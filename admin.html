@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Add Test (Admin)</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif;font-size:13px}
+body{margin:0;background:#f0f0f0;color:#333}
+.top{background:#2b2b2b;color:#fff;padding:10px 15px;display:flex;justify-content:space-between;align-items:center}
+.top a{color:#ffcc00;text-decoration:none}
+.wrap{max-width:800px;margin:15px auto;padding:0 10px}
+.card{background:#fff;border:1px solid #ccc;padding:12px;margin-bottom:12px;border-radius:4px}
+h3{margin:0 0 10px;color:#31708f}
+label{display:block;margin:8px 0 3px;font-weight:bold;font-size:12px}
+input,select{width:100%;padding:8px;border:1px solid #bbb;border-radius:3px;background:#fff}
+button{padding:8px 14px;border:0;border-radius:3px;cursor:pointer;font-weight:bold;color:#fff;background:#33a6ea;margin:8px 6px 0 0}
+button.g{background:#2e7d32}button.r{background:#d9534f;padding:2px 8px;margin:0}
+.msg{margin-top:8px;font-size:12px}
+.ok{color:#2e7d32}.er{color:#c00}
+.t{margin:3px 0 3px 12px;border-left:2px solid #ddd;padding-left:8px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:3px 0}
+.mut{color:#777;font-size:11px}
+</style><link rel="stylesheet" href="app.css"></head><body>
+<div class="top"><b>➕ Add Test (Admin)</b><a href="home.html">🏠 Home</a></div>
+<div class="wrap">
+  <div class="card">
+    <h3>नया टेस्ट जोड़ें</h3>
+    <label>1) प्रश्नों की JSON file चुनें (जाँच के लिए, वैकल्पिक)</label>
+    <input type="file" id="qf" accept=".json,application/json" onchange="checkFile(this)">
+    <div class="msg" id="fmsg"></div>
+
+    <label>2) Category</label>
+    <select id="cat" onchange="fillLevels()"><option value="teaching">Teaching</option><option value="nonTeaching">Non-Teaching</option></select>
+    <label>3) Level</label>
+    <select id="level" onchange="fillPosts()"></select>
+    <label>4) Post का नाम</label>
+    <input id="post" list="posts" placeholder="जैसे: PRT Rajasthan"><datalist id="posts"></datalist>
+    <label>5) Year</label>
+    <input id="year" placeholder="जैसे: 2025">
+    <label>6) Test का नाम</label>
+    <input id="title" placeholder="जैसे: Full Test 1">
+    <label>7) File का नाम (GitHub वाला हू-ब-हू नाम)</label>
+    <input id="file" placeholder="जैसे: questions_2.json">
+    <label>8) समय (मिनट) – खाली छोड़ सकते हैं</label>
+    <input id="dur" type="number" min="1" placeholder="file वाला समय इस्तेमाल होगा">
+    <button onclick="addTest()">➕ Add Test</button>
+    <div class="msg" id="amsg"></div>
+  </div>
+
+  <div class="card">
+    <h3>अभी की सूची</h3>
+    <div id="tree"></div>
+    <button class="g" onclick="download()">⬇ tests.json डाउनलोड करें</button>
+    <button onclick="copyJson()">📋 Copy</button>
+    <div class="msg mut">डाउनलोड हुई फ़ाइल को GitHub में पुरानी <b>tests.json</b> की जगह upload (replace) करें। प्रश्नों वाली JSON भी वहीं upload करें।</div>
+    <div class="msg" id="cmsg"></div>
+  </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const LEVELS={teaching:['NTT','PRT','TGT','PGT'],nonTeaching:['10th','12th','Graduation Level']};
+let CAT={_help:'Structure: category -> level -> post name -> year -> list of tests. Each test = {"title":"...","file":"questions.json"} (optional "duration": minutes). Sectional tests are made automatically from the sections inside each file.',teaching:{NTT:{},PRT:{},TGT:{},PGT:{}},nonTeaching:{'10th':{},'12th':{},'Graduation Level':{}}};
+
+async function fetchJSON(f){
+  const names=[...new Set([f,f.charAt(0).toUpperCase()+f.slice(1),f.charAt(0).toLowerCase()+f.slice(1)])];
+  let last;
+  for(const n of names){try{const r=await fetch(n);if(r.ok)return await r.json();last=new Error('HTTP '+r.status)}catch(e){last=e}}
+  throw last;
+}
+async function init(){
+  try{
+    const d=await fetchJSON('tests.json');
+    if(d&&!d.sections){CAT=d;['teaching','nonTeaching'].forEach(c=>{CAT[c]=CAT[c]||{};LEVELS[c].forEach(l=>CAT[c][l]=CAT[c][l]||{})})}
+    $('cmsg').innerHTML='<span class="ok">मौजूदा tests.json लोड हो गई।</span>';
+  }catch(e){$('cmsg').innerHTML='<span class="er">tests.json नहीं मिली — नई सूची बनेगी।</span>'}
+  fillLevels();drawTree();
+}
+function fillLevels(){
+  const c=$('cat').value;
+  $('level').innerHTML=LEVELS[c].map(l=>`<option>${esc(l)}</option>`).join('');
+  fillPosts();
+}
+function fillPosts(){
+  const n=(CAT[$('cat').value]||{})[$('level').value]||{};
+  $('posts').innerHTML=Object.keys(n).map(p=>`<option value="${esc(p)}">`).join('');
+}
+function checkFile(inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const d=JSON.parse(r.result);
+      const secs=(d.sections||[]).filter(s=>s.questions&&s.questions.length);
+      const n=secs.reduce((t,s)=>t+s.questions.length,0);
+      if(!secs.length)throw new Error('sections/questions नहीं मिले');
+      $('file').value=f.name;
+      if(!$('title').value)$('title').value=f.name.replace(/\.json$/i,'');
+      $('fmsg').innerHTML=`<span class="ok">✔ सही file: ${secs.length} sections, ${n} प्रश्न, समय ${d.duration||'—'} मिनट</span>`;
+    }catch(e){$('fmsg').innerHTML='<span class="er">✖ यह सही questions JSON नहीं है: '+esc(e.message)+'</span>'}
+  };
+  r.readAsText(f);
+}
+function addTest(){
+  const c=$('cat').value,l=$('level').value,post=$('post').value.trim(),year=$('year').value.trim(),title=$('title').value.trim(),file=$('file').value.trim(),dur=parseInt($('dur').value,10);
+  if(!post||!year||!title||!file){$('amsg').innerHTML='<span class="er">Post, Year, Test का नाम और File का नाम भरना ज़रूरी है।</span>';return}
+  CAT[c]=CAT[c]||{};CAT[c][l]=CAT[c][l]||{};
+  const p=CAT[c][l][post]=CAT[c][l][post]||{};
+  const list=p[year]=p[year]||[];
+  if(list.some(t=>t.file===file&&t.title===title)){$('amsg').innerHTML='<span class="er">यह test पहले से जुड़ा है।</span>';return}
+  const t={title,file};if(dur>0)t.duration=dur;
+  list.push(t);
+  $('amsg').innerHTML='<span class="ok">✔ जुड़ गया। नीचे से tests.json डाउनलोड करें।</span>';
+  $('title').value='';$('file').value='';$('dur').value='';
+  drawTree();fillPosts();
+}
+function del(c,l,p,y,i){
+  const list=CAT[c][l][p][y];list.splice(i,1);
+  if(!list.length)delete CAT[c][l][p][y];
+  if(!Object.keys(CAT[c][l][p]).length)delete CAT[c][l][p];
+  drawTree();fillPosts();
+}
+function drawTree(){
+  let h='';
+  ['teaching','nonTeaching'].forEach(c=>{
+    let inner='';
+    LEVELS[c].forEach(l=>{
+      const posts=(CAT[c]||{})[l]||{};
+      Object.keys(posts).forEach(p=>Object.keys(posts[p]).forEach(y=>posts[p][y].forEach((t,i)=>{
+        inner+=`<div class="row"><span><b>${esc(l)}</b> › ${esc(p)} › ${esc(y)} › ${esc(t.title)} <span class="mut">(${esc(t.file)}${t.duration?', '+t.duration+' min':''})</span></span><button class="r" onclick='del(${JSON.stringify(c)},${JSON.stringify(l)},${JSON.stringify(p)},${JSON.stringify(y)},${i})'>✕</button></div>`;
+      })));
+    });
+    h+=`<div><b>${c==='teaching'?'Teaching':'Non-Teaching'}</b><div class="t">${inner||'<span class="mut">कोई test नहीं</span>'}</div></div>`;
+  });
+  $('tree').innerHTML=h;
+}
+function jsonText(){return JSON.stringify(CAT,null,2)}
+function download(){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([jsonText()],{type:'application/json'}));
+  a.download='tests.json';document.body.appendChild(a);a.click();a.remove();
+}
+function copyJson(){
+  (navigator.clipboard?navigator.clipboard.writeText(jsonText()):Promise.reject()).then(()=>{$('cmsg').innerHTML='<span class="ok">Copy हो गया।</span>'}).catch(()=>{$('cmsg').innerHTML='<span class="er">Copy नहीं हो पाया — Download इस्तेमाल करें।</span>'});
+}
+init();
+</script>
+</body></html>

@@ -1,0 +1,4087 @@
+{
+  "duration": 120,
+  "neg": 0.25,
+  "sections": [
+    {
+      "name": "General Intelligence and Reasoning Ability",
+      "nameHi": "सामान्य बुद्धि एवं तर्कशक्ति",
+      "questions": [
+        {
+          "qid": "4410091528153",
+          "qEn": "What should come in place of '?' in the given series?\n5 11 23 47 95 ?",
+          "qHi": "दी गई श्रृंखला में '?' के स्थान पर क्या आना चाहिए?\n5 11 23 47 95 ?",
+          "optEn": [
+            "195",
+            "191",
+            "200",
+            "204"
+          ],
+          "optHi": [
+            "195",
+            "191",
+            "200",
+            "204"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009778962",
+          "qEn": "HH 12 is related to FE -4 in a certain way. In the same way, EI 13 is related to CF -3. To which of the following is MP 20 related, following the same logic?",
+          "qHi": "HH 12, FE -4 से एक निश्चित तरीके से संबंधित है। उसी प्रकार, EI 13, CF -3 से संबंधित है। इसी तर्क का पालन करते हुए, MP 20 निम्नलिखित में से किससे संबंधित है?",
+          "optEn": [
+            "LM 4",
+            "KM 4",
+            "KL 6",
+            "LL 6"
+          ],
+          "optHi": [
+            "LM 4",
+            "KM 4",
+            "KL 6",
+            "LL 6"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009864935",
+          "qEn": "If the water source is placed along M-N, as shown in the figure, which of the given options, will be the water reflection of the given figure?",
+          "qHi": "यदि जल स्रोत को आकृति में दर्शाए अनुसार M-N के अनुदिश रखा जाए, तो दिए गए विकल्पों में से कौन-सा दी गई आकृति का जल-प्रतिबिंब होगा?",
+          "optEn": [
+            "Option 1",
+            "Option 2",
+            "Option 3",
+            "Option 4"
+          ],
+          "optHi": [
+            "विकल्प 1",
+            "विकल्प 2",
+            "विकल्प 3",
+            "विकल्प 4"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": "",
+          "img": "images/gi_q03_question.png",
+          "imgEn": "images/gi_q03_question.png",
+          "imgHi": "images/gi_q03_question.png",
+          "optImg": [
+            "images/gi_q03_option1.png",
+            "images/gi_q03_option2.png",
+            "images/gi_q03_option3.png",
+            "images/gi_q03_option4.png"
+          ]
+        },
+        {
+          "qid": "4410091618940",
+          "qEn": "What should come in place of ? in the given series based on the English alphabetical order?\nNIOD VQWL DYET LGMB ?",
+          "qHi": "अंग्रेज़ी वर्णमाला क्रम के आधार पर, दी गई श्रृंखला में ? के स्थान पर क्या आना चाहिए?\nNIOD VQWL DYET LGMB ?",
+          "optEn": [
+            "TUHG",
+            "THGV",
+            "TOUJ",
+            "TOIL"
+          ],
+          "optHi": [
+            "TUHG",
+            "THGV",
+            "TOUJ",
+            "TOIL"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009788297",
+          "qEn": "This question is based on the five, three-digit numbers given below.\n(Left) 589 524 539 617 676 (Right)\n(Example- 697 – First digit = 6, second digit = 9 and third digit = 7)\nNOTE - All operations to be done from left to right.\nWhat will be the resultant if the third digit of the highest number is added to the second digit of the lowest number?",
+          "qHi": "यह प्रश्न नीचे दी गई पाँच तीन-अंकीय संख्याओं पर आधारित है।\n(बाएँ) 589 524 539 617 676 (दाएँ)\n(उदाहरण- 697 – पहला अंक = 6, दूसरा अंक = 9 और तीसरा अंक = 7)\nनोट - सभी संक्रियाएँ बाएँ से दाएँ की जानी हैं।\nयदि सबसे बड़ी संख्या के तीसरे अंक को सबसे छोटी संख्या के दूसरे अंक में जोड़ दिया जाए, तो परिणाम क्या होगा?",
+          "optEn": [
+            "7",
+            "8",
+            "5",
+            "6"
+          ],
+          "optHi": [
+            "7",
+            "8",
+            "5",
+            "6"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091609180",
+          "qEn": "What will come in the place of '?' in the following equation if '+' and '-' are interchanged and 'x' and '÷' are interchanged?\n18 x 2 + 7 - 3 ÷ 1 = ?",
+          "qHi": "यदि '+' और '-' को आपस में बदल दिया जाए तथा 'x' और '÷' को आपस में बदल दिया जाए, तो निम्नलिखित समीकरण में '?' के स्थान पर क्या आएगा?\n18 x 2 + 7 - 3 ÷ 1 = ?",
+          "optEn": [
+            "12",
+            "8",
+            "5",
+            "3"
+          ],
+          "optHi": [
+            "12",
+            "8",
+            "5",
+            "3"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009528655",
+          "qEn": "Below are given two sets of numbers. In each set of numbers, a certain mathematical operation on first number results in the second number. Similarly, certain mathematical operation on second number results in the third number and so on. Which of the given options follows the same set of operations as in question?\n(NOTE: Operations should be performed on the whole numbers, without breaking down the numbers into its constituent digits. E.g. 13 – Operations on 13 such as adding / subtracting /multiplying etc. to 13 can be performed. Breaking down 13 into 1 and 3 and then performing mathematical operations on 1 and 3 is not allowed.)\n38 - 266 - 532 - 544\n13 - 91 - 182 - 194",
+          "qHi": "नीचे संख्याओं के दो समुच्चय दिए गए हैं। प्रत्येक समुच्चय में, पहली संख्या पर एक निश्चित गणितीय संक्रिया करने से दूसरी संख्या प्राप्त होती है। इसी प्रकार, दूसरी संख्या पर एक निश्चित गणितीय संक्रिया करने से तीसरी संख्या प्राप्त होती है, और इसी तरह आगे। दिए गए विकल्पों में से कौन-सा विकल्प प्रश्न में दी गई संक्रियाओं के समुच्चय का ही अनुसरण करता है?\n(नोट: संक्रियाएँ पूर्ण संख्याओं पर की जानी चाहिए, संख्याओं को उनके घटक अंकों में तोड़े बिना। उदाहरण के लिए, 13 पर जोड़ना / घटाना / गुणा करना आदि संक्रियाएँ की जा सकती हैं। 13 को 1 और 3 में तोड़कर 1 और 3 पर गणितीय संक्रियाएँ करना अनुमत नहीं है।)\n38 - 266 - 532 - 544\n13 - 91 - 182 - 194",
+          "optEn": [
+            "25 - 155 - 465 - 478",
+            "22 - 154 - 770 - 782",
+            "12 - 96 - 288 - 300",
+            "15 - 105 - 210 - 222"
+          ],
+          "optHi": [
+            "25 - 155 - 465 - 478",
+            "22 - 154 - 770 - 782",
+            "12 - 96 - 288 - 300",
+            "15 - 105 - 210 - 222"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091619668",
+          "qEn": "In a row of people all facing north, Tanya is 14th from the left end. Rahul is 29th from the left end. Rahul is exactly between Tanya and Aditya. If Aditya is 5th from the right end of the line, how many people are there in the row?",
+          "qHi": "लोगों की एक पंक्ति में, जिसमें सभी उत्तर की ओर मुख करके खड़े हैं, तान्या बाएँ सिरे से 14वें स्थान पर है। राहुल बाएँ सिरे से 29वें स्थान पर है। राहुल ठीक तान्या और आदित्य के बीच में है। यदि आदित्य पंक्ति के दाएँ सिरे से 5वें स्थान पर है, तो पंक्ति में कुल कितने लोग हैं?",
+          "optEn": [
+            "47",
+            "49",
+            "46",
+            "48"
+          ],
+          "optHi": [
+            "47",
+            "49",
+            "46",
+            "48"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009216072",
+          "qEn": "If 2 is added to each odd digit and 1 is subtracted from each even digit in the number 2561473, then how many digits will appear more than once in the new number thus formed?",
+          "qHi": "यदि संख्या 2561473 में प्रत्येक विषम अंक में 2 जोड़ दिया जाए और प्रत्येक सम अंक में से 1 घटा दिया जाए, तो इस प्रकार बनी नई संख्या में कितने अंक एक से अधिक बार आएँगे?",
+          "optEn": [
+            "None",
+            "One",
+            "Two",
+            "Three"
+          ],
+          "optHi": [
+            "कोई नहीं",
+            "एक",
+            "दो",
+            "तीन"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009782362",
+          "qEn": "Based on the alphabetical order, three of the following four are alike in a certain way and thus form a group. Which is the one that does not belong to that group?\n(Note: The odd man out is not based on the number of consonants/vowels or their position in the letter cluster.)",
+          "qHi": "अंग्रेज़ी वर्णमाला क्रम के आधार पर, निम्नलिखित चार में से तीन एक निश्चित प्रकार से समान हैं और इस प्रकार एक समूह बनाते हैं। वह कौन-सा है जो उस समूह से संबंधित नहीं है?\n(नोट: विषम का चयन व्यंजनों/स्वरों की संख्या या अक्षर-समूह में उनकी स्थिति पर आधारित नहीं है।)",
+          "optEn": [
+            "PMK",
+            "XVS",
+            "FCA",
+            "ZWU"
+          ],
+          "optHi": [
+            "PMK",
+            "XVS",
+            "FCA",
+            "ZWU"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009784837",
+          "qEn": "Refer to the following series and answer the question. Counting to be done from left to right only. (All numbers are single digit numbers only).\n(Left) 6 9 5 4 2 1 4 5 8 4 6 7 3 6 8 5 2 9 1 2 1 7 4 4 5 5 8 4 4 2 (Right)\nHow many such prime digits are there each of which is immediately preceded by an even digit and also immediately followed by an even digit?",
+          "qHi": "निम्नलिखित श्रृंखला को देखिए और प्रश्न का उत्तर दीजिए। गिनती केवल बाएँ से दाएँ की जानी है। (सभी संख्याएँ केवल एकल अंक की संख्याएँ हैं।)\n(बाएँ) 6 9 5 4 2 1 4 5 8 4 6 7 3 6 8 5 2 9 1 2 1 7 4 4 5 5 8 4 4 2 (दाएँ)\nऐसे कितने अभाज्य अंक हैं, जिनमें से प्रत्येक के ठीक पहले एक सम अंक है और ठीक बाद भी एक सम अंक है?",
+          "optEn": [
+            "More than three",
+            "One",
+            "Two",
+            "Three"
+          ],
+          "optHi": [
+            "तीन से अधिक",
+            "एक",
+            "दो",
+            "तीन"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009216483",
+          "qEn": "Each of E, F, G, I, W, X and Y has an exam on a different day of a week, starting from Monday and ending on Sunday of the same week. Only three people have exams between I and F. Only three people have exams between W and X. E has an exam on some day before F and on some day after Y. Only G has an exam before X. How many people have exams after I?",
+          "qHi": "E, F, G, I, W, X और Y में से प्रत्येक की परीक्षा एक सप्ताह के अलग-अलग दिन होती है, जो उसी सप्ताह के सोमवार से शुरू होकर रविवार को समाप्त होता है। I और F के बीच केवल तीन लोगों की परीक्षा है। W और X के बीच केवल तीन लोगों की परीक्षा है। E की परीक्षा F से किसी दिन पहले और Y से किसी दिन बाद है। केवल G की परीक्षा X से पहले है। I के बाद कितने लोगों की परीक्षा है?",
+          "optEn": [
+            "Four",
+            "Three",
+            "One",
+            "Two"
+          ],
+          "optHi": [
+            "चार",
+            "तीन",
+            "एक",
+            "दो"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091619661",
+          "qEn": "In a row of 26 students facing north, Manish is 15th from the left end. If Divya is 6th to the right of Manish, what is Divya's position from the right end of the line?",
+          "qHi": "उत्तर की ओर मुख करके खड़े 26 विद्यार्थियों की एक पंक्ति में, मनीष बाएँ सिरे से 15वें स्थान पर है। यदि दिव्या मनीष के दाईं ओर 6वें स्थान पर है, तो पंक्ति के दाएँ सिरे से दिव्या का स्थान क्या है?",
+          "optEn": [
+            "6th",
+            "4th",
+            "7th",
+            "3rd"
+          ],
+          "optHi": [
+            "6वाँ",
+            "4था",
+            "7वाँ",
+            "3रा"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091614531",
+          "qEn": "In a certain code language, 'FLAT' is coded as '4625' and 'CALF' is coded as '2674'. What is the code for 'C' in the given code language?",
+          "qHi": "एक निश्चित कूट भाषा में, 'FLAT' को '4625' और 'CALF' को '2674' लिखा जाता है। दी गई कूट भाषा में 'C' का कूट क्या है?",
+          "optEn": [
+            "6",
+            "7",
+            "2",
+            "4"
+          ],
+          "optHi": [
+            "6",
+            "7",
+            "2",
+            "4"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009216475",
+          "qEn": "Each vowel in the word ABATAGES is changed to the letter immediately preceding it in the English alphabetical order and each consonant is changed to the letter immediately following it in the English alphabetical order. Which of the following letters will appear more than twice in the new group of letters thus formed?",
+          "qHi": "शब्द ABATAGES में प्रत्येक स्वर को अंग्रेज़ी वर्णमाला क्रम में उससे ठीक पहले वाले अक्षर में बदल दिया जाता है और प्रत्येक व्यंजन को अंग्रेज़ी वर्णमाला क्रम में उससे ठीक बाद वाले अक्षर में बदल दिया जाता है। इस प्रकार बने अक्षरों के नए समूह में निम्नलिखित में से कौन-सा अक्षर दो बार से अधिक आएगा?",
+          "optEn": [
+            "H",
+            "Z",
+            "U",
+            "C"
+          ],
+          "optHi": [
+            "H",
+            "Z",
+            "U",
+            "C"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091614507",
+          "qEn": "If the water source is placed along X-Y, as shown in the figure, which of the given options will be the water reflection of the given figure?",
+          "qHi": "यदि जल स्रोत को आकृति में दर्शाए अनुसार X-Y के अनुदिश रखा जाए, तो दिए गए विकल्पों में से कौन-सा दी गई आकृति का जल-प्रतिबिंब होगा?",
+          "optEn": [
+            "Option 1",
+            "Option 2",
+            "Option 3",
+            "Option 4"
+          ],
+          "optHi": [
+            "विकल्प 1",
+            "विकल्प 2",
+            "विकल्प 3",
+            "विकल्प 4"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": "",
+          "img": "images/gi_q16_question.png",
+          "imgEn": "images/gi_q16_question.png",
+          "imgHi": "images/gi_q16_question.png",
+          "optImg": [
+            "images/gi_q16_option1.png",
+            "images/gi_q16_option2.png",
+            "images/gi_q16_option3.png",
+            "images/gi_q16_option4.png"
+          ]
+        },
+        {
+          "qid": "4410091614480",
+          "qEn": "F is the father of I. I is the brother of G. W is the father of Z. Z is the son of G. How is W related to F?",
+          "qHi": "F, I का पिता है। I, G का भाई है। W, Z का पिता है। Z, G का पुत्र है। W का F से क्या संबंध है?",
+          "optEn": [
+            "Daughter's son",
+            "Father",
+            "Husband",
+            "Daughter's husband"
+          ],
+          "optHi": [
+            "बेटी का बेटा",
+            "पिता",
+            "पति",
+            "बेटी का पति"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009216750",
+          "qEn": "Seven people, E, F, G, H, K, L and N, are sitting in a row, facing the north. Only two people sit between K and E. Only G sits to the right of H. Only one person sits between E and H. N sits at some place to the right of L but at some place to the left of F. How many people sit between F and L?",
+          "qHi": "सात लोग, E, F, G, H, K, L और N, उत्तर की ओर मुख करके एक पंक्ति में बैठे हैं। K और E के बीच केवल दो लोग बैठे हैं। H के दाईं ओर केवल G बैठा है। E और H के बीच केवल एक व्यक्ति बैठा है। N, L के दाईं ओर किसी स्थान पर परंतु F के बाईं ओर किसी स्थान पर बैठा है। F और L के बीच कितने लोग बैठे हैं?",
+          "optEn": [
+            "Two",
+            "One",
+            "Three",
+            "Four"
+          ],
+          "optHi": [
+            "दो",
+            "एक",
+            "तीन",
+            "चार"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009764842",
+          "qEn": "Based on the English alphabetical order, three of the following four letter-clusters are alike in a certain way and thus form a group. Which letter-cluster DOES NOT belong to that group?\n(Note: The odd one out is not based on the number of consonants/vowels or their position in the letter-cluster.)",
+          "qHi": "अंग्रेज़ी वर्णमाला क्रम के आधार पर, निम्नलिखित चार अक्षर-समूहों में से तीन एक निश्चित प्रकार से समान हैं और इस प्रकार एक समूह बनाते हैं। कौन-सा अक्षर-समूह उस समूह से संबंधित नहीं है?\n(नोट: विषम का चयन व्यंजनों/स्वरों की संख्या या अक्षर-समूह में उनकी स्थिति पर आधारित नहीं है।)",
+          "optEn": [
+            "PUV",
+            "GKM",
+            "WAC",
+            "KOQ"
+          ],
+          "optHi": [
+            "PUV",
+            "GKM",
+            "WAC",
+            "KOQ"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009779769",
+          "qEn": "Refer to the following letter series and answer the question. (Counting to be done from left to right only)\n(Left) P V V M H V X E L E E F T S I O X I G (Right)\nHow many such vowels are there each of which is immediately preceded by a consonant and also immediately followed by a vowel?",
+          "qHi": "निम्नलिखित अक्षर श्रृंखला को देखिए और प्रश्न का उत्तर दीजिए। (गिनती केवल बाएँ से दाएँ की जानी है)\n(बाएँ) P V V M H V X E L E E F T S I O X I G (दाएँ)\nऐसे कितने स्वर हैं, जिनमें से प्रत्येक के ठीक पहले एक व्यंजन है और ठीक बाद एक स्वर है?",
+          "optEn": [
+            "1",
+            "3",
+            "2",
+            "4"
+          ],
+          "optHi": [
+            "1",
+            "3",
+            "2",
+            "4"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        }
+      ]
+    },
+    {
+      "name": "General Awareness",
+      "nameHi": "सामान्य जागरूकता",
+      "questions": [
+        {
+          "qid": "441009749559",
+          "qEn": "Which of the following sitar maestros is renowned for contributions to classical music in India?",
+          "qHi": "निम्नलिखित सितार वादकों में से कौन भारत में शास्त्रीय संगीत में अपने योगदान के लिए प्रसिद्ध हैं?",
+          "optEn": [
+            "R.D. Burman",
+            "Zakir Hussain",
+            "Pandit Bhimsen Joshi",
+            "Ravi Shankar"
+          ],
+          "optHi": [
+            "आर.डी. बर्मन",
+            "ज़ाकिर हुसैन",
+            "पंडित भीमसेन जोशी",
+            "रवि शंकर"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091120869",
+          "qEn": "Structural unemployment occurs primarily due to:",
+          "qHi": "संरचनात्मक बेरोज़गारी मुख्य रूप से किस कारण होती है:",
+          "optEn": [
+            "Skill mismatch",
+            "Cyclical demand fall",
+            "Voluntary quitting",
+            "Seasonal variation"
+          ],
+          "optHi": [
+            "कौशल असंगति",
+            "चक्रीय माँग में गिरावट",
+            "स्वैच्छिक नौकरी छोड़ना",
+            "मौसमी बदलाव"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009275878",
+          "qEn": "In 2025, which Indian Special Forces unit represented India in the 12th edition of Exercise KHANJAR held in Kyrgyzstan?",
+          "qHi": "2025 में, किर्गिज़स्तान में आयोजित एक्सरसाइज़ खंजर के 12वें संस्करण में भारत का प्रतिनिधित्व किस भारतीय विशेष बल इकाई ने किया?",
+          "optEn": [
+            "Parachute Regiment (Special Forces)",
+            "Garhwal Rifles Regiment (Special forces)",
+            "Sikh Light Infantry Regiment (Special forces)",
+            "Jat Infantry Regiment (Special forces)"
+          ],
+          "optHi": [
+            "पैराशूट रेजिमेंट (विशेष बल)",
+            "गढ़वाल राइफल्स रेजिमेंट (विशेष बल)",
+            "सिख लाइट इन्फैंट्री रेजिमेंट (विशेष बल)",
+            "जाट इन्फैंट्री रेजिमेंट (विशेष बल)"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009671684",
+          "qEn": "What does the Indian Constitution state about the Directive Principles of State Policy?",
+          "qHi": "राज्य के नीति निदेशक तत्वों के बारे में भारतीय संविधान क्या कहता है?",
+          "optEn": [
+            "They override rights during a national emergency period",
+            "They are optional and may be ignored by the government.",
+            "They are legally binding and enforceable by the courts.",
+            "They are not enforceable but guide state governance."
+          ],
+          "optHi": [
+            "राष्ट्रीय आपातकाल की अवधि के दौरान ये अधिकारों पर प्रभावी हो जाते हैं",
+            "ये वैकल्पिक हैं और सरकार द्वारा अनदेखे किए जा सकते हैं।",
+            "ये कानूनी रूप से बाध्यकारी हैं और न्यायालयों द्वारा लागू कराए जा सकते हैं।",
+            "ये न्यायालय द्वारा लागू नहीं कराए जा सकते, परंतु राज्य के शासन का मार्गदर्शन करते हैं।"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009217414",
+          "qEn": "Russia signed a military alliance with which of the following countries in 2024?",
+          "qHi": "2024 में रूस ने निम्नलिखित में से किस देश के साथ सैन्य गठबंधन पर हस्ताक्षर किए?",
+          "optEn": [
+            "Iran",
+            "China",
+            "North Korea",
+            "Belarus"
+          ],
+          "optHi": [
+            "ईरान",
+            "चीन",
+            "उत्तर कोरिया",
+            "बेलारूस"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009323487",
+          "qEn": "Which Article contained in the Fundamental Rights of the Indian Constitution deals with the prohibition of employment of children in factories and states that 'No child below the age of fourteen years shall be employed to work in any factory or mine or engaged in any other hazardous employment'?",
+          "qHi": "भारतीय संविधान के मौलिक अधिकारों में कौन-सा अनुच्छेद कारखानों में बच्चों के नियोजन के प्रतिषेध से संबंधित है और कहता है कि 'चौदह वर्ष से कम आयु के किसी बालक को किसी कारखाने या खान में काम करने के लिए नियोजित नहीं किया जाएगा या किसी अन्य परिसंकटमय नियोजन में नहीं लगाया जाएगा'?",
+          "optEn": [
+            "Article 31",
+            "Article 19",
+            "Article 24",
+            "Article 14"
+          ],
+          "optHi": [
+            "अनुच्छेद 31",
+            "अनुच्छेद 19",
+            "अनुच्छेद 24",
+            "अनुच्छेद 14"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009312279",
+          "qEn": "What was the impact of the ongoing India-Pakistan conflict on the Indian Premier League (IPL) 2025?",
+          "qHi": "भारत-पाकिस्तान के जारी संघर्ष का इंडियन प्रीमियर लीग (IPL) 2025 पर क्या प्रभाव पड़ा?",
+          "optEn": [
+            "The IPL 2025 season continued without any interruptions.",
+            "The IPL 2025 season was relocated to the United Arab Emirates.",
+            "The IPL 2025 season was canceled entirely.",
+            "The IPL 2025 season was suspended for one week."
+          ],
+          "optHi": [
+            "IPL 2025 सीज़न बिना किसी रुकावट के जारी रहा।",
+            "IPL 2025 सीज़न को संयुक्त अरब अमीरात में स्थानांतरित कर दिया गया।",
+            "IPL 2025 सीज़न पूरी तरह रद्द कर दिया गया।",
+            "IPL 2025 सीज़न एक सप्ताह के लिए निलंबित कर दिया गया।"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009606886",
+          "qEn": "Where was the capital of Alauddin Khalji built?",
+          "qHi": "अलाउद्दीन खिलजी की राजधानी कहाँ बनाई गई थी?",
+          "optEn": [
+            "Tughlaqabad",
+            "Ferozabad",
+            "Siri",
+            "Jahanpanah"
+          ],
+          "optHi": [
+            "तुगलकाबाद",
+            "फ़िरोज़ाबाद",
+            "सीरी",
+            "जहाँपनाह"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009513675",
+          "qEn": "Unlike sound waves, electromagnetic waves can travel through ___________.",
+          "qHi": "ध्वनि तरंगों के विपरीत, विद्युत चुंबकीय तरंगें ___________ से गुज़र सकती हैं।",
+          "optEn": [
+            "Only solids",
+            "Only air",
+            "Vacuum",
+            "Only water"
+          ],
+          "optHi": [
+            "केवल ठोस",
+            "केवल वायु",
+            "निर्वात",
+            "केवल जल"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091551175",
+          "qEn": "During 1820–21, the Ho community, who rose against British and landlord oppression, were primarily situated in which of the following areas?",
+          "qHi": "1820–21 के दौरान, ब्रिटिश और ज़मींदारों के उत्पीड़न के विरुद्ध विद्रोह करने वाला हो समुदाय मुख्य रूप से निम्नलिखित में से किस क्षेत्र में स्थित था?",
+          "optEn": [
+            "Gumla",
+            "Saraikela",
+            "Singhbhum",
+            "Godda"
+          ],
+          "optHi": [
+            "गुमला",
+            "सरायकेला",
+            "सिंहभूम",
+            "गोड्डा"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009226971",
+          "qEn": "As per the Periodic Labour Force Survey (PLFS), the Unemployment Rate (UR) in India, for individuals aged 15 years and above, has steadily declined from 6% in 2017-18 to _____ in 2023-24.",
+          "qHi": "आवधिक श्रम बल सर्वेक्षण (PLFS) के अनुसार, 15 वर्ष और उससे अधिक आयु के व्यक्तियों के लिए भारत में बेरोज़गारी दर (UR) 2017-18 में 6% से लगातार घटकर 2023-24 में _____ हो गई है।",
+          "optEn": [
+            "5.2%",
+            "2.2%",
+            "4.2%",
+            "3.2%"
+          ],
+          "optHi": [
+            "5.2%",
+            "2.2%",
+            "4.2%",
+            "3.2%"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009637393",
+          "qEn": "Which of the following religious groups had the smallest population share among the listed ones in Census 2011?",
+          "qHi": "2011 की जनगणना में सूचीबद्ध धार्मिक समूहों में से किसकी जनसंख्या में हिस्सेदारी सबसे कम थी?",
+          "optEn": [
+            "Sikh",
+            "Hindu",
+            "Jain",
+            "Buddhist"
+          ],
+          "optHi": [
+            "सिख",
+            "हिंदू",
+            "जैन",
+            "बौद्ध"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009460467",
+          "qEn": "Which of the following states' governor has particular responsibility for maintaining the state's law and order under Article 371 A of the Indian Constitution?",
+          "qHi": "भारतीय संविधान के अनुच्छेद 371 ए के अंतर्गत निम्नलिखित में से किस राज्य के राज्यपाल की राज्य की कानून-व्यवस्था बनाए रखने की विशेष ज़िम्मेदारी है?",
+          "optEn": [
+            "Assam",
+            "Manipur",
+            "Nagaland",
+            "Mizoram"
+          ],
+          "optHi": [
+            "असम",
+            "मणिपुर",
+            "नागालैंड",
+            "मिज़ोरम"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009205181",
+          "qEn": "Who was the chronicler that recognised Raziyya's abilities as a ruler of Delhi in 1236?",
+          "qHi": "1236 में दिल्ली की शासक के रूप में रज़िया की क्षमताओं को मान्यता देने वाला इतिहासकार कौन था?",
+          "optEn": [
+            "Minhaj-i Siraj",
+            "Firishta",
+            "Ibn Battuta",
+            "Amir Khusrau"
+          ],
+          "optHi": [
+            "मिन्हाज-ए-सिराज",
+            "फ़रिश्ता",
+            "इब्न बतूता",
+            "अमीर खुसरो"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009217412",
+          "qEn": "Who became the new Chief of Hezbollah after the death of Hassan Nasrallah?",
+          "qHi": "हसन नसरल्लाह की मृत्यु के बाद हिज़्बुल्लाह का नया प्रमुख कौन बना?",
+          "optEn": [
+            "Hashem Saifeddine",
+            "Zeinab Soleimani",
+            "Naim Qassem",
+            "Raeda Faqih"
+          ],
+          "optHi": [
+            "हाशिम सैफ़ुद्दीन",
+            "ज़ैनब सुलेमानी",
+            "नईम क़ासिम",
+            "रायदा फ़कीह"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009616788",
+          "qEn": "Which of the following is an incomplete protein — a protein source that does not contain all essential amino acids in adequate amounts?",
+          "qHi": "निम्नलिखित में से कौन-सा एक अपूर्ण प्रोटीन है — ऐसा प्रोटीन स्रोत जिसमें सभी आवश्यक अमीनो अम्ल पर्याप्त मात्रा में नहीं होते?",
+          "optEn": [
+            "Eggs",
+            "Fish",
+            "Milk",
+            "Pulses"
+          ],
+          "optHi": [
+            "अंडे",
+            "मछली",
+            "दूध",
+            "दालें"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009205173",
+          "qEn": "In what year did Qutbuddin Aibak become the ruler of Muhammad Ghori's Indian possessions?",
+          "qHi": "कुतुबुद्दीन ऐबक किस वर्ष मुहम्मद गोरी के भारतीय अधिकृत क्षेत्रों का शासक बना?",
+          "optEn": [
+            "AD 1206",
+            "AD 1210",
+            "AD 1221",
+            "AD 1192"
+          ],
+          "optHi": [
+            "ई. 1206",
+            "ई. 1210",
+            "ई. 1221",
+            "ई. 1192"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009306116",
+          "qEn": "In April 2025, the French luxury brand 'Chanel' named which Bollywood actress as its first-ever brand ambassador from India?",
+          "qHi": "अप्रैल 2025 में, फ्रांसीसी लग्ज़री ब्रांड 'शनेल' (Chanel) ने किस बॉलीवुड अभिनेत्री को भारत से अपना पहला ब्रांड एंबेसडर नामित किया?",
+          "optEn": [
+            "Ananya Panday",
+            "Alia Bhatt",
+            "Shraddha Kapoor",
+            "Disha Patani"
+          ],
+          "optHi": [
+            "अनन्या पांडे",
+            "आलिया भट्ट",
+            "श्रद्धा कपूर",
+            "दिशा पटानी"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009638688",
+          "qEn": "Which of the following soil types is widespread in the northern Indian plains and river valleys?",
+          "qHi": "निम्नलिखित में से कौन-सी मृदा उत्तरी भारतीय मैदानों और नदी घाटियों में व्यापक रूप से पाई जाती है?",
+          "optEn": [
+            "Arid soil",
+            "Laterite soil",
+            "Alluvial soil",
+            "Black soil"
+          ],
+          "optHi": [
+            "शुष्क मृदा",
+            "लैटेराइट मृदा",
+            "जलोढ़ मृदा",
+            "काली मृदा"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009638661",
+          "qEn": "Teak is the most dominant species of which of the following types of forest in India?",
+          "qHi": "सागौन (टीक) भारत में निम्नलिखित में से किस प्रकार के वन की सबसे प्रमुख प्रजाति है?",
+          "optEn": [
+            "Montane Forests",
+            "The Thorn Forests and Scrubs",
+            "Tropical Evergreen Forests",
+            "Tropical Deciduous Forests"
+          ],
+          "optHi": [
+            "पर्वतीय वन",
+            "कंटीले वन और झाड़ियाँ",
+            "उष्णकटिबंधीय सदाबहार वन",
+            "उष्णकटिबंधीय पर्णपाती वन"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        }
+      ]
+    },
+    {
+      "name": "Arithmetical and Numerical Ability",
+      "nameHi": "अंकगणितीय एवं संख्यात्मक योग्यता",
+      "questions": [
+        {
+          "qid": "441009547566",
+          "qEn": "During a sale, 60% of the goods are sold at a profit of 47%. 40% of the remaining goods are sold at a profit of 44%, and the rest are sold at a loss of 11%. If all goods have the same cost price, and there is an overall profit of x%, then what is the value of x?",
+          "qHi": "एक सेल के दौरान, 60% माल 47% के लाभ पर बेचा जाता है। शेष माल का 40% 44% के लाभ पर बेचा जाता है, और बाकी 11% की हानि पर बेचा जाता है। यदि सभी वस्तुओं का क्रय मूल्य समान है और कुल लाभ x% है, तो x का मान क्या है?",
+          "optEn": [
+            "30.5",
+            "32.6",
+            "31.5",
+            "33.4"
+          ],
+          "optHi": [
+            "30.5",
+            "32.6",
+            "31.5",
+            "33.4"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009364035",
+          "qEn": "Study the graph and answer the following question. Information about the various fruits purchased by three persons A, B and C is given in the graph.\nWhat is the total number of fruits purchased by A, B and C together?",
+          "qHi": "ग्राफ का अध्ययन करें और निम्नलिखित प्रश्न का उत्तर दें। तीन व्यक्तियों A, B और C द्वारा खरीदे गए विभिन्न फलों के बारे में जानकारी ग्राफ में दी गई है।\nA, B और C द्वारा एक साथ ख़रीदे गए फलों की कुल संख्या कितनी है?",
+          "optEn": [
+            "30",
+            "18",
+            "36",
+            "24"
+          ],
+          "optHi": [
+            "30",
+            "18",
+            "36",
+            "24"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": "",
+          "img": "images/an_q02_graph.png",
+          "imgEn": "images/an_q02_graph_en.png",
+          "imgHi": "images/an_q02_graph.png"
+        },
+        {
+          "qid": "441009153611",
+          "qEn": "If 9.9 : x :: x : 27.5, and x > 0, then find the value of x.",
+          "qHi": "यदि 9.9 : x :: x : 27.5 और x > 0 है, तो x का मान ज्ञात कीजिए।",
+          "optEn": [
+            "16.5",
+            "19.7",
+            "12.9",
+            "13"
+          ],
+          "optHi": [
+            "16.5",
+            "19.7",
+            "12.9",
+            "13"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "44100917580",
+          "qEn": "A cone is inscribed in a sphere such that the radius of the cone is the same as the radius of the sphere, and the height of the cone is equal to the diameter of the sphere. What is the relationship between the volume of the sphere and the volume of the cone?",
+          "qHi": "एक शंकु एक गोले के अंदर इस प्रकार अंतर्गत है कि शंकु की त्रिज्या गोले की त्रिज्या के बराबर है, और शंकु की ऊँचाई गोले के व्यास के बराबर है। गोले के आयतन और शंकु के आयतन के बीच क्या संबंध है?",
+          "optEn": [
+            "Volume of cone is one-third of volume of sphere.",
+            "Volume of sphere is twice of volume of cone.",
+            "Volume of cone is three-fourth of volume of sphere.",
+            "Volume of cone is two-third of volume of sphere."
+          ],
+          "optHi": [
+            "शंकु का आयतन गोले के आयतन का एक-तिहाई है।",
+            "गोले का आयतन शंकु के आयतन का दोगुना है।",
+            "शंकु का आयतन गोले के आयतन का तीन-चौथाई है।",
+            "शंकु का आयतन गोले के आयतन का दो-तिहाई है।"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009582034",
+          "qEn": "The average weight of a family of five members whose weights are 40 kg, 49 kg, 57 kg, 77 kg and 35 kg is:",
+          "qHi": "उस परिवार का औसत वज़न, जिसके पाँच सदस्यों का वज़न 40 किग्रा, 49 किग्रा, 57 किग्रा, 77 किग्रा और 35 किग्रा है, है:",
+          "optEn": [
+            "51.6 kg",
+            "53.6 kg",
+            "50.6 kg",
+            "52.6 kg"
+          ],
+          "optHi": [
+            "51.6 किग्रा",
+            "53.6 किग्रा",
+            "50.6 किग्रा",
+            "52.6 किग्रा"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009525624",
+          "qEn": "The LCM of the numbers 5, 3.2 and 0.03 is:",
+          "qHi": "संख्याओं 5, 3.2 और 0.03 का LCM है:",
+          "optEn": [
+            "120",
+            "160",
+            "480",
+            "240"
+          ],
+          "optHi": [
+            "120",
+            "160",
+            "480",
+            "240"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009857037",
+          "qEn": "By how much is 30% of 80 greater than 25% of 30?",
+          "qHi": "80 का 30%, 30 के 25% से कितना अधिक है?",
+          "optEn": [
+            "16.5",
+            "11.5",
+            "18.5",
+            "13.5"
+          ],
+          "optHi": [
+            "16.5",
+            "11.5",
+            "18.5",
+            "13.5"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009910891",
+          "qEn": "Find the value of:\n$\\left(\\frac{2}{7}\\right)\\times\\left(\\frac{21}{10}\\right)+\\left(\\frac{9}{5}-6\\right)$",
+          "qHi": "का मान ज्ञात कीजिए:\n$\\left(\\frac{2}{7}\\right)\\times\\left(\\frac{21}{10}\\right)+\\left(\\frac{9}{5}-6\\right)$",
+          "optEn": [
+            "$-\\frac{11}{2}$",
+            "$-\\frac{8}{15}$",
+            "$-\\frac{17}{8}$",
+            "$-\\frac{18}{5}$"
+          ],
+          "optHi": [
+            "$-\\frac{11}{2}$",
+            "$-\\frac{8}{15}$",
+            "$-\\frac{17}{8}$",
+            "$-\\frac{18}{5}$"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009209085",
+          "qEn": "The distance between A and B is 1,223 km. From A, Chaman goes to B with a speed of 77 km/hr and return to A with a speed of 150 km/hr.\nFind the average speed of Chaman. (Rounded off to two decimal places)",
+          "qHi": "A और B के बीच की दूरी 1,223 किमी है। A से चमन 77 किमी/घंटा की चाल से B जाता है और 150 किमी/घंटा की चाल से A लौटता है।\nचमन की औसत चाल ज्ञात कीजिए। (दशमलव के दो स्थानों तक पूर्णांकित)",
+          "optEn": [
+            "96.51 km/hr",
+            "101.76 km/hr",
+            "108.58 km/hr",
+            "96.35 km/hr"
+          ],
+          "optHi": [
+            "96.51 किमी/घंटा",
+            "101.76 किमी/घंटा",
+            "108.58 किमी/घंटा",
+            "96.35 किमी/घंटा"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009125601",
+          "qEn": "If the volume of cube is 19683 m³, then find the total surface area of cube in m².",
+          "qHi": "यदि एक घन का आयतन 19683 m³ है, तो घन का कुल पृष्ठीय क्षेत्रफल m² में ज्ञात कीजिए।",
+          "optEn": [
+            "4374",
+            "4421",
+            "4341",
+            "4392"
+          ],
+          "optHi": [
+            "4374",
+            "4421",
+            "4341",
+            "4392"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009852622",
+          "qEn": "What sum (in ₹) will earn a simple interest of ₹1680 in 4 years at 4% per annum?",
+          "qHi": "वह कौन-सी राशि (₹ में) है जो 4% वार्षिक दर से 4 वर्षों में ₹1680 साधारण ब्याज अर्जित करेगी?",
+          "optEn": [
+            "10200",
+            "10500",
+            "10550",
+            "10250"
+          ],
+          "optHi": [
+            "10200",
+            "10500",
+            "10550",
+            "10250"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009173298",
+          "qEn": "How many seconds will a boy take to run one complete round of a square field of side 20 metres, if he runs at a speed of 8 km/hr?",
+          "qHi": "एक लड़का 8 किमी/घंटा की चाल से दौड़ता है। 20 मीटर भुजा वाले एक वर्गाकार मैदान का एक पूरा चक्कर लगाने में उसे कितने सेकंड लगेंगे?",
+          "optEn": [
+            "16",
+            "36",
+            "46",
+            "26"
+          ],
+          "optHi": [
+            "16",
+            "36",
+            "46",
+            "26"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009544140",
+          "qEn": "The average of 7 numbers is found to be 25. Later, it was found that two numbers 29 and 12 were wrongly copied as 10 and 10. The correct average is:",
+          "qHi": "7 संख्याओं का औसत 25 पाया गया। बाद में पता चला कि दो संख्याएँ 29 और 12 गलती से 10 और 10 लिख ली गई थीं। सही औसत है:",
+          "optEn": [
+            "25",
+            "28",
+            "29",
+            "27"
+          ],
+          "optHi": [
+            "25",
+            "28",
+            "29",
+            "27"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009602798",
+          "qEn": "What is the diameter of the largest circle lying on the surface of a sphere of surface area 2,98,144 cm²?\n(Use $\\pi=\\frac{22}{7}$)",
+          "qHi": "2,98,144 सेमी² पृष्ठीय क्षेत्रफल वाले गोले की सतह पर स्थित सबसे बड़े वृत्त का व्यास क्या है?\n($\\pi=\\frac{22}{7}$ का प्रयोग करें)",
+          "optEn": [
+            "237 cm",
+            "154 cm",
+            "716 cm",
+            "308 cm"
+          ],
+          "optHi": [
+            "237 सेमी",
+            "154 सेमी",
+            "716 सेमी",
+            "308 सेमी"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009543438",
+          "qEn": "Ketan has two grandsons, Mahesh and David. 13-year-old Mahesh gets some money from Ketan's wealth, and 14-year-old David gets the rest of the money. But Mahesh and David will get the money only when they turn 25 years old. Till then, the money will be kept in a bank earning interest at the rate of 5% per annum, compounded annually. When both turn 25, they receive the same amount. If the total amount Ketan had was ₹24,600, how much money (in ₹) did Ketan initially give to David?",
+          "qHi": "केतन के दो पोते हैं, महेश और डेविड। 13 वर्षीय महेश को केतन की संपत्ति में से कुछ धन मिलता है, और 14 वर्षीय डेविड को शेष धन मिलता है। लेकिन महेश और डेविड को यह धन तभी मिलेगा जब वे 25 वर्ष के हो जाएँगे। तब तक यह धन एक बैंक में 5% वार्षिक दर से वार्षिक चक्रवृद्धि ब्याज अर्जित करेगा। जब दोनों 25 वर्ष के होते हैं, तो उन्हें समान राशि मिलती है। यदि केतन के पास कुल धन ₹24,600 था, तो केतन ने शुरू में डेविड को कितना धन (₹ में) दिया?",
+          "optEn": [
+            "12,950",
+            "11,750",
+            "12,600",
+            "12,000"
+          ],
+          "optHi": [
+            "12,950",
+            "11,750",
+            "12,600",
+            "12,000"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009898437",
+          "qEn": "P started a software business by investing ₹21000. After nine months, R joined him with a capital of ₹72000. After 3 years, they earned a profit of ₹50000. What was P's share (in ₹, rounded off to the nearest integer) in the profit?",
+          "qHi": "P ने ₹21000 निवेश करके एक सॉफ़्टवेयर व्यवसाय शुरू किया। नौ महीने बाद, R ₹72000 की पूँजी के साथ उसके साथ जुड़ गया। 3 वर्ष बाद, उन्होंने ₹50000 का लाभ कमाया। लाभ में P का हिस्सा (₹ में, निकटतम पूर्णांक तक पूर्णांकित) क्या था?",
+          "optEn": [
+            "13931",
+            "13902",
+            "14000",
+            "13882"
+          ],
+          "optHi": [
+            "13931",
+            "13902",
+            "14000",
+            "13882"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009913875",
+          "qEn": "A can do a work in 17 days and B in 23 days. If they work on it together for 5 days, then what fraction of the work that is left?",
+          "qHi": "A किसी काम को 17 दिनों में और B 23 दिनों में कर सकता है। यदि वे दोनों मिलकर उस पर 5 दिन काम करें, तो काम का कितना भाग शेष रहेगा?",
+          "optEn": [
+            "$\\frac{191}{391}$",
+            "$\\frac{194}{391}$",
+            "$\\frac{188}{391}$",
+            "$\\frac{189}{391}$"
+          ],
+          "optHi": [
+            "$\\frac{191}{391}$",
+            "$\\frac{194}{391}$",
+            "$\\frac{188}{391}$",
+            "$\\frac{189}{391}$"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091546515",
+          "qEn": "A shopkeeper lists an item at ₹5,000. He offers a trade discount of 20% to a retailer. The retailer further gets a scheme discount of \"Buy goods worth ₹4,000 and get an additional ₹200 off\". What is the final amount the retailer has to pay?",
+          "qHi": "एक दुकानदार किसी वस्तु की सूची कीमत ₹5,000 रखता है। वह एक खुदरा विक्रेता को 20% की व्यापार छूट देता है। खुदरा विक्रेता को “₹4,000 का माल खरीदने पर अतिरिक्त ₹200 की छूट” की योजना छूट भी मिलती है। खुदरा विक्रेता को अंततः कितनी राशि चुकानी होगी?",
+          "optEn": [
+            "₹4,200",
+            "₹3,800",
+            "₹3,600",
+            "₹4,000"
+          ],
+          "optHi": [
+            "₹4,200",
+            "₹3,800",
+            "₹3,600",
+            "₹4,000"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091546338",
+          "qEn": "A trader sells a bag for ₹1,260 at a loss of 10%. What was the cost price of the bag?",
+          "qHi": "एक व्यापारी एक बैग ₹1,260 में 10% की हानि पर बेचता है। बैग का क्रय मूल्य क्या था?",
+          "optEn": [
+            "₹1,350",
+            "₹1,300",
+            "₹1,450",
+            "₹1,400"
+          ],
+          "optHi": [
+            "₹1,350",
+            "₹1,300",
+            "₹1,450",
+            "₹1,400"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009519289",
+          "qEn": "A pipe can fill an empty tank in 11 hours, while another pipe can empty the filled tank in 44 hours. If both pipes are opened simultaneously when the tank is empty, how many hours will it take for the tank to be three-fourths full?",
+          "qHi": "एक पाइप एक खाली टंकी को 11 घंटे में भर सकता है, जबकि दूसरा पाइप भरी हुई टंकी को 44 घंटे में खाली कर सकता है। यदि टंकी के खाली होने पर दोनों पाइप एक साथ खोले जाएँ, तो टंकी को तीन-चौथाई भरने में कितने घंटे लगेंगे?",
+          "optEn": [
+            "22",
+            "33",
+            "44",
+            "11"
+          ],
+          "optHi": [
+            "22",
+            "33",
+            "44",
+            "11"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        }
+      ]
+    },
+    {
+      "name": "English Language and Comprehension",
+      "nameHi": "अंग्रेज़ी भाषा एवं बोध",
+      "questions": [
+        {
+          "qid": "4410091527498",
+          "qEn": "Choose the synonym of the highlighted word from the options given below.\nHe tried to cajole his friend into joining the trip by promising it would be unforgettable.\n[Highlighted: cajole]",
+          "qHi": "Choose the synonym of the highlighted word from the options given below.\nHe tried to cajole his friend into joining the trip by promising it would be unforgettable.\n[Highlighted: cajole]",
+          "optEn": [
+            "persuade",
+            "ignore",
+            "force",
+            "insult"
+          ],
+          "optHi": [
+            "persuade",
+            "ignore",
+            "force",
+            "insult"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091543674",
+          "qEn": "Select the most appropriate option to substitute the underlined word segment in the given sentence.\nSince the task was straightforward, the manager reminded the team that a simple and easy task can be quickly done.\n[Highlighted: a simple and easy task can be quickly done]",
+          "qHi": "Select the most appropriate option to substitute the underlined word segment in the given sentence.\nSince the task was straightforward, the manager reminded the team that a simple and easy task can be quickly done.\n[Highlighted: a simple and easy task can be quickly done]",
+          "optEn": [
+            "a stitch in time saves nine",
+            "a bald head is soon shaved",
+            "a little pot is soon hot",
+            "a guilty conscience needs no accuser"
+          ],
+          "optHi": [
+            "a stitch in time saves nine",
+            "a bald head is soon shaved",
+            "a little pot is soon hot",
+            "a guilty conscience needs no accuser"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091122870",
+          "qEn": "Choose the option that best completes the sentence using an appropriate adverb.\nThough unfamiliar with the topic, he responded to the questions ______.",
+          "qHi": "Choose the option that best completes the sentence using an appropriate adverb.\nThough unfamiliar with the topic, he responded to the questions ______.",
+          "optEn": [
+            "confidently",
+            "nervously",
+            "thoughtfully",
+            "cautiously"
+          ],
+          "optHi": [
+            "confidently",
+            "nervously",
+            "thoughtfully",
+            "cautiously"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091048253",
+          "qEn": "Fill in the blank with the correctly spelt word.\n_______ lines in geometry never intersect regardless of how far they extend.",
+          "qHi": "Fill in the blank with the correctly spelt word.\n_______ lines in geometry never intersect regardless of how far they extend.",
+          "optEn": [
+            "Parrallel",
+            "Paralell",
+            "Paralel",
+            "Parallel"
+          ],
+          "optHi": [
+            "Parrallel",
+            "Paralell",
+            "Paralel",
+            "Parallel"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009266958",
+          "qEn": "Select the most appropriate verb to fill in the blank.\nYesterday, they ___ indoors because of the storm.",
+          "qHi": "Select the most appropriate verb to fill in the blank.\nYesterday, they ___ indoors because of the storm.",
+          "optEn": [
+            "stay",
+            "staying",
+            "stayed",
+            "stays"
+          ],
+          "optHi": [
+            "stay",
+            "staying",
+            "stayed",
+            "stays"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009482752",
+          "qEn": "Select the most appropriate article to fill in the blank. If no article is needed, select 'No article required'.\nHe had _______ idea about how to solve the problem.",
+          "qHi": "Select the most appropriate article to fill in the blank. If no article is needed, select 'No article required'.\nHe had _______ idea about how to solve the problem.",
+          "optEn": [
+            "an",
+            "No article required",
+            "the",
+            "a"
+          ],
+          "optHi": [
+            "an",
+            "No article required",
+            "the",
+            "a"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091555271",
+          "qEn": "Replace the highlighted word segment with the appropriate one-word substitute.\nThe country's government ruled by a small, powerful group made decisions that benefited only a few.\n[Highlighted: government ruled by a small, powerful group]",
+          "qHi": "Replace the highlighted word segment with the appropriate one-word substitute.\nThe country's government ruled by a small, powerful group made decisions that benefited only a few.\n[Highlighted: government ruled by a small, powerful group]",
+          "optEn": [
+            "anarchy",
+            "oligarchy",
+            "democracy",
+            "theocracy"
+          ],
+          "optHi": [
+            "anarchy",
+            "oligarchy",
+            "democracy",
+            "theocracy"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091265547",
+          "qEn": "Rectify the given sentence by selecting the correct spelling of the misspelt word from the options.\nThe teacher explained the significanse of hard work in achieving success, emphasizing that patience and dedication are the true keys to reaching one’s goals in life.",
+          "qHi": "Rectify the given sentence by selecting the correct spelling of the misspelt word from the options.\nThe teacher explained the significanse of hard work in achieving success, emphasizing that patience and dedication are the true keys to reaching one’s goals in life.",
+          "optEn": [
+            "acheving",
+            "techer",
+            "significance",
+            "sucess"
+          ],
+          "optHi": [
+            "acheving",
+            "techer",
+            "significance",
+            "sucess"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091555134",
+          "qEn": "A sentence has been broken into parts, jumbled, and marked as PQRST. Arrange all the parts to make a coherent sentence.\nP) which demonstrated a new method\nQ) the scientist presented her research\nR) useful biodegradable materials\nS) for converting plastic waste into\nT) with remarkable efficiency",
+          "qHi": "A sentence has been broken into parts, jumbled, and marked as PQRST. Arrange all the parts to make a coherent sentence.\nP) which demonstrated a new method\nQ) the scientist presented her research\nR) useful biodegradable materials\nS) for converting plastic waste into\nT) with remarkable efficiency",
+          "optEn": [
+            "QPSRT",
+            "PQSTR",
+            "TSRQP",
+            "SQPRT"
+          ],
+          "optHi": [
+            "QPSRT",
+            "PQSTR",
+            "TSRQP",
+            "SQPRT"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091526896",
+          "qEn": "Choose the option that expresses the antonym of 'impecunious' as used in the sentence.\nDespite being impecunious in his early years, the scientist pursued his research with unwavering dedication.\n[Highlighted: impecunious]",
+          "qHi": "Choose the option that expresses the antonym of 'impecunious' as used in the sentence.\nDespite being impecunious in his early years, the scientist pursued his research with unwavering dedication.\n[Highlighted: impecunious]",
+          "optEn": [
+            "valiant",
+            "destitute",
+            "affluent",
+            "frugal"
+          ],
+          "optHi": [
+            "valiant",
+            "destitute",
+            "affluent",
+            "frugal"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009352154",
+          "qEn": "Select the option that can be used as a one-word substitute for the given group of words/phrase.\nA person who studies the science of the universe beyond the Earth's atmosphere",
+          "qHi": "Select the option that can be used as a one-word substitute for the given group of words/phrase.\nA person who studies the science of the universe beyond the Earth's atmosphere",
+          "optEn": [
+            "Astronomer",
+            "Meteorologist",
+            "Geologist",
+            "Biologist"
+          ],
+          "optHi": [
+            "Astronomer",
+            "Meteorologist",
+            "Geologist",
+            "Biologist"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009352176",
+          "qEn": "Parts of a sentence are given below. While the first part is in the correct place, the remaining parts (labelled A, B, C and D) are jumbled up. Arrange the parts in the correct order to form a meaningful and coherent sentence.\nThe talented musician\n(A) melody on the piano, captivating\n(B) skilfully played the beautiful\n(C) their performance\n(D) the audience with",
+          "qHi": "Parts of a sentence are given below. While the first part is in the correct place, the remaining parts (labelled A, B, C and D) are jumbled up. Arrange the parts in the correct order to form a meaningful and coherent sentence.\nThe talented musician\n(A) melody on the piano, captivating\n(B) skilfully played the beautiful\n(C) their performance\n(D) the audience with",
+          "optEn": [
+            "ABCD",
+            "DACB",
+            "BCAD",
+            "BADC"
+          ],
+          "optHi": [
+            "ABCD",
+            "DACB",
+            "BCAD",
+            "BADC"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009498176",
+          "qEn": "Select the most appropriate articles to fill in the blanks.\nHe went out with __ umbrella knowing that __ little distance away, he was going to witness rain.",
+          "qHi": "Select the most appropriate articles to fill in the blanks.\nHe went out with __ umbrella knowing that __ little distance away, he was going to witness rain.",
+          "optEn": [
+            "an; the",
+            "an; a",
+            "a; an",
+            "the; an"
+          ],
+          "optHi": [
+            "an; the",
+            "an; a",
+            "a; an",
+            "the; an"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009415887",
+          "qEn": "Choose the option which will correctly substitute the underlined words.\nI always tell my students that practical work is more important than mere words.\n[Highlighted: practical work is more important than mere words]",
+          "qHi": "Choose the option which will correctly substitute the underlined words.\nI always tell my students that practical work is more important than mere words.\n[Highlighted: practical work is more important than mere words]",
+          "optEn": [
+            "A penny saved is a penny earned",
+            "Jack of all trades, master of none",
+            "Actions speak louder than words",
+            "The early bird catches the worm"
+          ],
+          "optHi": [
+            "A penny saved is a penny earned",
+            "Jack of all trades, master of none",
+            "Actions speak louder than words",
+            "The early bird catches the worm"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091126957",
+          "qEn": "Choose the most appropriate option to fill in the given blanks.\nHe didn’t come to class ___ he was sick, ___ he sent his assignment.",
+          "qHi": "Choose the most appropriate option to fill in the given blanks.\nHe didn’t come to class ___ he was sick, ___ he sent his assignment.",
+          "optEn": [
+            "because, but",
+            "although, and",
+            "since, and",
+            "as, or"
+          ],
+          "optHi": [
+            "because, but",
+            "although, and",
+            "since, and",
+            "as, or"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091524135",
+          "qEn": "A new study published in Science provides clear evidence of organic matter on Mars’s surface. NASA’s rover Curiosity collected the data, confirming earlier findings that Mars once had carbon-based compounds essential for life. These organic molecules were found in Gale Crater, an area that may have been a lake over three billion years ago. The rocks containing the organics also had sulfur, which might have preserved them despite harsh surface radiation. While the presence of organic molecules doesn’t prove ancient life—since they could form through non-living processes—it’s a significant discovery. About five years ago, Curiosity also detected methane, a basic organic molecule and natural gas component, in the Martian atmosphere. Methane only lasts a few hundred years, suggesting an unknown source replenishes it. Its levels fluctuate seasonally, possibly due to underground icy crystals releasing gas.\n\nThese findings indicate Mars is more active than thought and might be becoming more habitable. Future missions, like ESA’s Exo Mars and NASA’s Mars Rover in 2020, aim to explore the soil and atmosphere further, potentially answering if life ever existed on Mars.\n\nIdentify the central theme of the passage.",
+          "qHi": "A new study published in Science provides clear evidence of organic matter on Mars’s surface. NASA’s rover Curiosity collected the data, confirming earlier findings that Mars once had carbon-based compounds essential for life. These organic molecules were found in Gale Crater, an area that may have been a lake over three billion years ago. The rocks containing the organics also had sulfur, which might have preserved them despite harsh surface radiation. While the presence of organic molecules doesn’t prove ancient life—since they could form through non-living processes—it’s a significant discovery. About five years ago, Curiosity also detected methane, a basic organic molecule and natural gas component, in the Martian atmosphere. Methane only lasts a few hundred years, suggesting an unknown source replenishes it. Its levels fluctuate seasonally, possibly due to underground icy crystals releasing gas.\n\nThese findings indicate Mars is more active than thought and might be becoming more habitable. Future missions, like ESA’s Exo Mars and NASA’s Mars Rover in 2020, aim to explore the soil and atmosphere further, potentially answering if life ever existed on Mars.\n\nIdentify the central theme of the passage.",
+          "optEn": [
+            "Searching for water on Mars",
+            "Discovery of organic matter and its implication for life on Mars",
+            "Mars’ atmospheric changes",
+            "Technical features of the Mars Rover"
+          ],
+          "optHi": [
+            "Searching for water on Mars",
+            "Discovery of organic matter and its implication for life on Mars",
+            "Mars’ atmospheric changes",
+            "Technical features of the Mars Rover"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091524136",
+          "qEn": "A new study published in Science provides clear evidence of organic matter on Mars’s surface. NASA’s rover Curiosity collected the data, confirming earlier findings that Mars once had carbon-based compounds essential for life. These organic molecules were found in Gale Crater, an area that may have been a lake over three billion years ago. The rocks containing the organics also had sulfur, which might have preserved them despite harsh surface radiation. While the presence of organic molecules doesn’t prove ancient life—since they could form through non-living processes—it’s a significant discovery. About five years ago, Curiosity also detected methane, a basic organic molecule and natural gas component, in the Martian atmosphere. Methane only lasts a few hundred years, suggesting an unknown source replenishes it. Its levels fluctuate seasonally, possibly due to underground icy crystals releasing gas.\n\nThese findings indicate Mars is more active than thought and might be becoming more habitable. Future missions, like ESA’s Exo Mars and NASA’s Mars Rover in 2020, aim to explore the soil and atmosphere further, potentially answering if life ever existed on Mars.\n\nIdentify the fact stated in the passage.",
+          "qHi": "A new study published in Science provides clear evidence of organic matter on Mars’s surface. NASA’s rover Curiosity collected the data, confirming earlier findings that Mars once had carbon-based compounds essential for life. These organic molecules were found in Gale Crater, an area that may have been a lake over three billion years ago. The rocks containing the organics also had sulfur, which might have preserved them despite harsh surface radiation. While the presence of organic molecules doesn’t prove ancient life—since they could form through non-living processes—it’s a significant discovery. About five years ago, Curiosity also detected methane, a basic organic molecule and natural gas component, in the Martian atmosphere. Methane only lasts a few hundred years, suggesting an unknown source replenishes it. Its levels fluctuate seasonally, possibly due to underground icy crystals releasing gas.\n\nThese findings indicate Mars is more active than thought and might be becoming more habitable. Future missions, like ESA’s Exo Mars and NASA’s Mars Rover in 2020, aim to explore the soil and atmosphere further, potentially answering if life ever existed on Mars.\n\nIdentify the fact stated in the passage.",
+          "optEn": [
+            "Methane on Mars lasts for millions of years.",
+            "Organic molecules were found in Gale Crater.",
+            "Sulphur destroys organic molecules on Mars.",
+            "Organic molecules prove ancient life on Mars."
+          ],
+          "optHi": [
+            "Methane on Mars lasts for millions of years.",
+            "Organic molecules were found in Gale Crater.",
+            "Sulphur destroys organic molecules on Mars.",
+            "Organic molecules prove ancient life on Mars."
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091524137",
+          "qEn": "A new study published in Science provides clear evidence of organic matter on Mars’s surface. NASA’s rover Curiosity collected the data, confirming earlier findings that Mars once had carbon-based compounds essential for life. These organic molecules were found in Gale Crater, an area that may have been a lake over three billion years ago. The rocks containing the organics also had sulfur, which might have preserved them despite harsh surface radiation. While the presence of organic molecules doesn’t prove ancient life—since they could form through non-living processes—it’s a significant discovery. About five years ago, Curiosity also detected methane, a basic organic molecule and natural gas component, in the Martian atmosphere. Methane only lasts a few hundred years, suggesting an unknown source replenishes it. Its levels fluctuate seasonally, possibly due to underground icy crystals releasing gas.\n\nThese findings indicate Mars is more active than thought and might be becoming more habitable. Future missions, like ESA’s Exo Mars and NASA’s Mars Rover in 2020, aim to explore the soil and atmosphere further, potentially answering if life ever existed on Mars.\n\nWhat is the antonym of the word “preserved” as used in the passage?\n[Highlighted: preserved]",
+          "qHi": "A new study published in Science provides clear evidence of organic matter on Mars’s surface. NASA’s rover Curiosity collected the data, confirming earlier findings that Mars once had carbon-based compounds essential for life. These organic molecules were found in Gale Crater, an area that may have been a lake over three billion years ago. The rocks containing the organics also had sulfur, which might have preserved them despite harsh surface radiation. While the presence of organic molecules doesn’t prove ancient life—since they could form through non-living processes—it’s a significant discovery. About five years ago, Curiosity also detected methane, a basic organic molecule and natural gas component, in the Martian atmosphere. Methane only lasts a few hundred years, suggesting an unknown source replenishes it. Its levels fluctuate seasonally, possibly due to underground icy crystals releasing gas.\n\nThese findings indicate Mars is more active than thought and might be becoming more habitable. Future missions, like ESA’s Exo Mars and NASA’s Mars Rover in 2020, aim to explore the soil and atmosphere further, potentially answering if life ever existed on Mars.\n\nWhat is the antonym of the word “preserved” as used in the passage?\n[Highlighted: preserved]",
+          "optEn": [
+            "Saved",
+            "Protected",
+            "Maintained",
+            "Destroyed"
+          ],
+          "optHi": [
+            "Saved",
+            "Protected",
+            "Maintained",
+            "Destroyed"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091524138",
+          "qEn": "A new study published in Science provides clear evidence of organic matter on Mars’s surface. NASA’s rover Curiosity collected the data, confirming earlier findings that Mars once had carbon-based compounds essential for life. These organic molecules were found in Gale Crater, an area that may have been a lake over three billion years ago. The rocks containing the organics also had sulfur, which might have preserved them despite harsh surface radiation. While the presence of organic molecules doesn’t prove ancient life—since they could form through non-living processes—it’s a significant discovery. About five years ago, Curiosity also detected methane, a basic organic molecule and natural gas component, in the Martian atmosphere. Methane only lasts a few hundred years, suggesting an unknown source replenishes it. Its levels fluctuate seasonally, possibly due to underground icy crystals releasing gas.\n\nThese findings indicate Mars is more active than thought and might be becoming more habitable. Future missions, like ESA’s Exo Mars and NASA’s Mars Rover in 2020, aim to explore the soil and atmosphere further, potentially answering if life ever existed on Mars.\n\nSelect the correct summary for the passage.",
+          "qHi": "A new study published in Science provides clear evidence of organic matter on Mars’s surface. NASA’s rover Curiosity collected the data, confirming earlier findings that Mars once had carbon-based compounds essential for life. These organic molecules were found in Gale Crater, an area that may have been a lake over three billion years ago. The rocks containing the organics also had sulfur, which might have preserved them despite harsh surface radiation. While the presence of organic molecules doesn’t prove ancient life—since they could form through non-living processes—it’s a significant discovery. About five years ago, Curiosity also detected methane, a basic organic molecule and natural gas component, in the Martian atmosphere. Methane only lasts a few hundred years, suggesting an unknown source replenishes it. Its levels fluctuate seasonally, possibly due to underground icy crystals releasing gas.\n\nThese findings indicate Mars is more active than thought and might be becoming more habitable. Future missions, like ESA’s Exo Mars and NASA’s Mars Rover in 2020, aim to explore the soil and atmosphere further, potentially answering if life ever existed on Mars.\n\nSelect the correct summary for the passage.",
+          "optEn": [
+            "Mars has no signs of organic material or past life.",
+            "Mars is too harsh for any organic matter to survive.",
+            "The passage details Mars Rover’s technical instruments only.",
+            "NASA’s rover detected organic compounds on Mars, hinting at past life."
+          ],
+          "optHi": [
+            "Mars has no signs of organic material or past life.",
+            "Mars is too harsh for any organic matter to survive.",
+            "The passage details Mars Rover’s technical instruments only.",
+            "NASA’s rover detected organic compounds on Mars, hinting at past life."
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091524139",
+          "qEn": "A new study published in Science provides clear evidence of organic matter on Mars’s surface. NASA’s rover Curiosity collected the data, confirming earlier findings that Mars once had carbon-based compounds essential for life. These organic molecules were found in Gale Crater, an area that may have been a lake over three billion years ago. The rocks containing the organics also had sulfur, which might have preserved them despite harsh surface radiation. While the presence of organic molecules doesn’t prove ancient life—since they could form through non-living processes—it’s a significant discovery. About five years ago, Curiosity also detected methane, a basic organic molecule and natural gas component, in the Martian atmosphere. Methane only lasts a few hundred years, suggesting an unknown source replenishes it. Its levels fluctuate seasonally, possibly due to underground icy crystals releasing gas.\n\nThese findings indicate Mars is more active than thought and might be becoming more habitable. Future missions, like ESA’s Exo Mars and NASA’s Mars Rover in 2020, aim to explore the soil and atmosphere further, potentially answering if life ever existed on Mars.\n\nThe passage’s tone when describing future missions can best be described as:",
+          "qHi": "A new study published in Science provides clear evidence of organic matter on Mars’s surface. NASA’s rover Curiosity collected the data, confirming earlier findings that Mars once had carbon-based compounds essential for life. These organic molecules were found in Gale Crater, an area that may have been a lake over three billion years ago. The rocks containing the organics also had sulfur, which might have preserved them despite harsh surface radiation. While the presence of organic molecules doesn’t prove ancient life—since they could form through non-living processes—it’s a significant discovery. About five years ago, Curiosity also detected methane, a basic organic molecule and natural gas component, in the Martian atmosphere. Methane only lasts a few hundred years, suggesting an unknown source replenishes it. Its levels fluctuate seasonally, possibly due to underground icy crystals releasing gas.\n\nThese findings indicate Mars is more active than thought and might be becoming more habitable. Future missions, like ESA’s Exo Mars and NASA’s Mars Rover in 2020, aim to explore the soil and atmosphere further, potentially answering if life ever existed on Mars.\n\nThe passage’s tone when describing future missions can best be described as:",
+          "optEn": [
+            "Optimistic",
+            "Dismissive",
+            "Pessimistic",
+            "Apathetic"
+          ],
+          "optHi": [
+            "Optimistic",
+            "Dismissive",
+            "Pessimistic",
+            "Apathetic"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        }
+      ]
+    },
+    {
+      "name": "Hindi Language and Comprehension",
+      "nameHi": "हिंदी भाषा एवं बोध",
+      "questions": [
+        {
+          "qid": "4410091629447",
+          "qEn": "'उखड़े बाल ना और नाम बलवंत सिंह' लोकोक्ति का सही अर्थ क्या है ?",
+          "qHi": "'उखड़े बाल ना और नाम बलवंत सिंह' लोकोक्ति का सही अर्थ क्या है ?",
+          "optEn": [
+            "अव्यवहारिक बात करना",
+            "महाशक्तिशाली होना",
+            "नाम के अनुरूप गुण का नहीं होना",
+            "दर-बदर होना"
+          ],
+          "optHi": [
+            "अव्यवहारिक बात करना",
+            "महाशक्तिशाली होना",
+            "नाम के अनुरूप गुण का नहीं होना",
+            "दर-बदर होना"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091305179",
+          "qEn": "उपयुक्त विशेषण का चयन कर दिए गए वाक्य को पूर्ण कीजिए।\nदिलीप उस्मान से ................................खाना खाता है ।",
+          "qHi": "उपयुक्त विशेषण का चयन कर दिए गए वाक्य को पूर्ण कीजिए।\nदिलीप उस्मान से ................................खाना खाता है ।",
+          "optEn": [
+            "प्रत्येक",
+            "तिगुना",
+            "एक",
+            "पहला"
+          ],
+          "optHi": [
+            "प्रत्येक",
+            "तिगुना",
+            "एक",
+            "पहला"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091288649",
+          "qEn": "उचित क्रिया विशेषण शब्द से वाक्य पूरा कीजिए।\n' वह _________ जाएगा।'",
+          "qHi": "उचित क्रिया विशेषण शब्द से वाक्य पूरा कीजिए।\n' वह _________ जाएगा।'",
+          "optEn": [
+            "थोड़ा",
+            "बिल्कुल",
+            "अतिशय",
+            "प्रत्यक्ष"
+          ],
+          "optHi": [
+            "थोड़ा",
+            "बिल्कुल",
+            "अतिशय",
+            "प्रत्यक्ष"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091304618",
+          "qEn": "'गोद लिया हुआ लड़का' वाक्यांश के लिए सार्थक शब्द होगा -",
+          "qHi": "'गोद लिया हुआ लड़का' वाक्यांश के लिए सार्थक शब्द होगा -",
+          "optEn": [
+            "दत्त",
+            "दत्तक",
+            "दगहा",
+            "दत्तचित्त"
+          ],
+          "optHi": [
+            "दत्त",
+            "दत्तक",
+            "दगहा",
+            "दत्तचित्त"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091626541",
+          "qEn": "निम्न में से वाक्य में रेखांकित शब्द का विलोम शब्द कौन-सा है ?\n'मेरा पड़ोसी बहुत ही अनुदार व्यक्ति है।'\n[रेखांकित: अनुदार]",
+          "qHi": "निम्न में से वाक्य में रेखांकित शब्द का विलोम शब्द कौन-सा है ?\n'मेरा पड़ोसी बहुत ही अनुदार व्यक्ति है।'\n[रेखांकित: अनुदार]",
+          "optEn": [
+            "उदार",
+            "ऊसर",
+            "कुटज",
+            "सुधार"
+          ],
+          "optHi": [
+            "उदार",
+            "ऊसर",
+            "कुटज",
+            "सुधार"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091618013",
+          "qEn": "“आँखों में धूल झोंकना\"- मुहावरे का क्या अर्थ है?",
+          "qHi": "“आँखों में धूल झोंकना\"- मुहावरे का क्या अर्थ है?",
+          "optEn": [
+            "नज़रों से ओझल हो जाना",
+            "हाथ की सफाई दिखाना",
+            "गैर-कानूनी कार्य करना",
+            "धोखा देना"
+          ],
+          "optHi": [
+            "नज़रों से ओझल हो जाना",
+            "हाथ की सफाई दिखाना",
+            "गैर-कानूनी कार्य करना",
+            "धोखा देना"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091626107",
+          "qEn": "‘अत्यंत प्रसन्न होना’ अर्थ के लिए सही मुहावरा क्या है?",
+          "qHi": "‘अत्यंत प्रसन्न होना’ अर्थ के लिए सही मुहावरा क्या है?",
+          "optEn": [
+            "बाछें खिल जाना",
+            "बेपेंदी का लोटा",
+            "नाक भौं चढ़ाना",
+            "मीठी छुरी चलाना"
+          ],
+          "optHi": [
+            "बाछें खिल जाना",
+            "बेपेंदी का लोटा",
+            "नाक भौं चढ़ाना",
+            "मीठी छुरी चलाना"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091242706",
+          "qEn": "निम्नलिखित वाक्य के रिक्त स्थान में उचित परिमाणवाचक क्रिया-विशेषण शब्द का प्रयोग करें -\n'बच्चे को पीने के लिए दूध दे दो।'",
+          "qHi": "निम्नलिखित वाक्य के रिक्त स्थान में उचित परिमाणवाचक क्रिया-विशेषण शब्द का प्रयोग करें -\n'बच्चे को पीने के लिए दूध दे दो।'",
+          "optEn": [
+            "ठीक",
+            "आगे",
+            "अत्यंत",
+            "थोड़ा"
+          ],
+          "optHi": [
+            "ठीक",
+            "आगे",
+            "अत्यंत",
+            "थोड़ा"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091629820",
+          "qEn": "निम्नलिखित विकल्पों में से रेखांकित शब्द का पर्यायवाची पहचानिए।\n'प्रातः सूर्य की किरणों के स्पर्श से तालाब में खिला कमल और भी मनमोहक दिखाई देने लगा है।'\n[रेखांकित: कमल]",
+          "qHi": "निम्नलिखित विकल्पों में से रेखांकित शब्द का पर्यायवाची पहचानिए।\n'प्रातः सूर्य की किरणों के स्पर्श से तालाब में खिला कमल और भी मनमोहक दिखाई देने लगा है।'\n[रेखांकित: कमल]",
+          "optEn": [
+            "सरसिज",
+            "अंशु",
+            "शुनक",
+            "तुषार"
+          ],
+          "optHi": [
+            "सरसिज",
+            "अंशु",
+            "शुनक",
+            "तुषार"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091626417",
+          "qEn": "निम्न में से 'एक तो करेला कडुआ, दूसरे नीम चढ़ा' लोकोक्ति का सही अर्थ कौन-सा है ?",
+          "qHi": "निम्न में से 'एक तो करेला कडुआ, दूसरे नीम चढ़ा' लोकोक्ति का सही अर्थ कौन-सा है ?",
+          "optEn": [
+            "जैसा करोगे वैसा पाओगे",
+            "एक वस्तु और चाहने वाले अनेक",
+            "निकम्मा आदमी बातूनी होता है",
+            "कुसंग में पड़कर और बुरा होना"
+          ],
+          "optHi": [
+            "जैसा करोगे वैसा पाओगे",
+            "एक वस्तु और चाहने वाले अनेक",
+            "निकम्मा आदमी बातूनी होता है",
+            "कुसंग में पड़कर और बुरा होना"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091288105",
+          "qEn": "‘जब तक वर्षा नहीं_______ किसान खेती शुरू नहीं करेंगे।’ रिक्त स्थान की पूर्ति उचित क्रिया शब्द से करें।",
+          "qHi": "‘जब तक वर्षा नहीं_______ किसान खेती शुरू नहीं करेंगे।’ रिक्त स्थान की पूर्ति उचित क्रिया शब्द से करें।",
+          "optEn": [
+            "होगी",
+            "होती",
+            "हो",
+            "हुए"
+          ],
+          "optHi": [
+            "होगी",
+            "होती",
+            "हो",
+            "हुए"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091629912",
+          "qEn": "निम्नलिखित विकल्पों में से रेखांकित शब्द का विलोम पहचानिए।\n'मेरा स्पष्ट मानना है कि जो व्यक्ति दूसरों की निंदा में समय नष्ट नहीं करता, वही अपने जीवन में आगे बढ़ता है।'\n[रेखांकित: निंदा]",
+          "qHi": "निम्नलिखित विकल्पों में से रेखांकित शब्द का विलोम पहचानिए।\n'मेरा स्पष्ट मानना है कि जो व्यक्ति दूसरों की निंदा में समय नष्ट नहीं करता, वही अपने जीवन में आगे बढ़ता है।'\n[रेखांकित: निंदा]",
+          "optEn": [
+            "स्तुति",
+            "नत",
+            "विनत",
+            "श्रुति"
+          ],
+          "optHi": [
+            "स्तुति",
+            "नत",
+            "विनत",
+            "श्रुति"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091624871",
+          "qEn": "अब मैं अनाथ हो गई हूँ ।\nउपर्युक्त रेखांकित शब्द का विलोम क्या होगा ?\n[रेखांकित: अनाथ]",
+          "qHi": "अब मैं अनाथ हो गई हूँ ।\nउपर्युक्त रेखांकित शब्द का विलोम क्या होगा ?\n[रेखांकित: अनाथ]",
+          "optEn": [
+            "अकीर्ति",
+            "सनाथ",
+            "निस्सीम",
+            "सदोष"
+          ],
+          "optHi": [
+            "अकीर्ति",
+            "सनाथ",
+            "निस्सीम",
+            "सदोष"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "441009557361",
+          "qEn": "निम्नलिखित वाक्यांशों को उचित क्रम में लगाकर एक शुद्ध वाक्य बनाइए:\n1- जिस संज्ञा या सर्वनाम\n2- प्रकट की जाती है\n3- शब्द की विशेषता\n4- उसे विशेष्य कहते हैं",
+          "qHi": "निम्नलिखित वाक्यांशों को उचित क्रम में लगाकर एक शुद्ध वाक्य बनाइए:\n1- जिस संज्ञा या सर्वनाम\n2- प्रकट की जाती है\n3- शब्द की विशेषता\n4- उसे विशेष्य कहते हैं",
+          "optEn": [
+            "1, 3, 2, 4",
+            "3, 4, 2, 1",
+            "4, 3, 1, 2",
+            "2, 3, 1, 4"
+          ],
+          "optHi": [
+            "1, 3, 2, 4",
+            "3, 4, 2, 1",
+            "4, 3, 1, 2",
+            "2, 3, 1, 4"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091278337",
+          "qEn": "'संकट के समय उसने ------------------- सहायता की।' वाक्य के रिक्त स्थान के लिए क्रिया-विशेषण शब्द कौन-सा है?",
+          "qHi": "'संकट के समय उसने ------------------- सहायता की।' वाक्य के रिक्त स्थान के लिए क्रिया-विशेषण शब्द कौन-सा है?",
+          "optEn": [
+            "लोगों की",
+            "बूढ़ों की",
+            "गरीबों की",
+            "बहुत"
+          ],
+          "optHi": [
+            "लोगों की",
+            "बूढ़ों की",
+            "गरीबों की",
+            "बहुत"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091627902",
+          "qEn": "नीचे दिए गए परिच्छेद को ध्यानपूर्वक पढ़ें और उसके आधार पर पूछे गए प्रश्नों के उत्तर दें।\n\nभारत में नाटक साहित्य की एक ऐसी विधा है, जिसकी लंबी परंपरा पाई जाती है। भारत में ही नाट्यशास्त्र की रचना सबसे पहले हुई। यहाँ नाट्यशास्त्र के अनेक आचार्य हुए, जिन्होंने नाटक पर बड़े विस्तार और गंभीरता से इस विधा पर विचार किया है। इनमें भरत, धनंजय, रामचंद्र-गुणचंद्र, अभिनवगुप्त, विश्वनाथ आदि के नाम अधिक प्रसिद्ध हैं। आचार्य धनंजय ने नाटक की परिभाषा इस प्रकार बताई है- अवस्था की अनुकृति नाटक है। यह परिभाषा सार्थक, व्यावहारिक और उपयोगी है। नाटक में अनुकरण तत्त्व की प्रधानता है। साहित्य की सभी विधाओं में नाटक ही वह विधा है, जिसमें अनुकरण पर सर्वाधिक बल दिया गया है। यह अनुकरण किसका होता है? उत्तर है- कार्य, अर्थात मानवीय जीवन के क्रियाशील कार्यों का। मनुष्य अनेक परिस्थितियों से हर क्षण गुजरता है। उसकी विभिन्न अवस्थाएँ होती हैं। भिन्न-भिन्न अवस्थाओं में रहने के कारण उसके जीवन-रंगमंच पर अनेक दृश्य (स्थितियाँ) आते-जाते रहते हैं। नाटककार नाटक की रचना करते समय इन्हीं स्थितियों का अनुकरण करता है। नाटक में जीवन का यथार्थमूलक अनुकरण होते हुए भी नाटककार सर्जनात्म्क कल्पना करता है। यही कल्पना नाटक को साहित्य की विधा प्रदान करती है। इसलिए नाटक एक ऐसी कला है, जिसमें अनुकरण और कल्पना दोनों का योग रहता है। इसका उद्देश्य पहले शिक्षण और मनोरंजन था।\n\nभारत में नाटक साहित्य की परंपरा के संदर्भ में कौन-सा कथन सही है?",
+          "qHi": "नीचे दिए गए परिच्छेद को ध्यानपूर्वक पढ़ें और उसके आधार पर पूछे गए प्रश्नों के उत्तर दें।\n\nभारत में नाटक साहित्य की एक ऐसी विधा है, जिसकी लंबी परंपरा पाई जाती है। भारत में ही नाट्यशास्त्र की रचना सबसे पहले हुई। यहाँ नाट्यशास्त्र के अनेक आचार्य हुए, जिन्होंने नाटक पर बड़े विस्तार और गंभीरता से इस विधा पर विचार किया है। इनमें भरत, धनंजय, रामचंद्र-गुणचंद्र, अभिनवगुप्त, विश्वनाथ आदि के नाम अधिक प्रसिद्ध हैं। आचार्य धनंजय ने नाटक की परिभाषा इस प्रकार बताई है- अवस्था की अनुकृति नाटक है। यह परिभाषा सार्थक, व्यावहारिक और उपयोगी है। नाटक में अनुकरण तत्त्व की प्रधानता है। साहित्य की सभी विधाओं में नाटक ही वह विधा है, जिसमें अनुकरण पर सर्वाधिक बल दिया गया है। यह अनुकरण किसका होता है? उत्तर है- कार्य, अर्थात मानवीय जीवन के क्रियाशील कार्यों का। मनुष्य अनेक परिस्थितियों से हर क्षण गुजरता है। उसकी विभिन्न अवस्थाएँ होती हैं। भिन्न-भिन्न अवस्थाओं में रहने के कारण उसके जीवन-रंगमंच पर अनेक दृश्य (स्थितियाँ) आते-जाते रहते हैं। नाटककार नाटक की रचना करते समय इन्हीं स्थितियों का अनुकरण करता है। नाटक में जीवन का यथार्थमूलक अनुकरण होते हुए भी नाटककार सर्जनात्म्क कल्पना करता है। यही कल्पना नाटक को साहित्य की विधा प्रदान करती है। इसलिए नाटक एक ऐसी कला है, जिसमें अनुकरण और कल्पना दोनों का योग रहता है। इसका उद्देश्य पहले शिक्षण और मनोरंजन था।\n\nभारत में नाटक साहित्य की परंपरा के संदर्भ में कौन-सा कथन सही है?",
+          "optEn": [
+            "भारत में नाटक साहित्य का विकास मध्यकाल में हुआ।",
+            "नाटक साहित्य की परंपरा भारत में अल्पकालिक रही।",
+            "नाट्यशास्त्र की रचना सर्वप्रथम भारत में हुई।",
+            "भारत में नाटक का विकास केवल संस्कृत तक सीमित रहा।"
+          ],
+          "optHi": [
+            "भारत में नाटक साहित्य का विकास मध्यकाल में हुआ।",
+            "नाटक साहित्य की परंपरा भारत में अल्पकालिक रही।",
+            "नाट्यशास्त्र की रचना सर्वप्रथम भारत में हुई।",
+            "भारत में नाटक का विकास केवल संस्कृत तक सीमित रहा।"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091627903",
+          "qEn": "नीचे दिए गए परिच्छेद को ध्यानपूर्वक पढ़ें और उसके आधार पर पूछे गए प्रश्नों के उत्तर दें।\n\nभारत में नाटक साहित्य की एक ऐसी विधा है, जिसकी लंबी परंपरा पाई जाती है। भारत में ही नाट्यशास्त्र की रचना सबसे पहले हुई। यहाँ नाट्यशास्त्र के अनेक आचार्य हुए, जिन्होंने नाटक पर बड़े विस्तार और गंभीरता से इस विधा पर विचार किया है। इनमें भरत, धनंजय, रामचंद्र-गुणचंद्र, अभिनवगुप्त, विश्वनाथ आदि के नाम अधिक प्रसिद्ध हैं। आचार्य धनंजय ने नाटक की परिभाषा इस प्रकार बताई है- अवस्था की अनुकृति नाटक है। यह परिभाषा सार्थक, व्यावहारिक और उपयोगी है। नाटक में अनुकरण तत्त्व की प्रधानता है। साहित्य की सभी विधाओं में नाटक ही वह विधा है, जिसमें अनुकरण पर सर्वाधिक बल दिया गया है। यह अनुकरण किसका होता है? उत्तर है- कार्य, अर्थात मानवीय जीवन के क्रियाशील कार्यों का। मनुष्य अनेक परिस्थितियों से हर क्षण गुजरता है। उसकी विभिन्न अवस्थाएँ होती हैं। भिन्न-भिन्न अवस्थाओं में रहने के कारण उसके जीवन-रंगमंच पर अनेक दृश्य (स्थितियाँ) आते-जाते रहते हैं। नाटककार नाटक की रचना करते समय इन्हीं स्थितियों का अनुकरण करता है। नाटक में जीवन का यथार्थमूलक अनुकरण होते हुए भी नाटककार सर्जनात्म्क कल्पना करता है। यही कल्पना नाटक को साहित्य की विधा प्रदान करती है। इसलिए नाटक एक ऐसी कला है, जिसमें अनुकरण और कल्पना दोनों का योग रहता है। इसका उद्देश्य पहले शिक्षण और मनोरंजन था।\n\nनिम्नलिखित में से नाटक पर विचार करने वाले प्रमुख आचार्यों में कौन-सा नाम गद्यांश में उल्लिखित नहीं है?",
+          "qHi": "नीचे दिए गए परिच्छेद को ध्यानपूर्वक पढ़ें और उसके आधार पर पूछे गए प्रश्नों के उत्तर दें।\n\nभारत में नाटक साहित्य की एक ऐसी विधा है, जिसकी लंबी परंपरा पाई जाती है। भारत में ही नाट्यशास्त्र की रचना सबसे पहले हुई। यहाँ नाट्यशास्त्र के अनेक आचार्य हुए, जिन्होंने नाटक पर बड़े विस्तार और गंभीरता से इस विधा पर विचार किया है। इनमें भरत, धनंजय, रामचंद्र-गुणचंद्र, अभिनवगुप्त, विश्वनाथ आदि के नाम अधिक प्रसिद्ध हैं। आचार्य धनंजय ने नाटक की परिभाषा इस प्रकार बताई है- अवस्था की अनुकृति नाटक है। यह परिभाषा सार्थक, व्यावहारिक और उपयोगी है। नाटक में अनुकरण तत्त्व की प्रधानता है। साहित्य की सभी विधाओं में नाटक ही वह विधा है, जिसमें अनुकरण पर सर्वाधिक बल दिया गया है। यह अनुकरण किसका होता है? उत्तर है- कार्य, अर्थात मानवीय जीवन के क्रियाशील कार्यों का। मनुष्य अनेक परिस्थितियों से हर क्षण गुजरता है। उसकी विभिन्न अवस्थाएँ होती हैं। भिन्न-भिन्न अवस्थाओं में रहने के कारण उसके जीवन-रंगमंच पर अनेक दृश्य (स्थितियाँ) आते-जाते रहते हैं। नाटककार नाटक की रचना करते समय इन्हीं स्थितियों का अनुकरण करता है। नाटक में जीवन का यथार्थमूलक अनुकरण होते हुए भी नाटककार सर्जनात्म्क कल्पना करता है। यही कल्पना नाटक को साहित्य की विधा प्रदान करती है। इसलिए नाटक एक ऐसी कला है, जिसमें अनुकरण और कल्पना दोनों का योग रहता है। इसका उद्देश्य पहले शिक्षण और मनोरंजन था।\n\nनिम्नलिखित में से नाटक पर विचार करने वाले प्रमुख आचार्यों में कौन-सा नाम गद्यांश में उल्लिखित नहीं है?",
+          "optEn": [
+            "मम्मट",
+            "अभिनवगुप्त",
+            "धनंजय",
+            "भरत"
+          ],
+          "optHi": [
+            "मम्मट",
+            "अभिनवगुप्त",
+            "धनंजय",
+            "भरत"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091627904",
+          "qEn": "नीचे दिए गए परिच्छेद को ध्यानपूर्वक पढ़ें और उसके आधार पर पूछे गए प्रश्नों के उत्तर दें।\n\nभारत में नाटक साहित्य की एक ऐसी विधा है, जिसकी लंबी परंपरा पाई जाती है। भारत में ही नाट्यशास्त्र की रचना सबसे पहले हुई। यहाँ नाट्यशास्त्र के अनेक आचार्य हुए, जिन्होंने नाटक पर बड़े विस्तार और गंभीरता से इस विधा पर विचार किया है। इनमें भरत, धनंजय, रामचंद्र-गुणचंद्र, अभिनवगुप्त, विश्वनाथ आदि के नाम अधिक प्रसिद्ध हैं। आचार्य धनंजय ने नाटक की परिभाषा इस प्रकार बताई है- अवस्था की अनुकृति नाटक है। यह परिभाषा सार्थक, व्यावहारिक और उपयोगी है। नाटक में अनुकरण तत्त्व की प्रधानता है। साहित्य की सभी विधाओं में नाटक ही वह विधा है, जिसमें अनुकरण पर सर्वाधिक बल दिया गया है। यह अनुकरण किसका होता है? उत्तर है- कार्य, अर्थात मानवीय जीवन के क्रियाशील कार्यों का। मनुष्य अनेक परिस्थितियों से हर क्षण गुजरता है। उसकी विभिन्न अवस्थाएँ होती हैं। भिन्न-भिन्न अवस्थाओं में रहने के कारण उसके जीवन-रंगमंच पर अनेक दृश्य (स्थितियाँ) आते-जाते रहते हैं। नाटककार नाटक की रचना करते समय इन्हीं स्थितियों का अनुकरण करता है। नाटक में जीवन का यथार्थमूलक अनुकरण होते हुए भी नाटककार सर्जनात्म्क कल्पना करता है। यही कल्पना नाटक को साहित्य की विधा प्रदान करती है। इसलिए नाटक एक ऐसी कला है, जिसमें अनुकरण और कल्पना दोनों का योग रहता है। इसका उद्देश्य पहले शिक्षण और मनोरंजन था।\n\nआचार्य धनंजय के अनुसार नाटक की परिभाषा क्या है?",
+          "qHi": "नीचे दिए गए परिच्छेद को ध्यानपूर्वक पढ़ें और उसके आधार पर पूछे गए प्रश्नों के उत्तर दें।\n\nभारत में नाटक साहित्य की एक ऐसी विधा है, जिसकी लंबी परंपरा पाई जाती है। भारत में ही नाट्यशास्त्र की रचना सबसे पहले हुई। यहाँ नाट्यशास्त्र के अनेक आचार्य हुए, जिन्होंने नाटक पर बड़े विस्तार और गंभीरता से इस विधा पर विचार किया है। इनमें भरत, धनंजय, रामचंद्र-गुणचंद्र, अभिनवगुप्त, विश्वनाथ आदि के नाम अधिक प्रसिद्ध हैं। आचार्य धनंजय ने नाटक की परिभाषा इस प्रकार बताई है- अवस्था की अनुकृति नाटक है। यह परिभाषा सार्थक, व्यावहारिक और उपयोगी है। नाटक में अनुकरण तत्त्व की प्रधानता है। साहित्य की सभी विधाओं में नाटक ही वह विधा है, जिसमें अनुकरण पर सर्वाधिक बल दिया गया है। यह अनुकरण किसका होता है? उत्तर है- कार्य, अर्थात मानवीय जीवन के क्रियाशील कार्यों का। मनुष्य अनेक परिस्थितियों से हर क्षण गुजरता है। उसकी विभिन्न अवस्थाएँ होती हैं। भिन्न-भिन्न अवस्थाओं में रहने के कारण उसके जीवन-रंगमंच पर अनेक दृश्य (स्थितियाँ) आते-जाते रहते हैं। नाटककार नाटक की रचना करते समय इन्हीं स्थितियों का अनुकरण करता है। नाटक में जीवन का यथार्थमूलक अनुकरण होते हुए भी नाटककार सर्जनात्म्क कल्पना करता है। यही कल्पना नाटक को साहित्य की विधा प्रदान करती है। इसलिए नाटक एक ऐसी कला है, जिसमें अनुकरण और कल्पना दोनों का योग रहता है। इसका उद्देश्य पहले शिक्षण और मनोरंजन था।\n\nआचार्य धनंजय के अनुसार नाटक की परिभाषा क्या है?",
+          "optEn": [
+            "अवस्था की अनुकृति",
+            "जीवन की कलात्मक अभिव्यक्ति",
+            "रस की अनुभूति कराने वाली विधा",
+            "कल्पना और यथार्थ का समन्वय"
+          ],
+          "optHi": [
+            "अवस्था की अनुकृति",
+            "जीवन की कलात्मक अभिव्यक्ति",
+            "रस की अनुभूति कराने वाली विधा",
+            "कल्पना और यथार्थ का समन्वय"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091627905",
+          "qEn": "नीचे दिए गए परिच्छेद को ध्यानपूर्वक पढ़ें और उसके आधार पर पूछे गए प्रश्नों के उत्तर दें।\n\nभारत में नाटक साहित्य की एक ऐसी विधा है, जिसकी लंबी परंपरा पाई जाती है। भारत में ही नाट्यशास्त्र की रचना सबसे पहले हुई। यहाँ नाट्यशास्त्र के अनेक आचार्य हुए, जिन्होंने नाटक पर बड़े विस्तार और गंभीरता से इस विधा पर विचार किया है। इनमें भरत, धनंजय, रामचंद्र-गुणचंद्र, अभिनवगुप्त, विश्वनाथ आदि के नाम अधिक प्रसिद्ध हैं। आचार्य धनंजय ने नाटक की परिभाषा इस प्रकार बताई है- अवस्था की अनुकृति नाटक है। यह परिभाषा सार्थक, व्यावहारिक और उपयोगी है। नाटक में अनुकरण तत्त्व की प्रधानता है। साहित्य की सभी विधाओं में नाटक ही वह विधा है, जिसमें अनुकरण पर सर्वाधिक बल दिया गया है। यह अनुकरण किसका होता है? उत्तर है- कार्य, अर्थात मानवीय जीवन के क्रियाशील कार्यों का। मनुष्य अनेक परिस्थितियों से हर क्षण गुजरता है। उसकी विभिन्न अवस्थाएँ होती हैं। भिन्न-भिन्न अवस्थाओं में रहने के कारण उसके जीवन-रंगमंच पर अनेक दृश्य (स्थितियाँ) आते-जाते रहते हैं। नाटककार नाटक की रचना करते समय इन्हीं स्थितियों का अनुकरण करता है। नाटक में जीवन का यथार्थमूलक अनुकरण होते हुए भी नाटककार सर्जनात्म्क कल्पना करता है। यही कल्पना नाटक को साहित्य की विधा प्रदान करती है। इसलिए नाटक एक ऐसी कला है, जिसमें अनुकरण और कल्पना दोनों का योग रहता है। इसका उद्देश्य पहले शिक्षण और मनोरंजन था।\n\nसाहित्य की सभी विधाओं में नाटक को विशिष्ट बनाने वाला प्रमुख तत्त्व कौन-सा है?",
+          "qHi": "नीचे दिए गए परिच्छेद को ध्यानपूर्वक पढ़ें और उसके आधार पर पूछे गए प्रश्नों के उत्तर दें।\n\nभारत में नाटक साहित्य की एक ऐसी विधा है, जिसकी लंबी परंपरा पाई जाती है। भारत में ही नाट्यशास्त्र की रचना सबसे पहले हुई। यहाँ नाट्यशास्त्र के अनेक आचार्य हुए, जिन्होंने नाटक पर बड़े विस्तार और गंभीरता से इस विधा पर विचार किया है। इनमें भरत, धनंजय, रामचंद्र-गुणचंद्र, अभिनवगुप्त, विश्वनाथ आदि के नाम अधिक प्रसिद्ध हैं। आचार्य धनंजय ने नाटक की परिभाषा इस प्रकार बताई है- अवस्था की अनुकृति नाटक है। यह परिभाषा सार्थक, व्यावहारिक और उपयोगी है। नाटक में अनुकरण तत्त्व की प्रधानता है। साहित्य की सभी विधाओं में नाटक ही वह विधा है, जिसमें अनुकरण पर सर्वाधिक बल दिया गया है। यह अनुकरण किसका होता है? उत्तर है- कार्य, अर्थात मानवीय जीवन के क्रियाशील कार्यों का। मनुष्य अनेक परिस्थितियों से हर क्षण गुजरता है। उसकी विभिन्न अवस्थाएँ होती हैं। भिन्न-भिन्न अवस्थाओं में रहने के कारण उसके जीवन-रंगमंच पर अनेक दृश्य (स्थितियाँ) आते-जाते रहते हैं। नाटककार नाटक की रचना करते समय इन्हीं स्थितियों का अनुकरण करता है। नाटक में जीवन का यथार्थमूलक अनुकरण होते हुए भी नाटककार सर्जनात्म्क कल्पना करता है। यही कल्पना नाटक को साहित्य की विधा प्रदान करती है। इसलिए नाटक एक ऐसी कला है, जिसमें अनुकरण और कल्पना दोनों का योग रहता है। इसका उद्देश्य पहले शिक्षण और मनोरंजन था।\n\nसाहित्य की सभी विधाओं में नाटक को विशिष्ट बनाने वाला प्रमुख तत्त्व कौन-सा है?",
+          "optEn": [
+            "संवाद",
+            "रस",
+            "अनुकरण",
+            "कल्पना"
+          ],
+          "optHi": [
+            "संवाद",
+            "रस",
+            "अनुकरण",
+            "कल्पना"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091627906",
+          "qEn": "नीचे दिए गए परिच्छेद को ध्यानपूर्वक पढ़ें और उसके आधार पर पूछे गए प्रश्नों के उत्तर दें।\n\nभारत में नाटक साहित्य की एक ऐसी विधा है, जिसकी लंबी परंपरा पाई जाती है। भारत में ही नाट्यशास्त्र की रचना सबसे पहले हुई। यहाँ नाट्यशास्त्र के अनेक आचार्य हुए, जिन्होंने नाटक पर बड़े विस्तार और गंभीरता से इस विधा पर विचार किया है। इनमें भरत, धनंजय, रामचंद्र-गुणचंद्र, अभिनवगुप्त, विश्वनाथ आदि के नाम अधिक प्रसिद्ध हैं। आचार्य धनंजय ने नाटक की परिभाषा इस प्रकार बताई है- अवस्था की अनुकृति नाटक है। यह परिभाषा सार्थक, व्यावहारिक और उपयोगी है। नाटक में अनुकरण तत्त्व की प्रधानता है। साहित्य की सभी विधाओं में नाटक ही वह विधा है, जिसमें अनुकरण पर सर्वाधिक बल दिया गया है। यह अनुकरण किसका होता है? उत्तर है- कार्य, अर्थात मानवीय जीवन के क्रियाशील कार्यों का। मनुष्य अनेक परिस्थितियों से हर क्षण गुजरता है। उसकी विभिन्न अवस्थाएँ होती हैं। भिन्न-भिन्न अवस्थाओं में रहने के कारण उसके जीवन-रंगमंच पर अनेक दृश्य (स्थितियाँ) आते-जाते रहते हैं। नाटककार नाटक की रचना करते समय इन्हीं स्थितियों का अनुकरण करता है। नाटक में जीवन का यथार्थमूलक अनुकरण होते हुए भी नाटककार सर्जनात्म्क कल्पना करता है। यही कल्पना नाटक को साहित्य की विधा प्रदान करती है। इसलिए नाटक एक ऐसी कला है, जिसमें अनुकरण और कल्पना दोनों का योग रहता है। इसका उद्देश्य पहले शिक्षण और मनोरंजन था।\n\nगद्यांश के अनुसार नाटक को साहित्य की विधा बनाने वाला प्रमुख कारण क्या है?",
+          "qHi": "नीचे दिए गए परिच्छेद को ध्यानपूर्वक पढ़ें और उसके आधार पर पूछे गए प्रश्नों के उत्तर दें।\n\nभारत में नाटक साहित्य की एक ऐसी विधा है, जिसकी लंबी परंपरा पाई जाती है। भारत में ही नाट्यशास्त्र की रचना सबसे पहले हुई। यहाँ नाट्यशास्त्र के अनेक आचार्य हुए, जिन्होंने नाटक पर बड़े विस्तार और गंभीरता से इस विधा पर विचार किया है। इनमें भरत, धनंजय, रामचंद्र-गुणचंद्र, अभिनवगुप्त, विश्वनाथ आदि के नाम अधिक प्रसिद्ध हैं। आचार्य धनंजय ने नाटक की परिभाषा इस प्रकार बताई है- अवस्था की अनुकृति नाटक है। यह परिभाषा सार्थक, व्यावहारिक और उपयोगी है। नाटक में अनुकरण तत्त्व की प्रधानता है। साहित्य की सभी विधाओं में नाटक ही वह विधा है, जिसमें अनुकरण पर सर्वाधिक बल दिया गया है। यह अनुकरण किसका होता है? उत्तर है- कार्य, अर्थात मानवीय जीवन के क्रियाशील कार्यों का। मनुष्य अनेक परिस्थितियों से हर क्षण गुजरता है। उसकी विभिन्न अवस्थाएँ होती हैं। भिन्न-भिन्न अवस्थाओं में रहने के कारण उसके जीवन-रंगमंच पर अनेक दृश्य (स्थितियाँ) आते-जाते रहते हैं। नाटककार नाटक की रचना करते समय इन्हीं स्थितियों का अनुकरण करता है। नाटक में जीवन का यथार्थमूलक अनुकरण होते हुए भी नाटककार सर्जनात्म्क कल्पना करता है। यही कल्पना नाटक को साहित्य की विधा प्रदान करती है। इसलिए नाटक एक ऐसी कला है, जिसमें अनुकरण और कल्पना दोनों का योग रहता है। इसका उद्देश्य पहले शिक्षण और मनोरंजन था।\n\nगद्यांश के अनुसार नाटक को साहित्य की विधा बनाने वाला प्रमुख कारण क्या है?",
+          "optEn": [
+            "केवल यथार्थ का चित्रण",
+            "केवल मनोरंजन का उद्देश्य",
+            "शिक्षण की प्रधानता",
+            "अनुकरण के साथ सर्जनात्मक कल्पना का योग"
+          ],
+          "optHi": [
+            "केवल यथार्थ का चित्रण",
+            "केवल मनोरंजन का उद्देश्य",
+            "शिक्षण की प्रधानता",
+            "अनुकरण के साथ सर्जनात्मक कल्पना का योग"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        }
+      ]
+    },
+    {
+      "name": "Discipline 1",
+      "nameHi": "डिसिप्लिन 1",
+      "questions": [
+        {
+          "qid": "4410091551672",
+          "qEn": "A preschool teacher notices that Riya can button her shirt but struggles to hop on one foot. What does this indicate?",
+          "qHi": "एक प्री-स्कूल शिक्षक देखता है कि रिया अपनी कमीज़ के बटन लगा सकती है, लेकिन एक पैर पर कूदने में संघर्ष करती है। यह क्या दर्शाता है?",
+          "optEn": [
+            "Fine motor skills are more developed than gross motor skills",
+            "Delay in cognitive sequencing abilities affecting motor coordination",
+            "Underdeveloped sensory integration leading to bilateral confusion",
+            "Inadequate maturation of language-mediated motor planning"
+          ],
+          "optHi": [
+            "सूक्ष्म पेशीय कौशल, स्थूल पेशीय कौशल की तुलना में अधिक विकसित हैं",
+            "संज्ञानात्मक अनुक्रमण क्षमताओं में विलंब, जो पेशीय समन्वय को प्रभावित कर रहा है",
+            "अविकसित संवेदी एकीकरण, जिससे द्विपक्षीय भ्रम उत्पन्न होता है",
+            "भाषा-मध्यस्थ पेशीय योजना की अपर्याप्त परिपक्वता"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091570146",
+          "qEn": "Which Article of the Indian Constitution provides facilities for instruction in the mother tongue at the primary stage?",
+          "qHi": "भारतीय संविधान का कौन-सा अनुच्छेद प्राथमिक स्तर पर मातृभाषा में शिक्षा की सुविधाएँ प्रदान करता है?",
+          "optEn": [
+            "Article 350A",
+            "Article 22B",
+            "Article 14A",
+            "Article 12B"
+          ],
+          "optHi": [
+            "अनुच्छेद 350A",
+            "अनुच्छेद 22B",
+            "अनुच्छेद 14A",
+            "अनुच्छेद 12B"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091612718",
+          "qEn": "In a classroom, Rehan consistently completes assignments on time and organizes his work meticulously. Applying the Big Five model, which personality dimension best explains Rehan's behavior?",
+          "qHi": "एक कक्षा में, रेहान लगातार समय पर असाइनमेंट पूरे करता है और अपने कार्य को सावधानीपूर्वक व्यवस्थित करता है। बिग फाइव मॉडल को लागू करते हुए, कौन-सा व्यक्तित्व आयाम रेहान के व्यवहार की सबसे अच्छी व्याख्या करता है?",
+          "optEn": [
+            "High agreeableness",
+            "High conscientiousness",
+            "High neuroticism",
+            "High openness"
+          ],
+          "optHi": [
+            "उच्च सहमतिशीलता",
+            "उच्च कर्तव्यनिष्ठा",
+            "उच्च तंत्रिकाताप (न्यूरोटिसिज़्म)",
+            "उच्च खुलापन"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091648456",
+          "qEn": "What distinguishes personality from other characteristics in psychological studies?",
+          "qHi": "मनोवैज्ञानिक अध्ययनों में व्यक्तित्व को अन्य विशेषताओं से क्या अलग करता है?",
+          "optEn": [
+            "The interplay between organic and psychological events",
+            "The emphasis on physical appearance",
+            "The focus on group dynamics",
+            "The disregard for individual differences"
+          ],
+          "optHi": [
+            "जैविक और मनोवैज्ञानिक घटनाओं की पारस्परिक क्रिया",
+            "शारीरिक बनावट पर बल",
+            "समूह गतिशीलता पर ध्यान",
+            "व्यक्तिगत भिन्नताओं की उपेक्षा"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091572113",
+          "qEn": "The transition from one Piagetian stage to another is best described as:",
+          "qHi": "एक पियाजे अवस्था से दूसरी में संक्रमण का सबसे अच्छा वर्णन इस प्रकार है:",
+          "optEn": [
+            "Abrupt and test-score dependent",
+            "Variable but sequential across individuals",
+            "Reliant solely on linguistic development",
+            "Entirely determined by environmental input"
+          ],
+          "optHi": [
+            "आकस्मिक और परीक्षण-अंकों पर निर्भर",
+            "अलग-अलग व्यक्तियों में भिन्न, परंतु क्रमिक",
+            "केवल भाषाई विकास पर निर्भर",
+            "पूर्णतः पर्यावरणीय आगत द्वारा निर्धारित"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091629052",
+          "qEn": "After observing recurring incidents of bullying, a school counselor introduces activities rooted in empathy-building and self-control, drawing on Buddhist and Islamic traditions. Which dimension of peace education is being emphasized?",
+          "qHi": "बार-बार होने वाली बदमाशी (बुलिंग) की घटनाओं को देखने के बाद, एक स्कूल परामर्शदाता बौद्ध और इस्लामी परंपराओं पर आधारित, सहानुभूति-निर्माण और आत्म-नियंत्रण से जुड़ी गतिविधियाँ शुरू करता है। शांति शिक्षा के किस आयाम पर बल दिया जा रहा है?",
+          "optEn": [
+            "Moral and spiritual development for inner harmony",
+            "Technological proficiency for academic progress",
+            "Strict enforcement of disciplinary measures",
+            "Material incentives for compliance"
+          ],
+          "optHi": [
+            "आंतरिक सद्भाव के लिए नैतिक और आध्यात्मिक विकास",
+            "शैक्षणिक प्रगति के लिए तकनीकी दक्षता",
+            "अनुशासनात्मक उपायों का कठोर प्रवर्तन",
+            "अनुपालन के लिए भौतिक प्रोत्साहन"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091640518",
+          "qEn": "If a curriculum is described as a plan for learning that translates the vision of planners into learning experiences, what key elements must be present?",
+          "qHi": "यदि पाठ्यचर्या को एक ऐसी अधिगम योजना के रूप में वर्णित किया जाए जो योजनाकारों की दृष्टि को सीखने के अनुभवों में परिवर्तित करती है, तो कौन-से प्रमुख तत्व मौजूद होने चाहिए?",
+          "optEn": [
+            "Library resources, cafeteria services, and transportation",
+            "Cultural events, sports activities, and student clubs",
+            "Schedule, study materials, and grading policy",
+            "Purpose, definite structure, and learning experiences"
+          ],
+          "optHi": [
+            "पुस्तकालय संसाधन, कैफेटेरिया सेवाएँ और परिवहन",
+            "सांस्कृतिक कार्यक्रम, खेल गतिविधियाँ और विद्यार्थी क्लब",
+            "समय-सारणी, अध्ययन सामग्री और ग्रेडिंग नीति",
+            "उद्देश्य, निश्चित संरचना और सीखने के अनुभव"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091570133",
+          "qEn": "When more people are engaged in a job that in reality needs a lesser number of people, it is known as:",
+          "qHi": "जब किसी कार्य में वास्तव में आवश्यक संख्या से अधिक लोग लगे हों, तो इसे कहा जाता है:",
+          "optEn": [
+            "Partial unemployment",
+            "Disguised unemployment",
+            "Complete unemployment",
+            "Pure unemployment"
+          ],
+          "optHi": [
+            "आंशिक बेरोज़गारी",
+            "प्रच्छन्न बेरोज़गारी",
+            "पूर्ण बेरोज़गारी",
+            "शुद्ध बेरोज़गारी"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091679321",
+          "qEn": "If a society only allows sons to inherit property despite laws for equality, which type of gender inequality does this represent?",
+          "qHi": "यदि कोई समाज समानता के कानूनों के बावजूद केवल पुत्रों को संपत्ति की विरासत की अनुमति देता है, तो यह किस प्रकार की लैंगिक असमानता को दर्शाता है?",
+          "optEn": [
+            "Professional inequality",
+            "Household inequality",
+            "Natality inequality",
+            "Ownership inequality"
+          ],
+          "optHi": [
+            "व्यावसायिक असमानता",
+            "घरेलू असमानता",
+            "जन्म-संबंधी असमानता",
+            "स्वामित्व असमानता"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091556577",
+          "qEn": "What preschool limitation prevents seeing others' viewpoints?",
+          "qHi": "कौन-सी पूर्व-विद्यालयी सीमा दूसरों के दृष्टिकोण को देखने से रोकती है?",
+          "optEn": [
+            "Egocentrism",
+            "Conservation logic",
+            "Hypothetical thoughts",
+            "Decentration"
+          ],
+          "optHi": [
+            "आत्मकेंद्रितता",
+            "संरक्षण तर्क",
+            "काल्पनिक विचार",
+            "विकेंद्रण"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091631370",
+          "qEn": "Which two guiding principles were added to the Preamble by the 42nd Amendment in 1976?",
+          "qHi": "1976 में 42वें संशोधन द्वारा प्रस्तावना में कौन-से दो मार्गदर्शक सिद्धांत जोड़े गए?",
+          "optEn": [
+            "Democratic and Republic",
+            "Secular and Republic",
+            "Sovereign and Democratic",
+            "Socialist and Secular"
+          ],
+          "optHi": [
+            "लोकतांत्रिक और गणराज्य",
+            "पंथनिरपेक्ष और गणराज्य",
+            "संप्रभु और लोकतांत्रिक",
+            "समाजवादी और पंथनिरपेक्ष"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091645810",
+          "qEn": "At which stage do children begin to understand and follow rules because they want to maintain social order and gain approval from others?",
+          "qHi": "किस अवस्था में बच्चे नियमों को इसलिए समझना और उनका पालन करना शुरू करते हैं क्योंकि वे सामाजिक व्यवस्था बनाए रखना और दूसरों से स्वीकृति पाना चाहते हैं?",
+          "optEn": [
+            "Post-conventional stage",
+            "Autonomous stage",
+            "Pre-conventional stage",
+            "Conventional stage"
+          ],
+          "optHi": [
+            "उत्तर-परंपरागत अवस्था",
+            "स्वायत्त अवस्था",
+            "पूर्व-परंपरागत अवस्था",
+            "परंपरागत अवस्था"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091572449",
+          "qEn": "Which statement best reflects the core concept of a curriculum in modern education?",
+          "qHi": "आधुनिक शिक्षा में पाठ्यचर्या की मूल अवधारणा को कौन-सा कथन सबसे अच्छी तरह दर्शाता है?",
+          "optEn": [
+            "A compilation of textbooks authorized by an institution",
+            "A fixed sequence of units and sub-units to be taught per term",
+            "A list of subject chapters prescribed for a grade",
+            "A structured plan of total learning experiences to learners"
+          ],
+          "optHi": [
+            "किसी संस्थान द्वारा अधिकृत पाठ्यपुस्तकों का संकलन",
+            "प्रति सत्र पढ़ाई जाने वाली इकाइयों और उप-इकाइयों का निश्चित क्रम",
+            "किसी कक्षा के लिए निर्धारित विषय अध्यायों की सूची",
+            "शिक्षार्थियों के लिए कुल सीखने के अनुभवों की संरचित योजना"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091549625",
+          "qEn": "A post-1950s secondary school principal must adopt a language instruction policy that promotes national integration while preserving cultural diversity. Which constitutional strategy, endorsed by subsequent educational policies, should the principal utilize?",
+          "qHi": "1950 के दशक के बाद के एक माध्यमिक विद्यालय के प्रधानाचार्य को ऐसी भाषा शिक्षण नीति अपनानी है जो सांस्कृतिक विविधता को सुरक्षित रखते हुए राष्ट्रीय एकता को बढ़ावा दे। बाद की शिक्षा नीतियों द्वारा समर्थित कौन-सी संवैधानिक रणनीति प्रधानाचार्य को अपनानी चाहिए?",
+          "optEn": [
+            "Abolishing regional language instruction",
+            "Prioritizing English medium instruction",
+            "Implementing the Three-Language Formula",
+            "Compulsory instruction in Union official language"
+          ],
+          "optHi": [
+            "क्षेत्रीय भाषा शिक्षण को समाप्त करना",
+            "अंग्रेज़ी माध्यम शिक्षण को प्राथमिकता देना",
+            "त्रि-भाषा सूत्र को लागू करना",
+            "संघ की राजभाषा में अनिवार्य शिक्षण"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091626460",
+          "qEn": "Which commission was established in 1952-53 to review secondary education in India?",
+          "qHi": "भारत में माध्यमिक शिक्षा की समीक्षा के लिए 1952-53 में कौन-सा आयोग स्थापित किया गया था?",
+          "optEn": [
+            "Hunter Commission",
+            "Mudaliar Commission",
+            "Radhakrishnan Commission",
+            "Kothari Commission"
+          ],
+          "optHi": [
+            "हंटर आयोग",
+            "मुदालियर आयोग",
+            "राधाकृष्णन आयोग",
+            "कोठारी आयोग"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091611366",
+          "qEn": "Which institutions are obligated under Section 4 of the RTE Act to admit out-of-school children to age-appropriate classes?",
+          "qHi": "शिक्षा का अधिकार अधिनियम की धारा 4 के अंतर्गत कौन-सी संस्थाएँ विद्यालय से बाहर रहे बच्चों को आयु-उपयुक्त कक्षाओं में प्रवेश देने के लिए बाध्य हैं?",
+          "optEn": [
+            "All schools in the country",
+            "Government and local schools",
+            "Private aided institutions",
+            "Private unaided institutions"
+          ],
+          "optHi": [
+            "देश के सभी विद्यालय",
+            "सरकारी और स्थानीय निकाय विद्यालय",
+            "निजी सहायता प्राप्त संस्थाएँ",
+            "निजी गैर-सहायता प्राप्त संस्थाएँ"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091570037",
+          "qEn": "Rohan, a 5-year-old boy, is playing with a football. Which motor skill is being displayed in this context?",
+          "qHi": "रोहन, 5 वर्ष का एक लड़का, फुटबॉल खेल रहा है। इस संदर्भ में कौन-सा पेशीय कौशल प्रदर्शित हो रहा है?",
+          "optEn": [
+            "Fine motor skill",
+            "Limited motor skill",
+            "Lite motor skill",
+            "Gross motor skill"
+          ],
+          "optHi": [
+            "सूक्ष्म पेशीय कौशल",
+            "सीमित पेशीय कौशल",
+            "लाइट पेशीय कौशल",
+            "स्थूल पेशीय कौशल"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091612726",
+          "qEn": "A teacher notices that a student who was previously confident in group work has recently become withdrawn after repeated negative interactions with classmates. Based on the scenario, which social factor is most likely influencing the student's personality development?",
+          "qHi": "एक शिक्षक देखता है कि एक विद्यार्थी, जो पहले समूह कार्य में आत्मविश्वासी था, सहपाठियों के साथ बार-बार नकारात्मक अंतःक्रियाओं के बाद हाल ही में अलग-थलग हो गया है। परिदृश्य के आधार पर, कौन-सा सामाजिक कारक विद्यार्थी के व्यक्तित्व विकास को सबसे अधिक प्रभावित करने की संभावना रखता है?",
+          "optEn": [
+            "Peer rejection leading to withdrawal",
+            "Prenatal factors affecting temperament",
+            "Authoritative parenting increasing confidence",
+            "Sibling rivalry causing insecurity"
+          ],
+          "optHi": [
+            "सहपाठियों द्वारा अस्वीकार किए जाने से अलगाव",
+            "प्रसवपूर्व कारक जो स्वभाव को प्रभावित करते हैं",
+            "आत्मविश्वास बढ़ाने वाली प्राधिकारपूर्ण (ऑथोरिटेटिव) पालन-पोषण शैली",
+            "असुरक्षा उत्पन्न करने वाली भाई-बहन की प्रतिद्वंद्विता"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091606253",
+          "qEn": "Which of the following is a fundamental principle of curriculum development?",
+          "qHi": "निम्नलिखित में से कौन-सा पाठ्यचर्या विकास का एक मूलभूत सिद्धांत है?",
+          "optEn": [
+            "Relevance to the needs of learners",
+            "Ignoring societal context",
+            "Random selection of topics",
+            "Emphasizing only teacher interests"
+          ],
+          "optHi": [
+            "शिक्षार्थियों की आवश्यकताओं के प्रति प्रासंगिकता",
+            "सामाजिक संदर्भ की उपेक्षा",
+            "विषयों का यादृच्छिक चयन",
+            "केवल शिक्षक की रुचियों पर बल"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091621801",
+          "qEn": "A school is revising its curriculum to better address the diverse cultural backgrounds of its students while ensuring core academic standards are met. Which approach best demonstrates an effective response to the concept and need of curriculum in this scenario?",
+          "qHi": "एक विद्यालय मुख्य शैक्षणिक मानकों की पूर्ति सुनिश्चित करते हुए अपने विद्यार्थियों की विविध सांस्कृतिक पृष्ठभूमियों को बेहतर ढंग से संबोधित करने के लिए अपनी पाठ्यचर्या में संशोधन कर रहा है। इस परिदृश्य में पाठ्यचर्या की अवधारणा और आवश्यकता के प्रति प्रभावी प्रतिक्रिया को कौन-सा दृष्टिकोण सबसे अच्छी तरह दर्शाता है?",
+          "optEn": [
+            "Focusing curriculum on standardized testing requirements only",
+            "Designing separate multicultural modules for each group",
+            "Integrating multicultural content within standard learning objectives",
+            "Reducing academic content for cultural content inclusion"
+          ],
+          "optHi": [
+            "पाठ्यचर्या को केवल मानकीकृत परीक्षण की आवश्यकताओं पर केंद्रित करना",
+            "प्रत्येक समूह के लिए अलग बहुसांस्कृतिक मॉड्यूल बनाना",
+            "बहुसांस्कृतिक सामग्री को मानक अधिगम उद्देश्यों के भीतर एकीकृत करना",
+            "सांस्कृतिक सामग्री को शामिल करने के लिए शैक्षणिक सामग्री घटाना"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        }
+      ]
+    },
+    {
+      "name": "Discipline 2",
+      "nameHi": "डिसिप्लिन 2",
+      "questions": [
+        {
+          "qid": "4410091544184",
+          "qEn": "Which of the following is not a practice to support mindfulness in the classroom?",
+          "qHi": "निम्नलिखित में से कौन-सा कक्षा में माइंडफुलनेस (सजगता) को समर्थन देने की एक पद्धति नहीं है?",
+          "optEn": [
+            "Start each class with at least a couple of moments of guided mindfulness",
+            "Segregating mindful and non-mindful students",
+            "Start each class off with the right atmosphere",
+            "Be aware of the part you play in setting the pace and tone of your classroom"
+          ],
+          "optHi": [
+            "प्रत्येक कक्षा की शुरुआत कम से कम कुछ क्षणों के निर्देशित माइंडफुलनेस से करें",
+            "सजग और गैर-सजग विद्यार्थियों को अलग-अलग करना",
+            "प्रत्येक कक्षा की शुरुआत सही वातावरण के साथ करें",
+            "अपनी कक्षा की गति और स्वर निर्धारित करने में अपनी भूमिका के प्रति सजग रहें"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091613243",
+          "qEn": "A school plans a week-long celebration of Rabindranath Tagore to help students internalize his world-view. Which activity best integrates Tagore’s belief in harmony with nature and creative pedagogy, as highlighted in his Shantiniketan model?",
+          "qHi": "एक विद्यालय रवींद्रनाथ टैगोर के सम्मान में एक सप्ताह-लंबा उत्सव आयोजित करने की योजना बनाता है ताकि विद्यार्थी उनके विश्व-दृष्टिकोण को आत्मसात कर सकें। कौन-सी गतिविधि टैगोर के शांतिनिकेतन मॉडल में उजागर प्रकृति के साथ सामंजस्य और रचनात्मक शिक्षण-विधि में उनकी आस्था को सबसे अच्छी तरह समाहित करती है?",
+          "optEn": [
+            "Hosting competitive quizzes on Tagore's life and achievements",
+            "Conducting lectures on the history of the Bengal Renaissance",
+            "Organizing open-air mural workshops on rural Bengal and eco-themes",
+            "Assigning individual essays about Tagore's Nobel Prize"
+          ],
+          "optHi": [
+            "टैगोर के जीवन और उपलब्धियों पर प्रतिस्पर्धी प्रश्नोत्तरी आयोजित करना",
+            "बंगाल पुनर्जागरण के इतिहास पर व्याख्यान देना",
+            "ग्रामीण बंगाल और पर्यावरण-विषयों पर खुली हवा में भित्तिचित्र कार्यशालाएँ आयोजित करना",
+            "टैगोर के नोबेल पुरस्कार के बारे में व्यक्तिगत निबंध देना"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091572029",
+          "qEn": "Which among the following is NOT considered as the agent of socialization?",
+          "qHi": "निम्नलिखित में से किसे समाजीकरण का अभिकर्ता नहीं माना जाता है?",
+          "optEn": [
+            "Community",
+            "Family",
+            "Heredity",
+            "School"
+          ],
+          "optHi": [
+            "समुदाय",
+            "परिवार",
+            "आनुवंशिकता",
+            "विद्यालय"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091644924",
+          "qEn": "A curriculum team is selecting a pedagogical approach to enhance inclusivity and peer interaction. Which rationale most strongly supports their choice of peer tutoring?",
+          "qHi": "एक पाठ्यचर्या टीम समावेशिता और सहपाठी अंतःक्रिया को बढ़ाने के लिए एक शिक्षण-विधिक दृष्टिकोण का चयन कर रही है। कौन-सा तर्क उनके सहपाठी शिक्षण (पीयर ट्यूटरिंग) के चयन का सबसे सशक्त समर्थन करता है?",
+          "optEn": [
+            "It restricts student roles to observer and participant only",
+            "It minimizes opportunities for flexible group formation",
+            "It utilizes student strengths for academic support",
+            "It standardizes all instructional delivery methods"
+          ],
+          "optHi": [
+            "यह विद्यार्थियों की भूमिकाओं को केवल प्रेक्षक और प्रतिभागी तक सीमित करता है",
+            "यह लचीले समूह-निर्माण के अवसरों को कम करता है",
+            "यह शैक्षणिक सहायता के लिए विद्यार्थियों की शक्तियों का उपयोग करता है",
+            "यह सभी शिक्षण-वितरण विधियों का मानकीकरण करता है"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091554849",
+          "qEn": "During the preschool years (3-6), what primarily drives the explosive vocabulary growth from hundreds to thousands of words?",
+          "qHi": "पूर्व-विद्यालयी वर्षों (3-6) में, सैकड़ों से हज़ारों शब्दों तक शब्दावली की तीव्र वृद्धि का मुख्य कारण क्या है?",
+          "optEn": [
+            "Incidental exposure through social interactions and rich language environments",
+            "Repetitive drilling of isolated words in structured classroom settings",
+            "Exclusive focus on reading printed materials without oral practice",
+            "Formal grammar instruction and rote memorization techniques"
+          ],
+          "optHi": [
+            "सामाजिक अंतःक्रियाओं और समृद्ध भाषा वातावरण के माध्यम से आकस्मिक अनावरण",
+            "संरचित कक्षा परिवेश में अलग-थलग शब्दों का बार-बार अभ्यास",
+            "मौखिक अभ्यास के बिना केवल मुद्रित सामग्री पढ़ने पर विशेष ध्यान",
+            "औपचारिक व्याकरण शिक्षण और रटने की तकनीकें"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091704563",
+          "qEn": "What does mathematics education at the elementary stage mainly aim to achieve?",
+          "qHi": "प्रारंभिक स्तर पर गणित शिक्षा का मुख्य उद्देश्य क्या प्राप्त करना है?",
+          "optEn": [
+            "To develop reasoning skills",
+            "To memorize multiplication tables",
+            "To focus only on addition",
+            "To improve handwriting"
+          ],
+          "optHi": [
+            "तर्क कौशल विकसित करना",
+            "गुणा सारणी याद करना",
+            "केवल जोड़ पर ध्यान देना",
+            "हस्तलेखन सुधारना"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091629165",
+          "qEn": "During practicum, a student teacher realizes she feels anxious when asked to try new teaching methods. She examines her beliefs about her abilities and seeks feedback to improve. Which aspect of self-understanding is most relevant in her case?",
+          "qHi": "प्रैक्टिकम (शिक्षण अभ्यास) के दौरान, एक शिक्षार्थी-शिक्षिका को एहसास होता है कि नई शिक्षण विधियाँ आज़माने को कहे जाने पर वह चिंतित हो जाती है। वह अपनी क्षमताओं के बारे में अपनी मान्यताओं की जाँच करती है और सुधार के लिए प्रतिक्रिया माँगती है। उसके मामले में आत्म-समझ का कौन-सा पहलू सबसे प्रासंगिक है?",
+          "optEn": [
+            "Understanding the duties and conduct standards expected of teachers",
+            "Being aware of one's body language and nonverbal cues during instruction",
+            "Using emotional regulation techniques to manage nervousness",
+            "Reflecting on self-efficacy beliefs to build teaching confidence"
+          ],
+          "optHi": [
+            "शिक्षकों से अपेक्षित कर्तव्यों और आचरण मानकों को समझना",
+            "शिक्षण के दौरान अपनी शारीरिक भाषा और अशाब्दिक संकेतों के प्रति जागरूक होना",
+            "घबराहट को नियंत्रित करने के लिए भावनात्मक नियमन तकनीकों का उपयोग करना",
+            "शिक्षण-आत्मविश्वास बढ़ाने के लिए आत्म-प्रभावकारिता की मान्यताओं पर चिंतन करना"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091654905",
+          "qEn": "Which model focuses on using literature to teach specific vocabulary and structural elements?",
+          "qHi": "कौन-सा मॉडल विशिष्ट शब्दावली और संरचनात्मक तत्वों को सिखाने के लिए साहित्य के उपयोग पर केंद्रित है?",
+          "optEn": [
+            "The Cultural Model.",
+            "The Personal Growth Model.",
+            "The Scientific Model.",
+            "The Language Model."
+          ],
+          "optHi": [
+            "सांस्कृतिक मॉडल।",
+            "व्यक्तिगत विकास मॉडल।",
+            "वैज्ञानिक मॉडल।",
+            "भाषा मॉडल।"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091646576",
+          "qEn": "Which strategy is most effective for assessing early language acquisition in a classroom with varied learners?",
+          "qHi": "विविध शिक्षार्थियों वाली कक्षा में प्रारंभिक भाषा अर्जन के आकलन के लिए कौन-सी रणनीति सबसे प्रभावी है?",
+          "optEn": [
+            "Checking for memorization of word lists",
+            "Giving standardized written tests",
+            "Observing interactive role-play scenarios",
+            "Monitoring silent reading time"
+          ],
+          "optHi": [
+            "शब्द-सूचियों के रटे जाने की जाँच करना",
+            "मानकीकृत लिखित परीक्षाएँ देना",
+            "अंतःक्रियात्मक भूमिका-निर्वाह (रोल-प्ले) परिदृश्यों का अवलोकन करना",
+            "मौन पठन समय की निगरानी करना"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091628324",
+          "qEn": "In a rule-governed language system, what guides how sentences are formed?",
+          "qHi": "नियम-शासित भाषा प्रणाली में, वाक्य कैसे बनते हैं इसका मार्गदर्शन क्या करता है?",
+          "optEn": [
+            "Visual appearance of words.",
+            "Specific rules for word order and structure.",
+            "Random selection of words.",
+            "Personal preferences of speakers."
+          ],
+          "optHi": [
+            "शब्दों का दृश्य रूप।",
+            "शब्द क्रम और संरचना के विशिष्ट नियम।",
+            "शब्दों का यादृच्छिक चयन।",
+            "वक्ताओं की व्यक्तिगत पसंद।"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091690457",
+          "qEn": "Which of the following best describes the main aim of national integration in education?",
+          "qHi": "शिक्षा में राष्ट्रीय एकता के मुख्य उद्देश्य का निम्नलिखित में से कौन-सा सबसे अच्छा वर्णन करता है?",
+          "optEn": [
+            "Encouraging competition among regions",
+            "Fostering unity among diverse groups",
+            "Teaching only local history",
+            "Promoting international travel and exchange"
+          ],
+          "optHi": [
+            "क्षेत्रों के बीच प्रतिस्पर्धा को प्रोत्साहित करना",
+            "विविध समूहों के बीच एकता को बढ़ावा देना",
+            "केवल स्थानीय इतिहास पढ़ाना",
+            "अंतरराष्ट्रीय यात्रा और आदान-प्रदान को बढ़ावा देना"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091553448",
+          "qEn": "Which foundational mindfulness program was developed to help people take responsibility for their well-being through paying attention and understanding their experiences?",
+          "qHi": "लोगों को अपने अनुभवों पर ध्यान देने और उन्हें समझने के माध्यम से अपने कल्याण की ज़िम्मेदारी लेने में मदद करने के लिए कौन-सा आधारभूत माइंडफुलनेस कार्यक्रम विकसित किया गया था?",
+          "optEn": [
+            "Mindfulness-Based Stress Reduction",
+            "Mindfulness Emotional Regulation",
+            "Mindfulness Acceptance Training",
+            "Mindfulness-Based Cognitive Therapy"
+          ],
+          "optHi": [
+            "माइंडफुलनेस-आधारित तनाव न्यूनीकरण",
+            "माइंडफुलनेस भावनात्मक नियमन",
+            "माइंडफुलनेस स्वीकृति प्रशिक्षण",
+            "माइंडफुलनेस-आधारित संज्ञानात्मक चिकित्सा"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091638547",
+          "qEn": "Which scenario best illustrates effective peer tutoring in an elementary classroom setting?",
+          "qHi": "कौन-सा परिदृश्य प्राथमिक कक्षा परिवेश में प्रभावी सहपाठी शिक्षण को सबसे अच्छी तरह दर्शाता है?",
+          "optEn": [
+            "Students working independently on worksheets",
+            "Older students mentoring younger pupils in reading comprehension",
+            "Teachers assigning extra homework to struggling students",
+            "Parents volunteering to assist with classroom management"
+          ],
+          "optHi": [
+            "विद्यार्थी कार्यपत्रकों पर स्वतंत्र रूप से कार्य करते हुए",
+            "बड़े विद्यार्थी छोटे विद्यार्थियों का पठन-बोध में मार्गदर्शन करते हुए",
+            "शिक्षक संघर्ष कर रहे विद्यार्थियों को अतिरिक्त गृहकार्य देते हुए",
+            "अभिभावक कक्षा-प्रबंधन में सहायता के लिए स्वेच्छा से आगे आते हुए"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091629301",
+          "qEn": "A school wants to maximise the academic progress of its students without hiring additional staff. The administration decides to introduce classwide peer tutoring. Why is this approach considered cost-effective?",
+          "qHi": "एक विद्यालय अतिरिक्त कर्मचारियों को नियुक्त किए बिना अपने विद्यार्थियों की शैक्षणिक प्रगति को अधिकतम करना चाहता है। प्रशासन कक्षा-व्यापी सहपाठी शिक्षण शुरू करने का निर्णय लेता है। इस दृष्टिकोण को लागत-प्रभावी क्यों माना जाता है?",
+          "optEn": [
+            "It depends on external mentors for tutoring.",
+            "It requires significant investment in materials.",
+            "It extends instructional support using existing students.",
+            "It reduces the overall instructional time."
+          ],
+          "optHi": [
+            "यह शिक्षण के लिए बाहरी मार्गदर्शकों पर निर्भर करता है।",
+            "इसके लिए सामग्री में महत्वपूर्ण निवेश की आवश्यकता होती है।",
+            "यह मौजूदा विद्यार्थियों का उपयोग करके शिक्षण सहायता का विस्तार करता है।",
+            "यह कुल शिक्षण समय को घटाता है।"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091624648",
+          "qEn": "How does learning to observe contribute to self-understanding in daily life?",
+          "qHi": "निरीक्षण करना सीखना दैनिक जीवन में आत्म-समझ में कैसे योगदान देता है?",
+          "optEn": [
+            "It helps identify personal patterns and reactions",
+            "It only encourages seeking approval from others",
+            "It relies solely on past achievements",
+            "It promotes avoiding new experiences"
+          ],
+          "optHi": [
+            "यह व्यक्तिगत प्रतिमानों और प्रतिक्रियाओं की पहचान करने में मदद करता है",
+            "यह केवल दूसरों से स्वीकृति पाने को प्रोत्साहित करता है",
+            "यह केवल पिछली उपलब्धियों पर निर्भर करता है",
+            "यह नए अनुभवों से बचने को बढ़ावा देता है"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091572386",
+          "qEn": "Why is literature considered an essential source of learning for children in the early years?",
+          "qHi": "बच्चों के प्रारंभिक वर्षों में साहित्य को सीखने का एक आवश्यक स्रोत क्यों माना जाता है?",
+          "optEn": [
+            "It replaces all other classroom activities",
+            "Elicits spontaneity and integrated language learning",
+            "It focuses solely on memorization of stories",
+            "It teaches only vocabulary and grammar"
+          ],
+          "optHi": [
+            "यह अन्य सभी कक्षा गतिविधियों का स्थान ले लेता है",
+            "यह सहजता और एकीकृत भाषा अधिगम को प्रेरित करता है",
+            "यह केवल कहानियाँ रटने पर केंद्रित है",
+            "यह केवल शब्दावली और व्याकरण सिखाता है"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091602334",
+          "qEn": "How does experiential learning in the classroom benefit students?",
+          "qHi": "कक्षा में अनुभवात्मक अधिगम विद्यार्थियों को कैसे लाभ पहुँचाता है?",
+          "optEn": [
+            "It discourages creativity",
+            "It only improves memory",
+            "It leads to cognitive, attitudinal, and behavioural changes",
+            "It limits social interaction"
+          ],
+          "optHi": [
+            "यह रचनात्मकता को हतोत्साहित करता है",
+            "यह केवल स्मृति में सुधार करता है",
+            "यह संज्ञानात्मक, अभिवृत्तिगत और व्यवहारिक परिवर्तन लाता है",
+            "यह सामाजिक अंतःक्रिया को सीमित करता है"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091608046",
+          "qEn": "Which practice best supports experiential learning in graduate education?",
+          "qHi": "स्नातक शिक्षा में अनुभवात्मक अधिगम को कौन-सी पद्धति सबसे अच्छी तरह समर्थन देती है?",
+          "optEn": [
+            "Engaging in problem solving",
+            "Copying instructor notes",
+            "Reading assigned articles",
+            "Attending lectures regularly"
+          ],
+          "optHi": [
+            "समस्या-समाधान में संलग्न होना",
+            "प्रशिक्षक के नोट्स की नकल करना",
+            "निर्धारित लेख पढ़ना",
+            "नियमित रूप से व्याख्यानों में उपस्थित होना"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091651085",
+          "qEn": "Which feature best describes a 'rule governed system' in the context of language?",
+          "qHi": "भाषा के संदर्भ में 'नियम-शासित प्रणाली' का कौन-सा लक्षण सबसे अच्छी तरह वर्णन करता है?",
+          "optEn": [
+            "Language operates with structured rules for grammar and syntax.",
+            "Language does not have any structure or authentic rules for all",
+            "Language is naturally evolving with new rules which may change",
+            "Language is based only on spoken words and written expressions"
+          ],
+          "optHi": [
+            "भाषा व्याकरण और वाक्य-विन्यास के संरचित नियमों के अनुसार संचालित होती है।",
+            "भाषा में सभी के लिए कोई संरचना या प्रामाणिक नियम नहीं होते।",
+            "भाषा स्वाभाविक रूप से विकसित होती रहती है, जिसमें नए नियम बन सकते हैं जो बदल भी सकते हैं।",
+            "भाषा केवल बोले गए शब्दों और लिखित अभिव्यक्तियों पर आधारित होती है।"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091696538",
+          "qEn": "What is a key benefit of learning to observe oneself?",
+          "qHi": "स्वयं का निरीक्षण करना सीखने का एक प्रमुख लाभ क्या है?",
+          "optEn": [
+            "Gaining awareness of personal strengths and weaknesses",
+            "Avoiding mistakes in every activity",
+            "Copying others' behaviours in new situations",
+            "Relying on others' opinions for self-assessment"
+          ],
+          "optHi": [
+            "व्यक्तिगत शक्तियों और कमज़ोरियों के प्रति जागरूकता प्राप्त करना",
+            "प्रत्येक गतिविधि में गलतियों से बचना",
+            "नई परिस्थितियों में दूसरों के व्यवहार की नकल करना",
+            "आत्म-मूल्यांकन के लिए दूसरों की राय पर निर्भर रहना"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        }
+      ]
+    },
+    {
+      "name": "Discipline 3",
+      "nameHi": "डिसिप्लिन 3",
+      "questions": [
+        {
+          "qid": "4410091629872",
+          "qEn": "What is an effective way to assess the impact of pretend play on language development?",
+          "qHi": "भाषा विकास पर कल्पनात्मक खेल (प्रिटेंड प्ले) के प्रभाव का आकलन करने का एक प्रभावी तरीका क्या है?",
+          "optEn": [
+            "Assign individual reading",
+            "Observe group storytelling",
+            "Administer written tests",
+            "Use silent observation"
+          ],
+          "optHi": [
+            "व्यक्तिगत पठन देना",
+            "समूह कहानी-कथन का अवलोकन करना",
+            "लिखित परीक्षाएँ आयोजित करना",
+            "मौन अवलोकन का उपयोग करना"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091609268",
+          "qEn": "Read the Assertion (A) and Reason (R) given below and choose the correct option.\nAssertion (A): When introducing the concept of volume to young children, using water and containers of different shapes is beneficial.\nReason (R): Hands-on activities help children visualize and compare how much space an object occupies.",
+          "qHi": "नीचे दिए गए अभिकथन (A) और कारण (R) को पढ़िए और सही विकल्प चुनिए।\nअभिकथन (A): छोटे बच्चों को आयतन की अवधारणा से परिचित कराते समय, पानी और विभिन्न आकारों के पात्रों का उपयोग लाभकारी होता है।\nकारण (R): हाथों से करने वाली गतिविधियाँ बच्चों को यह कल्पना करने और तुलना करने में मदद करती हैं कि कोई वस्तु कितना स्थान घेरती है।",
+          "optEn": [
+            "Both A and R are true, and R is the correct explanation of A",
+            "A is false, but R is true",
+            "A is true, but R is false",
+            "Both A and R are true, but R is not the correct explanation of A"
+          ],
+          "optHi": [
+            "A और R दोनों सत्य हैं, और R, A की सही व्याख्या है",
+            "A असत्य है, लेकिन R सत्य है",
+            "A सत्य है, लेकिन R असत्य है",
+            "A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091623855",
+          "qEn": "A healthcare organization is designing a new telemedicine platform to connect specialists from different countries. To ensure precise medical communication and patient safety, what language policy should the developers prioritize, considering English’s global role in science and medicine?",
+          "qHi": "एक स्वास्थ्य-सेवा संगठन विभिन्न देशों के विशेषज्ञों को जोड़ने के लिए एक नया टेलीमेडिसिन प्लेटफ़ॉर्म डिज़ाइन कर रहा है। सटीक चिकित्सकीय संचार और रोगी सुरक्षा सुनिश्चित करने के लिए, विज्ञान और चिकित्सा में अंग्रेज़ी की वैश्विक भूमिका को ध्यान में रखते हुए, डेवलपर्स को किस भाषा नीति को प्राथमिकता देनी चाहिए?",
+          "optEn": [
+            "Allowing users to select any language for reports and consultations",
+            "Implementing English as the standard interface and reporting language",
+            "Translating each interaction in real-time for every user",
+            "Using only local languages for each region’s interface and reports"
+          ],
+          "optHi": [
+            "उपयोगकर्ताओं को रिपोर्ट और परामर्श के लिए कोई भी भाषा चुनने की अनुमति देना",
+            "अंग्रेज़ी को मानक इंटरफ़ेस और रिपोर्टिंग भाषा के रूप में लागू करना",
+            "प्रत्येक उपयोगकर्ता के लिए हर अंतःक्रिया का वास्तविक समय में अनुवाद करना",
+            "प्रत्येक क्षेत्र के इंटरफ़ेस और रिपोर्ट के लिए केवल स्थानीय भाषाओं का उपयोग करना"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091682267",
+          "qEn": "According to NCF 2005, the main goal of Mathematics education in school is....................",
+          "qHi": "एनसीएफ 2005 के अनुसार, विद्यालय में गणित शिक्षा का मुख्य लक्ष्य .................... है।",
+          "optEn": [
+            "vocational training",
+            "preparation for engineering",
+            "memorization of formulae",
+            "mathematization of children’s minds"
+          ],
+          "optHi": [
+            "व्यावसायिक प्रशिक्षण",
+            "इंजीनियरिंग की तैयारी",
+            "सूत्रों को याद करना",
+            "बच्चों के मन का गणितीकरण"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091638595",
+          "qEn": "Which classroom practice supports English as a global language while also respecting local languages?",
+          "qHi": "कौन-सी कक्षा-पद्धति अंग्रेज़ी को वैश्विक भाषा के रूप में समर्थन देती है और साथ ही स्थानीय भाषाओं का सम्मान भी करती है?",
+          "optEn": [
+            "Insisting on only English in all interactions",
+            "Encouraging bilingual activities and discussions",
+            "Discouraging use of native language entirely",
+            "Focusing only on translation exercises daily"
+          ],
+          "optHi": [
+            "सभी अंतःक्रियाओं में केवल अंग्रेज़ी पर ज़ोर देना",
+            "द्विभाषी गतिविधियों और चर्चाओं को प्रोत्साहित करना",
+            "मातृभाषा के उपयोग को पूरी तरह हतोत्साहित करना",
+            "प्रतिदिन केवल अनुवाद अभ्यासों पर ध्यान देना"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091602178",
+          "qEn": "Which role does the community play in education?",
+          "qHi": "शिक्षा में समुदाय कौन-सी भूमिका निभाता है?",
+          "optEn": [
+            "Providing support and resources",
+            "Conducting classroom teaching",
+            "Managing daily school operations",
+            "Designing examination systems"
+          ],
+          "optHi": [
+            "सहायता और संसाधन उपलब्ध कराना",
+            "कक्षा में शिक्षण करना",
+            "दैनिक विद्यालय संचालन का प्रबंधन करना",
+            "परीक्षा प्रणालियाँ तैयार करना"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091704725",
+          "qEn": "Choose the correct sentence with proper subject-verb agreement.",
+          "qHi": "उचित कर्ता-क्रिया सामंजस्य (सब्जेक्ट-वर्ब एग्रीमेंट) वाला सही वाक्य चुनिए।",
+          "optEn": [
+            "The dog barked loudly at night.",
+            "The dog barking loudly at night.",
+            "The dog barks loudly at night.",
+            "The dog bark loudly at night."
+          ],
+          "optHi": [
+            "The dog barked loudly at night.",
+            "The dog barking loudly at night.",
+            "The dog barks loudly at night.",
+            "The dog bark loudly at night."
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091642808",
+          "qEn": "How does television advertising primarily impact children’s behavior?",
+          "qHi": "टेलीविज़न विज्ञापन मुख्य रूप से बच्चों के व्यवहार को कैसे प्रभावित करता है?",
+          "optEn": [
+            "Reduces aggression and violent tendencies",
+            "Improves academic performance through information",
+            "Improves attention span and focus skills",
+            "Shapes consumer preferences and influences purchase"
+          ],
+          "optHi": [
+            "आक्रामकता और हिंसक प्रवृत्तियों को कम करता है",
+            "जानकारी के माध्यम से शैक्षणिक प्रदर्शन में सुधार करता है",
+            "ध्यान अवधि और एकाग्रता कौशल में सुधार करता है",
+            "उपभोक्ता प्राथमिकताओं को आकार देता है और खरीद को प्रभावित करता है"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091629781",
+          "qEn": "During a peer review session, a student notices the sentence: \"Neither the principal nor the teachers is attending the event.\" Which correction maintains proper subject-verb agreement?",
+          "qHi": "एक सहपाठी समीक्षा सत्र के दौरान, एक विद्यार्थी इस वाक्य को देखता है: \"Neither the principal nor the teachers is attending the event.\" कौन-सा सुधार कर्ता-क्रिया सामंजस्य को सही रखता है?",
+          "optEn": [
+            "Neither the principal nor the teachers was attending the event.",
+            "Neither the principal nor the teachers attends the event.",
+            "Neither the principal nor the teachers have attended the event.",
+            "Neither the principal nor the teachers are attending the event."
+          ],
+          "optHi": [
+            "Neither the principal nor the teachers was attending the event.",
+            "Neither the principal nor the teachers attends the event.",
+            "Neither the principal nor the teachers have attended the event.",
+            "Neither the principal nor the teachers are attending the event."
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091628678",
+          "qEn": "A child stacks blocks in patterns and talks with friends while building. Which play types are shown, and how do they work together?",
+          "qHi": "एक बच्चा पैटर्न में ब्लॉक जमाता है और निर्माण करते समय मित्रों से बातें करता है। कौन-से खेल प्रकार दर्शाए गए हैं, और वे एक-दूसरे के साथ कैसे कार्य करते हैं?",
+          "optEn": [
+            "Constructive play and associative play; the child builds while interacting and coordinating with peers",
+            "Symbolic play and solitary play; the child pretends and plays alone without peer involvement",
+            "Constructive play and symbolic play; the child builds objects while imagining scenarios independently",
+            "Functional play and parallel play; the child repeats actions while playing near others without interaction"
+          ],
+          "optHi": [
+            "रचनात्मक खेल और साहचर्य खेल; बच्चा साथियों से अंतःक्रिया और समन्वय करते हुए निर्माण करता है",
+            "प्रतीकात्मक खेल और एकल खेल; बच्चा साथियों की भागीदारी के बिना अकेले अभिनय करता और खेलता है",
+            "रचनात्मक खेल और प्रतीकात्मक खेल; बच्चा स्वतंत्र रूप से परिदृश्यों की कल्पना करते हुए वस्तुएँ बनाता है",
+            "क्रियात्मक खेल और समानांतर खेल; बच्चा दूसरों के पास खेलते हुए बिना अंतःक्रिया के क्रियाओं को दोहराता है"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091633203",
+          "qEn": "Which activity best helps students understand that units must be consistent when measuring length, area, and volume?",
+          "qHi": "कौन-सी गतिविधि विद्यार्थियों को यह समझने में सबसे अच्छी मदद करती है कि लंबाई, क्षेत्रफल और आयतन मापते समय इकाइयाँ एकसमान होनी चाहिए?",
+          "optEn": [
+            "Estimating objects by visual comparison without using units",
+            "Measuring objects with different informal units each time",
+            "Measuring objects using metres, square metres, and cubic metres",
+            "Recording object measurements but omitting the unit names"
+          ],
+          "optHi": [
+            "इकाइयों का उपयोग किए बिना दृश्य तुलना द्वारा वस्तुओं का अनुमान लगाना",
+            "हर बार अलग-अलग अनौपचारिक इकाइयों से वस्तुओं को मापना",
+            "मीटर, वर्ग मीटर और घन मीटर का उपयोग करके वस्तुओं को मापना",
+            "इकाइयों के नाम छोड़कर वस्तुओं के माप दर्ज करना"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091580950",
+          "qEn": "The role of the teacher in alternative schooling is primarily that of a/an:",
+          "qHi": "वैकल्पिक विद्यालयी शिक्षा में शिक्षक की भूमिका मुख्य रूप से किस रूप में होती है:",
+          "optEn": [
+            "Content expert",
+            "Authority figure",
+            "Curriculum implementer",
+            "Facilitator"
+          ],
+          "optHi": [
+            "विषय विशेषज्ञ",
+            "सत्ता का प्रतीक",
+            "पाठ्यचर्या कार्यान्वयनकर्ता",
+            "सुगमकर्ता (फ़ैसिलिटेटर)"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091612346",
+          "qEn": "Who developed the concept of classical conditioning?",
+          "qHi": "शास्त्रीय अनुबंधन की अवधारणा किसने विकसित की?",
+          "optEn": [
+            "Ivan Petrovich Pavlov",
+            "B.F. Skinner",
+            "Jean Piaget",
+            "Sigmund Freud"
+          ],
+          "optHi": [
+            "इवान पेट्रोविच पावलोव",
+            "बी.एफ. स्किनर",
+            "जीन पियाजे",
+            "सिगमंड फ्रायड"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091548468",
+          "qEn": "A facilitator notices that a quiet participant is hesitant to share ideas. The facilitator gently asks open-ended questions and provides a supportive environment. Which facilitation skill is being used?",
+          "qHi": "एक सुगमकर्ता (फ़ैसिलिटेटर) देखता है कि एक शांत प्रतिभागी विचार साझा करने में हिचकिचा रहा है। सुगमकर्ता धीरे से खुले प्रश्न पूछता है और सहायक वातावरण प्रदान करता है। कौन-सा सुगमन कौशल प्रयोग किया जा रहा है?",
+          "optEn": [
+            "Active listening to engage",
+            "Controlling the conversation",
+            "Ignoring non-verbal cues",
+            "Rigid questioning"
+          ],
+          "optHi": [
+            "संलग्न करने के लिए सक्रिय श्रवण",
+            "बातचीत को नियंत्रित करना",
+            "अशाब्दिक संकेतों की उपेक्षा करना",
+            "कठोर प्रश्न-पद्धति"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091572430",
+          "qEn": "Which of the following is a major impact of TV advertising on society?",
+          "qHi": "निम्नलिखित में से कौन-सा समाज पर टीवी विज्ञापन का एक प्रमुख प्रभाव है?",
+          "optEn": [
+            "Influences purchase decisions unconsciously",
+            "Teaches historical facts",
+            "Reduces consumerism",
+            "Encourages critical thinking"
+          ],
+          "optHi": [
+            "अनजाने में खरीद निर्णयों को प्रभावित करता है",
+            "ऐतिहासिक तथ्य सिखाता है",
+            "उपभोक्तावाद को कम करता है",
+            "आलोचनात्मक चिंतन को प्रोत्साहित करता है"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091580959",
+          "qEn": "Designing curriculum from scratch challenges the notion that knowledge is:",
+          "qHi": "शुरू से पाठ्यचर्या तैयार करना इस धारणा को चुनौती देता है कि ज्ञान है:",
+          "optEn": [
+            "Socially constructed",
+            "Fixed and universal",
+            "Culturally embedded",
+            "Context-sensitive"
+          ],
+          "optHi": [
+            "सामाजिक रूप से निर्मित",
+            "स्थिर और सार्वभौमिक",
+            "सांस्कृतिक रूप से अंतर्निहित",
+            "संदर्भ-संवेदनशील"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091637871",
+          "qEn": "When both children and adults view television advertisements, what is a possible shared outcome?",
+          "qHi": "जब बच्चे और वयस्क दोनों टेलीविज़न विज्ञापन देखते हैं, तो एक संभावित साझा परिणाम क्या है?",
+          "optEn": [
+            "Both are always immune to advertising messages.",
+            "Both consistently avoid advertised products together.",
+            "Both are never exposed to advertising on television.",
+            "Both may develop increased interest in advertised products."
+          ],
+          "optHi": [
+            "दोनों विज्ञापन संदेशों से सदैव अप्रभावित रहते हैं।",
+            "दोनों विज्ञापित उत्पादों से लगातार साथ-साथ बचते हैं।",
+            "दोनों टेलीविज़न पर कभी विज्ञापन के संपर्क में नहीं आते।",
+            "दोनों में विज्ञापित उत्पादों के प्रति रुचि बढ़ सकती है।"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091601993",
+          "qEn": "Which statement best summarizes Indian attitudes towards political leadership and gender roles at home?",
+          "qHi": "कौन-सा कथन राजनीतिक नेतृत्व और घर में लैंगिक भूमिकाओं के प्रति भारतीय दृष्टिकोण का सबसे अच्छा सार प्रस्तुत करता है?",
+          "optEn": [
+            "Society equally supports women’s leadership and shared domestic responsibilities",
+            "Society accepts women as political leaders but expects traditional domestic roles",
+            "Society rejects women’s leadership while supporting equality within households",
+            "Society discourages women's political participation while promoting domestic independence"
+          ],
+          "optHi": [
+            "समाज महिलाओं के नेतृत्व और साझा घरेलू ज़िम्मेदारियों का समान रूप से समर्थन करता है",
+            "समाज महिलाओं को राजनीतिक नेता के रूप में स्वीकार करता है, परंतु पारंपरिक घरेलू भूमिकाओं की अपेक्षा रखता है",
+            "समाज महिलाओं के नेतृत्व को अस्वीकार करता है, जबकि घरों के भीतर समानता का समर्थन करता है",
+            "समाज महिलाओं की राजनीतिक भागीदारी को हतोत्साहित करता है, जबकि घरेलू स्वतंत्रता को बढ़ावा देता है"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091623906",
+          "qEn": "A first-year college student, facing pressure to conform to peer norms, often exhibits denial about academic challenges. Which concept factor most likely contributes to the persistence of this defence mechanism in the socio-cultural context?",
+          "qHi": "एक प्रथम-वर्ष का महाविद्यालय विद्यार्थी, साथियों के मानदंडों के अनुरूप ढलने के दबाव का सामना करते हुए, अक्सर शैक्षणिक चुनौतियों के बारे में अस्वीकार (डिनायल) दर्शाता है। सामाजिक-सांस्कृतिक संदर्भ में इस रक्षा-तंत्र के बने रहने में कौन-सा अवधारणात्मक कारक सबसे अधिक योगदान देता है?",
+          "optEn": [
+            "Influence of peer acceptance on defence mechanism selection",
+            "Institutional rules shaping classroom participation",
+            "Parental academic expectations influencing performance",
+            "Level of personal motivation affecting learning strategies"
+          ],
+          "optHi": [
+            "रक्षा-तंत्र के चयन पर साथियों की स्वीकृति का प्रभाव",
+            "कक्षा-भागीदारी को आकार देने वाले संस्थागत नियम",
+            "प्रदर्शन को प्रभावित करने वाली अभिभावकों की शैक्षणिक अपेक्षाएँ",
+            "अधिगम रणनीतियों को प्रभावित करने वाला व्यक्तिगत प्रेरणा का स्तर"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091602332",
+          "qEn": "Why is pedagogic leadership considered broader than instructional leadership?",
+          "qHi": "शैक्षिक (पेडागॉजिक) नेतृत्व को अनुदेशात्मक नेतृत्व से व्यापक क्यों माना जाता है?",
+          "optEn": [
+            "It focuses only on administrative tasks and curriculum implementation.",
+            "It limits leadership to principal duties only.",
+            "It ignores the need for student engagement in learning.",
+            "It emphasizes teacher autonomy and school-wide learning improvement."
+          ],
+          "optHi": [
+            "यह केवल प्रशासनिक कार्यों और पाठ्यचर्या कार्यान्वयन पर केंद्रित है।",
+            "यह नेतृत्व को केवल प्रधानाचार्य के कर्तव्यों तक सीमित करता है।",
+            "यह सीखने में विद्यार्थियों की संलग्नता की आवश्यकता की अनदेखी करता है।",
+            "यह शिक्षक स्वायत्तता और विद्यालय-व्यापी अधिगम सुधार पर बल देता है।"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        }
+      ]
+    },
+    {
+      "name": "Discipline 4",
+      "nameHi": "डिसिप्लिन 4",
+      "questions": [
+        {
+          "qid": "4410091550828",
+          "qEn": "A state education board achieved 100% student enrollment (goal attainment). However, the budget report revealed a four-fold increase in cost per pupil (input ratio). How is the board’s performance assessed?",
+          "qHi": "एक राज्य शिक्षा बोर्ड ने 100% विद्यार्थी नामांकन (लक्ष्य प्राप्ति) हासिल किया। हालाँकि, बजट रिपोर्ट से प्रति विद्यार्थी लागत (निवेश अनुपात) में चार गुना वृद्धि का पता चला। बोर्ड के प्रदर्शन का आकलन कैसे किया जाता है?",
+          "optEn": [
+            "High profitability, low goal attainment.",
+            "High effectiveness, low efficiency.",
+            "High efficiency, high resource wastage.",
+            "Low effectiveness, high efficiency."
+          ],
+          "optHi": [
+            "उच्च लाभप्रदता, निम्न लक्ष्य प्राप्ति।",
+            "उच्च प्रभावशीलता, निम्न दक्षता।",
+            "उच्च दक्षता, उच्च संसाधन अपव्यय।",
+            "निम्न प्रभावशीलता, उच्च दक्षता।"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091547470",
+          "qEn": "Which of the following is a major content area in the Primary level Environmental Studies curriculum?",
+          "qHi": "निम्नलिखित में से कौन-सा प्राथमिक स्तर के पर्यावरण अध्ययन पाठ्यचर्या का एक प्रमुख विषय-क्षेत्र है?",
+          "optEn": [
+            "Understanding plants, animals, water, air, and the surrounding environment",
+            "Studying only historical events unrelated to the environment or nature",
+            "Focusing solely on advanced scientific theories and laboratory experiments",
+            "Memorizing definitions and terms without observing the natural world"
+          ],
+          "optHi": [
+            "पौधों, जानवरों, जल, वायु और आसपास के पर्यावरण को समझना",
+            "केवल ऐसी ऐतिहासिक घटनाओं का अध्ययन जिनका पर्यावरण या प्रकृति से कोई संबंध नहीं",
+            "केवल उन्नत वैज्ञानिक सिद्धांतों और प्रयोगशाला प्रयोगों पर ध्यान देना",
+            "प्राकृतिक दुनिया का अवलोकन किए बिना परिभाषाएँ और शब्द याद करना"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091579621",
+          "qEn": "A key characteristic of a transformational school leader is the ability to:",
+          "qHi": "एक परिवर्तनकारी विद्यालय नेता की एक प्रमुख विशेषता यह है कि वह इस योग्यता से युक्त होता है कि वह:",
+          "optEn": [
+            "Inspire and empower others to share a vision",
+            "Focus only on personal achievements",
+            "Limit teacher participation in decision-making",
+            "Maintain existing practices without change"
+          ],
+          "optHi": [
+            "साझा दृष्टि के लिए दूसरों को प्रेरित और सशक्त करे",
+            "केवल व्यक्तिगत उपलब्धियों पर ध्यान केंद्रित करे",
+            "निर्णय-प्रक्रिया में शिक्षकों की भागीदारी सीमित करे",
+            "मौजूदा प्रथाओं को बिना बदलाव के बनाए रखे"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091611725",
+          "qEn": "Which of the following best describes the primary purpose of unit planning in the pedagogy of English language lesson development?",
+          "qHi": "अंग्रेज़ी भाषा पाठ विकास की शिक्षण-विधि में इकाई योजना के प्राथमिक उद्देश्य का निम्नलिखित में से कौन-सा सबसे अच्छा वर्णन करता है?",
+          "optEn": [
+            "To organize lessons around shared objectives",
+            "To focus exclusively on grammar instruction",
+            "To assess students only after each lesson",
+            "To select random activities for engagement"
+          ],
+          "optHi": [
+            "साझा उद्देश्यों के आसपास पाठों को व्यवस्थित करना",
+            "केवल व्याकरण शिक्षण पर ध्यान केंद्रित करना",
+            "विद्यार्थियों का आकलन केवल प्रत्येक पाठ के बाद करना",
+            "संलग्नता के लिए यादृच्छिक गतिविधियाँ चुनना"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091572462",
+          "qEn": "The Grammar Translation Method (GTM) was originally based on:",
+          "qHi": "व्याकरण-अनुवाद पद्धति (GTM) मूल रूप से किस पर आधारित थी:",
+          "optEn": [
+            "Classical language teaching of Latin and Greek",
+            "Task-based learning with active participation",
+            "Modern communication theories",
+            "Oral language practice using drills"
+          ],
+          "optHi": [
+            "लैटिन और यूनानी की शास्त्रीय भाषा शिक्षण पर",
+            "सक्रिय भागीदारी के साथ कार्य-आधारित अधिगम पर",
+            "आधुनिक संचार सिद्धांतों पर",
+            "अभ्यास-अभ्यासों (ड्रिल) का उपयोग करके मौखिक भाषा अभ्यास पर"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091681904",
+          "qEn": "A teacher wants to use open-ended problems in evaluation to promote higher-order thinking. Which of the following best illustrates an effective use of open-ended questions for this purpose?",
+          "qHi": "एक शिक्षक उच्च-स्तरीय चिंतन को बढ़ावा देने के लिए मूल्यांकन में खुले-अंत वाली समस्याओं का उपयोग करना चाहता है। निम्नलिखित में से कौन-सा इस उद्देश्य के लिए खुले-अंत वाले प्रश्नों के प्रभावी उपयोग को सबसे अच्छी तरह दर्शाता है?",
+          "optEn": [
+            "Instructing students to copy answers directly from textbooks",
+            "Having students select one correct option from a list",
+            "Asking students to propose solutions and justify their choices",
+            "Asking students to recall a fixed definition from memory"
+          ],
+          "optHi": [
+            "विद्यार्थियों को पाठ्यपुस्तकों से सीधे उत्तर नकल करने का निर्देश देना",
+            "विद्यार्थियों से सूची में से एक सही विकल्प चुनवाना",
+            "विद्यार्थियों से समाधान प्रस्तावित करने और अपने चयन का औचित्य बताने को कहना",
+            "विद्यार्थियों से स्मृति से एक निश्चित परिभाषा याद करने को कहना"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091584464",
+          "qEn": "A key pedagogical advantage of using open-ended questions is that they:",
+          "qHi": "खुले-अंत वाले प्रश्नों का उपयोग करने का एक प्रमुख शैक्षिक लाभ यह है कि वे:",
+          "optEn": [
+            "Reduce instructional planning time",
+            "Ensure identical learner responses",
+            "Simplify scoring procedures",
+            "Promote higher-order skills"
+          ],
+          "optHi": [
+            "अनुदेशात्मक योजना का समय घटाते हैं",
+            "विद्यार्थियों के एकसमान उत्तर सुनिश्चित करते हैं",
+            "अंक-निर्धारण प्रक्रियाओं को सरल बनाते हैं",
+            "उच्च-स्तरीय कौशलों को बढ़ावा देते हैं"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091627380",
+          "qEn": "Which of the following best describes a unit plan in the context of lesson planning for English language teaching?",
+          "qHi": "अंग्रेज़ी भाषा शिक्षण के लिए पाठ योजना के संदर्भ में निम्नलिखित में से कौन-सा इकाई योजना का सबसे अच्छा वर्णन करता है?",
+          "optEn": [
+            "A student attendance sheet",
+            "A list of classroom materials",
+            "A single day's lesson notes",
+            "A structured outline of related lessons"
+          ],
+          "optHi": [
+            "विद्यार्थी उपस्थिति पत्रक",
+            "कक्षा सामग्री की सूची",
+            "एक दिन के पाठ के नोट्स",
+            "संबंधित पाठों की संरचित रूपरेखा"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091637698",
+          "qEn": "A teacher designs a lesson that blends scientific inquiry, connects topics, and adapts for all abilities. Which teaching method is being applied?",
+          "qHi": "एक शिक्षक ऐसा पाठ तैयार करता है जो वैज्ञानिक अन्वेषण को मिलाता है, विषयों को जोड़ता है और सभी क्षमताओं के अनुरूप ढलता है। कौन-सी शिक्षण विधि अपनाई जा रही है?",
+          "optEn": [
+            "Integrated and inclusive approach",
+            "Rote memorization",
+            "Conceptual process only",
+            "Traditional lecture method"
+          ],
+          "optHi": [
+            "एकीकृत और समावेशी दृष्टिकोण",
+            "रटने की विधि",
+            "केवल संकल्पनात्मक प्रक्रिया",
+            "पारंपरिक व्याख्यान विधि"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091553487",
+          "qEn": "Micro teaching primarily focuses on:",
+          "qHi": "सूक्ष्म शिक्षण (माइक्रो टीचिंग) मुख्य रूप से किस पर केंद्रित होता है:",
+          "optEn": [
+            "Memorizing textbook content",
+            "Teaching a full-length lesson to a large class",
+            "Practicing specific teaching skills in a controlled, small-group",
+            "Evaluating school infrastructure"
+          ],
+          "optHi": [
+            "पाठ्यपुस्तक की सामग्री याद करना",
+            "बड़ी कक्षा को पूरी अवधि का पाठ पढ़ाना",
+            "नियंत्रित, छोटे समूह में विशिष्ट शिक्षण कौशलों का अभ्यास करना",
+            "विद्यालय के बुनियादी ढाँचे का मूल्यांकन करना"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091623529",
+          "qEn": "Which of the following best describes an open-ended question in educational evaluation?",
+          "qHi": "शैक्षिक मूल्यांकन में खुले-अंत वाले प्रश्न का निम्नलिखित में से कौन-सा सबसे अच्छा वर्णन करता है?",
+          "optEn": [
+            "A question that has only one correct word as an answer",
+            "A question that can only be answered with a number",
+            "A question that requires a yes or no answer",
+            "A question that allows for multiple possible responses and explanations"
+          ],
+          "optHi": [
+            "ऐसा प्रश्न जिसका उत्तर केवल एक सही शब्द होता है",
+            "ऐसा प्रश्न जिसका उत्तर केवल एक संख्या से दिया जा सकता है",
+            "ऐसा प्रश्न जिसमें हाँ या नहीं में उत्तर देना होता है",
+            "ऐसा प्रश्न जो अनेक संभावित उत्तरों और स्पष्टीकरणों की अनुमति देता है"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091623926",
+          "qEn": "A teacher wants to design a project linking the themes 'Shelter' and 'Water' for her primary EVS class. Which approach best aligns with the curriculum's goals?",
+          "qHi": "एक शिक्षिका अपनी प्राथमिक पर्यावरण अध्ययन (EVS) कक्षा के लिए 'आश्रय' और 'जल' विषयों को जोड़ने वाली एक परियोजना तैयार करना चाहती है। कौन-सा दृष्टिकोण पाठ्यचर्या के लक्ष्यों के साथ सबसे अच्छी तरह मेल खाता है?",
+          "optEn": [
+            "Study how water affects shelters",
+            "Compare local and traditional shelters",
+            "Investigate water use in homes",
+            "Study shelter materials and construction"
+          ],
+          "optHi": [
+            "यह अध्ययन करना कि जल आश्रयों को कैसे प्रभावित करता है",
+            "स्थानीय और पारंपरिक आश्रयों की तुलना करना",
+            "घरों में जल के उपयोग की जाँच करना",
+            "आश्रय सामग्री और निर्माण का अध्ययन करना"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091616362",
+          "qEn": "Which of the following best explains the importance of analyzing social studies textbooks?",
+          "qHi": "सामाजिक विज्ञान की पाठ्यपुस्तकों का विश्लेषण करने का महत्व निम्नलिखित में से कौन-सा सबसे अच्छी तरह समझाता है?",
+          "optEn": [
+            "It makes books longer and harder to read.",
+            "It ensures accuracy and diversity.",
+            "It helps teachers avoid using any textbooks.",
+            "It allows students to skip learning activities."
+          ],
+          "optHi": [
+            "यह पुस्तकों को लंबा और पढ़ने में कठिन बनाता है।",
+            "यह सटीकता और विविधता सुनिश्चित करता है।",
+            "यह शिक्षकों को किसी भी पाठ्यपुस्तक का उपयोग करने से बचने में मदद करता है।",
+            "यह विद्यार्थियों को अधिगम गतिविधियाँ छोड़ने की अनुमति देता है।"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091631515",
+          "qEn": "What is unit planning in English language pedagogy?",
+          "qHi": "अंग्रेज़ी भाषा शिक्षण-विधि में इकाई योजना क्या है?",
+          "optEn": [
+            "Theme based lessons",
+            "Writing daily reflections",
+            "Selecting textbooks",
+            "Assigning homework"
+          ],
+          "optHi": [
+            "विषय-आधारित पाठ",
+            "दैनिक चिंतन लिखना",
+            "पाठ्यपुस्तकों का चयन करना",
+            "गृहकार्य देना"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091553564",
+          "qEn": "What does the scope of Social Studies primarily include?",
+          "qHi": "सामाजिक विज्ञान के क्षेत्र में मुख्य रूप से क्या शामिल है?",
+          "optEn": [
+            "Studying history, geography, civics, economics, culture",
+            "Teaching only selected political events",
+            "Learning concepts from maths and science subjects",
+            "Focusing mainly on memorising dates and names"
+          ],
+          "optHi": [
+            "इतिहास, भूगोल, नागरिक शास्त्र, अर्थशास्त्र और संस्कृति का अध्ययन",
+            "केवल चुनी हुई राजनीतिक घटनाओं को पढ़ाना",
+            "गणित और विज्ञान विषयों से अवधारणाएँ सीखना",
+            "मुख्यतः तिथियाँ और नाम याद करने पर ध्यान देना"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091682183",
+          "qEn": "Which approach best enables students to critically evaluate contemporary social issues through Social Studies textbooks?",
+          "qHi": "कौन-सा दृष्टिकोण विद्यार्थियों को सामाजिक विज्ञान की पाठ्यपुस्तकों के माध्यम से समकालीन सामाजिक मुद्दों का आलोचनात्मक मूल्यांकन करने में सबसे अच्छी तरह सक्षम बनाता है?",
+          "optEn": [
+            "Listing textbook facts",
+            "Isolating textbook chapters",
+            "Case studies and discussion",
+            "Thematic memorization"
+          ],
+          "optHi": [
+            "पाठ्यपुस्तक के तथ्यों की सूची बनाना",
+            "पाठ्यपुस्तक के अध्यायों को अलग-थलग करना",
+            "केस स्टडी और चर्चा",
+            "विषयगत रटंत"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091558845",
+          "qEn": "Which instructional component is strengthened when a low-exposure primary teacher supplements lessons with structured online computer-lab activities?",
+          "qHi": "जब कोई कम-अनावरण (लो-एक्सपोज़र) वाला प्राथमिक शिक्षक पाठों को संरचित ऑनलाइन कंप्यूटर-लैब गतिविधियों से पूरक करता है, तो कौन-सा अनुदेशात्मक घटक सुदृढ़ होता है?",
+          "optEn": [
+            "Course book grading",
+            "Classroom-based instruction",
+            "Standardized test scores",
+            "Teacher’s grammar knowledge"
+          ],
+          "optHi": [
+            "पाठ्यपुस्तक ग्रेडिंग",
+            "कक्षा-आधारित शिक्षण",
+            "मानकीकृत परीक्षा अंक",
+            "शिक्षक का व्याकरण ज्ञान"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091623856",
+          "qEn": "A school leadership team wants to evaluate the success of a new initiative to foster a positive, inclusive culture. Which strategy best ensures the measurement is valid and meaningful?",
+          "qHi": "एक विद्यालय नेतृत्व टीम सकारात्मक, समावेशी संस्कृति को बढ़ावा देने की एक नई पहल की सफलता का मूल्यांकन करना चाहती है। कौन-सी रणनीति यह सुनिश्चित करती है कि मापन वैध और सार्थक हो?",
+          "optEn": [
+            "Reviewing textbook purchases",
+            "Observation, discussion & performance",
+            "Surveying only students",
+            "Collecting attendance records"
+          ],
+          "optHi": [
+            "पाठ्यपुस्तक खरीद की समीक्षा करना",
+            "अवलोकन, चर्चा और प्रदर्शन",
+            "केवल विद्यार्थियों का सर्वेक्षण करना",
+            "उपस्थिति रिकॉर्ड एकत्र करना"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091622391",
+          "qEn": "Which of the following is an example of a low cost, no cost material that can be used for teaching environmental studies?",
+          "qHi": "निम्नलिखित में से कौन-सा पर्यावरण अध्ययन पढ़ाने के लिए प्रयोग की जा सकने वाली कम लागत, बिना लागत वाली सामग्री का उदाहरण है?",
+          "optEn": [
+            "Colored textbooks",
+            "Laboratory glassware",
+            "Digital projectors",
+            "Leaves collected from the school ground"
+          ],
+          "optHi": [
+            "रंगीन पाठ्यपुस्तकें",
+            "प्रयोगशाला की काँच की वस्तुएँ",
+            "डिजिटल प्रोजेक्टर",
+            "विद्यालय के मैदान से एकत्र की गई पत्तियाँ"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091618761",
+          "qEn": "A teacher in a secondary school wants to help students understand the significance of economic activities in society. She decides to design an interdisciplinary project that connects economic systems with cultural diversity and political processes. Which approach best reflects the scope of social studies as described in the context?",
+          "qHi": "एक माध्यमिक विद्यालय की शिक्षिका विद्यार्थियों को समाज में आर्थिक गतिविधियों का महत्व समझाने में मदद करना चाहती है। वह एक अंतःविषयक परियोजना तैयार करने का निर्णय लेती है, जो आर्थिक प्रणालियों को सांस्कृतिक विविधता और राजनीतिक प्रक्रियाओं से जोड़ती है। संदर्भ में वर्णित सामाजिक विज्ञान के क्षेत्र को कौन-सा दृष्टिकोण सबसे अच्छी तरह दर्शाता है?",
+          "optEn": [
+            "Integrating multiple themes to promote civic engagement",
+            "Focusing solely on economic theories for research",
+            "Emphasizing memorization of economic definitions",
+            "Teaching economic activities in isolation from other areas"
+          ],
+          "optHi": [
+            "नागरिक सहभागिता को बढ़ावा देने के लिए अनेक विषयों को एकीकृत करना",
+            "अनुसंधान के लिए केवल आर्थिक सिद्धांतों पर ध्यान केंद्रित करना",
+            "आर्थिक परिभाषाएँ रटने पर बल देना",
+            "आर्थिक गतिविधियों को अन्य क्षेत्रों से अलग करके पढ़ाना"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        }
+      ]
+    },
+    {
+      "name": "Discipline 5",
+      "nameHi": "डिसिप्लिन 5",
+      "questions": [
+        {
+          "qid": "4410091550458",
+          "qEn": "Which area of development is demonstrated when a learner consistently displays punctuality, honesty, and responsibility in school?",
+          "qHi": "जब कोई शिक्षार्थी विद्यालय में लगातार समय की पाबंदी, ईमानदारी और ज़िम्मेदारी प्रदर्शित करता है, तो विकास का कौन-सा क्षेत्र प्रदर्शित होता है?",
+          "optEn": [
+            "Cognitive domain",
+            "Psychomotor domain",
+            "Social domain",
+            "Affective domain"
+          ],
+          "optHi": [
+            "संज्ञानात्मक क्षेत्र",
+            "मनोगत्यात्मक क्षेत्र",
+            "सामाजिक क्षेत्र",
+            "भावात्मक क्षेत्र"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091606740",
+          "qEn": "Which of the following is an example of a cultural practice that reflects patriarchal values ?",
+          "qHi": "निम्नलिखित में से कौन-सा पितृसत्तात्मक मूल्यों को दर्शाने वाली सांस्कृतिक प्रथा का उदाहरण है?",
+          "optEn": [
+            "Architecture",
+            "Costume",
+            "Technology",
+            "Ecology"
+          ],
+          "optHi": [
+            "वास्तुकला",
+            "पोशाक",
+            "प्रौद्योगिकी",
+            "पारिस्थितिकी"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091687928",
+          "qEn": "Which of the following best describes the nature of science as a discipline?",
+          "qHi": "निम्नलिखित में से कौन-सा एक विषय के रूप में विज्ञान की प्रकृति का सबसे अच्छा वर्णन करता है?",
+          "optEn": [
+            "It relies on observation and experimentation of nature.",
+            "It cannot be tested or scientifically verified.",
+            "It ignores facts and focuses only on imagination.",
+            "It is based only on personal opinions and beliefs."
+          ],
+          "optHi": [
+            "यह प्रकृति के अवलोकन और प्रयोग पर निर्भर करता है।",
+            "इसका परीक्षण या वैज्ञानिक सत्यापन नहीं किया जा सकता।",
+            "यह तथ्यों की उपेक्षा करता है और केवल कल्पना पर केंद्रित है।",
+            "यह केवल व्यक्तिगत मतों और विश्वासों पर आधारित है।"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091619149",
+          "qEn": "During a unit on scientific inquiry, students make repeated observations of plants bending towards light and propose that all plants exhibit this behaviour. Which core process of scientific reasoning are they applying?",
+          "qHi": "वैज्ञानिक अन्वेषण की एक इकाई के दौरान, विद्यार्थी पौधों को प्रकाश की ओर झुकते हुए बार-बार देखते हैं और प्रस्ताव रखते हैं कि सभी पौधे यह व्यवहार प्रदर्शित करते हैं। वे वैज्ञानिक तर्क की कौन-सी मूल प्रक्रिया लागू कर रहे हैं?",
+          "optEn": [
+            "Statistical reasoning",
+            "Inductive reasoning",
+            "Retroductive reasoning",
+            "Deductive reasoning"
+          ],
+          "optHi": [
+            "सांख्यिकीय तर्क",
+            "आगमनात्मक तर्क",
+            "प्रतीपगामी (रेट्रोडक्टिव) तर्क",
+            "निगमनात्मक तर्क"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091633786",
+          "qEn": "Which concept involves respecting differences among students?",
+          "qHi": "कौन-सी अवधारणा विद्यार्थियों के बीच भिन्नताओं का सम्मान करने से संबंधित है?",
+          "optEn": [
+            "Homogeneity",
+            "Diversity",
+            "Competition",
+            "Discipline"
+          ],
+          "optHi": [
+            "समरूपता",
+            "विविधता",
+            "प्रतिस्पर्धा",
+            "अनुशासन"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091692826",
+          "qEn": "A teacher shows a short video of a conversation to demonstrate correct pronunciation and body language. This teaching aid can be best classified as?",
+          "qHi": "एक शिक्षक सही उच्चारण और शारीरिक भाषा का प्रदर्शन करने के लिए बातचीत का एक छोटा वीडियो दिखाता है। इस शिक्षण सहायक सामग्री को सबसे अच्छी तरह किस रूप में वर्गीकृत किया जा सकता है?",
+          "optEn": [
+            "Visual aid",
+            "Audio-visual aid",
+            "Textual aid",
+            "Audio aid"
+          ],
+          "optHi": [
+            "दृश्य सामग्री",
+            "श्रव्य-दृश्य सामग्री",
+            "पाठ्य सामग्री",
+            "श्रव्य सामग्री"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091589313",
+          "qEn": "Linguistic diversity in Indian classrooms can be addressed effectively by:",
+          "qHi": "भारतीय कक्षाओं में भाषाई विविधता को किसके द्वारा प्रभावी ढंग से संबोधित किया जा सकता है:",
+          "optEn": [
+            "Enforcing a single language of instruction strictly",
+            "Limiting classroom discussion and interaction",
+            "Discouraging use of home languages",
+            "Using multilingual strategies"
+          ],
+          "optHi": [
+            "अनुदेश की एकल भाषा को कठोरता से लागू करना",
+            "कक्षा चर्चा और अंतःक्रिया को सीमित करना",
+            "घर की भाषाओं के उपयोग को हतोत्साहित करना",
+            "बहुभाषी रणनीतियों का उपयोग करना"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091564670",
+          "qEn": "How do classroom processes reproduce gender in school?",
+          "qHi": "कक्षा की प्रक्रियाएँ विद्यालय में लिंग (जेंडर) को कैसे पुनरुत्पादित करती हैं?",
+          "optEn": [
+            "Girls leading science experiments",
+            "Boys handling art and crafts only",
+            "Mixed gender teams for all projects",
+            "Separate seating for boys and girls"
+          ],
+          "optHi": [
+            "लड़कियों द्वारा विज्ञान प्रयोगों का नेतृत्व करना",
+            "लड़कों द्वारा केवल कला और शिल्प कार्य करना",
+            "सभी परियोजनाओं के लिए मिश्रित लिंग वाली टीमें",
+            "लड़के और लड़कियों के लिए अलग बैठक व्यवस्था"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091616924",
+          "qEn": "A research analyst needs a four-digit prime number for a new encryption algorithm. Which of the following numbers is most suitable?",
+          "qHi": "एक शोध विश्लेषक को नए एन्क्रिप्शन एल्गोरिदम के लिए चार अंकों की अभाज्य संख्या चाहिए। निम्नलिखित में से कौन-सी संख्या सबसे उपयुक्त है?",
+          "optEn": [
+            "2462",
+            "2448",
+            "2371",
+            "2382"
+          ],
+          "optHi": [
+            "2462",
+            "2448",
+            "2371",
+            "2382"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091548249",
+          "qEn": "Which of the following is not an importance of social science?",
+          "qHi": "निम्नलिखित में से कौन-सा सामाजिक विज्ञान का महत्व नहीं है?",
+          "optEn": [
+            "Proves scientific experiments in social contexts",
+            "Promotes understanding of human behaviour",
+            "Interdisciplinary in its conceptual nature",
+            "Provides equitable solutions for marginalised groups"
+          ],
+          "optHi": [
+            "सामाजिक संदर्भों में वैज्ञानिक प्रयोगों को सिद्ध करता है",
+            "मानव व्यवहार की समझ को बढ़ावा देता है",
+            "अपनी संकल्पनात्मक प्रकृति में अंतःविषयक है",
+            "हाशिए पर रहने वाले समूहों के लिए न्यायसंगत समाधान प्रदान करता है"
+          ],
+          "ans": 0,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091662520",
+          "qEn": "What is the standard form of a rational number $\\frac{p}{q}$?",
+          "qHi": "परिमेय संख्या $\\frac{p}{q}$ का मानक रूप क्या है?",
+          "optEn": [
+            "p is greater than q in value",
+            "p and q are both positive integers",
+            "p and q are non-zero numbers",
+            "q is positive and p and q are co-primes"
+          ],
+          "optHi": [
+            "p का मान q से अधिक है",
+            "p और q दोनों धनात्मक पूर्णांक हैं",
+            "p और q अशून्य संख्याएँ हैं",
+            "q धनात्मक है तथा p और q सह-अभाज्य हैं"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091617303",
+          "qEn": "A teacher observes that classroom interactions often result in boys dominating science discussions. What instructional adjustment can best promote equitable participation?",
+          "qHi": "एक शिक्षक देखता है कि कक्षा की अंतःक्रियाओं में अक्सर लड़के विज्ञान चर्चाओं पर हावी हो जाते हैं। कौन-सा शिक्षण-समायोजन समान भागीदारी को सबसे अच्छी तरह बढ़ावा दे सकता है?",
+          "optEn": [
+            "Allowing spontaneous contributions in class",
+            "Designing turn-taking protocols during group discussions",
+            "Assigning boys to lead science discussions in classroom",
+            "Grouping students by their ability level"
+          ],
+          "optHi": [
+            "कक्षा में सहज योगदान की अनुमति देना",
+            "समूह चर्चाओं के दौरान बारी-बारी से बोलने के नियम बनाना",
+            "कक्षा में विज्ञान चर्चाओं का नेतृत्व करने के लिए लड़कों को नियुक्त करना",
+            "विद्यार्थियों को उनकी योग्यता स्तर के आधार पर समूहबद्ध करना"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091688027",
+          "qEn": "Which of the following best describes gender equality in schools?",
+          "qHi": "निम्नलिखित में से कौन-सा विद्यालयों में लैंगिक समानता का सबसे अच्छा वर्णन करता है?",
+          "optEn": [
+            "Having separate classrooms for boys and girls",
+            "Providing equal learning opportunities to all genders",
+            "Allowing participation in sports only for boys",
+            "Giving higher academic marks only to girls"
+          ],
+          "optHi": [
+            "लड़के और लड़कियों के लिए अलग-अलग कक्षाएँ रखना",
+            "सभी लिंगों को समान सीखने के अवसर प्रदान करना",
+            "खेलों में भागीदारी की अनुमति केवल लड़कों को देना",
+            "केवल लड़कियों को अधिक शैक्षणिक अंक देना"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091619163",
+          "qEn": "An eco-club’s kitchen garden is struggling due to water shortage. Which science club collaboration would exemplify holistic science appreciation and problem-solving?",
+          "qHi": "एक इको-क्लब का रसोई बगीचा जल की कमी के कारण संघर्ष कर रहा है। कौन-सा विज्ञान क्लब सहयोग समग्र विज्ञान-प्रशंसा और समस्या-समाधान का उदाहरण होगा?",
+          "optEn": [
+            "Switching to synthetic plants for demonstration",
+            "Requesting additional funds from management",
+            "Designing a water harvesting system with club members",
+            "Scheduling more garden visits without changes"
+          ],
+          "optHi": [
+            "प्रदर्शन के लिए कृत्रिम पौधों पर स्विच करना",
+            "प्रबंधन से अतिरिक्त धन का अनुरोध करना",
+            "क्लब के सदस्यों के साथ जल संचयन प्रणाली तैयार करना",
+            "बिना किसी बदलाव के बगीचे के अधिक दौरे निर्धारित करना"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091581980",
+          "qEn": "Which of the following best describes economic exclusion?",
+          "qHi": "निम्नलिखित में से कौन-सा आर्थिक बहिष्करण का सबसे अच्छा वर्णन करता है?",
+          "optEn": [
+            "Exclusion due to alienation from political processes and inequality before the law",
+            "Exclusion based on the distribution of resources, wealth, and access to markets",
+            "Exclusion resulting from lack of citizenship status and deprivation of basic rights",
+            "Exclusion due to lack of political rights, freedom of expression, and political participation"
+          ],
+          "optHi": [
+            "राजनीतिक प्रक्रियाओं से अलगाव और कानून के समक्ष असमानता के कारण बहिष्करण",
+            "संसाधनों, संपत्ति और बाज़ारों तक पहुँच के वितरण पर आधारित बहिष्करण",
+            "नागरिकता की स्थिति के अभाव और बुनियादी अधिकारों से वंचित किए जाने के परिणामस्वरूप बहिष्करण",
+            "राजनीतिक अधिकारों, अभिव्यक्ति की स्वतंत्रता और राजनीतिक भागीदारी के अभाव के कारण बहिष्करण"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091633963",
+          "qEn": "Which of the following correctly expresses 0.25 as a fraction?",
+          "qHi": "निम्नलिखित में से कौन-सा 0.25 को भिन्न के रूप में सही ढंग से व्यक्त करता है?",
+          "optEn": [
+            "$\\frac{1}{2}$",
+            "$\\frac{2}{5}$",
+            "$\\frac{3}{8}$",
+            "$\\frac{1}{4}$"
+          ],
+          "optHi": [
+            "$\\frac{1}{2}$",
+            "$\\frac{2}{5}$",
+            "$\\frac{3}{8}$",
+            "$\\frac{1}{4}$"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091626497",
+          "qEn": "When aiming for formative assessment that encourages student autonomy and ongoing improvement, which evaluation method is most effective?",
+          "qHi": "जब विद्यार्थी स्वायत्तता और निरंतर सुधार को प्रोत्साहित करने वाले रचनात्मक मूल्यांकन (फ़ॉर्मेटिव असेसमेंट) का लक्ष्य हो, तो कौन-सी मूल्यांकन विधि सबसे प्रभावी है?",
+          "optEn": [
+            "Peer grading with rubric-based scoring",
+            "End-of-term cumulative examination",
+            "Teacher-only written feedback after tasks",
+            "Self-assessment checklists with guided criteria"
+          ],
+          "optHi": [
+            "रूब्रिक-आधारित अंकन के साथ सहपाठी ग्रेडिंग",
+            "सत्र-अंत का संचयी परीक्षण",
+            "कार्यों के बाद केवल शिक्षक द्वारा लिखित प्रतिक्रिया",
+            "निर्देशित मानदंडों के साथ आत्म-मूल्यांकन चेकलिस्ट"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091551092",
+          "qEn": "Which of the following best describes an activity-based approach in mathematics teaching?",
+          "qHi": "गणित शिक्षण में गतिविधि-आधारित दृष्टिकोण का निम्नलिखित में से कौन-सा सबसे अच्छा वर्णन करता है?",
+          "optEn": [
+            "Providing only lectures and demonstrations to the whole class",
+            "Engaging students in hands-on activities to explore concepts",
+            "Giving students notes to read silently without discussion",
+            "Asking students to memorize formulas and rules without practice"
+          ],
+          "optHi": [
+            "पूरी कक्षा को केवल व्याख्यान और प्रदर्शन देना",
+            "अवधारणाओं की खोज के लिए विद्यार्थियों को हाथों से की जाने वाली गतिविधियों में संलग्न करना",
+            "विद्यार्थियों को बिना चर्चा के चुपचाप पढ़ने के लिए नोट्स देना",
+            "विद्यार्थियों से बिना अभ्यास के सूत्र और नियम याद करने को कहना"
+          ],
+          "ans": 1,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091708489",
+          "qEn": "Gender-balanced visuals in textbooks are important because they help to:",
+          "qHi": "पाठ्यपुस्तकों में लैंगिक रूप से संतुलित चित्र इसलिए महत्वपूर्ण हैं क्योंकि वे इसमें मदद करते हैं:",
+          "optEn": [
+            "Simplify lesson objectives",
+            "Reduce reading difficulty",
+            "Increase syllabus coverage",
+            "Challenge stereotypical roles"
+          ],
+          "optHi": [
+            "पाठ उद्देश्यों को सरल बनाना",
+            "पढ़ने की कठिनाई घटाना",
+            "पाठ्यक्रम का कवरेज बढ़ाना",
+            "रूढ़िवादी भूमिकाओं को चुनौती देना"
+          ],
+          "ans": 3,
+          "solEn": "",
+          "solHi": ""
+        },
+        {
+          "qid": "4410091633888",
+          "qEn": "A school principal wants to improve students’ scientific temper and performance in science subjects while working under budget constraints and limited storage space. Which feature of science kits most effectively addresses these challenges?",
+          "qHi": "एक विद्यालय के प्रधानाचार्य बजट की सीमाओं और सीमित भंडारण स्थान में काम करते हुए विज्ञान विषयों में विद्यार्थियों की वैज्ञानिक अभिवृत्ति और प्रदर्शन में सुधार करना चाहते हैं। विज्ञान किट की कौन-सी विशेषता इन चुनौतियों को सबसे प्रभावी ढंग से संबोधित करती है?",
+          "optEn": [
+            "Limiting activities to teacher demonstrations only",
+            "Requirement of advanced laboratory infrastructure",
+            "Portability and use of low-cost, indigenous materials",
+            "Dependence on imported apparatus"
+          ],
+          "optHi": [
+            "गतिविधियों को केवल शिक्षक प्रदर्शन तक सीमित करना",
+            "उन्नत प्रयोगशाला अवसंरचना की आवश्यकता",
+            "कम लागत वाली, स्वदेशी सामग्री की सुवाह्यता और उपयोग",
+            "आयातित उपकरणों पर निर्भरता"
+          ],
+          "ans": 2,
+          "solEn": "",
+          "solHi": ""
+        }
+      ]
+    }
+  ]
+}

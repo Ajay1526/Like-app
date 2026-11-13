@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Result Analysis</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif;font-size:13px}
+body{margin:0;background:#f0f0f0;color:#333}
+.top{background:#2b2b2b;color:#fff;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.top a{color:#ffcc00}
+.wrap{max-width:1000px;margin:15px auto;padding:0 10px}
+.card{background:#fff;border:1px solid #ccc;padding:12px;margin-bottom:12px;border-radius:4px;overflow-x:auto}
+h3{margin:0 0 8px;color:#31708f}
+.cards{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:8px;}
+.k{background:#e8f0f8;padding:10px;text-align:center;border-radius:4px;border:1px solid #d0e1f9}
+.k b{display:block;font-size:16px;margin-top:4px}
+.k span.sub-val{display:block;font-size:11px;color:#555;margin-top:2px;border-top:1px dashed #bcdff5;padding-top:2px;}
+/* Paired Left/Right cards */
+.pc{display:grid;grid-template-columns:1fr 1fr;background:#e8f0f8;border:1px solid #d0e1f9;border-radius:4px}
+.ps{padding:10px 6px;text-align:center;min-width:0}
+.ps+.ps{border-left:1px solid #bcdff5}
+.ps .pl{font-size:12px;color:#444}
+.ps b{display:block;font-size:16px;margin-top:4px}
+.ps span.sub-val{display:block;font-size:11px;color:#555;margin-top:4px;border-top:1px dashed #bcdff5;padding-top:2px}
+table{width:100%;border-collapse:collapse}
+th{background:#c6d9f1;border:1px solid #8ea9db;padding:6px}
+td{border:1px solid #ccc;padding:6px;text-align:center}
+.c{color:#2e7d32;font-weight:bold}.w{color:#d9534f;font-weight:bold}.u{color:#888}
+.bar{height:6px;border-radius:3px;margin-top:3px}
+.me{background:#33a6ea}.tp{background:#2ecc71}.av{background:#f0ad4e}
+button,select{padding:5px 12px;border:1px solid #bbb;background:#fff;cursor:pointer;border-radius:3px}
+button.s{background:#33a6ea;color:#fff;border:0}
+.sol{background:#fffde7;border:1px solid #ffe082;padding:12px;text-align:left;line-height:1.6;white-space:pre-wrap}
+.o{padding:3px 6px;border-radius:3px;margin:3px 0}
+.o.ok{background:#d4edda}.o.bad{background:#f8d7da}
+.qimg{max-width:100%;height:auto;display:block;margin:6px 0 12px}
+.oimg{max-width:100%;max-height:220px;height:auto;vertical-align:middle}
+.imgerr{color:#c00;font-size:11px}
+.lg span{display:inline-block;width:12px;height:12px;vertical-align:middle;margin:0 3px 0 10px}
+/* Color coding: You=blue, Average=green, Topper=yellow */
+.cy{color:#33a6ea;font-weight:bold}.ca{color:#6cc24a;font-weight:bold}.ct{color:#c79100;font-weight:bold}
+.ca,.ct,.cy{font-size:inherit}
+.legend{font-size:12px;margin-bottom:8px;color:#555}
+.cmp{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.cmp h3{margin:0}
+.cmp select,.cmp input{padding:4px 6px;font-size:12px}
+.cmp input{width:60px;border:1px solid #bbb;border-radius:3px}
+/* Compact question-wise table (phone) */
+.qtab th,.qtab td{padding:4px 2px!important;font-size:11px}
+.qtab th{font-size:10px}
+.qtab button{padding:3px 6px;font-size:10px}
+.card select#qSec{max-width:100%}
+/* Compact time column */
+.tc{width:95px;max-width:95px;padding:4px!important;text-align:left}
+.tc *{white-space:nowrap;font-size:10px;line-height:1.2}
+.tc div[style*="flex"]{flex-direction:column;gap:1px}
+</style><link rel="stylesheet" href="app.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head><body>
+<div class="top">
+  <b>Result Analysis</b>
+  <span style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <select id="att" onchange="render()" style="display:none"></select>
+    <select id="lg" onchange="render()"><option value="en">English</option><option value="hi">हिंदी</option></select>
+    <a href="javascript:void(0)" onclick="restartTest()" style="color:#d93025!important">🔄 Restart</a>
+    <a href="home.html">🏠</a> <a href="my-progress.html">📈</a>
+  </span>
+</div>
+<div class="wrap" id="root"></div>
+
+<div class="wrap">
+  <div class="card p-3 shadow-sm bg-light">
+    <h5 class="text-primary mb-3" style="color:#31708f; margin-bottom:8px;">📁 Official Updates & Cut-Off</h5>
+    <p class="mb-2" style="margin-bottom:6px;"><b>Final Cut-Off:</b> Update your exam cut-off marks here (e.g., UR: 75, OBC: 70)</p>
+    <a href="#" target="_blank" style="color:#33a6ea; text-decoration:none; font-weight:bold;">
+      Visit Official e-Dossier Portal →
+    </a>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let D=null,A=[];
+let qFilterV='all';
+let qSecSel='0';   // Question-wise table के लिए चुना हुआ subject ('all' = सभी)
+let cmpMode='avg',cmpPct=10;
+let DEF=null;try{DEF=JSON.parse(localStorage.getItem('examData'))}catch(e){}
+function dataFor(a){
+  try{if(a&&a.dataKey){const x=localStorage.getItem(a.dataKey);if(x)return JSON.parse(x)}}catch(e){}
+  return DEF;
+}
+D=DEF;
+try{A=JSON.parse(localStorage.getItem('examAttempts'))||[]}catch(e){}
+const fmt=s=>{s=Math.round(s||0);return Math.floor(s/60)+'m '+String(s%60).padStart(2,'0')+'s'};
+const sum=a=>a.reduce((x,y)=>x+y,0);
+
+if(!A.length){
+  $('root').innerHTML='<div class="card">No attempts found. Please submit a test first.</div>';
+} else {
+ const want=location.hash.slice(1)||localStorage.getItem('lastAttempt');
+ $('att').innerHTML=A.map(a=>`<option value="${a.id}">${a.name} – ${a.date} (Score: ${a.score})</option>`).join('');
+ if(A.some(a=>String(a.id)===want))$('att').value=want; else $('att').value=A[A.length-1].id;
+ render();
+}
+
+function secT(a,i){return (a && a.sections && a.sections[i]) ? sum(a.sections[i].q.map(x=>x.t||0)) : 0}
+
+function getSecCorrectWrongTimes(attemptObj, secIdx) {
+  let cTime = 0, wTime = 0;
+  if(attemptObj && attemptObj.sections && attemptObj.sections[secIdx] && attemptObj.sections[secIdx].q) {
+    attemptObj.sections[secIdx].q.forEach(x => {
+      if(x.a >= 0) {
+        if(x.a === x.c) cTime += (x.t || 0);
+        else wTime += (x.t || 0);
+      }
+    });
+  }
+  return {cTime, wTime};
+}
+
+function getCorrectWrongTimes(attemptObj) {
+  let cTime = 0, wTime = 0;
+  if(attemptObj && attemptObj.sections) {
+    attemptObj.sections.forEach((s, i) => {
+      let res = getSecCorrectWrongTimes(attemptObj, i);
+      cTime += res.cTime;
+      wTime += res.wTime;
+    });
+  }
+  return {cTime, wTime};
+}
+
+function render(){
+ const h=$('lg').value==='hi', me=A.find(a=>String(a.id)===$('att').value);
+ if(!me || !me.sections){
+   $('root').innerHTML='<div class="card">Invalid attempt data found. Please take a new test.</div>';
+   return;
+ }
+ D=dataFor(me);
+ 
+ let c=0, w=0, u=0, attCount=0;
+ me.sections.forEach(s=>s.q.forEach(x=>{if(x.a<0)u++;else{attCount++;if(x.a===x.c)c++;else w++}}));
+ 
+ const accuracy = attCount > 0 ? ((c / attCount) * 100).toFixed(1) : 0;
+ let actualScore = (c * 1) - (w * 0.25);
+ actualScore = Math.round(actualScore * 100) / 100;
+
+ const {cTime: myCTime, wTime: myWTime} = getCorrectWrongTimes(me);
+ const top=A.reduce((b,a)=>a.score>b.score?a:b,A[0]);
+ const {cTime: topCTime, wTime: topWTime} = getCorrectWrongTimes(top);
+
+ const avgS=i=>sum(A.map(a=>(a.sections && a.sections[i])?secT(a,i):0))/A.length;
+ const avgQ=(i,j)=>sum(A.map(a=>(a.sections && a.sections[i] && a.sections[i].q[j])?(a.sections[i].q[j].t||0):0))/A.length;
+ 
+ const tot=sum(me.sections.map((s,i)=>secT(me,i)));
+ const topTot=sum(top.sections.map((s,i)=>secT(top,i)));
+ const avgTot=sum(A.map(a=>sum(a.sections.map((s,i)=>secT(a,i)))))/A.length;
+
+ const avgScore = sum(A.map(a=>a.score))/A.length;
+ const avgAcc = sum(A.map(a=>{
+   let ac=0, at=0;
+   a.sections.forEach(s=>s.q.forEach(x=>{if(x.a>=0){at++; if(x.a===x.c)ac++;}}));
+   return at>0?(ac/at)*100:0;
+ }))/A.length;
+
+ const avgC = sum(A.map(a=>{let cnt=0; a.sections.forEach(s=>s.q.forEach(x=>{if(x.a>=0 && x.a===x.c)cnt++;})); return cnt; }))/A.length;
+ const avgW = sum(A.map(a=>{let cnt=0; a.sections.forEach(s=>s.q.forEach(x=>{if(x.a>=0 && x.a!==x.c)cnt++;})); return cnt; }))/A.length;
+ const avgU = sum(A.map(a=>{let cnt=0; a.sections.forEach(s=>s.q.forEach(x=>{if(x.a<0)cnt++;})); return cnt; }))/A.length;
+ const avgCCTime = sum(A.map(a=>getCorrectWrongTimes(a).cTime))/A.length;
+ const avgWTime = sum(A.map(a=>getCorrectWrongTimes(a).wTime))/A.length;
+
+ const topC = top.sections.reduce((acc,s)=>acc + s.q.filter(x=>x.a>=0 && x.a===x.c).length, 0);
+ const topW = top.sections.reduce((acc,s)=>acc + s.q.filter(x=>x.a>=0 && x.a!==x.c).length, 0);
+ const topU = top.sections.reduce((acc,s)=>acc + s.q.filter(x=>x.a<0).length, 0);
+ const topAcc = (topC + topW) > 0 ? ((topC / (topC + topW))*100).toFixed(1) : 0;
+ 
+ let sortedAttempts=[...A].sort((x,y)=>y.score-x.score);
+ let rank=sortedAttempts.findIndex(a=>a.id===me.id)+1;
+
+ // Marks % = net score / total marks (1 mark per question)
+ const totalQ = c + w + u;
+ const pct = v => totalQ > 0 ? ((v / totalQ) * 100).toFixed(1) : '0.0';
+ const myMarksPct = pct(actualScore), avgMarksPct = pct(avgScore), topMarksPct = pct(top.score);
+
+ const L=h?{cmpWith:'तुलना करें',cmpAvg:'औसत छात्र',cmpTop:'टॉपर छात्र',cmpAvgP:'औसत छात्र + Custom %',cmpTopM:'टॉपर छात्र − Custom %',sc:'आपका स्कोर (कट-पिट कर)',co:'सही',wr:'गलत',un:'अनअटेम्प्टेड',tt:'कुल समय',tp:'टॉपर स्कोर',av:'औसत छात्र समय',n:'कुल छात्र',sec:'सेक्शन-वार समय और विश्लेषण',q:'प्रश्न-वार समय',sub:'सेक्शन',you:'आपका',avL:'औसत',topT:'टॉपर',st:'स्थिति',sol:'हल देखें',hide:'हल छुपाएं',ans:'सही उत्तर',your:'आपका उत्तर',none:'कोई नहीं',qn:'प्रश्न',nt:'हल उपलब्ध नहीं है।',rank:'अनुमानित रैंक (Rank)',acc:'एक्यूरेसी (Accuracy)',allQ:'सभी प्रश्न',corr:'सही',wrg:'गलत',unatt:'अनअटेम्प्टेड',slow:'औसत से ज़्यादा समय',fast:'औसत से कम समय',cTime:'सही उत्तर का समय', wTime:'गलत उत्तर का समय', avgCorrP:'औसत सही %', avgWrongP:'औसत गलत %', avgAttP:'औसत प्रयास %', timeLayout:'समय (आपका / औसत / टॉपर)', secTimeLayout:'समय (Your / Avg / Top)'}
+  :{cmpWith:'Comparison With',cmpAvg:'Average Student',cmpTop:'Topper Student',cmpAvgP:'Average Student + Custom %',cmpTopM:'Topper Student − Custom %',sc:'Your Score (Net)',co:'Correct',wr:'Wrong',un:'Unattempted',tt:'Total Time',tp:'Top Score',av:'Avg Student Time',n:'Total Students',sec:'Section-wise Time & Analysis',q:'Question-wise Time',sub:'Section',you:'Your',avL:'Avg',topT:'Top',st:'Status',sol:'View Solution',hide:'Hide Solution',ans:'Correct Answer',your:'Your Answer',none:'None',qn:'Question',nt:'No solution available.',rank:'Predicted Rank',acc:'Accuracy',allQ:'All Questions',corr:'Correct',wrg:'Wrong',unatt:'Unattempted',slow:'Above Avg Time',fast:'Below Avg Time',cTime:'Correct Q. Time', wTime:'Wrong Q. Time', avgCorrP:'Avg Correct %', avgWrongP:'Avg Wrong %', avgAttP:'Avg Attempt %', timeLayout:'Time (Your / Avg / Top)', secTimeLayout:'Time (Your / Avg / Top)'};
+
+ const qFilterVal=qFilterV;
+ const fOpts=[['all',L.allQ],['correct',L.corr],['wrong',L.wrg],['unattempted',L.unatt],['slow',L.slow],['fast',L.fast]];
+ const secName=(s)=>h?(s.nameHi||s.name):s.name;
+ 
+ // Colored legend helpers (Average = green, Topper = yellow)
+ const tlHTML=h?'समय (<span class="cy">आपका</span> / <span class="ca">औसत</span> / <span class="ct">टॉपर</span>)':'Time (<span class="cy">You</span> / <span class="ca">Avg</span> / <span class="ct">Top</span>)';
+ const av=(a,t)=>`<span class="ca">${a}</span> | <span class="ct">${t}</span>`;
+ const side=(t,v,cls,sub)=>`<div class="ps"><div class="pl">${t}</div><b class="${cls||''}">${v}</b><span class="sub-val">${sub}</span></div>`;
+ const pair=(l,r)=>`<div class="pc">${l}${r}</div>`;
+
+ let o=`<div class="card"><div class="legend"><span class="cy">■ ${h?'आप':'You'}</span> &nbsp; <span class="ca">■ ${h?'औसत छात्र':'Average'}</span> &nbsp; <span class="ct">■ ${h?'टॉपर':'Topper'}</span></div><div class="cards">
+ ${pair(
+   side('Your Score (Net)',actualScore,'',av(avgScore.toFixed(2),top.score)),
+   side('Marks %',myMarksPct+'%','',av(avgMarksPct+'%',topMarksPct+'%'))
+ )}
+ ${pair(
+   side('Predicted Rank','#'+rank+' / '+A.length,'',`${A.length} ${h?'छात्र':'Students'}`),
+   side('Accuracy',accuracy+'%','',av(avgAcc.toFixed(1)+'%',topAcc+'%'))
+ )}
+ ${pair(
+   side('Correct',c,'c',av(avgC.toFixed(1),topC)),
+   side('Correct Q. Time',fmt(myCTime),'',av(fmt(avgCCTime),fmt(topCTime)))
+ )}
+ ${pair(
+   side('Wrong',w,'w',av(avgW.toFixed(1),topW)),
+   side('Wrong Q. Time',fmt(myWTime),'',av(fmt(avgWTime),fmt(topWTime)))
+ )}
+ ${pair(
+   side('Unattempted',u,'u',av(avgU.toFixed(1),topU)),
+   side('Total Time',fmt(tot),'',av(fmt(avgTot),fmt(topTot)))
+ )}
+ </div></div>`;
+
+ // Section-wise table with comparison dropdown
+ const secStats=(att,i)=>{
+   let sc=0,sw=0,su=0;
+   const q=(att.sections&&att.sections[i]&&att.sections[i].q)||[];
+   q.forEach(x=>{if(x.a<0)su++;else if(x.a===x.c)sc++;else sw++;});
+   const ct=getSecCorrectWrongTimes(att,i);
+   return {c:sc,w:sw,u:su,att:sc+sw,score:Math.round((sc-sw*0.25)*100)/100,cT:ct.cTime,wT:ct.wTime,tot:secT(att,i)};
+ };
+ const isAvg=(cmpMode==='avg'||cmpMode==='avgp');
+ const factor=cmpMode==='avgp'?1+cmpPct/100:cmpMode==='topm'?Math.max(0,1-cmpPct/100):1;
+ const cmpCls=isAvg?'ca':'ct';
+ const modes=[['avg',L.cmpAvg],['top',L.cmpTop],['avgp',L.cmpAvgP],['topm',L.cmpTopM]];
+ const pctInput=(cmpMode==='avgp'||cmpMode==='topm')?` <input type="number" id="cmpPct" min="0" max="100" step="1" value="${cmpPct}" onchange="setCmp()"> %`:'';
+
+ o+=`<div class="card"><div class="cmp"><h3>${L.sec}</h3><div>${L.cmpWith}: <select id="cmpMode" onchange="setCmp()">${modes.map(m=>`<option value="${m[0]}"${m[0]===cmpMode?' selected':''}>${m[1]}</option>`).join('')}</select>${pctInput}</div></div>
+ <div class="legend"><span class="cy">■ ${h?'आप':'You'}</span> &nbsp; <span class="${cmpCls}">■ ${modes.find(m=>m[0]===cmpMode)[1].replace('Custom %',cmpPct+'%')}</span></div>
+ <table><tr><th>${L.sub}</th><th>Score</th><th>${L.acc}</th><th>Correct</th><th>Wrong</th><th>Unattempted</th><th>${L.cTime}</th><th>${L.wTime}</th><th>${h?'समय':'Time'}</th></tr>`;
+
+ me.sections.forEach((s,i)=>{
+  const m=secStats(me,i);
+  const mAcc=m.att>0?(m.c/m.att*100):0;
+  const n=A.length;
+  const ss=A.map(att=>secStats(att,i));
+  const totAtt=sum(ss.map(x=>x.att)), totC=sum(ss.map(x=>x.c));
+  const avgB={score:sum(ss.map(x=>x.score))/n,acc:totAtt>0?totC/totAtt*100:0,c:sum(ss.map(x=>x.c))/n,w:sum(ss.map(x=>x.w))/n,u:sum(ss.map(x=>x.u))/n,cT:sum(ss.map(x=>x.cT))/n,wT:sum(ss.map(x=>x.wT))/n,tot:sum(ss.map(x=>x.tot))/n};
+  const tp=secStats(top,i);
+  const topB={score:tp.score,acc:tp.att>0?tp.c/tp.att*100:0,c:tp.c,w:tp.w,u:tp.u,cT:tp.cT,wT:tp.wT,tot:tp.tot};
+  const base=isAvg?avgB:topB;
+  const kv={};
+  Object.keys(base).forEach(key=>{kv[key]=base[key]*factor});
+  kv.acc=Math.min(100,kv.acc);
+
+  const cell=(my,cm,cls)=>`<div class="${cls||''}" style="font-weight:bold">${my}</div><div class="${cmpCls}" style="font-size:11px;border-top:1px dashed #ddd;margin-top:2px;padding-top:2px">${cm}</div>`;
+
+  o+=`<tr>
+    <td><a href="javascript:void(0)" onclick="scrollToSec(${i})" style="color:#33a6ea;text-decoration:underline;cursor:pointer;"><b>${secName(s)}</b></a></td>
+    <td>${cell(m.score,(Math.round(kv.score*100)/100),'')}</td>
+    <td>${cell(mAcc.toFixed(1)+'%',kv.acc.toFixed(1)+'%','')}</td>
+    <td>${cell(m.c,kv.c.toFixed(1),'c')}</td>
+    <td>${cell(m.w,kv.w.toFixed(1),'w')}</td>
+    <td>${cell(m.u,kv.u.toFixed(1),'u')}</td>
+    <td>${cell(fmt(m.cT),fmt(kv.cT),'')}</td>
+    <td>${cell(fmt(m.wT),fmt(kv.wT),'')}</td>
+    <td>${cell(fmt(m.tot),fmt(kv.tot),'cy')}</td>
+  </tr>`;
+ });
+ o+='</table></div>';
+
+ // Question-wise tables (subject dropdown से एक-एक subject)
+ if(qSecSel!=='all' && Number(qSecSel)>=me.sections.length) qSecSel='0';
+ o+=`<div class="card" style="padding:8px 12px"><b>${L.q}</b> &nbsp; ${h?'विषय':'Subject'}: <select id="qSec" onchange="setQSec(this.value)"><option value="all"${qSecSel==='all'?' selected':''}>${h?'सभी विषय':'All Subjects'}</option>${me.sections.map((s,i)=>`<option value="${i}"${String(i)===String(qSecSel)?' selected':''}>${String(secName(s)).replace(/</g,'&lt;')}</option>`).join('')}</select> &nbsp; ${h?'प्रश्न फ़िल्टर':'Question filter'}: <select onchange="setQF(this.value)">${fOpts.map(f=>`<option value="${f[0]}"${f[0]===qFilterV?' selected':''}>${f[1]}</option>`).join('')}</select></div>`;
+ me.sections.forEach((s,i)=>{
+  if(!s || !s.q) return;
+  if(qSecSel!=='all' && String(i)!==String(qSecSel)) return;
+  let filteredQs = s.q.map((x, originalIdx) => ({x, originalIdx})).filter(({x, originalIdx}) => {
+   if(qFilterVal==='fast') return (x.t||0) < avgQ(i, originalIdx);
+   if(qFilterVal==='slow') return (x.t||0) > avgQ(i, originalIdx);
+   if(qFilterVal==='correct') return x.a === x.c;
+   if(qFilterVal==='wrong') return x.a >= 0 && x.a !== x.c;
+   if(qFilterVal==='unattempted') return x.a < 0;
+   return true;
+  });
+
+  if(filteredQs.length === 0) {
+   o+=`<div class="card" id="sec_block_${i}"><h3>${L.q} – ${secName(s)}</h3><div style="padding:10px;color:#888;text-align:center">${h?'इस फ़िल्टर में कोई प्रश्न नहीं मिला।':'No questions match this filter.'}</div></div>`;
+  } else {
+   o+=`<div class="card" id="sec_block_${i}"><h3>${L.q} – ${secName(s)}</h3><table class="qtab"><tr><th>${L.qn}</th><th>${L.st}</th><th>${L.avgCorrP}</th><th>${L.avgWrongP}</th><th>${L.avgAttP}</th><th class="tc">${tlHTML}</th><th></th></tr>`;
+   
+   filteredQs.forEach(({x, originalIdx})=>{
+    const j=originalIdx;
+    
+    let qTotal = A.length;
+    let qCorrectCount = 0, qWrongCount = 0, qAttemptCount = 0;
+    let topQTime = (top.sections && top.sections[i] && top.sections[i].q[j]) ? (top.sections[i].q[j].t || 0) : 0;
+    
+    A.forEach(attObj => {
+      if(attObj.sections && attObj.sections[i] && attObj.sections[i].q && attObj.sections[i].q[j]) {
+        let qItem = attObj.sections[i].q[j];
+        if(qItem.a >= 0) {
+          qAttemptCount++;
+          if(qItem.a === qItem.c) qCorrectCount++;
+          else qWrongCount++;
+        }
+      }
+    });
+
+    const avgCorrPct = qTotal > 0 ? ((qCorrectCount / qTotal) * 100).toFixed(1) : 0;
+    const avgWrongPct = qTotal > 0 ? ((qWrongCount / qTotal) * 100).toFixed(1) : 0;
+    const avgAttPct = qTotal > 0 ? ((qAttemptCount / qTotal) * 100).toFixed(1) : 0;
+
+    const t=topQTime;
+    const v=avgQ(i,j);
+    const st=x.a<0?`<span class="u">${L.un}</span>`:x.a===x.c?`<span class="c">${L.co}</span>`:`<span class="w">${L.wr}</span>`;
+    
+    const timeCombinedHTML = `
+      <div class="cy" style="font-size:12px; margin-bottom:2px;">${fmt(x.t)}</div>
+      <div style="display:flex; justify-content:space-between; font-size:10px; border-top:1px dashed #ddd; padding-top:2px;">
+        <span class="ca">${fmt(v)}</span>
+        <span class="ct">${fmt(t)}</span>
+      </div>
+    `;
+
+    o+=`<tr>
+      <td>${j+1}</td>
+      <td>${st}</td>
+      <td><b>${avgCorrPct}%</b></td>
+      <td><b>${avgWrongPct}%</b></td>
+      <td><b>${avgAttPct}%</b></td>
+      <td class="tc">${timeCombinedHTML}</td>
+      <td><button class="s" id="b${i}_${j}" onclick="tog(${i},${j})">${L.sol}</button></td>
+    </tr>
+    <tr id="r${i}_${j}" style="display:none"><td colspan="7">${solHTML(i,j,x,h,L)}</td></tr>`});
+   o+='</table></div>';
+  }
+ });
+ 
+ const open=[...document.querySelectorAll('[id^=r][style*="table-row"]')].map(e=>e.id);
+ $('root').innerHTML=o;
+ if(typeof renderMathInElement==='function'){try{renderMathInElement($('root'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}}
+ window._L=L;
+ open.forEach(id=>{const e=$(id);if(e){e.style.display='table-row';$('b'+id.slice(1)).textContent=L.hide}});
+}
+
+
+// ---------- Images in questions/options (fields: img, imgEn, imgHi, optImg) ----------
+function qImgSrc(q, l) { return ((l === 'hi' ? (q.imgHi || q.img) : (q.imgEn || q.img)) || ''); }
+function imgTag(src, cls) {
+  return '<img class="' + cls + '" src="' + src + '" alt="" onerror="this.outerHTML=\'<span class=imgerr>[image नहीं मिली: \'+this.getAttribute(\'src\')+\']</span>\'">';
+}
+function optInner(q, k, x) {
+  const im = q.optImg && q.optImg[k];
+  if (!im) return x;
+  const t = /^(option|विकल्प)\s*\d+$/i.test(String(x).trim()) ? '(' + (k + 1) + ')' : x;
+  return t + ' ' + imgTag(im, 'oimg');
+}
+
+function solHTML(i,j,x,h,L){
+ const secObj=D&&D.sections&&D.sections[i];
+ const q=secObj&&secObj.questions?secObj.questions[j]:null;
+ if(!q)return L.nt;
+ const opts=(h?q.optHi:q.optEn).map((t,k)=>`<div class="o ${k===q.ans?'ok':(k===x.a?'bad':'')}">${String.fromCharCode(65+k)}. ${optInner(q,k,t.replace(/</g,'&lt;'))}${k===q.ans?' ✔':''}${k===x.a?' ◀ '+L.your:''}</div>`).join('');
+ const sol=(h?q.solHi:q.solEn)||'';
+ return `<div class="sol"><b>Q.${j+1}) ${(h?q.qHi:q.qEn).replace(/</g,'&lt;')}</b>${qImgSrc(q,h?'hi':'en')?imgTag(qImgSrc(q,h?'hi':'en'),'qimg'):''}${opts}<div style="margin-top:6px"><b>${L.ans}:</b> ${String.fromCharCode(65+q.ans)} &nbsp; <b>${L.your}:</b> ${x.a<0?L.none:String.fromCharCode(65+x.a)}</div>${sol?`<div style="margin-top:6px">${sol.replace(/</g,'&lt;')}</div>`:''}</div>`}
+
+function setQSec(v){qSecSel=v;render()}
+function setQF(v){qFilterV=v;render()}
+
+function tog(i,j){const r=$('r'+i+'_'+j),b=$('b'+i+'_'+j),sh=r.style.display==='none';r.style.display=sh?'table-row':'none';b.textContent=sh?_L.hide:_L.sol}
+
+function scrollToSec(i) {
+  localStorage.setItem('resumeSection', i);
+  localStorage.setItem('lastAttempt', $('att').value);
+  window.location.href = 'index.html?mode=review';
+}
+
+function setCmp(){
+  cmpMode=$('cmpMode').value;
+  const p=$('cmpPct');
+  if(p){cmpPct=Math.max(0,Math.min(100,parseFloat(p.value)||0));}
+  render();
+}
+
+function restartTest() {
+  document.getElementById('restartModal').style.display = 'flex';
+}
+
+function closeRestartModal() {
+  document.getElementById('restartModal').style.display = 'none';
+}
+
+function confirmRestart() {
+  // पुराने attempts (examAttempts) जानबूझकर नहीं हटाए जाते, ताकि My Progress में history बनी रहे
+  localStorage.removeItem('lastAttempt');
+  localStorage.removeItem('resumeSection');
+  const me = A.find(a => String(a.id) === $('att').value);
+  window.location.href = 'index.html' + ((me && me.launch) ? me.launch : '');
+}
+</script>
+
+<div id="restartModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:#fff; padding:20px; border-radius:6px; width:300px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,0.2);">
+    <h4 style="margin-bottom:10px; color:#333;">रीस्टार्ट टेस्ट (Restart Test)</h4>
+    <p style="margin-bottom:20px; font-size:13px; color:#555;">क्या आप यह टेस्ट दोबारा देना चाहते हैं? नया टेस्ट शुरू होगा। आपके पिछले attempts My Progress में सुरक्षित रहेंगे।</p>
+    <div style="display:flex; justify-content:space-around;">
+      <button onclick="closeRestartModal()" style="background:#ccc; border:0; padding:6px 15px; border-radius:3px; cursor:pointer; font-weight:bold;">Cancel</button>
+      <button onclick="confirmRestart()" style="background:#d9534f; color:#fff; border:0; padding:6px 15px; border-radius:3px; cursor:pointer; font-weight:bold;">Yes, Restart</button>
+    </div>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,45 @@
+/* Shared Google-style (Material) look for all non-exam pages */
+:root{--bl:#1a73e8;--bl2:#e8f0fe;--gr:#188038;--gr2:#e6f4ea;--am:#f9ab00;--am2:#fef7e0;--rd:#d93025;--rd2:#fce8e6;--tx:#202124;--mt:#5f6368;--ln:#dadce0;--bg:#f6f8fc;--sh:0 1px 2px rgba(60,64,67,.25),0 1px 3px 1px rgba(60,64,67,.12)}
+*{font-family:'Google Sans',Roboto,'Noto Sans Devanagari',system-ui,Arial,sans-serif;font-size:inherit}
+html{font-size:14px}
+body{background:var(--bg)!important;color:var(--tx)!important;font-size:14px;padding-bottom:84px}
+.top{position:sticky;top:0;z-index:50;background:#fff!important;color:var(--tx)!important;padding:12px 16px!important;box-shadow:var(--sh)}
+.top b{font-size:19px;font-weight:500}
+.top a{color:var(--bl)!important;font-weight:500;text-decoration:none}
+.wrap{max-width:900px;margin:14px auto!important;padding:0 12px!important}
+.card{background:#fff!important;border:0!important;border-radius:16px!important;padding:14px!important;box-shadow:var(--sh);margin-bottom:12px}
+h2{font-size:18px!important;font-weight:500;color:var(--tx)!important}
+h3{color:var(--tx)!important;font-weight:500;font-size:15px}
+.tiles{gap:12px!important}
+.tile{background:#fff!important;border:0!important;border-radius:20px!important;padding:18px 14px!important;box-shadow:var(--sh)!important;transition:.15s}
+.tile:active{transform:scale(.97);background:var(--bl2)!important}
+.tile .ic{width:52px;height:52px;border-radius:50%;background:var(--bl2);display:flex!important;align-items:center;justify-content:center;font-size:26px!important;margin:0 auto 10px!important}
+.tile b{color:var(--tx)!important;font-size:15px!important;font-weight:500}
+.tile.g .ic{background:var(--gr2)}.tile.o .ic{background:var(--am2)}.tile.r .ic{background:var(--rd2)}
+.btn,button.btn{border-radius:20px!important;padding:8px 18px!important;font-weight:500!important;background:var(--bl)!important;color:#fff!important;border:0!important;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.g{background:var(--gr)!important}.btn.o{background:var(--am)!important;color:#202124!important}.btn.r{background:var(--rd)!important}
+.btn.p{background:var(--bl)!important}
+select,input[type=text],input[type=search],input:not([type]){border:1px solid var(--ln)!important;border-radius:10px!important;padding:8px 10px!important;background:#fff;color:var(--tx)}
+button{border-radius:20px}
+th{background:var(--bl2)!important;color:#174ea6;border:0!important;border-bottom:1px solid var(--ln)!important;font-weight:500}
+td{border:0!important;border-bottom:1px solid #eee!important}
+.k,.chip{background:var(--bl2)!important;border:0!important;border-radius:12px!important}
+.bm{border:0!important;background:var(--am2)!important;border-radius:12px!important}
+.best{box-shadow:0 0 0 2px var(--am),var(--sh)!important}
+.badge{background:var(--am)!important;color:#202124!important}
+.crumb a{color:var(--bl)!important;font-weight:500}
+.empty{color:var(--mt)!important}
+.row{border-bottom:1px solid #eee!important}
+details summary{color:var(--bl)!important}
+.chipbar{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:none}
+.chipbar::-webkit-scrollbar{display:none}
+.fc{flex:0 0 auto;border:1px solid var(--ln);background:#fff;color:var(--tx);padding:7px 14px;border-radius:18px;cursor:pointer;font-weight:500;white-space:nowrap}
+.fc.on{background:var(--bl2);border-color:var(--bl);color:#174ea6}
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:100;background:#fff;border-top:3px solid #1f1f1f;display:flex;justify-content:space-around;align-items:flex-end;padding:8px 2px calc(8px + env(safe-area-inset-bottom,0px))}
+.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:var(--c);font-size:13px;font-weight:700;white-space:nowrap}
+.bnav a i{width:60px;height:38px;border-radius:19px;display:flex;align-items:center;justify-content:center}
+.bnav a.on i{background:var(--c);width:68px;height:44px;border-radius:22px;box-shadow:0 0 0 3px #fff,0 0 0 6px #1f1f1f;margin-top:-6px;margin-bottom:2px}
+.bnav a.on{color:var(--c)}
+.bnav svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.bnav a.on svg{stroke:#fff;fill:#fff}
+.bnav a.on svg path{stroke-linejoin:round}

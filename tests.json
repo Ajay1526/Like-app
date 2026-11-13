@@ -1,0 +1,27 @@
+{
+  "_help": "Structure: category -> level -> post name -> year -> list of tests. Each test = {\"title\": \"...\", \"file\": \"questions.json\"} (optional \"duration\": minutes). Sectional tests are made automatically from the sections inside each file.",
+  "teaching": {
+    "NTT": {},
+    "PRT": {},
+    "TGT": {},
+    "PGT": {}
+  },
+  "nonTeaching": {
+    "10th": {},
+    "12th": {
+      "Sample Post (edit in tests.json)": {
+        "2024": [
+          {
+            "title": "Sample Full Test 1",
+            "file": "questions.json"
+          },
+          {
+            "title": "Sample Full Test 2",
+            "file": "questions_1.json"
+          }
+        ]
+      }
+    },
+    "Graduation Level": {}
+  }
+}
