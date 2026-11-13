@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Revision</title>
+<link rel="stylesheet" href="app.css?v=5">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+.qt{white-space:pre-wrap;line-height:1.6;font-weight:500;margin:6px 0}
+.o{padding:6px 10px;border-radius:10px;margin:4px 0}.o.ok{background:var(--gr2);color:#0d652d;font-weight:500}
+.meta{display:flex;flex-wrap:wrap;gap:6px;font-size:11px;color:var(--mt)}
+.meta span{background:#f1f3f4;border-radius:10px;padding:2px 8px}
+.acts{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.acts button{border:1px solid var(--ln);background:#fff;padding:5px 12px;cursor:pointer;font-size:12px}
+.sol{background:var(--am2);border-radius:10px;padding:10px;margin-top:8px;white-space:pre-wrap;line-height:1.6}
+.qimg{max-width:100%;height:auto;display:block;margin:6px 0}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.bar input{flex:1;min-width:140px}
+.lbl{font-size:12px;color:var(--mt);margin:6px 0 2px}
+</style></head><body>
+<div class="top"><b>📚 Revision</b></div>
+<div class="wrap">
+  <div class="bar"><input type="search" id="q" placeholder="प्रश्न खोजें…" oninput="F.s=this.value;F.n=20;draw()">
+    <select id="lvl" onchange="F.l=this.value;F.n=20;draw()"></select>
+    <select onchange="F.lang=this.value;draw()"><option value="en">English</option><option value="hi">हिंदी</option></select></div>
+  <div class="lbl">विषय (Subject)</div><div class="chipbar" id="subs"></div>
+  <div class="lbl">टॉपिक (Topic)</div><div class="chipbar" id="tops"></div>
+  <div id="list"><div class="card" style="text-align:center">Loading questions…</div></div>
+</div>
+<script src="nav.js?v=5"></script>
+<script>
+const $=id=>document.getElementById(id);
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const STRUCT={teaching:['NTT','PRT','TGT','PGT'],nonTeaching:['10th','12th','Graduation Level']};
+let ALL=[],F={s:'',l:'',subj:'',top:'',lang:'en',n:20},OV={};
+try{OV=JSON.parse(localStorage.getItem('examTopics'))||{}}catch(e){}
+function hashStr(t){let h=0;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return String(h)}
+const qKey=q=>q.qid?String(q.qid):'h'+hashStr(q.qEn||'');
+// ---- Topic auto-detection (optional "topic" field in JSON wins; user can also change any topic) ----
+const R={
+rea:[[/series|come in place|श्रृंखला/,'Series'],[/related to|odd one|does not belong|संबंधित|अलग/,'Analogy & Classification'],[/coded|code|कूट/,'Coding-Decoding'],[/father|mother|brother|sister|\bson\b|daughter|uncle|aunt|पिता|माता|भाई|बहन/,'Blood Relations'],[/north|south|east|west|direction|दिशा/,'Direction'],[/rank|\brow\b|tallest|taller|heavier|पंक्ति/,'Ranking & Order'],[/venn|conclusion|statement|कथन|निष्कर्ष/,'Statements & Syllogism'],[/mirror|water image|folded|cube|dice|figure|दर्पण|पासा/,'Figure & Non-verbal'],[/calendar|clock|day of the week|घड़ी/,'Calendar & Clock'],[/symbol|interchang|operation|चिह्न/,'Mathematical Operations']],
+math:[[/percent|%|प्रतिशत/,'Percentage'],[/profit|loss|discount|लाभ|हानि|छूट/,'Profit, Loss & Discount'],[/simple interest|compound|interest|ब्याज/,'Interest'],[/ratio|proportion|अनुपात/,'Ratio & Proportion'],[/average|mean|औसत/,'Average'],[/work|pipe|tank|काम|नल/,'Time & Work'],[/speed|train|km\/h|distance|चाल|ट्रेन/,'Time, Speed & Distance'],[/triangle|circle|area|perimeter|volume|radius|क्षेत्रफल|त्रिभुज|वृत्त/,'Geometry & Mensuration'],[/sin|cos|tan|trigonometr/,'Trigonometry'],[/divisible|hcf|lcm|prime|remainder|लघुत्तम|महत्तम|भाज्य/,'Number System'],[/simplif|value of|सरल/,'Simplification'],[/x\s*[+-]|equation|समीकरण/,'Algebra']],
+eng:[[/passage|comprehension/,'Comprehension'],[/error|incorrect|grammatically/,'Error Spotting'],[/fill in the blank|blank/,'Fill in the Blanks'],[/synonym|similar in meaning/,'Synonyms'],[/antonym|opposite/,'Antonyms'],[/idiom|phrase/,'Idioms & Phrases'],[/one word|substitut/,'One Word Substitution'],[/spelt|spelling/,'Spelling'],[/passive|active voice|narration|direct|indirect/,'Voice & Narration'],[/rearrange|jumbled|sentence/,'Sentence Arrangement']],
+hin:[[/संधि/,'संधि'],[/समास/,'समास'],[/पर्यायवाची|समानार्थी/,'पर्यायवाची'],[/विलोम|विपरीतार्थक/,'विलोम'],[/मुहावरा|मुहावरे|लोकोक्ति/,'मुहावरे व लोकोक्तियाँ'],[/शुद्ध|अशुद्ध|वर्तनी/,'शब्द शुद्धि'],[/एक शब्द|के लिए.*शब्द/,'एक शब्द'],[/अलंकार/,'अलंकार'],[/कारक|विभक्ति/,'कारक'],[/गद्यांश|अनुच्छेद/,'गद्यांश']],
+gk:[[/emperor|dynasty|battle|mughal|revolt|ancient|medieval|freedom|वंश|युद्ध|मुगल|आंदोलन/,'History'],[/river|mountain|plateau|climate|soil|national park|नदी|पर्वत|पठार/,'Geography'],[/constitution|article|president|parliament|amendment|संविधान|अनुच्छेद|राष्ट्रपति|संसद/,'Polity'],[/gdp|bank|tax|budget|inflation|rbi|economy|बैंक|बजट|अर्थ/,'Economy'],[/physics|chemistry|biology|vitamin|acid|cell|gas|element|विटामिन|अम्ल|कोशिका|तत्व/,'Science'],[/award|prize|trophy|olympic|cup|खेल|पुरस्कार|ओलंपिक/,'Awards & Sports'],[/author|book|wrote|written by|लेखक|पुस्तक|रचना/,'Books & Authors'],[/dance|festival|temple|folk|नृत्य|मंदिर|त्योहार/,'Art & Culture']]};
+function kind(n){n=n.toLowerCase();return/reasoning|intelligence/.test(n)?'rea':/arith|numer|quant|math/.test(n)?'math':/english/.test(n)?'eng':/hindi/.test(n)?'hin':/awareness|knowledge|gk|current/.test(n)?'gk':''}
+function autoTopic(sn,q){const r=R[kind(sn)]||[],t=((q.qEn||'')+' '+(q.qHi||'')).toLowerCase();for(const[x,n]of r)if(x.test(t))return n;return 'अन्य / Other'}
+const topicOf=o=>OV[o.key]||o.q.topic||o.auto;
+
+const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part|set|भाग)?\s*\d+\s*[\)\]]?\s*$/i,'').trim();
+function normSubj(name,nameHi,CFG){
+  const al={};Object.keys((CFG&&CFG.subjectAliases)||{}).forEach(k=>al[stripN(k).toLowerCase()]=CFG.subjectAliases[k]);
+  let n=stripN(name)||String(name||'').trim();const a=al[n.toLowerCase()];if(a)n=a;
+  return {name:n,nameHi:stripN(nameHi)||nameHi,key:n.toLowerCase()};
+}
+async function load(){
+  let C;try{C=await(await fetch('tests.json')).json()}catch(e){$('list').innerHTML='<div class="card empty">tests.json नहीं मिली। Server/hosting से खोलें।</div>';return}
+  const files={};
+  Object.keys(STRUCT).forEach(c=>STRUCT[c].forEach(l=>{const n=((C[c]||{})[l])||{};
+    Object.keys(n).forEach(p=>Object.keys(n[p]||{}).forEach(y=>(n[p][y]||[]).forEach(t=>{if(!files[t.file])files[t.file]={c,l,p,y,t:t.title}})))}));
+  const seen=new Set();
+  for(const f of Object.keys(files)){
+    let d;try{d=await(await fetch(f)).json()}catch(e){continue}
+    (d.sections||[]).forEach(s=>(s.questions||[]).forEach(q=>{
+      const key=qKey(q);if(seen.has(key))return;seen.add(key);
+      const ns=normSubj(s.name,s.nameHi,C);
+      ALL.push({key,q,sn:ns.name,snHi:ns.nameHi||ns.name,sk:ns.key,auto:autoTopic(ns.name,q),m:files[f]});
+    }));
+  }
+  const lv=[...new Set(ALL.map(o=>o.m.l))];
+  $('lvl').innerHTML='<option value="">All Levels</option>'+lv.map(l=>`<option>${esc(l)}</option>`).join('');
+  draw();
+}
+const hi=()=>F.lang==='hi';
+function chips(el,list,cur,fn){el.innerHTML=list.map(([v,t,c])=>`<button class="fc${cur===v?' on':''}" onclick="${fn}(this.dataset.v)" data-v="${esc(v)}">${esc(t)} <small>${c}</small></button>`).join('')}
+function setSubj(v){F.subj=v;F.top='';F.n=20;draw()}
+function setTop(v){F.top=v;F.n=20;draw()}
+function draw(){
+  if(!ALL.length){$('list').innerHTML='<div class="card empty" style="text-align:center">अभी कोई test/question upload नहीं है।</div>';return}
+  const lv=ALL.filter(o=>!F.l||o.m.l===F.l);
+  const sm={};lv.forEach(o=>{(sm[o.sk]=sm[o.sk]||{n:hi()?o.snHi:o.sn,c:0}).c++});
+  chips($('subs'),[['','सभी / All',lv.length],...Object.keys(sm).map(k=>[k,sm[k].n,sm[k].c])],F.subj,'setSubj');
+  const bs=lv.filter(o=>!F.subj||o.sk===F.subj),tm={};
+  bs.forEach(o=>{const t=topicOf(o);tm[t]=(tm[t]||0)+1});
+  chips($('tops'),[['','सभी / All',bs.length],...Object.keys(tm).sort().map(t=>[t,t,tm[t]])],F.top,'setTop');
+  const s=F.s.trim().toLowerCase();
+  const res=bs.filter(o=>(!F.top||topicOf(o)===F.top)&&(!s||(o.q.qEn+' '+o.q.qHi).toLowerCase().includes(s)));
+  $('list').innerHTML=res.slice(0,F.n).map(card).join('')||'<div class="card empty" style="text-align:center">कोई प्रश्न नहीं मिला।</div>';
+  if(res.length>F.n)$('list').innerHTML+=`<div style="text-align:center"><button class="btn" onclick="F.n+=20;draw()">और दिखाएँ (${res.length-F.n})</button></div>`;
+  if(typeof renderMathInElement==='function')try{renderMathInElement($('list'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}
+}
+function card(o){
+  const q=o.q,h=hi(),opts=(h?q.optHi:q.optEn)||[],im=h?(q.imgHi||q.img):(q.imgEn||q.img),sol=(h?q.solHi:q.solEn)||'';
+  const bm=(()=>{try{return JSON.parse(localStorage.getItem('examBookmarks')).some(b=>b.id===o.key)}catch(e){return false}})();
+  return `<div class="card"><div class="meta"><span>${esc(h?o.snHi:o.sn)}</span><span>${esc(topicOf(o))}</span><span>${esc(o.m.l)} • ${esc(o.m.p)} • ${esc(o.m.y)}</span></div>
+  <div class="qt">${esc(h?q.qHi:q.qEn)}</div>${im?`<img class="qimg" src="${esc(im)}" alt="">`:''}
+  ${opts.map((t,k)=>`<div class="o${k===q.ans?' ok':''}">${String.fromCharCode(65+k)}. ${esc(t)}${k===q.ans?' ✔':''}</div>`).join('')}
+  ${sol?`<details><summary>Solution</summary><div class="sol">${esc(sol)}</div></details>`:''}
+  <div class="acts"><button onclick="bm('${esc(o.key)}')">${bm?'★ Bookmarked':'☆ Bookmark'}</button><button onclick="edTopic('${esc(o.key)}')">✎ Topic बदलें</button></div></div>`;
+}
+function edTopic(k){
+  const o=ALL.find(x=>x.key===k),v=prompt('इस प्रश्न का topic लिखें / बदलें:',topicOf(o));
+  if(v===null||!v.trim())return;OV[k]=v.trim();
+  try{localStorage.setItem('examTopics',JSON.stringify(OV))}catch(e){}draw();
+}
+function bm(k){
+  const o=ALL.find(x=>x.key===k);let a=[];try{a=JSON.parse(localStorage.getItem('examBookmarks'))||[]}catch(e){}
+  if(a.some(b=>b.id===k))a=a.filter(b=>b.id!==k);
+  else{const n=new Date(),q=o.q;a.push({id:k,qid:q.qid||'',ts:n.getTime(),date:n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0'),subject:o.sn,subjectHi:o.snHi,testName:'Revision',q:{qid:q.qid||'',qEn:q.qEn,qHi:q.qHi,optEn:q.optEn,optHi:q.optHi,ans:q.ans,solEn:q.solEn||'',solHi:q.solHi||'',img:q.img||'',imgEn:q.imgEn||'',imgHi:q.imgHi||'',optImg:q.optImg||null}})}
+  try{localStorage.setItem('examBookmarks',JSON.stringify(a))}catch(e){}draw();
+}
+load();
+</script></body></html>
