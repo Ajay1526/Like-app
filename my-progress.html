@@ -209,9 +209,10 @@ function render(){
   if(PF==='all'||PF==='bookmark')o+=bmHTML();
   o+=(PF==='sectional')?secHTML(S,scores,V):cmpHTML(S,scores,V);
 
-  o+='<h2>All Attempts (Latest first)</h2>';
+  const showList=PF!=='sectional'; // Sectional view में ऊपर की तालिका में ही Full Analysis / Re-attempt हैं
+  if(showList)o+='<h2>All Attempts (Latest first)</h2>';
 
-  for(const n of [...V].reverse()){
+  for(const n of (showList?[...V].reverse():[])){
     const a=A[n], st=S[n], isBest=(n===bestIdx);
     o+=`<div class="card${isBest?' best':''}">
       <div class="head">
