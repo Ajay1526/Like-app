@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Bookmarks</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif;font-size:13px}
+body{margin:0;background:#f0f0f0;color:#333}
+.top{background:#2b2b2b;color:#fff;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.top a{color:#ffcc00;margin-left:12px;text-decoration:none}
+.wrap{max-width:1000px;margin:15px auto;padding:0 10px}
+.card{background:#fff;border:1px solid #ccc;padding:12px;margin-bottom:12px;border-radius:4px}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.ctl label{font-size:12px;color:#555}
+select,button,.btn{padding:5px 10px;border:1px solid #bbb;background:#fff;border-radius:3px;cursor:pointer;text-decoration:none;color:#333;display:inline-block;max-width:100%}
+.btn.p{background:#33a6ea;color:#fff;border:0;font-weight:bold}
+.btn.g{background:#2e7d32;color:#fff;border:0;font-weight:bold}
+.btn.r{background:#d9534f;color:#fff;border:0}
+.gh{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.gh h3{margin:0;color:#31708f;font-size:14px}
+.bm{border:1px solid #ffe082;background:#fffde7;border-radius:4px;padding:10px;margin-bottom:8px}
+.bm .t{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px;font-size:12px;color:#555}
+.bm .o{padding:3px 6px;border-radius:3px;margin:3px 0}
+.bm .o.ok{background:#d4edda}
+details summary{cursor:pointer;color:#31708f;font-weight:bold;margin-top:6px}
+.empty{text-align:center;padding:24px;color:#777;line-height:1.7}
+.qimg{max-width:100%;height:auto;display:block;margin:6px 0 12px}
+.oimg{max-width:100%;max-height:220px;height:auto;vertical-align:middle}
+.imgerr{color:#c00;font-size:11px}
+.chip{display:inline-block;background:#e8f0f8;border:1px solid #d0e1f9;border-radius:10px;padding:1px 8px;font-size:11px;margin-right:4px}
+</style><link rel="stylesheet" href="app.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head><body>
+<div class="top"><b>🔖 My Bookmarks</b></div>
+<div class="wrap">
+  <div class="card" id="ctl"></div>
+  <div id="list"></div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+const KEY='examBookmarks';
+const $=id=>document.getElementById(id);
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const enc=encodeURIComponent;
+let B=[];
+let F={group:'date',subject:'',date:'',lang:'en'};
+
+function load(){try{B=JSON.parse(localStorage.getItem(KEY))||[]}catch(e){B=[]}B.sort((a,b)=>b.ts-a.ts)}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(B))}catch(e){alert('Could not save.')}}
+function fmtDate(d){
+  const x=new Date(d+'T00:00:00');
+  return isNaN(x)?d:x.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+}
+function filtered(){return B.filter(b=>(!F.subject||b.subject===F.subject)&&(!F.date||b.date===F.date))}
+function uniq(a){return [...new Set(a)]}
+
+function practiceURL(subject,date){
+  let u='exam.html?mode=bookmarks';
+  if(subject)u+='&subject='+enc(subject);
+  if(date)u+='&date='+enc(date);
+  return u;
+}
+
+function drawCtl(){
+  const subs=uniq(B.map(b=>b.subject)), dates=uniq(B.map(b=>b.date)).sort().reverse();
+  const list=filtered();
+  $('ctl').innerHTML=`
+    <div class="ctl">
+      <label>Group by</label>
+      <select onchange="F.group=this.value;draw()">
+        <option value="date"${F.group==='date'?' selected':''}>Date-wise</option>
+        <option value="subject"${F.group==='subject'?' selected':''}>Subject-wise</option>
+      </select>
+      <label>Subject</label>
+      <select onchange="F.subject=this.value;draw()"><option value="">All</option>${subs.map(s=>`<option value="${esc(s)}"${F.subject===s?' selected':''}>${esc(s)}</option>`).join('')}</select>
+      <label>Date</label>
+      <select onchange="F.date=this.value;draw()"><option value="">All</option>${dates.map(d=>`<option value="${esc(d)}"${F.date===d?' selected':''}>${esc(fmtDate(d))}</option>`).join('')}</select>
+      <select onchange="F.lang=this.value;draw()"><option value="en"${F.lang==='en'?' selected':''}>English</option><option value="hi"${F.lang==='hi'?' selected':''}>हिंदी</option></select>
+    </div>
+    <div class="ctl">
+      <b>${list.length} / ${B.length} bookmarks</b>
+      ${list.length?`<a class="btn g" href="${practiceURL(F.subject,F.date)}">▶ Practice as Test (${list.length})</a>`:''}
+    </div>
+    <div class="ctl" style="border-top:1px dashed #ddd;padding-top:8px">
+      <label>🗑 Clear old bookmarks – older than</label>
+      <select id="oldDays"><option value="7">7 days</option><option value="15">15 days</option><option value="30" selected>30 days</option><option value="60">60 days</option><option value="90">90 days</option></select>
+      <button class="btn r" onclick="clearOld()">Clear Old</button>
+      <button class="btn r" onclick="clearAll()">Clear All</button>
+    </div>`;
+}
+
+
+// ---------- Images in questions/options (fields: img, imgEn, imgHi, optImg) ----------
+function qImgSrc(q, l) { return ((l === 'hi' ? (q.imgHi || q.img) : (q.imgEn || q.img)) || ''); }
+function imgTag(src, cls) {
+  return '<img class="' + cls + '" src="' + src + '" alt="" onerror="this.outerHTML=\'<span class=imgerr>[image नहीं मिली: \'+this.getAttribute(\'src\')+\']</span>\'">';
+}
+function optInner(q, k, x) {
+  const im = q.optImg && q.optImg[k];
+  if (!im) return x;
+  const t = /^(option|विकल्प)\s*\d+$/i.test(String(x).trim()) ? '(' + (k + 1) + ')' : x;
+  return t + ' ' + imgTag(im, 'oimg');
+}
+
+function bmCard(b,h){
+  const q=b.q||{};
+  const opts=(h?q.optHi:q.optEn)||q.optEn||[];
+  const sol=(h?q.solHi:q.solEn)||'';
+  return `<div class="bm">
+    <div class="t"><span><span class="chip">${esc(h&&b.subjectHi?b.subjectHi:b.subject)}</span><span class="chip">${esc(fmtDate(b.date))}</span>${b.testName?`<span class="chip">${esc(b.testName)}</span>`:''}</span><button class="btn r" onclick="removeOne('${esc(b.id)}')">Remove</button></div>
+    <div style="white-space:pre-wrap"><b>${esc((h?q.qHi:q.qEn)||q.qEn||'')}</b></div>${qImgSrc(q,h?'hi':'en')?imgTag(qImgSrc(q,h?'hi':'en'),'qimg'):''}
+    ${opts.map((t,k)=>`<div class="o${k===q.ans?' ok':''}">${String.fromCharCode(65+k)}. ${optInner(q,k,esc(t))}${k===q.ans?' ✔':''}</div>`).join('')}
+    ${sol?`<details><summary>${h?'हल देखें':'View Solution'}</summary><div style="white-space:pre-wrap;margin-top:4px">${esc(sol)}</div></details>`:''}
+  </div>`;
+}
+
+function draw(){
+  drawCtl();
+  const h=F.lang==='hi', list=filtered();
+  if(!B.length){$('list').innerHTML='<div class="card empty">अभी कोई bookmark नहीं है।<br>टेस्ट देते समय प्रश्न पर "☆ Bookmark" दबाएँ, वह यहाँ सेव हो जाएगा।<br><br><a class="btn p" href="home.html">🏠 Home</a></div>';return}
+  if(!list.length){$('list').innerHTML='<div class="card empty">इस filter में कोई bookmark नहीं मिला।</div>';return}
+  const key=F.group==='date'?'date':'subject';
+  const groups={};
+  list.forEach(b=>{(groups[b[key]]=groups[b[key]]||[]).push(b)});
+  let keys=Object.keys(groups);
+  if(key==='date')keys.sort().reverse();else keys.sort();
+  $('list').innerHTML=keys.map(k=>{
+    const g=groups[k];
+    const title=key==='date'?'📅 '+esc(fmtDate(k)):'📚 '+esc(h&&g[0].subjectHi?g[0].subjectHi:k);
+    const pu=key==='date'?practiceURL(F.subject,k):practiceURL(k,F.date);
+    return `<div class="card"><div class="gh"><h3>${title} (${g.length})</h3><span><a class="btn g" href="${pu}">▶ Practice</a> <button class="btn r" onclick="clearGroup('${key}','${enc(k)}')">🗑 Clear group</button></span></div>${g.map(b=>bmCard(b,h)).join('')}</div>`;
+  }).join('');
+}
+
+function removeOne(id){
+  B=B.filter(b=>b.id!==id);save();draw();
+}
+function clearGroup(key,k){
+  k=decodeURIComponent(k);
+  const ids=new Set(filtered().filter(b=>b[key]===k).map(b=>b.id));
+  if(!confirm('इस group के '+ids.size+' bookmarks हटाएँ?'))return;
+  B=B.filter(b=>!ids.has(b.id));save();draw();
+}
+function clearOld(){
+  const days=parseInt($('oldDays').value,10);
+  const lim=Date.now()-days*86400000;
+  const n=B.filter(b=>b.ts<lim).length;
+  if(!n){alert(days+' दिन से पुराना कोई bookmark नहीं है।');return}
+  if(!confirm(days+' दिन से पुराने '+n+' bookmarks हटाएँ?'))return;
+  B=B.filter(b=>b.ts>=lim);save();draw();
+}
+function clearAll(){
+  if(!B.length)return;
+  if(!confirm('सभी '+B.length+' bookmarks हटाएँ? यह वापस नहीं होगा।'))return;
+  B=[];save();draw();
+}
+
+function mathAll(){if(typeof renderMathInElement==='function'){try{renderMathInElement(document.getElementById('list'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}}}
+const _draw=draw;draw=function(){_draw();mathAll()};
+window.addEventListener('load',mathAll);
+load();draw();
+</script>
+</body></html>

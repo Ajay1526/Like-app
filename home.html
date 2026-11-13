@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Exam Portal – Home</title>
+<link rel="stylesheet" href="app.css">
+<style>
+.hero{background:linear-gradient(135deg,#1a73e8,#4285f4);color:#fff;border-radius:24px;padding:20px;margin-bottom:16px}
+.hero b{font-size:22px;display:block;font-weight:500;color:#fff}.hero span{opacity:.9;font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr)}
+.tile{text-align:center;cursor:pointer}.tile .s{display:block;margin-top:4px;font-size:11px;color:var(--mt)}
+.crumb{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:12px;color:var(--mt);margin-bottom:10px}
+.crumb a{cursor:pointer}.mut{color:var(--mt);font-size:12px}
+.gt{font-weight:500;color:var(--bl);margin:14px 0 4px;font-size:13px}
+</style></head><body>
+<div class="top"><b>🎓 Exam Portal</b></div>
+<div class="wrap">
+  <div id="note"></div>
+  <div class="crumb" id="crumb"></div>
+  <div id="view"></div>
+</div>
+<script src="nav.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const enc=encodeURIComponent;
+const DEFAULT_CATALOG={teaching:{NTT:{},PRT:{},TGT:{},PGT:{}},nonTeaching:{'10th':{},'12th':{'Sample Post (edit in tests.json)':{'2024':[{title:'Sample Full Test 1',file:'questions.json'}]}},'Graduation Level':{}}};
+const STRUCT={
+  teaching:{label:'Teaching',hi:'शिक्षण',icon:'👩‍🏫',levels:['NTT','PRT','TGT','PGT']},
+  nonTeaching:{label:'Non-Teaching',hi:'गैर-शिक्षण',icon:'🏢',levels:['10th','12th','Graduation Level']}
+};
+let CAT=DEFAULT_CATALOG;
+const S={mode:null,cat:null,level:null,post:null,year:null,subj:null};
+const ORDER=['mode','cat','level','post','year'];
+const fileCache={};let SUBJ=null;
+
+async function init(){
+  try{const r=await fetch('tests.json');if(!r.ok)throw 0;CAT=await r.json()}
+  catch(e){CAT=DEFAULT_CATALOG;$('note').innerHTML='<div class="card" style="color:#b3261e">tests.json नहीं मिली, sample list दिख रही है। Server/hosting से खोलें।</div>'}
+  render();
+}
+const getBM=()=>{try{return JSON.parse(localStorage.getItem('examBookmarks'))||[]}catch(e){return[]}};
+const getFile=f=>fileCache[f]||(fileCache[f]=fetch(f).then(r=>{if(!r.ok)throw 0;return r.json()}));
+const node=()=>((CAT[S.cat]||{})[S.level])||{};
+
+function pick(k,v){S[k]=decodeURIComponent(v);for(let i=ORDER.indexOf(k)+1;i<ORDER.length;i++)S[ORDER[i]]=null;S.subj=null;render()}
+function pick2(c){S.mode='full';S.cat=c;S.level=S.post=S.year=S.subj=null;render()}
+function upTo(k){if(k===null){ORDER.forEach(x=>S[x]=null);S.subj=null}else{for(let i=ORDER.indexOf(k)+1;i<ORDER.length;i++)S[ORDER[i]]=null;S.subj=null}render()}
+function crumb(){
+  const p=[`<a onclick="upTo(null)">Home</a>`];
+  if(S.mode==='sec')p.push(`<a onclick="upTo('mode')">Sectional Test</a>`);
+  if(S.cat)p.push(`<a onclick="upTo('cat')">${STRUCT[S.cat].label}</a>`);
+  if(S.level)p.push(`<a onclick="upTo('level')">${esc(S.level)}</a>`);
+  if(S.post)p.push(`<a onclick="upTo('post')">${esc(S.post)}</a>`);
+  if(S.year)p.push(`<b>${esc(S.year)}</b>`);
+  if(S.subj&&SUBJ&&SUBJ[S.subj])p.push(`<b>${esc(SUBJ[S.subj].name)}</b>`);
+  $('crumb').innerHTML=S.mode?p.join(' › '):'';
+}
+const empty=m=>`<div class="card empty" style="text-align:center;padding:24px">${m}</div>`;
+const tile=(ic,t,s,on,cls)=>`<div class="tile ${cls||''}" onclick="${on}"><span class="ic">${ic}</span><b>${t}</b><span class="s">${s}</span></div>`;
+function launchURL(t,title,section){
+  let u='exam.html?file='+enc(t.file)+'&title='+enc(title||t.title);
+  if(section!==undefined)u+='&section='+section;else if(t.duration)u+='&duration='+enc(t.duration);
+  return u;
+}
+// ---- Subject index (sectional tests are grouped by subject, across all uploaded tests) ----
+async function buildSubjects(){
+  if(SUBJ)return SUBJ;
+  const items=[];
+  Object.keys(STRUCT).forEach(c=>STRUCT[c].levels.forEach(l=>{const n=((CAT[c]||{})[l])||{};
+    Object.keys(n).forEach(p=>Object.keys(n[p]||{}).forEach(y=>(n[p][y]||[]).forEach(t=>items.push({c,l,p,y,t}))))}));
+  const S2={};
+  await Promise.all([...new Set(items.map(i=>i.t.file))].map(f=>getFile(f).catch(()=>null)));
+  for(const it of items){
+    let d;try{d=await getFile(it.t.file)}catch(e){continue}
+    (d.sections||[]).forEach((s,k)=>{
+      if(!s.questions||!s.questions.length)return;
+      const key=String(s.name).trim().toLowerCase();
+      const o=S2[key]=S2[key]||{name:s.name,nameHi:s.nameHi,items:[]};
+      o.items.push({...it,k,n:s.questions.length});
+    });
+  }
+  return SUBJ=S2;
+}
+async function renderSubjects(){
+  const v=$('view');v.innerHTML='<h2>Sectional Test – विषय चुनें</h2><div class="card empty" style="text-align:center">Loading subjects…</div>';
+  let sj;try{sj=await buildSubjects()}catch(e){}
+  if(!sj||!Object.keys(sj).length){v.innerHTML='<h2>Sectional Test</h2>'+empty('कोई subject नहीं मिला। Server/hosting से खोलें और tests.json में tests जोड़ें।');return}
+  const ic=['🧠','🌍','🔢','📖','✍️','📚'];
+  v.innerHTML='<h2>Sectional Test – विषय चुनें</h2><div class="tiles">'+Object.keys(sj).map((k,i)=>{const o=sj[k],q=o.items.reduce((a,b)=>a+b.n,0);
+    return tile(ic[i%ic.length],esc(o.name),`${esc(o.nameHi||'')}<br>${o.items.length} test(s) • ${q} Q`,`pick('subj','${enc(k)}')`,['','g','o','r'][i%4])}).join('')+'</div>';
+}
+function renderSubjectTests(){
+  const o=SUBJ[S.subj],g={};
+  o.items.forEach(i=>{(g[`${i.p} • ${i.y} • ${i.l}`]=g[`${i.p} • ${i.y} • ${i.l}`]||[]).push(i)});
+  $('view').innerHTML=`<h2>${esc(o.name)}</h2><div class="mut" style="margin-bottom:6px">${esc(o.nameHi||'')}</div>`+
+    Object.keys(g).map(h=>`<div class="gt">${esc(h)}</div><div class="card" style="padding:4px 14px!important">`+g[h].map(i=>
+      `<div class="row"><div><b>${esc(i.t.title)}</b><div class="mut">${i.n} questions</div></div><a class="btn g" href="${launchURL(i.t,i.t.title+' – '+o.name,i.k)}">Start</a></div>`).join('')+'</div>').join('');
+}
+function render(){
+  crumb();const v=$('view');
+  if(!S.mode){
+    v.innerHTML=`<h2>Test Category</h2><div class="tiles">
+      ${Object.keys(STRUCT).map(k=>tile(STRUCT[k].icon,STRUCT[k].label,STRUCT[k].hi+' • '+STRUCT[k].levels.join(', '),`pick2('${k}')`)).join('')}
+      ${tile('🧩','Sectional Test','Subject-wise practice',"pick('mode','sec')",'g')}
+      ${tile('🔁','Re-attempts','पुराने tests दोबारा दें',"location.href='my-progress.html?f=reattempt'",'r')}
+    </div>`;return;
+  }
+  if(S.mode==='sec'){
+    if(!S.subj){renderSubjects();return}
+    if(SUBJ&&SUBJ[S.subj]){renderSubjectTests();return}
+    S.subj=null;renderSubjects();return;
+  }
+  // Fresh (full) test flow
+  if(!S.cat){v.innerHTML=`<h2>Test Category</h2><div class="tiles">${Object.keys(STRUCT).map(k=>tile(STRUCT[k].icon,STRUCT[k].label,STRUCT[k].hi+' • '+STRUCT[k].levels.join(', '),`pick('cat','${k}')`)).join('')}</div>`;return}
+  if(!S.level){v.innerHTML=`<h2>${STRUCT[S.cat].label} – Level</h2><div class="tiles">${STRUCT[S.cat].levels.map(l=>{const n=Object.keys((CAT[S.cat]||{})[l]||{}).length;return tile('🎓',esc(l),n+' post'+(n===1?'':'s'),`pick('level','${enc(l)}')`)}).join('')}</div>`;return}
+  if(!S.post){const ps=Object.keys(node());v.innerHTML=`<h2>${esc(S.level)} – Post</h2>`+(ps.length?`<div class="tiles">${ps.map(p=>tile('📋',esc(p),Object.keys(node()[p]||{}).length+' year(s)',`pick('post','${enc(p)}')`)).join('')}</div>`:empty('इस level में अभी कोई post नहीं है।<br><span class="mut">tests.json में जोड़ें।</span>'));return}
+  if(!S.year){const ys=Object.keys(node()[S.post]||{}).sort((a,b)=>b.localeCompare(a));v.innerHTML=`<h2>${esc(S.post)} – Year</h2>`+(ys.length?`<div class="tiles">${ys.map(y=>tile('📅',esc(y),(node()[S.post][y]||[]).length+' test(s)',`pick('year','${enc(y)}')`)).join('')}</div>`:empty('कोई year नहीं मिला।'));return}
+  const ts=(node()[S.post]||{})[S.year]||[];
+  v.innerHTML=`<h2>Full Tests</h2><div class="card" style="padding:4px 14px!important">`+(ts.length?ts.map(t=>`<div class="row"><div><b>${esc(t.title)}</b>${t.duration?`<div class="mut">${esc(t.duration)} min</div>`:''}</div><a class="btn" href="${launchURL(t)}">Start Test</a></div>`).join(''):empty('इस year में कोई test नहीं है।'))+'</div>';
+}
+init();
+</script></body></html>
