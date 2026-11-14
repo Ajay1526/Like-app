@@ -150,7 +150,7 @@ function drawDash(){
 
 function resetT(){if(!confirm('इस Topic की सारी Learning Progress मिटानी है?'))return;cur().forEach(o=>delete REC[o.key]);saveR();draw()}
 
-// ---------- List viewer with Custom Days & Test Controls inside Lists ----------
+// ---------- List viewer with Custom Days & Smooth Typing ----------
 function openList(k){
   F.list = k;
   F.view = 'list';
@@ -165,8 +165,8 @@ function drawList(){
   const allRows = cur().filter(o => listOf(o) === k);
   
   let rows = allRows;
-  if(k === 'R'){
-    const d = Math.max(0, parseFloat(UI.listDays) || 0);
+  const d = Math.max(0, parseFloat(UI.listDays) || 0);
+  if(k === 'R' || k === 'X' || k === 'G'){
     rows = allRows.filter(o => ageD(o) >= d).sort((a,b) => refT(a) - refT(b));
   } else if(k === 'L' && UI.listKw.trim()){
     const kw = UI.listKw.trim().toLowerCase();
@@ -175,23 +175,23 @@ function drawList(){
 
   const dd = o => {
     if(k === 'L') return '';
-    const d = Math.floor(ageD(o));
-    return never(o) ? `⭐ ${d} दिन (Revise नहीं हुआ)` : `${d} दिन`;
+    const dayVal = Math.floor(ageD(o));
+    return never(o) ? `⭐ ${dayVal} दिन (Revise नहीं हुआ)` : `${dayVal} दिन`;
   };
 
   let controlsHTML = '';
-  if(k === 'R'){
+  if(k === 'R' || k === 'X' || k === 'G'){
     const dVal = parseFloat(UI.listDays) || 0;
     const testCnt = Math.min(parseInt(UI.listRn) || rows.length, rows.length);
     controlsHTML = `
       <div class="card" style="background:#f8f9fa;margin-bottom:12px;padding:10px;border:1px solid #e0e3e7">
-        <div class="lbl" style="margin-top:0">🎯 Revision Test सेटिंग्स (कस्टम दिन)</div>
+        <div class="lbl" style="margin-top:0">🎯 ${NM[k]} Test सेटिंग्स (कस्टम दिन)</div>
         <div class="bar" style="margin-top:6px">
-          <input type="number" min="0" placeholder="दिन पुराने (उदा. 7 दिन)" value="${UI.listDays==='0'?'':esc(UI.listDays)}" oninput="updateListDays(this.value)" style="flex:1">
-          <input type="number" min="1" placeholder="प्रश्न संख्या" value="${esc(UI.listRn)}" oninput="UI.listRn=this.value; updateListDays(UI.listDays);" style="width:90px">
+          <input type="number" id="inDays" min="0" placeholder="दिन पुराने (उदा. 7)" value="${UI.listDays==='0'?'':esc(UI.listDays)}" oninput="updateFilteredList('${k}')" style="flex:1">
+          <input type="number" id="inRn" min="1" placeholder="प्रश्न संख्या" value="${esc(UI.listRn)}" oninput="updateFilteredList('${k}')" style="width:90px">
         </div>
         <div class="note" id="listInfoNote">${dVal>0?dVal+' दिन या उससे पुराने':'सभी'}: <b>${rows.length}</b> प्रश्न उपलब्ध हैं • Test में आएँगे: <b>${testCnt}</b></div>
-        <div class="nav" style="margin-top:8px"><button class="btn g ${rows.length?'':'off'}" id="listTestBtn" onclick="startListTest('R')">▶ Revision Test शुरू करें</button></div>
+        <div class="nav" style="margin-top:8px"><button class="btn g ${rows.length?'':'off'}" id="listTestBtn" onclick="startListTest('${k}')">▶ ${NM[k]} Test शुरू करें</button></div>
       </div>
     `;
   } else if(k === 'L'){
@@ -199,22 +199,11 @@ function drawList(){
       <div class="card" style="background:#f8f9fa;margin-bottom:12px;padding:10px;border:1px solid #e0e3e7">
         <div class="lbl" style="margin-top:0">📘 Learning सेटिंग्स</div>
         <div class="bar" style="margin-top:6px">
-          <input type="search" placeholder="कोई शब्द खोजें..." value="${esc(UI.listKw)}" oninput="UI.listKw=this.value;draw()" style="flex:1">
-          <input type="number" min="1" placeholder="कितने" value="${esc(UI.listRn)}" oninput="UI.listRn=this.value;draw()" style="width:90px">
+          <input type="search" id="inKw" placeholder="कोई शब्द खोजें..." value="${esc(UI.listKw)}" oninput="updateFilteredList('L')" style="flex:1">
+          <input type="number" id="inRn" min="1" placeholder="कितने" value="${esc(UI.listRn)}" oninput="updateFilteredList('L')" style="width:90px">
         </div>
-        <div class="note">कुल प्रश्न: <b>${rows.length}</b></div>
-        <div class="nav" style="margin-top:8px"><button class="btn ${rows.length?'':'off'}" onclick="startListLearn()">▶ Learning शुरू करें</button></div>
-      </div>
-    `;
-  } else if(k === 'X' || k === 'G'){
-    controlsHTML = `
-      <div class="card" style="background:#f8f9fa;margin-bottom:12px;padding:10px;border:1px solid #e0e3e7">
-        <div class="lbl" style="margin-top:0">${NM[k]} Test सेटिंग्स</div>
-        <div class="bar" style="margin-top:6px">
-          <input type="number" min="1" placeholder="प्रश्न संख्या" value="${esc(UI.listRn)}" oninput="UI.listRn=this.value;draw()" style="flex:1">
-        </div>
-        <div class="note">कुल प्रश्न: <b>${rows.length}</b> • Test में आएँगे: <b>${Math.min(parseInt(UI.listRn)||rows.length, rows.length)}</b></div>
-        <div class="nav" style="margin-top:8px"><button class="btn g ${rows.length?'':'off'}" onclick="startListTest('${k}')">▶ ${NM[k]} Test शुरू करें</button></div>
+        <div class="note" id="listInfoNote">कुल प्रश्न: <b>${rows.length}</b></div>
+        <div class="nav" style="margin-top:8px"><button class="btn ${rows.length?'':'off'}" id="listTestBtn" onclick="startListLearn()">▶ Learning शुरू करें</button></div>
       </div>
     `;
   }
@@ -237,26 +226,50 @@ function drawList(){
   `;
 }
 
-function updateListDays(val){
-  UI.listDays = val || '0';
+// बिना input/focus खोए स्मूथ रूप से लिस्ट और काउंट्स अपडेट करने का फंक्शन
+function updateFilteredList(k){
+  UI.listDays = document.getElementById('inDays') ? document.getElementById('inDays').value : UI.listDays;
+  UI.listRn = document.getElementById('inRn') ? document.getElementById('inRn').value : UI.listRn;
+  UI.listKw = document.getElementById('inKw') ? document.getElementById('inKw').value : UI.listKw;
+
+  const allRows = cur().filter(o => listOf(o) === k);
+  let rows = allRows;
   const d = Math.max(0, parseFloat(UI.listDays) || 0);
-  const allRows = cur().filter(o => listOf(o) === 'R');
-  const rows = allRows.filter(o => ageD(o) >= d).sort((a,b) => refT(a) - refT(b));
+
+  if(k === 'R' || k === 'X' || k === 'G'){
+    rows = allRows.filter(o => ageD(o) >= d).sort((a,b) => refT(a) - refT(b));
+  } else if(k === 'L'){
+    const kw = (UI.listKw || '').trim().toLowerCase();
+    if(kw){
+      rows = allRows.filter(o => ((o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')).toLowerCase().includes(kw));
+    }
+  }
+
   const rn = parseInt(UI.listRn) || rows.length;
   const actualTestCnt = Math.min(rn, rows.length);
-  
+
   if($('listInfoNote')){
-    $('listInfoNote').innerHTML = `${d > 0 ? d + ' दिन या उससे पुराने' : 'सभी'}: <b>${rows.length}</b> प्रश्न उपलब्ध हैं • Test में आएँगे: <b>${actualTestCnt}</b>`;
+    if(k === 'L'){
+      $('listInfoNote').innerHTML = `कुल प्रश्न: <b>${rows.length}</b>`;
+    } else {
+      $('listInfoNote').innerHTML = `${d > 0 ? d + ' दिन या उससे पुराने' : 'सभी'}: <b>${rows.length}</b> प्रश्न उपलब्ध हैं • Test में आएँगे: <b>${actualTestCnt}</b>`;
+    }
   }
+
   if($('listRowsContainer')){
     const h = hi();
-    $('listRowsContainer').innerHTML = rows.map(o => `
-      <div class="row">
-        <div style="flex:1">${esc(String(h ? (o.q.qHi || o.q.qEn) : o.q.qEn).slice(0, 110))}</div>
-        <span style="white-space:nowrap;font-size:12px;color:var(--mt)">${Math.floor(ageD(o))} दिन</span>
-      </div>
-    `).join('') || '<div class="note" style="text-align:center;padding:10px">इस सूची में कोई प्रश्न नहीं।</div>';
+    $('listRowsContainer').innerHTML = rows.map(o => {
+      const dayVal = Math.floor(ageD(o));
+      const badge = (k === 'L') ? '' : (never(o) ? `⭐ ${dayVal} दिन (Revise नहीं हुआ)` : `${dayVal} दिन`);
+      return `
+        <div class="row">
+          <div style="flex:1">${esc(String(h ? (o.q.qHi || o.q.qEn) : o.q.qEn).slice(0, 110))}</div>
+          <span style="white-space:nowrap;font-size:12px;color:var(--mt)">${badge}</span>
+        </div>
+      `;
+    }).join('') || '<div class="note" style="text-align:center;padding:10px">इस सूची में कोई प्रश्न नहीं।</div>';
   }
+
   if($('listTestBtn')){
     $('listTestBtn').classList.toggle('off', !rows.length);
   }
@@ -264,7 +277,7 @@ function updateListDays(val){
 
 function startListTest(k){
   let p = cur().filter(o => listOf(o) === k);
-  if(k === 'R'){
+  if(k === 'R' || k === 'X' || k === 'G'){
     const d = Math.max(0, parseFloat(UI.listDays) || 0);
     p = p.filter(o => ageD(o) >= d).sort((a,b) => refT(a) - refT(b));
   }
@@ -278,7 +291,7 @@ function startListTest(k){
 
 function startListLearn(){
   let p = cur().filter(o => listOf(o) === 'L');
-  const kw = UI.listKw.trim().toLowerCase();
+  const kw = (UI.listKw || '').trim().toLowerCase();
   if(kw){
     p = p.filter(o => ((o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')).toLowerCase().includes(kw));
   }
