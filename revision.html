@@ -19,7 +19,7 @@
 .full{background:var(--gr2);color:#0d652d;border-radius:14px;padding:10px;text-align:center;font-weight:500;margin-top:10px}
 .note{font-size:11px;color:var(--mt);margin-top:8px}.big{text-align:center;padding:22px 12px}.big b{font-size:24px;display:block;margin:8px 0}
 .qimg,.oimg{max-width:100%;height:auto;display:block;margin:6px 0}
-.stats5{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;text-align:center}.stats5 div{background:var(--bl2);border-radius:12px;padding:8px 2px;font-size:10px;color:var(--mt)}.stats5 b{display:block;font-size:18px;color:var(--tx);font-weight:500}
+.stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}.stats4 div{background:var(--bl2);border-radius:12px;padding:8px 2px;font-size:10px;color:var(--mt);cursor:pointer}.stats4 b{display:block;font-size:16px;color:var(--tx);font-weight:500}
 .row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #eee;font-size:13px}
 </style></head><body>
 <div class="top"><b>📚 Revision</b></div>
@@ -36,7 +36,7 @@ let ALL=[],OV={};
 try{OV=JSON.parse(localStorage.getItem('examTopics'))||{}}catch(e){}
 function hashStr(t){let h=0;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return String(h)}
 const qKey=q=>q.qid?String(q.qid):'h'+hashStr(q.qEn||'');
-// ---- Topic auto-detection (optional "topic" field in JSON wins; user can also change any topic) ----
+// ---- Topic auto-detection ----
 const R={
 rea:[[/series|come in place|श्रृंखला/,'Series'],[/related to|odd one|does not belong|संबंधित|अलग/,'Analogy & Classification'],[/coded|code|कूट/,'Coding-Decoding'],[/father|mother|brother|sister|\bson\b|daughter|uncle|aunt|पिता|माता|भाई|बहन/,'Blood Relations'],[/north|south|east|west|direction|दिशा/,'Direction'],[/rank|\brow\b|tallest|taller|heavier|पंक्ति/,'Ranking & Order'],[/venn|conclusion|statement|कथन|निष्कर्ष/,'Statements & Syllogism'],[/mirror|water image|folded|cube|dice|figure|दर्पण|पासा/,'Figure & Non-verbal'],[/calendar|clock|day of the week|घड़ी/,'Calendar & Clock'],[/symbol|interchang|operation|चिह्न/,'Mathematical Operations']],
 math:[[/percent|%|प्रतिशत/,'Percentage'],[/profit|loss|discount|लाभ|हानि|छूट/,'Profit, Loss & Discount'],[/simple interest|compound|interest|ब्याज/,'Interest'],[/ratio|proportion|अनुपात/,'Ratio & Proportion'],[/average|mean|औसत/,'Average'],[/work|pipe|tank|काम|नल/,'Time & Work'],[/speed|train|km\/h|distance|चाल|ट्रेन/,'Time, Speed & Distance'],[/triangle|circle|area|perimeter|volume|radius|क्षेत्रफल|त्रिभुज|वृत्त/,'Geometry & Mensuration'],[/sin|cos|tan|trigonometr/,'Trigonometry'],[/divisible|hcf|lcm|prime|remainder|लघुत्तम|महत्तम|भाज्य/,'Number System'],[/simplif|value of|सरल/,'Simplification'],[/x\s*[+-]|equation|समीकरण/,'Algebra']],
@@ -70,12 +70,11 @@ async function load(){
   const sk=[...new Set(ALL.map(o=>o.sk))];F.subj=sk[0]||'';draw();
 }
 
-// ================= Learning ⇄ Revision (4 lists) =================
-// L = Learning, R = Revision बाकी, X = 🔴 लाल (Revision में गलत), G = 🟢 हरी (Revision में सही)
+// ================= Learning ⇄ Revision =================
 const LS='examLearning2';
 let REC={},SS=null;
 try{REC=JSON.parse(localStorage.getItem(LS))||{}}catch(e){}
-try{localStorage.removeItem('examLearning');localStorage.removeItem('examLearningMeta')}catch(e){}   // पुराना डेटा रीसेट
+try{localStorage.removeItem('examLearning');localStorage.removeItem('examLearningMeta')}catch(e){}
 const saveR=()=>{try{localStorage.setItem(LS,JSON.stringify(REC))}catch(e){}};
 let F={l:'',lang:'en',subj:'',top:'',view:'home',list:''};
 let UI={src:{L:1,X:0,G:0},kw:'',ln:'20',rsrc:{R:1,X:1,G:1},days:'0',rn:'20'};
@@ -95,7 +94,7 @@ function lastRev(list){let t=0;list.forEach(o=>{const r=REC[o.key];if(r&&r.lastR
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const mk=o=>REC[o.key]=REC[o.key]||{a:0,c:0,w:0,l:'L'};
 function learnAns(o,ok){const r=mk(o);r.a++;
-  if(ok){r.c++;r.l='R';r.learnedAt=Date.now();delete r.lastRevisionAt}   // 1 बार सही → Revision बाकी
+  if(ok){r.c++;r.l='R';r.learnedAt=Date.now();delete r.lastRevisionAt}
   else{r.w++;if(r.l==='G')r.l='X'}
   saveR()}
 function revAns(o,ok){const r=mk(o);r.a++;if(ok){r.c++;r.l='G'}else{r.w++;r.l='X'}r.lastRevisionAt=Date.now()}
@@ -110,21 +109,31 @@ function ctl(){
   <select onchange="F.lang=this.value;draw()" style="flex:1"><option value="en"${F.lang==='en'?' selected':''}>English</option><option value="hi"${F.lang==='hi'?' selected':''}>हिंदी</option></select>`;
 }
 const isFull=c=>c.t>0&&c.G===c.t;
-function tiles(c,click){return `<div class="stats5">${['L','R','X','G'].map(k=>`<div ${click?`onclick="openList('${k}')" style="cursor:pointer"`:''}><b>${c[k]}</b>${NM[k]}</div>`).join('')}<div><b>${c.t}</b>Total</div></div>`}
+
+// --- Combined Stats / Tiles (Learning दिखाएगा Total में से, जैसे 97/100) ---
+function tiles(c,click){
+  return `<div class="stats4">
+    <div ${click?`onclick="openList('L')" style="cursor:pointer"`:''}><b>${c.L}/${c.t}</b>📘 Learning</div>
+    <div ${click?`onclick="openList('R')" style="cursor:pointer"`:''}><b>${c.R}</b>📝 Revision</div>
+    <div ${click?`onclick="openList('X')" style="cursor:pointer"`:''}><b>${c.X}</b>🔴 लाल</div>
+    <div ${click?`onclick="openList('G')" style="cursor:pointer"`:''}><b>${c.G}</b>🟢 हरी</div>
+  </div>`;
+}
+
 function drawHome(){
   const lv=ALL.filter(o=>!F.l||o.m.l===F.l),sm={};
   lv.forEach(o=>{(sm[o.sk]=sm[o.sk]||{n:hi()?o.snHi:o.sn,l:[]}).l.push(o)});
   if(!sm[F.subj])F.subj=Object.keys(sm)[0]||'';
   let h=`<div class="lbl">विषय (Subject)</div><div class="chipbar">${Object.keys(sm).map(k=>{const c=cnt(sm[k].l);return `<button class="fc${k===F.subj?' on':''}" onclick="setF('subj',this.dataset.v)" data-v="${esc(k)}">${esc(sm[k].n)} <small>🟢${c.G}/${c.t}</small></button>`}).join('')}</div><div class="lbl">टॉपिक (Topic) चुनें</div>`;
   const tm={};(sm[F.subj]?sm[F.subj].l:[]).forEach(o=>{(tm[topicOf(o)]=tm[topicOf(o)]||[]).push(o)});
-  h+=Object.keys(tm).sort().map(t=>{const c=cnt(tm[t]),p=c.t?Math.round(c.G/c.t*100):0;return `<div class="card tc" onclick="openT(this.dataset.t)" data-t="${esc(t)}"><div class="r"><b>${esc(t)}</b><span>${isFull(c)?'🎓':''} ${p}%</span></div><div class="pb"><i style="width:${p}%"></i></div><div class="note" style="margin:0">📘 ${c.L} • 📝 ${c.R} • 🔴 ${c.X} • 🟢 ${c.G} • कुल ${c.t}</div></div>`}).join('')||'<div class="card" style="text-align:center">कोई question नहीं मिला।</div>';
+  h+=Object.keys(tm).sort().map(t=>{const c=cnt(tm[t]),p=c.t?Math.round(c.G/c.t*100):0;return `<div class="card tc" onclick="openT(this.dataset.t)" data-t="${esc(t)}"><div class="r"><b>${esc(t)}</b><span>${isFull(c)?'🎓':''} ${p}%</span></div><div class="pb"><i style="width:${p}%"></i></div><div class="note" style="margin:0">📘 ${c.L}/${c.t} • 📝 ${c.R} • 🔴 ${c.X} • 🟢 ${c.G}</div></div>`}).join('')||'<div class="card" style="text-align:center">कोई question नहीं मिला।</div>';
   $('main').innerHTML=h;
 }
 // ---------- Topic dashboard ----------
 function learnPool(){
   const kw=UI.kw.trim().toLowerCase();
   const p=cur().filter(o=>UI.src[listOf(o)]&&(!kw||((o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')+' '+(o.q.optHi||[]).join(' ')).toLowerCase().includes(kw)));
-  return ['X','L','G'].flatMap(k=>shuffle(p.filter(o=>listOf(o)===k)));   // पहले 🔴, फिर नए, फिर 🟢
+  return ['X','L','G'].flatMap(k=>shuffle(p.filter(o=>listOf(o)===k)));
 }
 function revPool(){
   const d=Math.max(0,parseFloat(UI.days)||0);
@@ -149,14 +158,14 @@ function drawDash(){
   <div class="card"><h2 style="margin:0 0 8px">${esc(F.top)}</h2>${tiles(c,true)}
     <div class="note">⏱ आख़िरी Revision: ${lr?`<b>${ago(lr)}</b> (${fmtT(lr)})`:'अभी तक नहीं हुआ'}</div>
     ${isFull(c)?'<div class="full">🎓 Fully Mastered</div>':''}
-    <div class="note">यह सिर्फ़ Learning Progress है, Main Test Result नहीं। किसी गिनती पर टैप करने से उसकी सूची खुलती है।</div></div>
-  <div class="card"><h3 style="margin:0 0 6px">📘 Learning</h3><div class="note" style="margin:0 0 6px">किस सूची के प्रश्न पढ़ने हैं, चुनें:</div>
+  </div>
+  <div class="card"><h3 style="margin:0 0 6px">📘 Learning</h3><div class="note" style="margin:0 0 6px">सूची चुनें:</div>
     <div class="chipbar">${sc('L')}${sc('X')}${sc('G')}</div>
-    <div class="bar"><input type="search" placeholder="कोई शब्द खोजें (वैकल्पिक)" value="${esc(UI.kw)}" ${oc('', 'kw')} style="flex:1"><input type="number" min="1" placeholder="कितने" value="${esc(UI.ln)}" ${oc('', 'ln')} style="width:90px"></div>
+    <div class="bar" style="margin-top:8px"><input type="search" placeholder="कोई शब्द खोजें (वैकल्पिक)" value="${esc(UI.kw)}" ${oc('', 'kw')} style="flex:1"><input type="number" min="1" placeholder="कितने" value="${esc(UI.ln)}" ${oc('', 'ln')} style="width:90px"></div>
     <div class="note" id="lInfo"></div><div class="nav"><button class="btn" id="lBtn" onclick="startLearn()">▶ Learning शुरू करें</button></div></div>
-  <div class="card"><h3 style="margin:0 0 6px">🎯 Revision Test</h3><div class="note" style="margin:0 0 6px">किस सूची के प्रश्न जाँचने हैं, चुनें:</div>
+  <div class="card"><h3 style="margin:0 0 6px">🎯 Revision Test</h3><div class="note" style="margin:0 0 6px">सूची चुनें:</div>
     <div class="chipbar">${rcb('R')}${rcb('X')}${rcb('G')}</div>
-    <div class="bar"><input type="number" min="0" placeholder="कितने दिन पुराने (0 = सब)" value="${UI.days==='0'?'':esc(UI.days)}" oninput="UI.days=this.value||'0';updInfo()" style="flex:1"><input type="number" min="1" placeholder="कितने प्रश्न" value="${esc(UI.rn)}" ${oc('', 'rn')} style="width:100px"></div>
+    <div class="bar" style="margin-top:8px"><input type="number" min="0" placeholder="दिन पुराने (0 = सब)" value="${UI.days==='0'?'':esc(UI.days)}" oninput="UI.days=this.value||'0';updInfo()" style="flex:1"><input type="number" min="1" placeholder="कितने प्रश्न" value="${esc(UI.rn)}" ${oc('', 'rn')} style="width:100px"></div>
     <div class="note" id="rInfo"></div><div class="nav"><button class="btn g" id="rBtn" onclick="startTest()">▶ Revision Test शुरू करें</button></div></div>
   <div class="note" style="text-align:center"><a onclick="resetT()" style="color:var(--rd);cursor:pointer">इस Topic की Progress रीसेट करें</a></div>`;
   updInfo();
@@ -185,7 +194,7 @@ function tap(k){
   if(SS.mode==='learn'){if(SS.ans!==undefined)return;const o=SS.queue[0];SS.ans=k;SS.ok=k===o.q.ans;learnAns(o,SS.ok);draw()}
   else if(SS.mode==='test'){SS.sel[SS.i]=k;draw()}
 }
-function nextL(){const o=SS.queue.shift();if(listOf(o)!=='R')SS.queue.push(o);SS.ans=undefined;draw()}   // गलत प्रश्न इसी सत्र में फिर आता है
+function nextL(){const o=SS.queue.shift();if(listOf(o)!=='R')SS.queue.push(o);SS.ans=undefined;draw()}
 function drawLearn(){
   const c=cnt(cur());
   if(!SS.queue.length){$('main').innerHTML=`<div class="card big">🎉<b>Learning सत्र पूरा!</b>${tiles(c,false)}<div class="nav"><button class="btn" onclick="back()">Topic पर जाएँ</button></div></div>`;return}
@@ -198,7 +207,7 @@ function drawLearn(){
 }
 // ---------- Revision Test ----------
 function startTest(){
-  let p=revPool();const n=parseInt(UI.rn);if(n>0)p=p.slice(0,n);   // सबसे पुराने पहले
+  let p=revPool();const n=parseInt(UI.rn);if(n>0)p=p.slice(0,n);
   if(!p.length)return;SS={mode:'test',items:shuffle(p),i:0,sel:{}};F.view='test';draw();
 }
 function tgo(d){SS.i=Math.max(0,Math.min(SS.items.length-1,SS.i+d));draw()}
