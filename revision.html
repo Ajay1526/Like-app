@@ -132,7 +132,7 @@ function drawHome(){
   $('main').innerHTML=h;
 }
 
-// ---------- Topic dashboard (फालतू कार्ड हटाए गए) ----------
+// ---------- Topic dashboard ----------
 function drawDash(){
   const L=cur(),c=cnt(L),lr=lastRev(L);
   $('main').innerHTML=`<a class="fc" onclick="toTopics()" style="display:inline-block;margin-bottom:8px">← Topics</a>
@@ -150,7 +150,7 @@ function drawDash(){
 
 function resetT(){if(!confirm('इस Topic की सारी Learning Progress मिटानी है?'))return;cur().forEach(o=>delete REC[o.key]);saveR();draw()}
 
-// ---------- List viewer with Custom Filters & Test Buttons ----------
+// ---------- List viewer with Custom Days & Test Controls inside Lists ----------
 function openList(k){
   F.list = k;
   F.view = 'list';
@@ -182,15 +182,16 @@ function drawList(){
   let controlsHTML = '';
   if(k === 'R'){
     const dVal = parseFloat(UI.listDays) || 0;
+    const testCnt = Math.min(parseInt(UI.listRn) || rows.length, rows.length);
     controlsHTML = `
       <div class="card" style="background:#f8f9fa;margin-bottom:12px;padding:10px;border:1px solid #e0e3e7">
         <div class="lbl" style="margin-top:0">🎯 Revision Test सेटिंग्स (कस्टम दिन)</div>
         <div class="bar" style="margin-top:6px">
-          <input type="number" min="0" placeholder="दिन पुराने (उदा. 7 दिन)" value="${UI.listDays==='0'?'':esc(UI.listDays)}" oninput="UI.listDays=this.value||'0';draw()" style="flex:1">
-          <input type="number" min="1" placeholder="प्रश्न संख्या" value="${esc(UI.listRn)}" oninput="UI.listRn=this.value;draw()" style="width:90px">
+          <input type="number" min="0" placeholder="दिन पुराने (उदा. 7 दिन)" value="${UI.listDays==='0'?'':esc(UI.listDays)}" oninput="updateListDays(this.value)" style="flex:1">
+          <input type="number" min="1" placeholder="प्रश्न संख्या" value="${esc(UI.listRn)}" oninput="UI.listRn=this.value; updateListDays(UI.listDays);" style="width:90px">
         </div>
-        <div class="note">${dVal>0?dVal+' दिन या उससे पुराने': 'सभी'}: <b>${rows.length}</b> प्रश्न उपलब्ध हैं • Test में आएँगे: <b>${Math.min(parseInt(UI.listRn)||rows.length, rows.length)}</b></div>
-        <div class="nav" style="margin-top:8px"><button class="btn g ${rows.length?'':'off'}" onclick="startListTest('R')">▶ Revision Test शुरू करें</button></div>
+        <div class="note" id="listInfoNote">${dVal>0?dVal+' दिन या उससे पुराने':'सभी'}: <b>${rows.length}</b> प्रश्न उपलब्ध हैं • Test में आएँगे: <b>${testCnt}</b></div>
+        <div class="nav" style="margin-top:8px"><button class="btn g ${rows.length?'':'off'}" id="listTestBtn" onclick="startListTest('R')">▶ Revision Test शुरू करें</button></div>
       </div>
     `;
   } else if(k === 'L'){
@@ -224,14 +225,41 @@ function drawList(){
       <h2 style="margin:0 0 6px">${NM[k]} (${allRows.length} कुल)</h2>
       ${controlsHTML}
       <div class="lbl" style="margin-top:10px">प्रश्नों की सूची:</div>
-      ${rows.map(o => `
-        <div class="row">
-          <div style="flex:1">${esc(String(h ? (o.q.qHi || o.q.qEn) : o.q.qEn).slice(0, 110))}</div>
-          <span style="white-space:nowrap;font-size:12px;color:var(--mt)">${dd(o)}</span>
-        </div>
-      `).join('') || '<div class="note" style="text-align:center;padding:10px">इस सूची में कोई प्रश्न नहीं।</div>'}
+      <div id="listRowsContainer">
+        ${rows.map(o => `
+          <div class="row">
+            <div style="flex:1">${esc(String(h ? (o.q.qHi || o.q.qEn) : o.q.qEn).slice(0, 110))}</div>
+            <span style="white-space:nowrap;font-size:12px;color:var(--mt)">${dd(o)}</span>
+          </div>
+        `).join('') || '<div class="note" style="text-align:center;padding:10px">इस सूची में कोई प्रश्न नहीं।</div>'}
+      </div>
     </div>
   `;
+}
+
+function updateListDays(val){
+  UI.listDays = val || '0';
+  const d = Math.max(0, parseFloat(UI.listDays) || 0);
+  const allRows = cur().filter(o => listOf(o) === 'R');
+  const rows = allRows.filter(o => ageD(o) >= d).sort((a,b) => refT(a) - refT(b));
+  const rn = parseInt(UI.listRn) || rows.length;
+  const actualTestCnt = Math.min(rn, rows.length);
+  
+  if($('listInfoNote')){
+    $('listInfoNote').innerHTML = `${d > 0 ? d + ' दिन या उससे पुराने' : 'सभी'}: <b>${rows.length}</b> प्रश्न उपलब्ध हैं • Test में आएँगे: <b>${actualTestCnt}</b>`;
+  }
+  if($('listRowsContainer')){
+    const h = hi();
+    $('listRowsContainer').innerHTML = rows.map(o => `
+      <div class="row">
+        <div style="flex:1">${esc(String(h ? (o.q.qHi || o.q.qEn) : o.q.qEn).slice(0, 110))}</div>
+        <span style="white-space:nowrap;font-size:12px;color:var(--mt)">${Math.floor(ageD(o))} दिन</span>
+      </div>
+    `).join('') || '<div class="note" style="text-align:center;padding:10px">इस सूची में कोई प्रश्न नहीं।</div>';
+  }
+  if($('listTestBtn')){
+    $('listTestBtn').classList.toggle('off', !rows.length);
+  }
 }
 
 function startListTest(k){
