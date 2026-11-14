@@ -47,7 +47,7 @@ function kind(n){n=n.toLowerCase();return/reasoning|intelligence/.test(n)?'rea':
 function autoTopic(sn,q){const r=R[kind(sn)]||[],t=((q.qEn||'')+' '+(q.qHi||'')).toLowerCase();for(const[x,n]of r)if(x.test(t))return n;return 'अन्य / Other'}
 const topicOf=o=>OV[o.key]||o.q.topic||o.auto;
 
-const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part|set|भाग)?\s*\d+\s*[\)\]]?\s*$/i,'').trim();
+const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part\vert{}set\vert{}भाग)?\s*\d+\s*[\)\]]?\s*$/i,'').trim();
 function normSubj(name,nameHi,CFG){
   const al={};Object.keys((CFG&&CFG.subjectAliases)||{}).forEach(k=>al[stripN(k).toLowerCase()]=CFG.subjectAliases[k]);
   let n=stripN(name)||String(name||'').trim();const a=al[n.toLowerCase()];if(a)n=a;
@@ -110,7 +110,7 @@ function ctl(){
 }
 const isFull=c=>c.t>0&&c.G===c.t;
 
-// --- Combined Stats / Tiles (Learning दिखाएगा Total में से, जैसे 97/100) ---
+// --- Combined Tiles (4 बर्तनों वाला स्टैट्स) ---
 function tiles(c,click){
   return `<div class="stats4">
     <div ${click?`onclick="openList('L')" style="cursor:pointer"`:''}><b>${c.L}/${c.t}</b>📘 Learning</div>
@@ -129,7 +129,8 @@ function drawHome(){
   h+=Object.keys(tm).sort().map(t=>{const c=cnt(tm[t]),p=c.t?Math.round(c.G/c.t*100):0;return `<div class="card tc" onclick="openT(this.dataset.t)" data-t="${esc(t)}"><div class="r"><b>${esc(t)}</b><span>${isFull(c)?'🎓':''} ${p}%</span></div><div class="pb"><i style="width:${p}%"></i></div><div class="note" style="margin:0">📘 ${c.L}/${c.t} • 📝 ${c.R} • 🔴 ${c.X} • 🟢 ${c.G}</div></div>`}).join('')||'<div class="card" style="text-align:center">कोई question नहीं मिला।</div>';
   $('main').innerHTML=h;
 }
-// ---------- Topic dashboard ----------
+
+// ---------- Topic dashboard (सब कुछ एक ही कार्ड के अंदर) ----------
 function learnPool(){
   const kw=UI.kw.trim().toLowerCase();
   const p=cur().filter(o=>UI.src[listOf(o)]&&(!kw||((o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')+' '+(o.q.optHi||[]).join(' ')).toLowerCase().includes(kw)));
@@ -143,34 +144,55 @@ function updInfo(){
   const lp=learnPool(),rp=revPool(),n=parseInt(UI.ln)||lp.length,m=parseInt(UI.rn)||rp.length;
   if($('lInfo'))$('lInfo').innerHTML=`चुने गए प्रश्न: <b>${lp.length}</b> • इस बार: <b>${Math.min(n,lp.length)}</b>`;
   const rc={R:0,X:0,G:0,nv:0};rp.forEach(o=>{rc[listOf(o)]++;if(never(o))rc.nv++});
-  if($('rInfo'))$('rInfo').innerHTML=`${(parseFloat(UI.days)||0)>0?(parseFloat(UI.days))+' दिन या उससे पुराने':'सभी'}: 📝 <b>${rc.R}</b> • 🔴 <b>${rc.X}</b> • 🟢 <b>${rc.G}</b> • कुल <b>${rp.length}</b> ${rc.nv?`(⭐ कभी Revise नहीं: ${rc.nv})`:''}<br>Test में आएँगे: <b>${Math.min(m,rp.length)}</b>`;
+  if($('rInfo'))$('rInfo').innerHTML=`${(parseFloat(UI.days)\vert{}\vert{}0)>0?(parseFloat(UI.days))+' दिन या उससे पुराने':'सभी'}: 📝 <b>${rc.R}</b> • 🔴 <b>${rc.X}</b> • 🟢 <b>${rc.G}</b> • कुल <b>${rp.length}</b> ${rc.nv?`(⭐ कभी Revise नहीं: ${rc.nv})`:''}<br>Test में आएँगे: <b>${Math.min(m,rp.length)}</b>`;
   if($('lBtn'))$('lBtn').classList.toggle('off',!lp.length);
   if($('rBtn'))$('rBtn').classList.toggle('off',!rp.length);
 }
 function togS(k){UI.src[k]=UI.src[k]?0:1;draw()}
 function togR(k){UI.rsrc[k]=UI.rsrc[k]?0:1;draw()}
 const oc=(v,k)=>`oninput="UI.${k}=this.value;updInfo()"`;
+
 function drawDash(){
   const L=cur(),c=cnt(L),lr=lastRev(L);
   const sc=k=>`<button class="fc${UI.src[k]?' on':''}" onclick="togS('${k}')">${NM[k]} (${c[k]})</button>`;
   const rcb=k=>`<button class="fc${UI.rsrc[k]?' on':''}" onclick="togR('${k}')">${NM[k]} (${c[k]})</button>`;
+  
   $('main').innerHTML=`<a class="fc" onclick="toTopics()" style="display:inline-block;margin-bottom:8px">← Topics</a>
-  <div class="card"><h2 style="margin:0 0 8px">${esc(F.top)}</h2>${tiles(c,true)}
-    <div class="note">⏱ आख़िरी Revision: ${lr?`<b>${ago(lr)}</b> (${fmtT(lr)})`:'अभी तक नहीं हुआ'}</div>
+  <div class="card">
+    <h2 style="margin:0 0 8px">${esc(F.top)}</h2>
+    ${tiles(c,true)}
+    <div class="note" style="margin-top:8px">⏱ आख़िरी Revision: ${lr?`<b>${ago(lr)}</b> (${fmtT(lr)})`:'अभी तक नहीं हुआ'}</div>
     ${isFull(c)?'<div class="full">🎓 Fully Mastered</div>':''}
-  </div>
-  <div class="card"><h3 style="margin:0 0 6px">📘 Learning</h3><div class="note" style="margin:0 0 6px">सूची चुनें:</div>
+    
+    <hr style="border:0;border-top:1px solid #eee;margin:14px 0">
+
+    <!-- Learning Mode अंदर ही -->
+    <h3 style="margin:0 0 4px;font-size:14px">📘 Learning मोड</h3>
+    <div class="note" style="margin:0 0 6px">सूची चुनें:</div>
     <div class="chipbar">${sc('L')}${sc('X')}${sc('G')}</div>
-    <div class="bar" style="margin-top:8px"><input type="search" placeholder="कोई शब्द खोजें (वैकल्पिक)" value="${esc(UI.kw)}" ${oc('', 'kw')} style="flex:1"><input type="number" min="1" placeholder="कितने" value="${esc(UI.ln)}" ${oc('', 'ln')} style="width:90px"></div>
-    <div class="note" id="lInfo"></div><div class="nav"><button class="btn" id="lBtn" onclick="startLearn()">▶ Learning शुरू करें</button></div></div>
-  <div class="card"><h3 style="margin:0 0 6px">🎯 Revision Test</h3><div class="note" style="margin:0 0 6px">सूची चुनें:</div>
+    <div class="bar" style="margin-top:6px"><input type="search" placeholder="कोई शब्द खोजें (वैकल्पिक)" value="${esc(UI.kw)}" ${oc('', 'kw')} style="flex:1"><input type="number" min="1" placeholder="कितने" value="${esc(UI.ln)}" ${oc('', 'ln')} style="width:80px"></div>
+    <div class="note" id="lInfo"></div>
+    <div class="nav" style="margin-top:6px"><button class="btn" id="lBtn" onclick="startLearn()">▶ Learning शुरू करें</button></div>
+
+    <hr style="border:0;border-top:1px solid #eee;margin:14px 0">
+
+    <!-- Revision Test Mode अंदर ही -->
+    <h3 style="margin:0 0 4px;font-size:14px">🎯 Revision Test मोड</h3>
+    <div class="note" style="margin:0 0 6px">सूची चुनें:</div>
     <div class="chipbar">${rcb('R')}${rcb('X')}${rcb('G')}</div>
-    <div class="bar" style="margin-top:8px"><input type="number" min="0" placeholder="दिन पुराने (0 = सब)" value="${UI.days==='0'?'':esc(UI.days)}" oninput="UI.days=this.value||'0';updInfo()" style="flex:1"><input type="number" min="1" placeholder="कितने प्रश्न" value="${esc(UI.rn)}" ${oc('', 'rn')} style="width:100px"></div>
-    <div class="note" id="rInfo"></div><div class="nav"><button class="btn g" id="rBtn" onclick="startTest()">▶ Revision Test शुरू करें</button></div></div>
-  <div class="note" style="text-align:center"><a onclick="resetT()" style="color:var(--rd);cursor:pointer">इस Topic की Progress रीसेट करें</a></div>`;
+    <div class="bar" style="margin-top:6px"><input type="number" min="0" placeholder="दिन पुराने (0=सब)" value="${UI.days==='0'?'':esc(UI.days)}" oninput="UI.days=this.value||'0';updInfo()" style="flex:1"><input type="number" min="1" placeholder="प्रश्न" value="${esc(UI.rn)}" ${oc('', 'rn')} style="width:80px"></div>
+    <div class="note" id="rInfo"></div>
+    <div class="nav" style="margin-top:6px"><button class="btn g" id="rBtn" onclick="startTest()">▶ Revision Test शुरू करें</button></div>
+
+    <div style="text-align:center;margin-top:14px">
+      <a onclick="resetT()" style="color:var(--rd);cursor:pointer;font-size:12px">इस Topic की Progress रीसेट करें</a>
+    </div>
+  </div>`;
   updInfo();
 }
+
 function resetT(){if(!confirm('इस Topic की सारी Learning Progress मिटानी है?'))return;cur().forEach(o=>delete REC[o.key]);saveR();draw()}
+
 // ---------- List viewer ----------
 function openList(k){F.list=k;F.view='list';draw()}
 function drawList(){
@@ -178,6 +200,7 @@ function drawList(){
   const dd=o=>{if(k==='L')return '';const d=Math.floor(ageD(o));return never(o)?`⭐ ${d} दिन (Revise नहीं हुआ)`:`${d} दिन`};
   $('main').innerHTML=`<a class="fc" onclick="back()" style="display:inline-block;margin-bottom:8px">← वापस</a><div class="card"><h2 style="margin:0 0 6px">${NM[k]} (${rows.length})</h2>${rows.map(o=>`<div class="row"><div style="flex:1">${esc(String(h?(o.q.qHi||o.q.qEn):o.q.qEn).slice(0,110))}</div><span style="white-space:nowrap;font-size:12px;color:var(--mt)">${dd(o)}</span></div>`).join('')||'<div class="note">इस सूची में कोई प्रश्न नहीं।</div>'}</div>`;
 }
+
 // ---------- Learning ----------
 function startLearn(){
   let p=learnPool();const n=parseInt(UI.ln);if(n>0)p=p.slice(0,n);
@@ -205,6 +228,7 @@ function drawLearn(){
   <div class="nav"><button class="btn gray" onclick="back()">✕ रोकें</button>${a!==undefined?`<button class="btn" onclick="nextL()">Next →</button>`:''}</div>
   <div class="nav"><button class="btn gray" onclick="edTopic('${esc(o.key)}')">✎ Topic बदलें</button></div></div>`;
 }
+
 // ---------- Revision Test ----------
 function startTest(){
   let p=revPool();const n=parseInt(UI.rn);if(n>0)p=p.slice(0,n);
@@ -229,20 +253,3 @@ function drawResult(){
   const w=SS.wrong,h=hi(),c=cnt(cur());
   $('main').innerHTML=`<div class="card big">${w.length?'📝':'🎉'}<b>${SS.n} में से ${SS.g} सही</b>🟢 ${SS.g} सही • 🔴 ${w.length} गलत<div style="margin-top:12px">${tiles(c,false)}</div>
   <div class="nav"><button class="btn" onclick="back()">Topic पर जाएँ</button></div><div class="note">यह Revision/Learning Progress है, Main Test Result नहीं।</div></div>`+
-  w.map(x=>{const q=x.o.q,sol=(h?q.solHi:q.solEn)||q.solEn||'',opts=(h?q.optHi:q.optEn)||q.optEn||[],sv=SS.sel[x.i];
-    return `<div class="card"><div class="meta"><span>🔴 लाल सूची में गया</span></div><div class="qt">${esc(h?(q.qHi||q.qEn):q.qEn)}</div><div class="note">आपका उत्तर: ${sv===undefined?'—':esc(opts[sv])}</div><div class="opt ok lock">सही: ${String.fromCharCode(65+q.ans)}. ${esc(opts[q.ans])}</div>${sol?`<div class="sol">${esc(sol)}</div>`:''}</div>`}).join('');
-}
-function draw(){
-  if(!ALL.length){$('main').innerHTML='<div class="card" style="text-align:center">अभी कोई test/question upload नहीं है।</div>';return}
-  ctl();
-  ({home:drawHome,dash:drawDash,list:drawList,learn:drawLearn,test:drawTest,result:drawResult})[F.view]();
-  if(typeof renderMathInElement==='function')try{renderMathInElement($('main'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}
-}
-function edTopic(k){
-  const o=ALL.find(x=>x.key===k),v=prompt('इस प्रश्न का topic लिखें / बदलें:',topicOf(o));
-  if(v===null||!v.trim())return;OV[k]=v.trim();
-  try{localStorage.setItem('examTopics',JSON.stringify(OV))}catch(e){}
-  F.top=v.trim();if(SS&&SS.mode==='learn')SS.queue=SS.queue.filter(x=>x.key!==k);draw();
-}
-load().catch(e=>{try{console.error(e)}catch(x){}$('main').innerHTML='<div class="card empty" style="text-align:center">प्रश्न लोड नहीं हो पाए। पेज दोबारा खोलें।</div>'});
-</script></body></html>
