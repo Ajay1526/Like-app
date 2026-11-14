@@ -132,34 +132,9 @@ function drawHome(){
   $('main').innerHTML=h;
 }
 
-// ---------- Topic dashboard ----------
-function learnPool(){
-  const kw=UI.kw.trim().toLowerCase();
-  const p=cur().filter(o=>UI.src[listOf(o)]&&(!kw||((o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')+' '+(o.q.optHi||[]).join(' ')).toLowerCase().includes(kw)));
-  return ['X','L','G'].flatMap(k=>shuffle(p.filter(o=>listOf(o)===k)));
-}
-function revPool(){
-  const d=Math.max(0,parseFloat(UI.days)||0);
-  return cur().filter(o=>UI.rsrc[listOf(o)]&&ageD(o)>=d).sort((a,b)=>refT(a)-refT(b));
-}
-function updInfo(){
-  const lp=learnPool(),rp=revPool(),n=parseInt(UI.ln)||lp.length,m=parseInt(UI.rn)||rp.length;
-  if($('lInfo'))$('lInfo').innerHTML=`चुने गए प्रश्न: <b>${lp.length}</b> • इस बार: <b>${Math.min(n,lp.length)}</b>`;
-  const rc={R:0,X:0,G:0,nv:0};rp.forEach(o=>{rc[listOf(o)]++;if(never(o))rc.nv++});
-  const dVal=parseFloat(UI.days)||0;
-  if($('rInfo'))$('rInfo').innerHTML=`${dVal>0?dVal+' दिन या उससे पुराने':'सभी'}: 📝 <b>${rc.R}</b> • 🔴 <b>${rc.X}</b> • 🟢 <b>${rc.G}</b> • कुल <b>${rp.length}</b> ${rc.nv?`(⭐ कभी Revise नहीं: ${rc.nv})`:''}<br>Test में आएँगे: <b>${Math.min(m,rp.length)}</b>`;
-  if($('lBtn'))$('lBtn').classList.toggle('off',!lp.length);
-  if($('rBtn'))$('rBtn').classList.toggle('off',!rp.length);
-}
-function togS(k){UI.src[k]=UI.src[k]?0:1;draw()}
-function togR(k){UI.rsrc[k]=UI.rsrc[k]?0:1;draw()}
-const oc=(v,k)=>`oninput="UI.${k}=this.value;updInfo()"`;
-
+// ---------- Topic dashboard (फालतू कार्ड हटाए गए) ----------
 function drawDash(){
   const L=cur(),c=cnt(L),lr=lastRev(L);
-  const sc=k=>`<button class="fc${UI.src[k]?' on':''}" onclick="togS('${k}')">${NM[k]} (${c[k]})</button>`;
-  const rcb=k=>`<button class="fc${UI.rsrc[k]?' on':''}" onclick="togR('${k}')">${NM[k]} (${c[k]})</button>`;
-  
   $('main').innerHTML=`<a class="fc" onclick="toTopics()" style="display:inline-block;margin-bottom:8px">← Topics</a>
   <div class="card">
     <h2 style="margin:0 0 8px">${esc(F.top)}</h2>
@@ -167,31 +142,10 @@ function drawDash(){
     <div class="note" style="margin-top:8px">⏱ आख़िरी Revision: ${lr?`<b>${ago(lr)}</b> (${fmtT(lr)})`:'अभी तक नहीं हुआ'}</div>
     ${isFull(c)?'<div class="full">🎓 Fully Mastered</div>':''}
     
-    <hr style="border:0;border-top:1px solid #eee;margin:14px 0">
-
-    <!-- Learning Mode -->
-    <h3 style="margin:0 0 4px;font-size:14px">📘 Learning मोड</h3>
-    <div class="note" style="margin:0 0 6px">सूची चुनें:</div>
-    <div class="chipbar">${sc('L')}${sc('X')}${sc('G')}</div>
-    <div class="bar" style="margin-top:6px"><input type="search" placeholder="कोई शब्द खोजें (वैकल्पिक)" value="${esc(UI.kw)}" ${oc('', 'kw')} style="flex:1"><input type="number" min="1" placeholder="कितने" value="${esc(UI.ln)}" ${oc('', 'ln')} style="width:80px"></div>
-    <div class="note" id="lInfo"></div>
-    <div class="nav" style="margin-top:6px"><button class="btn" id="lBtn" onclick="startLearn()">▶ Learning शुरू करें</button></div>
-
-    <hr style="border:0;border-top:1px solid #eee;margin:14px 0">
-
-    <!-- Revision Test Mode -->
-    <h3 style="margin:0 0 4px;font-size:14px">🎯 Revision Test मोड</h3>
-    <div class="note" style="margin:0 0 6px">सूची चुनें:</div>
-    <div class="chipbar">${rcb('R')}${rcb('X')}${rcb('G')}</div>
-    <div class="bar" style="margin-top:6px"><input type="number" min="0" placeholder="दिन पुराने (उदा. 7 दिन)" value="${UI.days==='0'?'':esc(UI.days)}" oninput="UI.days=this.value||'0';updInfo()" style="flex:1"><input type="number" min="1" placeholder="प्रश्न" value="${esc(UI.rn)}" ${oc('', 'rn')} style="width:80px"></div>
-    <div class="note" id="rInfo"></div>
-    <div class="nav" style="margin-top:6px"><button class="btn g" id="rBtn" onclick="startTest()">▶ Revision Test शुरू करें</button></div>
-
-    <div style="text-align:center;margin-top:14px">
+    <div style="text-align:center;margin-top:16px">
       <a onclick="resetT()" style="color:var(--rd);cursor:pointer;font-size:12px">इस Topic की Progress रीसेट करें</a>
     </div>
   </div>`;
-  updInfo();
 }
 
 function resetT(){if(!confirm('इस Topic की सारी Learning Progress मिटानी है?'))return;cur().forEach(o=>delete REC[o.key]);saveR();draw()}
@@ -309,10 +263,6 @@ function startListLearn(){
 }
 
 // ---------- Learning ----------
-function startLearn(){
-  let p=learnPool();const n=parseInt(UI.ln);if(n>0)p=p.slice(0,n);
-  if(!p.length)return;SS={mode:'learn',queue:p,total:p.length,ans:undefined};F.view='learn';draw();
-}
 function qHTML(o,sel,lock){
   const q=o.q,h=hi(),opts=(h?q.optHi:q.optEn)||q.optEn||[],im=h?(q.imgHi||q.img):(q.imgEn||q.img),l=listOf(o);
   return `<div class="meta"><span>${esc(h?o.snHi:o.sn)}</span><span>${esc(topicOf(o))}</span>${l==='X'?'<span>🔴 लाल</span>':l==='G'?'<span>🟢 हरी</span>':''}</div><div class="qt">${esc(h?(q.qHi||q.qEn):q.qEn)}</div>${im?`<img class="qimg" src="${esc(im)}" alt="">`:''}`+
@@ -337,10 +287,6 @@ function drawLearn(){
 }
 
 // ---------- Revision Test ----------
-function startTest(){
-  let p=revPool();const n=parseInt(UI.rn);if(n>0)p=p.slice(0,n);
-  if(!p.length)return;SS={mode:'test',items:shuffle(p),i:0,sel:{}};F.view='test';draw();
-}
 function tgo(d){SS.i=Math.max(0,Math.min(SS.items.length-1,SS.i+d));draw()}
 function submitT(){
   const un=SS.items.filter((o,i)=>SS.sel[i]===undefined).length;
