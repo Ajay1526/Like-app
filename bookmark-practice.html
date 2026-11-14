@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bookmark Practice</title>
+<link rel="stylesheet" href="app.css?v=5">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+body{padding-bottom:24px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.bar{height:6px;background:#e0e3e7;border-radius:3px;overflow:hidden;margin:4px 0 12px}.bar i{display:block;height:100%;background:var(--bl);transition:.2s}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--mt);margin-bottom:6px;gap:8px}
+.qt{white-space:pre-wrap;line-height:1.65;font-size:16px;font-weight:500;margin:8px 0 12px}
+.opt{display:block;width:100%;text-align:left;padding:12px 14px;margin:8px 0;border:1.5px solid var(--ln);border-radius:14px;background:#fff;color:var(--tx);font-size:15px;line-height:1.45;cursor:pointer}
+.opt.ok{background:var(--gr2);border-color:var(--gr);color:#0d652d;font-weight:500}
+.opt.bad{background:var(--rd2);border-color:var(--rd);color:#a50e0e}
+.opt.lock{cursor:default}
+.sol{background:var(--am2);border-radius:14px;padding:12px;margin-top:12px;white-space:pre-wrap;line-height:1.6}
+.nav{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}.nav .btn{flex:1;text-align:center}
+.btn.gray{background:#e8eaed!important;color:var(--tx)!important}
+.qimg,.oimg{max-width:100%;height:auto;display:block;margin:6px 0}
+.big{text-align:center;padding:28px 14px}.big b{font-size:26px;display:block;margin:8px 0}
+</style></head><body>
+<div class="top"><b>🔖 Bookmark Practice</b>
+  <select id="lg" onchange="LG=this.value;draw()"><option value="en">English</option><option value="hi">हिंदी</option></select></div>
+<div class="wrap" id="root"></div>
+<script>
+const $=id=>document.getElementById(id);
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const P=new URLSearchParams(location.search);
+let LG='en',B=[],L=[],I=0,ANS={},DONE=false;
+function load(){
+  try{B=JSON.parse(localStorage.getItem('examBookmarks'))||[]}catch(e){B=[]}
+  const s=P.get('subject'),d=P.get('date');
+  L=B.filter(b=>b&&b.q&&(!s||b.subject===s)&&(!d||b.date===d));
+}
+function save(){try{localStorage.setItem('examBookmarks',JSON.stringify(B))}catch(e){}}
+function math(){if(typeof renderMathInElement!=='function')return;try{renderMathInElement($('root'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})}catch(e){}}
+function tapOpt(k){const b=L[I];if(ANS[b.id]!==undefined)return;ANS[b.id]=k;draw()}   // पहले tap के बाद लॉक
+function go(d){I=Math.max(0,Math.min(L.length,I+d));draw()}
+function rm(){
+  const b=L[I];if(!b||!confirm('इस प्रश्न को Bookmark से हटाएँ?'))return;
+  B=B.filter(x=>x.id!==b.id);save();L.splice(I,1);delete ANS[b.id];
+  if(I>=L.length)I=L.length;draw();
+}
+function draw(){
+  const r=$('root'),h=LG==='hi';
+  if(!L.length){r.innerHTML='<div class="card big">कोई Bookmark प्रश्न नहीं है।<br><br><a class="btn" href="bookmarks.html">Bookmarks खोलें</a></div>';return}
+  if(I>=L.length){
+    const n=L.length,c=L.filter(b=>ANS[b.id]!==undefined&&ANS[b.id]===b.q.ans).length;
+    r.innerHTML=`<div class="card big">🎉<b>${n} में से ${c} सही</b><div class="mut" style="color:var(--mt)">यह नतीजा कहीं सेव नहीं होता।</div><div class="nav"><a class="btn gray" href="bookmarks.html">Bookmarks</a><button class="btn" onclick="ANS={};I=0;draw()">फिर से Practice</button></div></div>`;return}
+  const b=L[I],q=b.q,opts=(h?q.optHi:q.optEn)||q.optEn||[],a=ANS[b.id],sol=(h?q.solHi:q.solEn)||q.solEn||q.solHi||'';
+  const im=h?(q.imgHi||q.img):(q.imgEn||q.img);
+  r.innerHTML=`<div class="bar"><i style="width:${(I+1)/L.length*100}%"></i></div>
+  <div class="card"><div class="meta"><span>Q ${I+1} / ${L.length}</span><span>${esc(h?(b.subjectHi||b.subject):b.subject)}</span></div>
+  <div class="qt">${esc(h?(q.qHi||q.qEn):q.qEn)}</div>${im?`<img class="qimg" src="${esc(im)}" alt="">`:''}
+  ${opts.map((t,k)=>{let c='opt';if(a!==undefined){c+=' lock';if(k===q.ans)c+=' ok';else if(k===a)c+=' bad'}
+    const oi=q.optImg&&q.optImg[k];
+    return `<button class="${c}" onclick="tapOpt(${k})">${String.fromCharCode(65+k)}. ${esc(t)}${oi?`<img class="oimg" src="${esc(oi)}" alt="">`:''}${a!==undefined&&k===q.ans?' ✔':''}</button>`}).join('')}
+  ${a!==undefined?`<div class="sol"><b>${a===q.ans?'✅ सही':'❌ गलत'}</b>${sol?'\n\n'+esc(sol):'\n\nSolution उपलब्ध नहीं है।'}</div>`:''}
+  <div class="nav"><button class="btn gray" onclick="go(-1)" ${I===0?'disabled style="opacity:.4"':''}>← Previous</button><button class="btn" onclick="go(1)">${I===L.length-1?'Finish':'Next →'}</button></div>
+  <div class="nav"><button class="btn r" onclick="rm()">🗑 Bookmark हटाएँ</button><a class="btn gray" href="bookmarks.html">✕ बंद करें</a></div></div>`;
+  math();window.scrollTo(0,0);
+}
+load();draw();window.addEventListener('load',math);
+</script></body></html>
