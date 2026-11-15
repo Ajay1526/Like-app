@@ -21,7 +21,8 @@
 .qimg,.oimg{max-width:100%;height:auto;display:block;margin:6px 0}
 .row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #eee;font-size:13px}
 .stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}.stats4 div{background:var(--bl2);border-radius:12px;padding:8px 2px;font-size:10px;color:var(--mt);cursor:pointer}.stats4 b{display:block;font-size:15px;color:var(--tx);font-weight:500}
-.subsel{font-weight:600;border:2px solid var(--bl)!important;background:var(--bl2)!important;color:#174ea6}.subsel:disabled{opacity:1;color:#174ea6}
+.bar select,.bar input{box-sizing:border-box;min-width:0;max-width:100%}.subsel{box-sizing:border-box;min-width:0;max-width:100%;font-weight:600;border:2px solid var(--bl)!important;background:var(--bl2)!important;color:#174ea6}.subsel:disabled{opacity:1;color:#174ea6}
+.ei{font-size:.72em;vertical-align:.12em}
 </style></head><body>
 <div class="top"><b>📚 Revision</b></div>
 <div class="wrap">
@@ -81,6 +82,7 @@ const saveR=()=>{try{localStorage.setItem(LS,JSON.stringify(REC))}catch(e){}};
 let F={l:'',lang:'en',subj:'',top:'',view:'home',list:''};
 let UI={listDays:'0',listRn:'20',listKw:'',show:50};
 const hi=()=>F.lang==='hi';
+const ei=e=>`<span class="ei">${e}</span>`;
 const DAY=864e5,NM={L:'📘 Learning',R:'📝 Revision Pending',X:'🔴 Weak Questions',G:'🟢 Strong Questions'};
 const TN={L:'Learning',R:'Revision Pending',X:'Weak Questions',G:'Strong Questions'},TI={L:'📘',R:'📝',X:'🔴',G:'🟢'};
 const listOf=o=>(REC[o.key]&&REC[o.key].l)||'L';
@@ -93,13 +95,31 @@ function cnt(list){const c={L:0,R:0,X:0,G:0,t:list.length};list.forEach(o=>c[lis
 const p2=n=>String(n).padStart(2,'0');
 function fmtT(ts){const d=new Date(ts);let h=d.getHours();const ap=h>=12?'PM':'AM';h=h%12||12;return `${p2(d.getDate())}-${p2(d.getMonth()+1)}-${d.getFullYear()} ${p2(h)}:${p2(d.getMinutes())} ${ap}`}
 function ago(ts){const m=(Date.now()-ts)/6e4;if(m<60)return 'अभी अभी';if(m<1440)return Math.floor(m/60)+' घंटे पहले';return Math.floor(m/1440)+' दिन पहले'}
+const fmtD=ts=>{const d=new Date(ts);return `${p2(d.getDate())}-${p2(d.getMonth()+1)}-${d.getFullYear()}`};
+function whenHTML(list){
+  return ['X','G','R'].map(k=>{
+    const items=list.filter(o=>listOf(o)===k);
+    if(!items.length)return `<div class="row"><span>${ei(TI[k])} ${TN[k]}</span><span style="color:var(--mt)">कोई प्रश्न नहीं</span></div>`;
+    const ts=items.map(o=>{const r=REC[o.key]||{};return k==='R'?r.learnedAt:r.lastRevisionAt}).filter(Boolean);
+    const lo=ts.length?Math.min(...ts):0,mx=ts.length?Math.max(...ts):0;
+    const t=!ts.length?'—':lo===mx?ago(lo):`सबसे पुराना ${ago(lo)} • सबसे नया ${ago(mx)}`;
+    return `<div class="row"><span>${ei(TI[k])} ${TN[k]} (${items.length})</span><span style="text-align:right">${k==='R'?'Learning से: ':'Revision: '}${t}</span></div>`;
+  }).join('');
+}
 function lastRev(list){let t=0;list.forEach(o=>{const r=REC[o.key];if(r&&r.lastRevisionAt&&r.lastRevisionAt>t)t=r.lastRevisionAt});return t}
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const mk=o=>REC[o.key]=REC[o.key]||{a:0,c:0,w:0,l:'L'};
-function learnAns(o,ok){const r=mk(o);r.a++;
-  if(ok){r.c++;r.l='R';r.learnedAt=Date.now();delete r.lastRevisionAt}   // Learning में 1 बार सही → Revision Pending
-  else{r.w++;if(r.l==='G')r.l='X'}
-  saveR()}
+function learnAns(o,ok){
+  const r=mk(o);r.a++;let res='';
+  if(ok){r.c++;r.l='R';r.learnedAt=Date.now();delete r.lastRevisionAt;r.lw=0}   // 1 बार सही → Revision Pending
+  else{r.w++;
+    if(r.l==='G'){r.l='X';r.lw=0;res='g2x'}              // Strong में गलत → Weak
+    else if(r.l==='X'){res='stayX'}                      // Weak में ही रहता है
+    else{r.lw=(r.lw||0)+1;if(r.lw>=2){r.l='X';r.lw=0;res='moved'}else res='wrong1'}   // Learning में 2 बार गलत → Weak
+  }
+  saveR();return res}
+const lw=o=>((REC[o.key]||{}).lw)||0;
+const warnN=list=>list.filter(o=>listOf(o)==='L'&&lw(o)>0).length;
 function revAns(o,ok){const r=mk(o);r.a++;if(ok){r.c++;r.l='G'}else{r.w++;r.l='X'}r.lastRevisionAt=Date.now()}
 
 function setF(k,v){F[k]=v;if(k==='subj')F.top='';F.view='home';SS=null;draw()}
@@ -122,7 +142,7 @@ function ctl(){
 const isFull=c=>c.t>0&&c.G===c.t;
 // सत्र (Learning/Test) के दौरान click=false, ताकि गलती से बाहर न निकलें
 function tiles(c,click){
-  return `<div class="stats4">${['L','R','X','G'].map(k=>`<div ${click?`onclick="openList('${k}')"`:'style="cursor:default"'}><b>${TI[k]} ${k==='L'?c.L+'/'+c.t:c[k]}</b>${TN[k]}</div>`).join('')}</div>`;
+  return `<div class="stats4">${['L','R','X','G'].map(k=>`<div ${click?`onclick="openList('${k}')"`:'style="cursor:default"'}><b>${ei(TI[k])} ${k==='L'?c.L+'/'+c.t:c[k]}</b>${TN[k]}</div>`).join('')}</div>`;
 }
 function drawHome(){
   const sm=subjMap();
@@ -134,13 +154,15 @@ function drawHome(){
 }
 // ---------- Topic dashboard ----------
 function drawDash(){
-  const L=cur(),c=cnt(L),lr=lastRev(L);
+  const L=cur(),c=cnt(L);
   $('main').innerHTML=`<a class="fc" onclick="toTopics()" style="display:inline-block;margin-bottom:8px">← Topics</a>
   <div class="card">
     <h2 style="margin:0 0 8px">${esc(F.top)}</h2>
     ${tiles(c,true)}
-    <div class="note">👆 किसी भी सूची पर टैप करें: प्रश्न देखें, Learning या Test शुरू करें। कुल प्रश्न: <b>${c.t}</b></div>
-    <div class="note">⏱ आख़िरी Revision: ${lr?`<b>${ago(lr)}</b> (${fmtT(lr)})`:'अभी तक नहीं हुआ'}</div>
+    ${warnN(L)?`<div class="note">${ei('⚠️')} Learning में गलत हुए (अभी भी Learning में): <b>${warnN(L)}</b></div>`:''}
+    <div class="note">${ei('👆')} किसी भी सूची पर टैप करें: प्रश्न देखें, Learning या Test शुरू करें। कुल प्रश्न: <b>${c.t}</b></div>
+    <div class="lbl" style="margin-top:12px">⏱ किस सूची के प्रश्न कितने दिन पहले Revise हुए</div>${whenHTML(L)}
+    <div class="note">हर प्रश्न की अलग तारीख़ देखने के लिए ऊपर की सूची पर टैप करें।</div>
     ${isFull(c)?'<div class="full">🎓 Fully Mastered</div>':''}
     <div class="note">यह सिर्फ़ Learning Progress है, Main Test Result नहीं।</div>
     <div style="text-align:center;margin-top:12px"><a onclick="resetT()" style="color:var(--rd);cursor:pointer;font-size:12px">इस Topic की Progress रीसेट करें</a></div>
@@ -150,21 +172,23 @@ function resetT(){if(!confirm('इस Topic की सारी Learning Progres
 // ---------- List viewer ----------
 function filterRows(k){
   let r=cur().filter(o=>listOf(o)===k);
-  if(k==='L'){const kw=(UI.listKw||'').trim().toLowerCase();if(kw)r=r.filter(o=>((o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')+' '+(o.q.optHi||[]).join(' ')).toLowerCase().includes(kw))}
+  if(k==='L'){const kw=(UI.listKw||'').trim().toLowerCase();if(kw)r=r.filter(o=>((o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')+' '+(o.q.optHi||[]).join(' ')).toLowerCase().includes(kw));r.sort((a,b)=>lw(b)-lw(a))}
   else{const d=Math.max(0,parseFloat(UI.listDays)||0);r=r.filter(o=>ageD(o)>=d).sort((a,b)=>refT(a)-refT(b))}
   return r;
 }
 function rowsHTML(k,rows){
   const h=hi();
-  const part=rows.slice(0,UI.show).map(o=>{const dv=Math.floor(ageD(o));const b=k==='L'?'':(never(o)?`⭐ ${dv} दिन (Revise नहीं हुआ)`:`${dv} दिन`);
-    return `<div class="row"><div style="flex:1">${esc(String(h?(o.q.qHi||o.q.qEn):o.q.qEn).slice(0,110))}</div><span style="white-space:nowrap;font-size:12px;color:var(--mt)">${b}</span></div>`}).join('');
+  const part=rows.slice(0,UI.show).map(o=>{const r=REC[o.key]||{};
+    const b=k==='L'?(lw(o)>0?`⚠️ ${lw(o)} बार गलत`:''):k==='R'?`⭐ Revise नहीं हुआ<br>Learning से ${ago(r.learnedAt)}`:`${ago(r.lastRevisionAt)}<br>${fmtD(r.lastRevisionAt)}`;
+    return `<div class="row"><div style="flex:1">${esc(String(h?(o.q.qHi||o.q.qEn):o.q.qEn).slice(0,110))}</div><span style="white-space:nowrap;font-size:12px;color:var(--mt);text-align:right">${b}</span></div>`}).join('');
   return (part||'<div class="note" style="text-align:center;padding:10px">इस सूची में कोई प्रश्न नहीं।</div>')+(rows.length>UI.show?`<div style="text-align:center;margin-top:8px"><button class="btn gray" onclick="UI.show+=50;updateFilteredList('${k}')">और दिखाएँ (${rows.length-UI.show})</button></div>`:'');
 }
 function infoHTML(k,rows){
   const d=Math.max(0,parseFloat(UI.listDays)||0),n=Math.min(parseInt(UI.listRn)||rows.length,rows.length);
   const act=k==='L'?'की Learning':k==='R'?'का Test':'की Learning या Test';
   const base=k==='L'?((UI.listKw||'').trim()?'खोज में मिले':'इस सूची में कुल'):(d>0?d+' दिन या उससे पुराने':'इस सूची में कुल');
-  return `${base} <b>${rows.length}</b> प्रश्न हैं।<br>आप इनमें से <b>${n}</b> प्रश्नों ${act} करना चाहते हैं।`;
+  const wn=k==='L'?warnN(rows):0;
+  return `${base} <b>${rows.length}</b> प्रश्न हैं।${wn?`<br>${ei('⚠️')} इनमें से Learning में गलत हुए: <b>${wn}</b> (ये सबसे ऊपर हैं)`:''}<br>आप इनमें से <b>${n}</b> प्रश्नों ${act} करना चाहते हैं।`;
 }
 function openList(k){F.list=k;F.view='list';UI.listDays='0';UI.listRn='20';UI.listKw='';UI.show=50;draw()}
 function drawList(){
@@ -175,7 +199,7 @@ function drawList(){
     :k==='L'?`<button class="btn ${off}" id="lBtn" onclick="startListLearn('L')">▶ Learning</button>`
     :`<button class="btn ${off}" id="lBtn" onclick="startListLearn('${k}')">▶ Learning</button><button class="btn g ${off}" id="tBtn" onclick="startListTest('${k}')">🎯 Test</button>`;
   $('main').innerHTML=`<a class="fc" onclick="back()" style="display:inline-block;margin-bottom:8px">← वापस</a>
-  <div class="card"><h2 style="margin:0 0 6px">${NM[k]} (${all.length})</h2>
+  <div class="card"><h2 style="margin:0 0 6px">${ei(TI[k])} ${TN[k]} (${all.length})</h2>
     <div class="card" style="background:#f8f9fa;margin-bottom:12px;padding:10px!important;border:1px solid #e0e3e7;box-shadow:none">
       ${first}<div class="lbl">कितने प्रश्न करने हैं?</div><input type="number" id="inRn" min="1" placeholder="जैसे 20" value="${esc(UI.listRn)}" oninput="updateFilteredList('${k}',true)" style="width:100%;box-sizing:border-box">
       <div class="note" id="listInfoNote">${infoHTML(k,rows)}</div><div class="nav">${btns}</div></div>
@@ -198,23 +222,23 @@ function startListLearn(k){const p=pickN(filterRows(k));if(!p.length)return;SS={
 // ---------- Learning ----------
 function qHTML(o,sel,lock){
   const q=o.q,h=hi(),opts=(h?q.optHi:q.optEn)||q.optEn||[],im=h?(q.imgHi||q.img):(q.imgEn||q.img),l=listOf(o);
-  return `<div class="meta"><span>${esc(h?o.snHi:o.sn)}</span><span>${esc(topicOf(o))}</span>${l==='X'?'<span>🔴 Weak</span>':l==='G'?'<span>🟢 Strong</span>':''}</div><div class="qt">${esc(h?(q.qHi||q.qEn):q.qEn)}</div>${im?`<img class="qimg" src="${esc(im)}" alt="">`:''}`+
+  return `<div class="meta"><span>${esc(h?o.snHi:o.sn)}</span><span>${esc(topicOf(o))}</span>${l==='X'?'<span>🔴 Weak</span>':l==='G'?'<span>🟢 Strong</span>':l==='L'&&lw(o)>0?'<span>⚠️ Learning में पहले गलत हुआ</span>':''}</div><div class="qt">${esc(h?(q.qHi||q.qEn):q.qEn)}</div>${im?`<img class="qimg" src="${esc(im)}" alt="">`:''}`+
   opts.map((t,k)=>{let c='opt';if(lock){c+=' lock';if(k===q.ans)c+=' ok';else if(k===sel)c+=' bad'}else if(k===sel)c+=' sel';
     const oi=q.optImg&&q.optImg[k];return `<button class="${c}" onclick="tap(${k})">${String.fromCharCode(65+k)}. ${esc(t)}${oi?`<img class="oimg" src="${esc(oi)}" alt="">`:''}${lock&&k===q.ans?' ✔':''}</button>`}).join('');
 }
 function tap(k){
   if(!SS)return;
-  if(SS.mode==='learn'){if(SS.ans!==undefined)return;const o=SS.queue[0];SS.ans=k;SS.ok=k===o.q.ans;learnAns(o,SS.ok);draw()}
+  if(SS.mode==='learn'){if(SS.ans!==undefined)return;const o=SS.queue[0];SS.ans=k;SS.ok=k===o.q.ans;SS.res=learnAns(o,SS.ok);SS.moved=SS.res==='moved';draw()}
   else if(SS.mode==='test'){SS.sel[SS.i]=k;draw()}
 }
-function nextL(){const o=SS.queue.shift();if(listOf(o)!=='R')SS.queue.push(o);SS.ans=undefined;draw()}   // गलत प्रश्न इसी सत्र में फिर आता है
+function nextL(){const o=SS.queue.shift();if(listOf(o)!=='R'&&!SS.moved)SS.queue.push(o);SS.ans=undefined;SS.moved=false;draw()}   // गलत प्रश्न इसी सत्र में फिर आता है
 function drawLearn(){
   const c=cnt(cur());
   if(!SS.queue.length){$('main').innerHTML=`<div class="card big">🎉<b>Learning सत्र पूरा!</b>${tiles(c,false)}<div class="nav"><button class="btn" onclick="back()">Topic पर जाएँ</button></div></div>`;return}
   const o=SS.queue[0],q=o.q,h=hi(),sol=(h?q.solHi:q.solEn)||q.solEn||q.solHi||'',a=SS.ans;
   $('main').innerHTML=`<div class="card" style="padding:10px!important">${tiles(c,false)}</div>
   <div class="card"><div class="meta"><span>बाकी: ${SS.queue.length}</span></div>${qHTML(o,a,a!==undefined)}
-  ${a!==undefined?`<div class="sol"><b>${SS.ok?'✅ Correct':'❌ Wrong'}</b>${SS.ok?'':'\nसही उत्तर: '+String.fromCharCode(65+q.ans)}${sol?'\n\n'+esc(sol):'\n\nSolution उपलब्ध नहीं है।'}\n\n${SS.ok?'→ 📝 Revision Pending में गया।':'→ यह इसी सत्र में फिर आएगा।'}</div>`:''}
+  ${a!==undefined?`<div class="sol"><b>${SS.ok?'✅ Correct':'❌ Wrong'}</b>${SS.ok?'':'\nसही उत्तर: '+String.fromCharCode(65+q.ans)}${sol?'\n\n'+esc(sol):'\n\nSolution उपलब्ध नहीं है।'}\n\n${SS.ok?'→ Revision Pending में गया।':SS.res==='moved'?'→ Learning में 2 बार गलत हुआ, इसलिए Weak Questions में चला गया।':SS.res==='g2x'?'→ Weak Questions में चला गया; यह इसी सत्र में फिर आएगा।':SS.res==='stayX'?'→ Weak Questions में ही है; यह इसी सत्र में फिर आएगा।':'→ ⚠️ 1 बार गलत हुआ। इसी सत्र में फिर आएगा; दोबारा गलत हुआ तो Weak Questions में चला जाएगा।'}</div>`:''}
   <div class="nav"><button class="btn gray" onclick="if(SS.ans!==undefined||confirm('सत्र रोकें?'))back()">✕ रोकें</button>${a!==undefined?`<button class="btn" onclick="nextL()">Next →</button>`:''}</div>
   <div class="nav"><button class="btn gray" onclick="edTopic('${esc(o.key)}')">✎ Topic बदलें</button></div></div>`;
 }
