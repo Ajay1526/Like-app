@@ -23,6 +23,7 @@
 .stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}.stats4 div{background:var(--bl2);border-radius:12px;padding:8px 2px;font-size:10px;color:var(--mt);cursor:pointer}.stats4 b{display:block;font-size:15px;color:var(--tx);font-weight:500}
 .bar select,.bar input{box-sizing:border-box;min-width:0;max-width:100%}.subsel{box-sizing:border-box;min-width:0;max-width:100%;font-weight:600;border:2px solid var(--bl)!important;background:var(--bl2)!important;color:#174ea6}.subsel:disabled{opacity:1;color:#174ea6}
 .ei{font-size:.72em;vertical-align:.12em}
+.opt{box-sizing:border-box;max-width:100%}.mvov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}.mvbox{background:#fff;border-radius:18px;padding:18px;width:100%;max-width:420px;box-sizing:border-box}.mvbox select{width:100%;margin-top:10px;box-sizing:border-box}.toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:#202124;color:#fff;padding:10px 16px;border-radius:20px;font-size:13px;z-index:300;max-width:90%}
 </style></head><body>
 <div class="top"><b>📚 Revision</b></div>
 <div class="wrap">
@@ -241,7 +242,7 @@ function drawLearn(){
   <div class="card"><div class="meta"><span>बाकी: ${SS.queue.length}</span></div>${qHTML(o,a,a!==undefined)}
   ${a!==undefined?`<div class="sol"><b>${SS.ok?'✅ Correct':'❌ Wrong'}</b>${SS.ok?'':'\nसही उत्तर: '+String.fromCharCode(65+q.ans)}${sol?'\n\n'+esc(sol):'\n\nSolution उपलब्ध नहीं है।'}\n\n${SS.ok?(SS.res==='stayG'?'→ Strong Questions में ही रहेगा।':'→ Revision Pending में गया।'):SS.res==='moved'?'→ Learning में 2 बार गलत हुआ, इसलिए Weak Questions में चला गया।':SS.res==='g2x'?'→ Weak Questions में चला गया; यह इसी सत्र में फिर आएगा।':SS.res==='stayX'?'→ Weak Questions में ही है; यह इसी सत्र में फिर आएगा।':'→ ⚠️ 1 बार गलत हुआ। इसी सत्र में फिर आएगा; दोबारा गलत हुआ तो Weak Questions में चला जाएगा।'}</div>`:''}
   <div class="nav"><button class="btn gray" onclick="if(SS.ans!==undefined||confirm('सत्र रोकें?'))back()">✕ रोकें</button>${a!==undefined?`<button class="btn" onclick="nextL()">Next →</button>`:''}</div>
-  <div class="nav"><button class="btn gray" onclick="edTopic('${esc(o.key)}')">✎ Topic बदलें</button></div></div>`;
+  <div class="nav"><button class="btn gray" onclick="moveQ('${esc(o.key)}')">🔀 दूसरे Topic में भेजें</button></div></div>`;
 }
 // ---------- Revision Test ----------
 function tgo(d){SS.i=Math.max(0,Math.min(SS.items.length-1,SS.i+d));draw()}
@@ -257,14 +258,14 @@ function drawTest(){
   $('main').innerHTML=`<div class="pb"><i style="width:${(SS.i+1)/n*100}%;background:var(--bl)"></i></div>
   <div class="card"><div class="meta"><span>Revision Test • Q ${SS.i+1}/${n}</span></div>${qHTML(o,SS.sel[SS.i],false)}
   <div class="nav"><button class="btn gray ${SS.i?'':'off'}" onclick="tgo(-1)">← Previous</button>${SS.i<n-1?`<button class="btn" onclick="tgo(1)">Next →</button>`:`<button class="btn g" onclick="submitT()">Submit</button>`}</div>
-  <div class="nav"><button class="btn gray" onclick="if(confirm('Test छोड़ें? Progress सेव नहीं होगी।'))back()">✕ छोड़ें</button></div></div>`;
+  <div class="nav"><button class="btn gray" onclick="moveQ('${esc(o.key)}')">🔀 दूसरे Topic में भेजें</button><button class="btn gray" onclick="if(confirm('Test छोड़ें? Progress सेव नहीं होगी।'))back()">✕ छोड़ें</button></div></div>`;
 }
 function drawResult(){
   const w=SS.wrong,h=hi(),c=cnt(cur());
-  $('main').innerHTML=`<div class="card big">${w.length?'📝':'🎉'}<b>${SS.n} में से ${SS.g} सही</b>🟢 ${SS.g} Strong • 🔴 ${w.length} Weak<div style="margin-top:12px">${tiles(c,false)}</div>
+  $('main').innerHTML=`<div class="card big">${w.length?'📝':'🎉'}<b>${SS.n} में से ${SS.g} सही</b>🟢 ${SS.g} Strong • 🔴 ${w.length} Weak
   <div class="nav"><button class="btn" onclick="back()">Topic पर जाएँ</button></div><div class="note">यह Revision/Learning Progress है, Main Test Result नहीं।</div></div>`+
   w.map(x=>{const q=x.o.q,sol=(h?q.solHi:q.solEn)||q.solEn||'',opts=(h?q.optHi:q.optEn)||q.optEn||[],sv=SS.sel[x.i];
-    return `<div class="card"><div class="meta"><span>🔴 Weak Questions में गया</span></div><div class="qt">${esc(h?(q.qHi||q.qEn):q.qEn)}</div><div class="note">आपका उत्तर: ${sv===undefined?'—':esc(opts[sv])}</div><div class="opt ok lock">सही: ${String.fromCharCode(65+q.ans)}. ${esc(opts[q.ans])}</div>${sol?`<div class="sol">${esc(sol)}</div>`:''}</div>`}).join('');
+    return `<div class="card"><div class="meta"><span>🔴 Weak Questions में गया</span></div><div class="qt">${esc(h?(q.qHi||q.qEn):q.qEn)}</div><div class="note">आपका उत्तर: ${sv===undefined?'—':esc(opts[sv])}</div><div class="opt ok lock">सही: ${String.fromCharCode(65+q.ans)}. ${esc(opts[q.ans])}</div>${sol?`<div class="sol">${esc(sol)}</div>`:''}<div class="nav"><button class="btn gray" onclick="moveQ('${esc(x.o.key)}')">🔀 दूसरे Topic में भेजें</button></div></div>`}).join('');
 }
 function draw(){
   if(!ALL.length){$('main').innerHTML='<div class="card" style="text-align:center">अभी कोई test/question upload नहीं है।</div>';return}
@@ -272,11 +273,22 @@ function draw(){
   ({home:drawHome,dash:drawDash,list:drawList,learn:drawLearn,test:drawTest,result:drawResult})[F.view]();
   if(typeof renderMathInElement==='function')try{renderMathInElement($('main'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}
 }
-function edTopic(k){
-  const o=ALL.find(x=>x.key===k),v=prompt('इस प्रश्न का topic लिखें / बदलें:',topicOf(o));
-  if(v===null||!v.trim())return;OV[k]=v.trim();
-  try{localStorage.setItem('examTopics',JSON.stringify(OV))}catch(e){}
-  F.top=v.trim();if(SS&&SS.mode==='learn')SS.queue=SS.queue.filter(x=>x.key!==k);draw();
+function toast(t){const o=document.getElementById('toastB');if(o)o.remove();const d=document.createElement('div');d.id='toastB';d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>{const x=document.getElementById('toastB');if(x)x.remove()},2200)}
+function moveQ(k){
+  const o=ALL.find(x=>x.key===k);if(!o)return;
+  const now_=topicOf(o),tops=[...new Set(ALL.filter(x=>x.sk===o.sk).map(topicOf))].sort();
+  mvClose();const ov=document.createElement('div');ov.id='mvOv';ov.className='mvov';
+  ov.innerHTML=`<div class="mvbox"><b>इस प्रश्न को किस Topic में भेजना है?</b><div class="note">अभी: ${esc(now_)}</div><select id="mvSel">${tops.filter(t=>t!==now_).map(t=>`<option>${esc(t)}</option>`).join('')}<option value="__new">➕ नया Topic बनाएँ…</option></select><div class="nav"><button class="btn gray" onclick="mvClose()">रद्द करें</button><button class="btn" onclick="mvDo('${esc(k)}')">भेजें</button></div></div>`;
+  document.body.appendChild(ov);
+}
+function mvClose(){const ov=document.getElementById('mvOv');if(ov)ov.remove()}
+function mvDo(k){
+  let t=document.getElementById('mvSel').value;
+  if(t==='__new'){t=(prompt('नए Topic का नाम लिखें:')||'').trim();if(!t)return}
+  OV[k]=t;try{localStorage.setItem('examTopics',JSON.stringify(OV))}catch(e){}
+  mvClose();
+  if(SS&&SS.mode==='learn'){if(SS.queue[0]&&SS.queue[0].key===k){SS.ans=undefined;SS.moved=false}SS.queue=SS.queue.filter(x=>x.key!==k)}
+  draw();toast('✅ प्रश्न "'+t+'" Topic में भेज दिया गया');
 }
 load().catch(e=>{try{console.error(e)}catch(x){}$('main').innerHTML='<div class="card empty" style="text-align:center">प्रश्न लोड नहीं हो पाए। पेज दोबारा खोलें।</div>'});
 </script></body></html>
