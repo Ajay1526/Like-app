@@ -21,6 +21,7 @@
 .qimg,.oimg{max-width:100%;height:auto;display:block;margin:6px 0}
 .row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #eee;font-size:13px}
 .stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}.stats4 div{background:var(--bl2);border-radius:12px;padding:8px 2px;font-size:10px;color:var(--mt);cursor:pointer}.stats4 b{display:block;font-size:15px;color:var(--tx);font-weight:500}
+.subsel{font-weight:600;border:2px solid var(--bl)!important;background:var(--bl2)!important;color:#174ea6}.subsel:disabled{opacity:1;color:#174ea6}
 </style></head><body>
 <div class="top"><b>📚 Revision</b></div>
 <div class="wrap">
@@ -106,21 +107,27 @@ function openT(t){F.top=t;F.view='dash';SS=null;draw()}
 function toTopics(){F.top='';F.view='home';SS=null;draw()}
 function back(){F.view=F.top?'dash':'home';SS=null;draw()}
 function backToList(){F.view='list';SS=null;draw()}
+function subjMap(){
+  const sm={};ALL.filter(o=>!F.l||o.m.l===F.l).forEach(o=>{(sm[o.sk]=sm[o.sk]||{n:hi()?o.snHi:o.sn,l:[]}).l.push(o)});
+  return sm;
+}
 function ctl(){
-  const lv=[...new Set(ALL.map(o=>o.m.l))];
-  $('ctl').innerHTML=`<select onchange="setF('l',this.value)" style="flex:1"><option value="">All Levels</option>${lv.map(l=>`<option${l===F.l?' selected':''}>${esc(l)}</option>`).join('')}</select>
+  const lv=[...new Set(ALL.map(o=>o.m.l))],sm=subjMap();
+  if(!sm[F.subj])F.subj=Object.keys(sm)[0]||'';
+  const lock=(F.view==='learn'||F.view==='test');   // सत्र चलते समय subject बदला नहीं जा सकता
+  $('ctl').innerHTML=`<select class="subsel" ${lock?'disabled':''} onchange="setF('subj',this.value)" style="flex:1 1 100%">${Object.keys(sm).map(k=>{const c=cnt(sm[k].l);return `<option value="${esc(k)}"${k===F.subj?' selected':''}>📚 ${esc(sm[k].n)} (🟢 ${c.G}/${c.t})</option>`}).join('')}</select>
+  <select onchange="setF('l',this.value)" style="flex:1"><option value="">All Levels</option>${lv.map(l=>`<option${l===F.l?' selected':''}>${esc(l)}</option>`).join('')}</select>
   <select onchange="F.lang=this.value;draw()" style="flex:1"><option value="en"${F.lang==='en'?' selected':''}>English</option><option value="hi"${F.lang==='hi'?' selected':''}>हिंदी</option></select>`;
 }
 const isFull=c=>c.t>0&&c.G===c.t;
 // सत्र (Learning/Test) के दौरान click=false, ताकि गलती से बाहर न निकलें
 function tiles(c,click){
-  return `<div class="stats4">${['L','R','X','G'].map(k=>`<div ${click?`onclick="openList('${k}')"`:'style="cursor:default"'}><b>${TI[k]} ${c[k]}</b>${TN[k]}</div>`).join('')}</div>`;
+  return `<div class="stats4">${['L','R','X','G'].map(k=>`<div ${click?`onclick="openList('${k}')"`:'style="cursor:default"'}><b>${TI[k]} ${k==='L'?c.L+'/'+c.t:c[k]}</b>${TN[k]}</div>`).join('')}</div>`;
 }
 function drawHome(){
-  const lv=ALL.filter(o=>!F.l||o.m.l===F.l),sm={};
-  lv.forEach(o=>{(sm[o.sk]=sm[o.sk]||{n:hi()?o.snHi:o.sn,l:[]}).l.push(o)});
+  const sm=subjMap();
   if(!sm[F.subj])F.subj=Object.keys(sm)[0]||'';
-  let h=`<div class="lbl">विषय (Subject)</div><div class="chipbar">${Object.keys(sm).map(k=>{const c=cnt(sm[k].l);return `<button class="fc${k===F.subj?' on':''}" onclick="setF('subj',this.dataset.v)" data-v="${esc(k)}">${esc(sm[k].n)} <small>🟢${c.G}/${c.t}</small></button>`}).join('')}</div><div class="lbl">टॉपिक (Topic) चुनें</div>`;
+  let h=`<div class="lbl">टॉपिक (Topic) चुनें</div>`;
   const tm={};(sm[F.subj]?sm[F.subj].l:[]).forEach(o=>{(tm[topicOf(o)]=tm[topicOf(o)]||[]).push(o)});
   h+=Object.keys(tm).sort().map(t=>{const c=cnt(tm[t]),p=c.t?Math.round(c.G/c.t*100):0;return `<div class="card tc" onclick="openT(this.dataset.t)" data-t="${esc(t)}"><div class="r"><b>${esc(t)}</b><span>${isFull(c)?'🎓':''} ${p}%</span></div><div class="pb"><i style="width:${p}%"></i></div><div class="note" style="margin:0">📘 ${c.L} • 📝 ${c.R} • 🔴 Weak ${c.X} • 🟢 Strong ${c.G} • कुल ${c.t}</div></div>`}).join('')||'<div class="card" style="text-align:center">कोई question नहीं मिला।</div>';
   $('main').innerHTML=h;
@@ -135,7 +142,6 @@ function drawDash(){
     <div class="note">👆 किसी भी सूची पर टैप करें: प्रश्न देखें, Learning या Test शुरू करें। कुल प्रश्न: <b>${c.t}</b></div>
     <div class="note">⏱ आख़िरी Revision: ${lr?`<b>${ago(lr)}</b> (${fmtT(lr)})`:'अभी तक नहीं हुआ'}</div>
     ${isFull(c)?'<div class="full">🎓 Fully Mastered</div>':''}
-    <div class="nav"><button class="btn ${c.L?'':'off'}" onclick="openList('L')">▶ Learning</button><button class="btn g" onclick="openList('R')">🎯 Revision Test</button></div>
     <div class="note">यह सिर्फ़ Learning Progress है, Main Test Result नहीं।</div>
     <div style="text-align:center;margin-top:12px"><a onclick="resetT()" style="color:var(--rd);cursor:pointer;font-size:12px">इस Topic की Progress रीसेट करें</a></div>
   </div>`;
@@ -156,20 +162,22 @@ function rowsHTML(k,rows){
 }
 function infoHTML(k,rows){
   const d=Math.max(0,parseFloat(UI.listDays)||0),n=Math.min(parseInt(UI.listRn)||rows.length,rows.length);
-  return k==='L'?`चुने गए प्रश्न: <b>${rows.length}</b> • इस बार: <b>${n}</b>`:`${d>0?d+' दिन या उससे पुराने':'सभी'}: <b>${rows.length}</b> प्रश्न • इस बार: <b>${n}</b>`;
+  const act=k==='L'?'की Learning':k==='R'?'का Test':'की Learning या Test';
+  const base=k==='L'?((UI.listKw||'').trim()?'खोज में मिले':'इस सूची में कुल'):(d>0?d+' दिन या उससे पुराने':'इस सूची में कुल');
+  return `${base} <b>${rows.length}</b> प्रश्न हैं।<br>आप इनमें से <b>${n}</b> प्रश्नों ${act} करना चाहते हैं।`;
 }
 function openList(k){F.list=k;F.view='list';UI.listDays='0';UI.listRn='20';UI.listKw='';UI.show=50;draw()}
 function drawList(){
   const k=F.list,all=cur().filter(o=>listOf(o)===k),rows=filterRows(k),off=rows.length?'':'off';
-  const first=k==='L'?`<input type="search" id="inKw" placeholder="कोई शब्द खोजें..." value="${esc(UI.listKw)}" oninput="updateFilteredList('${k}',true)" style="flex:1">`
-    :`<input type="number" id="inDays" min="0" placeholder="कितने दिन पुराने (0 = सब)" value="${UI.listDays==='0'?'':esc(UI.listDays)}" oninput="updateFilteredList('${k}',true)" style="flex:1">`;
+  const first=k==='L'?`<div class="lbl">कोई शब्द खोजें (वैकल्पिक)</div><input type="search" id="inKw" placeholder="शब्द लिखें..." value="${esc(UI.listKw)}" oninput="updateFilteredList('${k}',true)" style="width:100%;box-sizing:border-box">`
+    :`<div class="lbl">कितने दिन पुराने प्रश्न चाहिए? (0 या खाली = सब)</div><input type="number" id="inDays" min="0" placeholder="जैसे 7" value="${UI.listDays==='0'?'':esc(UI.listDays)}" oninput="updateFilteredList('${k}',true)" style="width:100%;box-sizing:border-box">`;
   const btns=k==='R'?`<button class="btn g ${off}" id="tBtn" onclick="startListTest('R')">🎯 Revision Test</button>`
     :k==='L'?`<button class="btn ${off}" id="lBtn" onclick="startListLearn('L')">▶ Learning</button>`
     :`<button class="btn ${off}" id="lBtn" onclick="startListLearn('${k}')">▶ Learning</button><button class="btn g ${off}" id="tBtn" onclick="startListTest('${k}')">🎯 Test</button>`;
   $('main').innerHTML=`<a class="fc" onclick="back()" style="display:inline-block;margin-bottom:8px">← वापस</a>
   <div class="card"><h2 style="margin:0 0 6px">${NM[k]} (${all.length})</h2>
     <div class="card" style="background:#f8f9fa;margin-bottom:12px;padding:10px!important;border:1px solid #e0e3e7;box-shadow:none">
-      <div class="bar" style="margin-top:4px">${first}<input type="number" id="inRn" min="1" placeholder="कितने प्रश्न" value="${esc(UI.listRn)}" oninput="updateFilteredList('${k}',true)" style="width:100px"></div>
+      ${first}<div class="lbl">कितने प्रश्न करने हैं?</div><input type="number" id="inRn" min="1" placeholder="जैसे 20" value="${esc(UI.listRn)}" oninput="updateFilteredList('${k}',true)" style="width:100%;box-sizing:border-box">
       <div class="note" id="listInfoNote">${infoHTML(k,rows)}</div><div class="nav">${btns}</div></div>
     <div class="lbl">प्रश्नों की सूची (सबसे पुराने पहले):</div><div id="listRowsContainer">${rowsHTML(k,rows)}</div></div>`;
 }
