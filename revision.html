@@ -111,7 +111,8 @@ const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(M
 const mk=o=>REC[o.key]=REC[o.key]||{a:0,c:0,w:0,l:'L'};
 function learnAns(o,ok){
   const r=mk(o);r.a++;let res='';
-  if(ok){r.c++;r.l='R';r.learnedAt=Date.now();delete r.lastRevisionAt;r.lw=0}   // 1 बार सही → Revision Pending
+  if(ok){r.c++;if(r.l==='G'){res='stayG'}                               // Strong में सही → Strong में ही रहता है
+    else{r.l='R';r.learnedAt=Date.now();delete r.lastRevisionAt;r.lw=0}}   // बाकी: 1 बार सही → Revision Pending
   else{r.w++;
     if(r.l==='G'){r.l='X';r.lw=0;res='g2x'}              // Strong में गलत → Weak
     else if(r.l==='X'){res='stayX'}                      // Weak में ही रहता है
@@ -231,14 +232,14 @@ function tap(k){
   if(SS.mode==='learn'){if(SS.ans!==undefined)return;const o=SS.queue[0];SS.ans=k;SS.ok=k===o.q.ans;SS.res=learnAns(o,SS.ok);SS.moved=SS.res==='moved';draw()}
   else if(SS.mode==='test'){SS.sel[SS.i]=k;draw()}
 }
-function nextL(){const o=SS.queue.shift();if(listOf(o)!=='R'&&!SS.moved)SS.queue.push(o);SS.ans=undefined;SS.moved=false;draw()}   // गलत प्रश्न इसी सत्र में फिर आता है
+function nextL(){const o=SS.queue.shift();if(!SS.ok&&!SS.moved)SS.queue.push(o);SS.ans=undefined;SS.moved=false;draw()}   // गलत प्रश्न इसी सत्र में फिर आता है
 function drawLearn(){
   const c=cnt(cur());
   if(!SS.queue.length){$('main').innerHTML=`<div class="card big">🎉<b>Learning सत्र पूरा!</b>${tiles(c,false)}<div class="nav"><button class="btn" onclick="back()">Topic पर जाएँ</button></div></div>`;return}
   const o=SS.queue[0],q=o.q,h=hi(),sol=(h?q.solHi:q.solEn)||q.solEn||q.solHi||'',a=SS.ans;
   $('main').innerHTML=`<div class="card" style="padding:10px!important">${tiles(c,false)}</div>
   <div class="card"><div class="meta"><span>बाकी: ${SS.queue.length}</span></div>${qHTML(o,a,a!==undefined)}
-  ${a!==undefined?`<div class="sol"><b>${SS.ok?'✅ Correct':'❌ Wrong'}</b>${SS.ok?'':'\nसही उत्तर: '+String.fromCharCode(65+q.ans)}${sol?'\n\n'+esc(sol):'\n\nSolution उपलब्ध नहीं है।'}\n\n${SS.ok?'→ Revision Pending में गया।':SS.res==='moved'?'→ Learning में 2 बार गलत हुआ, इसलिए Weak Questions में चला गया।':SS.res==='g2x'?'→ Weak Questions में चला गया; यह इसी सत्र में फिर आएगा।':SS.res==='stayX'?'→ Weak Questions में ही है; यह इसी सत्र में फिर आएगा।':'→ ⚠️ 1 बार गलत हुआ। इसी सत्र में फिर आएगा; दोबारा गलत हुआ तो Weak Questions में चला जाएगा।'}</div>`:''}
+  ${a!==undefined?`<div class="sol"><b>${SS.ok?'✅ Correct':'❌ Wrong'}</b>${SS.ok?'':'\nसही उत्तर: '+String.fromCharCode(65+q.ans)}${sol?'\n\n'+esc(sol):'\n\nSolution उपलब्ध नहीं है।'}\n\n${SS.ok?(SS.res==='stayG'?'→ Strong Questions में ही रहेगा।':'→ Revision Pending में गया।'):SS.res==='moved'?'→ Learning में 2 बार गलत हुआ, इसलिए Weak Questions में चला गया।':SS.res==='g2x'?'→ Weak Questions में चला गया; यह इसी सत्र में फिर आएगा।':SS.res==='stayX'?'→ Weak Questions में ही है; यह इसी सत्र में फिर आएगा।':'→ ⚠️ 1 बार गलत हुआ। इसी सत्र में फिर आएगा; दोबारा गलत हुआ तो Weak Questions में चला जाएगा।'}</div>`:''}
   <div class="nav"><button class="btn gray" onclick="if(SS.ans!==undefined||confirm('सत्र रोकें?'))back()">✕ रोकें</button>${a!==undefined?`<button class="btn" onclick="nextL()">Next →</button>`:''}</div>
   <div class="nav"><button class="btn gray" onclick="edTopic('${esc(o.key)}')">✎ Topic बदलें</button></div></div>`;
 }
