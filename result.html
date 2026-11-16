@@ -332,18 +332,25 @@ function render(){
       <td><b>${avgWrongPct}%</b></td>
       <td><b>${avgAttPct}%</b></td>
       <td class="tc">${timeCombinedHTML}</td>
-      <td><button class="s" id="b${i}_${j}" onclick="tog(${i},${j})">${L.sol}</button></td>
+      <td><button class="s" id="sol_btn_${i}_${j}" onclick="tog(${i},${j})">${L.sol}</button></td>
     </tr>
-    <tr id="r${i}_${j}" style="display:none"><td colspan="7">${solHTML(i,j,x,h,L)}</td></tr>`});
+    <tr id="sol_row_${i}_${j}" style="display:none"><td colspan="7">${solHTML(i,j,x,h,L)}</td></tr>`});
    o+='</table></div>';
   }
  });
  
- const open=[...document.querySelectorAll('[id^=r][style*="table-row"]')].map(e=>e.id);
+ const open=[...document.querySelectorAll('[id^="sol_row_"][style*="table-row"]')].map(e=>e.id);
  $('root').innerHTML=o;
  if(typeof renderMathInElement==='function'){try{renderMathInElement($('root'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}}
  window._L=L;
- open.forEach(id=>{const e=$(id);if(e){e.style.display='table-row';$('b'+id.slice(1)).textContent=L.hide}});
+ open.forEach(id=>{
+   const e=$(id);
+   if(e){
+     e.style.display='table-row';
+     const parts = id.replace('sol_row_', '');
+     $('sol_btn_'+parts).textContent=L.hide;
+   }
+ });
 }
 
 
@@ -371,16 +378,16 @@ function setQSec(v){qSecSel=v;render()}
 function setQF(v){qFilterV=v;render()}
 
 function tog(i,j){
-  const r = $('r'+i+'_'+j), b = $('b'+i+'_'+j), sh = r.style.display==='none';
+  const r = $('sol_row_'+i+'_'+j), b = $('sol_btn_'+i+'_'+j), sh = r.style.display==='none';
   
-  // सभी खुले हुए सॉल्यूशंस को बंद कर दें और बटन्स का टेक्स्ट रीसेट करें
-  document.querySelectorAll('[id^=r]').forEach(row => {
-    if(row.id !== 'r'+i+'_'+j) {
+  // अन्य सभी खुले हुए सॉल्यूशंस बंद करें (केवल sol_row_ से शुरू होने वाले एलिमेंट्स पर प्रभाव पड़े)
+  document.querySelectorAll('[id^="sol_row_"]').forEach(row => {
+    if(row.id !== 'sol_row_'+i+'_'+j) {
       row.style.display = 'none';
     }
   });
-  document.querySelectorAll('[id^=b]').forEach(btn => {
-    if(btn.id !== 'b'+i+'_'+j) {
+  document.querySelectorAll('[id^="sol_btn_"]').forEach(btn => {
+    if(btn.id !== 'sol_btn_'+i+'_'+j) {
       btn.textContent = _L.sol;
     }
   });
