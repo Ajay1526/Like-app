@@ -31,7 +31,7 @@ td{border:1px solid #ccc;padding:6px;text-align:center;white-space:nowrap}
 button,.btn{padding:6px 12px;border:1px solid #bbb;background:#fff;cursor:pointer;border-radius:3px;text-decoration:none;color:#333;display:inline-block}
 .btn.p{background:#33a6ea;color:#fff;border:0}
 .btn.g{background:#2e7d32;color:#fff;border:0}
-details summary{cursor:pointer;font-weight:bold;color:#31708f;margin-bottom:8px}
+details summary{cursor:pointer;font-weight:bold;color:#31708f}
 .up{color:#2e7d32;font-weight:bold}.dn{color:#d9534f;font-weight:bold}
 .empty{text-align:center;padding:20px;color:#666}
 </style><link rel="stylesheet" href="app.css?v=5"></head><body>
@@ -119,8 +119,20 @@ try{SF=sessionStorage.getItem('progSubj')||'all'}catch(e){}
 function setSF(v){SF=v;try{sessionStorage.setItem('progSubj',v)}catch(e){}selectedTests.clear();render()}
 
 let selectedTests=new Set();
+let sortField='name'; // 'name' or 'score' or 'date'
+let sortOrder='asc';  // 'asc' or 'desc'
 
-const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part|set|भाग)?\s*\d+\s*[\)\]]?\s*$/i,'').trim();
+function setSort(field){
+  if(sortField===field){
+    sortOrder=sortOrder==='asc'?'desc':'asc';
+  } else {
+    sortField=field;
+    sortOrder='asc';
+  }
+  render();
+}
+
+const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part|set|भाग)?\s*\d+\s*[\)\]]?\s*$/i,$1=>'').trim();
 const subjOf=a=>stripN((a.sections&&a.sections[0]&&a.sections[0].name)||tname(a))||tname(a);
 
 // Remove bookmark attempts
@@ -163,12 +175,26 @@ function firstAttemptCmpHTML(S,scores){
     return '<div class="card"><div class="empty" style="padding:10px">कोई टेस्ट उपलब्ध नहीं है।</div></div>';
   }
 
-  // Initialize selected tests if empty
   if(selectedTests.size===0){
     testNames.forEach(name=>selectedTests.add(name));
   }
 
-  const filteredTestNames = testNames.filter(name=>selectedTests.has(name));
+  let filteredTestNames = testNames.filter(name=>selectedTests.has(name));
+
+  // Sorting logic (Ascending / Descending)
+  filteredTestNames.sort((a,b)=>{
+    let valA, valB;
+    if(sortField==='name'){
+      valA=a.toLowerCase(); valB=b.toLowerCase();
+    } else if(sortField==='score'){
+      valA=scores[testMap[a].index]; valB=scores[testMap[b].index];
+    } else if(sortField==='date'){
+      valA=Number(A[testMap[a].index].id)||0; valB=Number(A[testMap[b].index].id)||0;
+    }
+    if(valA<valB) return sortOrder==='asc'?-1:1;
+    if(valA>valB) return sortOrder==='asc'?1:-1;
+    return 0;
+  });
 
   const allSelectedScores=filteredTestNames.map(name=>scores[testMap[name].index]);
   const avgSelectedScore=allSelectedScores.length?sum(allSelectedScores)/allSelectedScores.length:0;
@@ -177,11 +203,27 @@ function firstAttemptCmpHTML(S,scores){
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">
       <h2 style="margin:0">1st Attempt-wise Comparison</h2>
     </div>
-    <div style="margin-bottom:10px;padding:8px;background:#e8f0f8;border-radius:4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-      <b style="font-size:12px;color:#31708f">Select Tests to Compare:</b>
-      ${testNames.map(name=>`<label style="font-size:12px;background:#fff;padding:3px 8px;border-radius:3px;border:1px solid #d0e1f9;cursor:pointer;display:flex;align-items:center;gap:4px">
-        <input type="checkbox" ${selectedTests.has(name)?'checked':''} onclick="toggleTest('${esc(name).replace(/'/g, "\\'")}',this)"> ${esc(name)}
-      </label>`).join('')}
+    
+    <!-- Collapsible Dropdown for Select Tests -->
+    <details style="border:1px solid #d0e1f9;background:#e8f0f8;border-radius:4px;padding:8px 12px;margin-bottom:10px">
+      <summary style="font-weight:bold;color:#31708f;font-size:13px">📌 Select Tests to Compare (${selectedTests.size}/${testNames.length} selected)</summary>
+      <div style="margin-top:8px;max-height:150px;overflow-y:auto;background:#fff;padding:6px;border-radius:4px;border:1px solid #ccc;display:flex;flex-direction:column;gap:4px">
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding-bottom:4px;margin-bottom:4px">
+          <label style="font-size:12px;cursor:pointer;font-weight:bold"><input type="checkbox" ${testNames.every(n=>selectedTests.has(n))?'checked':''} onclick="toggleAllTests(this)"> Select All</label>
+          <span style="font-size:11px;color:#666">Click to toggle</span>
+        </div>
+        ${testNames.map(name=>`<label style="font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px">
+          <input type="checkbox" ${selectedTests.has(name)?'checked':''} onclick="toggleTest('${esc(name).replace(/[']/g, "\\'")}',this)"> ${esc(name)}
+        </label>`).join('')}
+      </div>
+    </details>
+
+    <!-- Sorting Controls -->
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap;font-size:12px">
+      <b>Sort By:</b>
+      <button class="btn${sortField==='name'?' p':''}" style="padding:4px 8px;font-size:11px" onclick="setSort('name')">Test Name ${sortField==='name'?(sortOrder==='asc'?'▲':'▼'):''}</button>
+      <button class="btn${sortField==='score'?' p':''}" style="padding:4px 8px;font-size:11px" onclick="setSort('score')">Score ${sortField==='score'?(sortOrder==='asc'?'▲':'▼'):''}</button>
+      <button class="btn${sortField==='date'?' p':''}" style="padding:4px 8px;font-size:11px" onclick="setSort('date')">Date ${sortField==='date'?(sortOrder==='asc'?'▲':'▼'):''}</button>
     </div>`;
 
   if(!filteredTestNames.length){
@@ -218,6 +260,21 @@ function firstAttemptCmpHTML(S,scores){
 function toggleTest(name,el){
   if(el.checked) selectedTests.add(name);
   else selectedTests.delete(name);
+  render();
+}
+
+function toggleAllTests(el){
+  const testMap={};
+  A.forEach(a=>{
+    const name=tname(a);
+    const t=typeOf(a);
+    if(PF==='full'&&t==='full') testMap[name]=true;
+    if(PF==='sectional'&&t==='sectional'&&(SF==='all'||subjOf(a)===SF)) testMap[name]=true;
+  });
+  selectedTests.clear();
+  if(el.checked){
+    Object.keys(testMap).forEach(n=>selectedTests.add(n));
+  }
   render();
 }
 
