@@ -22,6 +22,12 @@
         ]
       }
     },
-    "Graduation Level": {}
-  }
-}
+    "Graduation Level": {"Sample Post (edit in tests.json)": {
+        "2024": [
+          {
+            "title": "Sample Full Test 1",
+            "file": "questions.json"
+          }
+        ]
+      }
+    },
