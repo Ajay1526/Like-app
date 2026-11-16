@@ -111,17 +111,17 @@ function typeOf(a){
 
 let PF=new URLSearchParams(location.search).get('f')||sessionStorage.getItem('progFilter')||'full';
 if(PF==='all'||PF==='reattempt')PF='full';
-function setF(v){PF=v;try{sessionStorage.setItem('progFilter',v)}catch(e){}SF='all';try{sessionStorage.setItem('progSubj','all')}catch(e){}selectedTests.clear();render()}
+function setF(v){PF=v;try{sessionStorage.setItem('progFilter',v)}catch(e){}SF='all';try{sessionStorage.setItem('progSubj','all')}catch(e){}selectedTests.clear();testSearchQuery='';render()}
 
 let SF='all'; 
 try{SF=sessionStorage.getItem('progSubj')||'all'}catch(e){}
-function setSF(v){SF=v;try{sessionStorage.setItem('progSubj',v)}catch(e){}selectedTests.clear();render()}
+function setSF(v){SF=v;try{sessionStorage.setItem('progSubj',v)}catch(e){}selectedTests.clear();testSearchQuery='';render()}
 
 let selectedTests=new Set();
 let sortField='name'; 
 let sortOrder='asc';  
-let isDropdownOpen=false; // Keeps dropdown state persistent
-let testSearchQuery='';   // Search filter for tests checklist
+let isDropdownOpen=false; 
+let testSearchQuery='';   
 
 function setSort(field){
   if(sortField===field){
@@ -161,10 +161,35 @@ function toggleDropdown(){
   render();
 }
 
-function updateSearchQuery(val){
-  testSearchQuery=val;
-  // Do not full re-render whole page to keep input focus, just update checklist items if needed or re-render
-  render();
+function filterTestsList(){
+  const box=$('testSearchBox');
+  if(!box)return;
+  testSearchQuery=box.value.toLowerCase();
+  
+  const testMap={};
+  A.forEach((a,n)=>{
+    const name=tname(a);
+    const t=typeOf(a);
+    if(PF==='full'&&t!=='full')return;
+    if(PF==='sectional'){
+      if(t!=='sectional')return;
+      if(SF!=='all'&&subjOf(a)!==SF)return;
+    }
+    testMap[name]=true;
+  });
+  const testNames=Object.keys(testMap).sort();
+  const searchable=testNames.filter(name=>name.toLowerCase().includes(testSearchQuery));
+
+  const listEl=$('testListItems');
+  const countEl=$('testCountLabel');
+  if(listEl){
+    listEl.innerHTML=searchable.length?searchable.map(name=>`<label style="font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px">
+      <input type="checkbox" ${selectedTests.has(name)?'checked':''} onclick="toggleTest('${esc(name).replace(/[']/g, "\\'")}',this)"> ${esc(name)}
+    </label>`).join(''):'<div style="color:#777;font-size:12px;text-align:center;padding:4px">No test found</div>';
+  }
+  if(countEl){
+    countEl.innerText=searchable.length+' found';
+  }
 }
 
 function firstAttemptCmpHTML(S,scores){
@@ -193,7 +218,6 @@ function firstAttemptCmpHTML(S,scores){
 
   let filteredTestNames = testNames.filter(name=>selectedTests.has(name));
 
-  // Sorting logic
   filteredTestNames.sort((a,b)=>{
     let valA, valB;
     if(sortField==='name'){
@@ -211,27 +235,25 @@ function firstAttemptCmpHTML(S,scores){
   const allSelectedScores=filteredTestNames.map(name=>scores[testMap[name].index]);
   const avgSelectedScore=allSelectedScores.length?sum(allSelectedScores)/allSelectedScores.length:0;
 
-  // Filter test names for checklist based on search query
-  const searchableTestNames = testNames.filter(name=>name.toLowerCase().includes(testSearchQuery.toLowerCase()));
+  const searchableTestNames = testNames.filter(name=>name.toLowerCase().includes(testSearchQuery));
 
   let o=`<div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">
       <h2 style="margin:0">1st Attempt-wise Comparison</h2>
     </div>
     
-    <!-- Custom Persistent Dropdown for Select Tests -->
     <div style="border:1px solid #d0e1f9;background:#e8f0f8;border-radius:4px;padding:8px 12px;margin-bottom:10px">
       <div onclick="toggleDropdown()" style="font-weight:bold;color:#31708f;font-size:13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
         <span>📌 Select Tests to Compare (${selectedTests.size}/${testNames.length} selected)</span>
         <span>${isDropdownOpen?'▲':'▼'}</span>
       </div>
       <div style="margin-top:8px;display:${isDropdownOpen?'block':'none'};background:#fff;padding:8px;border-radius:4px;border:1px solid #ccc">
-        <input type="text" id="testSearchBox" placeholder="🔍 Search test name..." value="${esc(testSearchQuery)}" oninput="testSearchQuery=this.value; render();" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:3px;margin-bottom:6px;font-size:12px">
+        <input type="text" id="testSearchBox" placeholder="🔍 Search test name..." value="${esc(testSearchQuery)}" oninput="filterTestsList()" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:3px;margin-bottom:6px;font-size:12px">
         <div style="display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding-bottom:4px;margin-bottom:4px">
           <label style="font-size:12px;cursor:pointer;font-weight:bold"><input type="checkbox" ${testNames.every(n=>selectedTests.has(n))?'checked':''} onclick="toggleAllTests(this)"> Select All</label>
-          <span style="font-size:11px;color:#666">${searchableTestNames.length} found</span>
+          <span id="testCountLabel" style="font-size:11px;color:#666">${searchableTestNames.length} found</span>
         </div>
-        <div style="max-height:140px;overflow-y:auto;display:flex;flex-direction:column;gap:4px">
+        <div id="testListItems" style="max-height:140px;overflow-y:auto;display:flex;flex-direction:column;gap:4px">
           ${searchableTestNames.length?searchableTestNames.map(name=>`<label style="font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px">
             <input type="checkbox" ${selectedTests.has(name)?'checked':''} onclick="toggleTest('${esc(name).replace(/[']/g, "\\'")}',this)"> ${esc(name)}
           </label>`).join(''):'<div style="color:#777;font-size:12px;text-align:center;padding:4px">No test found</div>'}
@@ -239,7 +261,6 @@ function firstAttemptCmpHTML(S,scores){
       </div>
     </div>
 
-    <!-- Sorting Controls -->
     <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap;font-size:12px">
       <b>Sort By:</b>
       <button class="btn${sortField==='name'?' p':''}" style="padding:4px 8px;font-size:11px" onclick="setSort('name')">Test Name ${sortField==='name'?(sortOrder==='asc'?'▲':'▼'):''}</button>
@@ -282,11 +303,6 @@ function toggleTest(name,el){
   if(el.checked) selectedTests.add(name);
   else selectedTests.delete(name);
   render();
-  // Restore focus and cursor on search box if active
-  setTimeout(()=>{
-    const box = $('testSearchBox');
-    if(box){ box.focus(); box.setSelectionRange(box.value.length, box.value.length); }
-  }, 50);
 }
 
 function toggleAllTests(el){
