@@ -181,8 +181,8 @@ function render(){
  const pct = v => totalQ > 0 ? ((v / totalQ) * 100).toFixed(1) : '0.0';
  const myMarksPct = pct(actualScore), avgMarksPct = pct(avgScore), topMarksPct = pct(top.score);
 
- const L=h?{cmpWith:'तुलना करें',cmpAvg:'औसत छात्र',cmpTop:'टॉपर छात्र',cmpAvgP:'औसत छात्र + Custom %',cmpTopM:'टॉपर छात्र − Custom %',sc:'आपका स्कोर (कट-पिट कर)',co:'सही',wr:'गलत',un:'अनअटेम्प्टेड',tt:'कुल समय',tp:'टॉपर स्कोर',av:'औसत छात्र समय',n:'कुल छात्र',sec:'सेक्शन-वार समय और विश्लेषण',q:'प्रश्न-वार समय',sub:'सेक्शन',you:'आपका',avL:'औसत',topT:'टॉपर',st:'स्थिति',sol:'हल देखें',hide:'हल छुपाएं',ans:'सही उत्तर',your:'आपका उत्तर',none:'कोई नहीं',qn:'प्रश्न',nt:'हल उपलब्ध नहीं है।',rank:'अनुमानित रैंक (Rank)',acc:'एक्यूरेसी (Accuracy)',allQ:'सभी प्रश्न',corr:'सही',wrg:'गलत',unatt:'अनअटेम्प्टेड',slow:'औसत से ज़्यादा समय',fast:'औसत से कम समय',cTime:'सही उत्तर का समय', wTime:'गलत उत्तर का समय', avgCorrP:'औसत सही %', avgWrongP:'औसत गलत %', avgAttP:'औसत प्रयास %', timeLayout:'समय (आपका / औसत / टॉपर)', secTimeLayout:'समय (Your / Avg / Top)'}
-  :{cmpWith:'Comparison With',cmpAvg:'Average Student',cmpTop:'Topper Student',cmpAvgP:'Average Student + Custom %',cmpTopM:'Topper Student − Custom %',sc:'Your Score (Net)',co:'Correct',wr:'Wrong',un:'Unattempted',tt:'Total Time',tp:'Top Score',av:'Avg Student Time',n:'Total Students',sec:'Section-wise Time & Analysis',q:'Question-wise Time',sub:'Section',you:'Your',avL:'Avg',topT:'Top',st:'Status',sol:'View Solution',hide:'Hide Solution',ans:'Correct Answer',your:'Your Answer',none:'None',qn:'Question',nt:'No solution available.',rank:'Predicted Rank',acc:'Accuracy',allQ:'All Questions',corr:'Correct',wrg:'Wrong',unatt:'Unattempted',slow:'Above Avg Time',fast:'Below Avg Time',cTime:'Correct Q. Time', wTime:'Wrong Q. Time', avgCorrP:'Avg Correct %', avgWrongP:'Avg Wrong %', avgAttP:'Avg Attempt %', timeLayout:'Time (Your / Avg / Top)', secTimeLayout:'Time (Your / Avg / Top)'};
+ const L=h?{cmpWith:'तुलना करें',cmpAvg:'औसत छात्र',cmpTop:'टॉपर छात्र',cmpAvgP:'औसत छात्र + Custom %',cmpTopM:'टॉपर छात्र − Custom %',sc:'आपका स्कोर (कट-पिट कर)',co:'सही',wr:'गलत',un:'अनअटेम्प्टेड',tt:'कुल समय',tp:'टॉपर स्कोर',av:'औसत छात्र समय',n:'कुल छात्र',sec:'सेक्शन-वार समय और विश्लेषण',q:'प्रश्न-वार समय',sub:'सेक्शन',you:'आपका',avL:'औसत',topT:'टॉपर',st:'स्थिति',sol:'हल देखें',hide:'हल छुपाएं',ans:'सही उत्तर',your:'आपका उत्तर',none:'कोई नहीं',qn:'प्रश्न',nt:'हल उपलब्ध नहीं है।',rank:'अनुमानित रैंक (Rank)',acc:'एक्यूरेसी (Accuracy)',allQ:'सभी प्रश्न',corr:'सही',wrg:'गलत',unatt:'अनअटेम्प्टेड',slow:'औसत से ज़्यादा समय',fast:'औसत से कम समय',cTime:'सही उत्तर का समय', wTime:'गलत उत्तर का समय', avgCorrP:'औसत सही %', avgWrongP:'औसत गलत %', avgAttP:'औसत प्रयास %', timeLayout:'समय (आपका / औसत / टॉपर)', secTimeLayout:'समय (Your / Avg / Top)', change:'बदलाव', attCol:'प्रयास'}
+  :{cmpWith:'Comparison With',cmpAvg:'Average Student',cmpTop:'Topper Student',cmpAvgP:'Average Student + Custom %',cmpTopM:'Topper Student − Custom %',sc:'Your Score (Net)',co:'Correct',wr:'Wrong',un:'Unattempted',tt:'Total Time',tp:'Top Score',av:'Avg Student Time',n:'Total Students',sec:'Section-wise Time & Analysis',q:'Question-wise Time',sub:'Section',you:'Your',avL:'Avg',topT:'Top',st:'Status',sol:'View Solution',hide:'Hide Solution',ans:'Correct Answer',your:'Your Answer',none:'None',qn:'Question',nt:'No solution available.',rank:'Predicted Rank',acc:'Accuracy',allQ:'All Questions',corr:'Correct',wrg:'Wrong',unatt:'Unattempted',slow:'Above Avg Time',fast:'Below Avg Time',cTime:'Correct Q. Time', wTime:'Wrong Q. Time', avgCorrP:'Avg Correct %', avgWrongP:'Avg Wrong %', avgAttP:'Avg Attempt %', timeLayout:'Time (Your / Avg / Top)', secTimeLayout:'Time (Your / Avg / Top)', change:'Change', attCol:'Attempted'};
 
  const qFilterVal=qFilterV;
  const fOpts=[['all',L.allQ],['correct',L.corr],['wrong',L.wrg],['unattempted',L.unatt],['slow',L.slow],['fast',L.fast]];
@@ -233,7 +233,7 @@ function render(){
 
  o+=`<div class="card"><div class="cmp"><h3>${L.sec}</h3><div>${L.cmpWith}: <select id="cmpMode" onchange="setCmp()">${modes.map(m=>`<option value="${m[0]}"${m[0]===cmpMode?' selected':''}>${m[1]}</option>`).join('')}</select>${pctInput}</div></div>
  <div class="legend"><span class="cy">■ ${h?'आप':'You'}</span> &nbsp; <span class="${cmpCls}">■ ${modes.find(m=>m[0]===cmpMode)[1].replace('Custom %',cmpPct+'%')}</span></div>
- <table><tr><th>${L.sub}</th><th>Score</th><th>${L.acc}</th><th>Correct</th><th>Wrong</th><th>Unattempted</th><th>${L.cTime}</th><th>${L.wTime}</th><th>${h?'समय':'Time'}</th></tr>`;
+ <table><tr><th>${L.sub}</th><th>Score</th><th>${L.change}</th><th>${L.acc}</th><th>Correct</th><th>Wrong</th><th>${L.attCol}</th><th>Unattempted</th><th>${L.cTime}</th><th>${L.wTime}</th><th>${h?'समय':'Time'}</th></tr>`;
 
  me.sections.forEach((s,i)=>{
   const m=secStats(me,i);
@@ -241,9 +241,9 @@ function render(){
   const n=A.length;
   const ss=A.map(att=>secStats(att,i));
   const totAtt=sum(ss.map(x=>x.att)), totC=sum(ss.map(x=>x.c));
-  const avgB={score:sum(ss.map(x=>x.score))/n,acc:totAtt>0?totC/totAtt*100:0,c:sum(ss.map(x=>x.c))/n,w:sum(ss.map(x=>x.w))/n,u:sum(ss.map(x=>x.u))/n,cT:sum(ss.map(x=>x.cT))/n,wT:sum(ss.map(x=>x.wT))/n,tot:sum(ss.map(x=>x.tot))/n};
+  const avgB={score:sum(ss.map(x=>x.score))/n,acc:totAtt>0?totC/totAtt*100:0,c:sum(ss.map(x=>x.c))/n,w:sum(ss.map(x=>x.w))/n,u:sum(ss.map(x=>x.u))/n,att:sum(ss.map(x=>x.att))/n,cT:sum(ss.map(x=>x.cT))/n,wT:sum(ss.map(x=>x.wT))/n,tot:sum(ss.map(x=>x.tot))/n};
   const tp=secStats(top,i);
-  const topB={score:tp.score,acc:tp.att>0?tp.c/tp.att*100:0,c:tp.c,w:tp.w,u:tp.u,cT:tp.cT,wT:tp.wT,tot:tp.tot};
+  const topB={score:tp.score,acc:tp.att>0?tp.c/tp.att*100:0,c:tp.c,w:tp.w,u:tp.u,att:tp.att,cT:tp.cT,wT:tp.wT,tot:tp.tot};
   const base=isAvg?avgB:topB;
   const kv={};
   Object.keys(base).forEach(key=>{kv[key]=base[key]*factor});
@@ -251,12 +251,18 @@ function render(){
 
   const cell=(my,cm,cls)=>`<div class="${cls||''}" style="font-weight:bold">${my}</div><div class="${cmpCls}" style="font-size:11px;border-top:1px dashed #ddd;margin-top:2px;padding-top:2px">${cm}</div>`;
 
+  const sDiff = Math.round((m.score - kv.score) * 100) / 100;
+  const sDiffStr = (sDiff >= 0 ? '+' : '') + sDiff.toFixed(2);
+  const sDiffCls = sDiff >= 0 ? 'c' : 'w';
+
   o+=`<tr>
     <td><a href="javascript:void(0)" onclick="scrollToSec(${i})" style="color:#33a6ea;text-decoration:underline;cursor:pointer;"><b>${secName(s)}</b></a></td>
     <td>${cell(m.score,(Math.round(kv.score*100)/100),'')}</td>
+    <td>${cell(sDiffStr, cmpMode.startsWith('avg')?(h?'औसत से':'vs Avg'):(h?'टॉपर से':'vs Top'), sDiffCls)}</td>
     <td>${cell(mAcc.toFixed(1)+'%',kv.acc.toFixed(1)+'%','')}</td>
     <td>${cell(m.c,kv.c.toFixed(1),'c')}</td>
     <td>${cell(m.w,kv.w.toFixed(1),'w')}</td>
+    <td>${cell(m.att,kv.att.toFixed(1),'')}</td>
     <td>${cell(m.u,kv.u.toFixed(1),'u')}</td>
     <td>${cell(fmt(m.cT),fmt(kv.cT),'')}</td>
     <td>${cell(fmt(m.wT),fmt(kv.wT),'')}</td>
@@ -364,7 +370,24 @@ function solHTML(i,j,x,h,L){
 function setQSec(v){qSecSel=v;render()}
 function setQF(v){qFilterV=v;render()}
 
-function tog(i,j){const r=$('r'+i+'_'+j),b=$('b'+i+'_'+j),sh=r.style.display==='none';r.style.display=sh?'table-row':'none';b.textContent=sh?_L.hide:_L.sol}
+function tog(i,j){
+  const r = $('r'+i+'_'+j), b = $('b'+i+'_'+j), sh = r.style.display==='none';
+  
+  // सभी खुले हुए सॉल्यूशंस को बंद कर दें और बटन्स का टेक्स्ट रीसेट करें
+  document.querySelectorAll('[id^=r]').forEach(row => {
+    if(row.id !== 'r'+i+'_'+j) {
+      row.style.display = 'none';
+    }
+  });
+  document.querySelectorAll('[id^=b]').forEach(btn => {
+    if(btn.id !== 'b'+i+'_'+j) {
+      btn.textContent = _L.sol;
+    }
+  });
+
+  r.style.display = sh ? 'table-row' : 'none';
+  b.textContent = sh ? _L.hide : _L.sol;
+}
 
 function scrollToSec(i) {
   localStorage.setItem('resumeSection', i);
