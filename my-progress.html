@@ -26,30 +26,24 @@ h2{margin:6px 0 10px;font-size:16px;color:#31708f}
 .chip b{font-size:14px}
 table{width:100%;border-collapse:collapse}
 th{background:#c6d9f1;border:1px solid #8ea9db;padding:6px}
-td{border:1px solid #ccc;padding:6px;text-align:center}
+td{border:1px solid #ccc;padding:6px;text-align:center;word-break:break-word;overflow-wrap:break-word}
 .c{color:#2e7d32;font-weight:bold}.w{color:#d9534f;font-weight:bold}.u{color:#888;font-weight:bold}
 button,.btn{padding:6px 12px;border:1px solid #bbb;background:#fff;cursor:pointer;border-radius:3px;text-decoration:none;color:#333;display:inline-block}
 .btn.p{background:#33a6ea;color:#fff;border:0}
 .btn.g{background:#2e7d32;color:#fff;border:0}
 details summary{cursor:pointer;font-weight:bold;color:#31708f;margin-bottom:8px}
-.bm{border:1px solid #ffe082;background:#fffde7;border-radius:4px;padding:10px;margin-bottom:8px}
-.bm .t{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:4px}
-.bm .o{padding:3px 6px;border-radius:3px;margin:3px 0}
-.bm .o.ok{background:#d4edda}.bm .o.bad{background:#f8d7da}
-.bm summary{font-weight:normal}
 .up{color:#2e7d32;font-weight:bold}.dn{color:#d9534f;font-weight:bold}
-.bar{height:8px;border-radius:4px;background:#33a6ea;min-width:2px}
-.gh{margin:10px 0 6px;font-weight:bold;color:#31708f;font-size:14px}
 .empty{text-align:center;padding:20px;color:#666}
 </style><link rel="stylesheet" href="app.css?v=5"></head><body>
 <div class="top"><b>📈 My Progress</b></div>
 <div class="wrap">
   <div class="card" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
     <b>कौन सी Progress देखनी है?</b>
-    <select id="pf" onchange="setF(this.value)" style="flex:1;min-width:200px">
+    <select id="pf" onchange="setF(this.value)" style="min-width:180px">
       <option value="full">Fresh Test (Full Test)</option>
       <option value="sectional">Sectional Test (Subject-wise)</option>
     </select>
+    <div id="subjectFilterContainer" style="display:flex;align-items:center;gap:6px;flex:1"></div>
   </div>
   <div id="root"></div>
 </div><script src="nav.js?v=5"></script>
@@ -71,7 +65,6 @@ const $=id=>document.getElementById(id);
 let A=[];
 try{A=JSON.parse(localStorage.getItem('examAttempts'))||[]}catch(e){}
 A=A.filter(a=>a&&Array.isArray(a.sections));
-let D=null;try{D=JSON.parse(localStorage.getItem('examData'))}catch(e){}
 let BMX=[];try{BMX=JSON.parse(localStorage.getItem('examBookmarks'))||[]}catch(e){}
 const sum=a=>a.reduce((x,y)=>x+y,0);
 const fmt=s=>{s=Math.round(s||0);return Math.floor(s/60)+'m '+String(s%60).padStart(2,'0')+'s'};
@@ -119,18 +112,13 @@ function typeOf(a){
 
 let PF=new URLSearchParams(location.search).get('f')||sessionStorage.getItem('progFilter')||'full';
 if(PF==='all'||PF==='reattempt')PF='full';
-function setF(v){PF=v;try{sessionStorage.setItem('progFilter',v)}catch(e){}render()}
+function setF(v){PF=v;try{sessionStorage.setItem('progFilter',v)}catch(e){}SF='all';try{sessionStorage.setItem('progSubj','all')}catch(e){}render()}
 
-let subTypeF='full'; // Dropdown next to 1st Attempt-wise Comparison ('full' or 'sectional')
-let SF='all'; // Subject filter for sectional test
-let TF='all'; // Test name filter for 1st attempt table
-try{subTypeF=sessionStorage.getItem('subTypeF')||'full'}catch(e){}
+let SF='all'; 
 try{SF=sessionStorage.getItem('progSubj')||'all'}catch(e){}
-try{TF=sessionStorage.getItem('testNameF')||'all'}catch(e){}
-
-function setSubTypeF(v){subTypeF=v;try{sessionStorage.setItem('subTypeF',v)}catch(e){}render()}
 function setSF(v){SF=v;try{sessionStorage.setItem('progSubj',v)}catch(e){}render()}
-function setTF(v){TF=v;try{sessionStorage.setItem('testNameF',v)}catch(e){}render()}
+
+let selectedTests=new Set();
 
 const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part|set|भाग)?\s*\d+\s*[\)\]]?\s*$/i,'').trim();
 const subjOf=a=>stripN((a.sections&&a.sections[0]&&a.sections[0].name)||tname(a))||tname(a);
@@ -143,7 +131,7 @@ const subjOf=a=>stripN((a.sections&&a.sections[0]&&a.sections[0].name)||tname(a)
 
 function visible(){
   return A.map((a,n)=>n).filter(n=>{
-    if(PF!=='all'&&typeOf(A[n])!==PF)return false;
+    if(typeOf(A[n])!==PF)return false;
     return PF!=='sectional'||SF==='all'||subjOf(A[n])===SF;
   });
 }
@@ -156,62 +144,51 @@ function delta(d){
 }
 
 function firstAttemptCmpHTML(S,scores){
-  // Find 1st attempt for each unique test name based on subTypeF and SF
   const testMap={};
   A.forEach((a,n)=>{
     const name=tname(a);
     const t=typeOf(a);
-    if(subTypeF==='full'&&t!=='full')return;
-    if(subTypeF==='sectional'){
+    if(PF==='full'&&t!=='full')return;
+    if(PF==='sectional'){
       if(t!=='sectional')return;
       if(SF!=='all'&&subjOf(a)!==SF)return;
     }
     if(!testMap[name]){
-      testMap[name]={index:n, attemptNum:1};
+      testMap[name]={index:n};
     }
   });
 
   const testNames=Object.keys(testMap).sort();
-  const filteredTestNames=testNames.filter(name=>TF==='all'||name===TF);
+  if(!testNames.length){
+    return '<div class="card"><div class="empty" style="padding:10px">कोई टेस्ट उपलब्ध नहीं है।</div></div>';
+  }
 
-  const subs=[...new Set(A.filter(a=>typeOf(a)==='sectional').map(subjOf))].sort();
+  // Initialize selected tests if empty
+  if(selectedTests.size===0){
+    testNames.forEach(name=>selectedTests.add(name));
+  }
+
+  const all1stScores=testNames.map(name=>scores[testMap[name].index]);
+  const avg1stScore=all1stScores.length?sum(all1stScores)/all1stScores.length:0;
 
   let o=`<div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">
       <h2 style="margin:0">1st Attempt-wise Comparison</h2>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-        <select onchange="setSubTypeF(this.value)">
-          <option value="full"${subTypeF==='full'?' selected':''}>Full Test</option>
-          <option value="sectional"${subTypeF==='sectional'?' selected':''}>Sectional Test</option>
-        </select>
-        ${subTypeF==='sectional'?`<select onchange="setSF(this.value)"><option value="all">All Subjects</option>${subs.map(x=>`<option value="${esc(x)}"${x===SF?' selected':''}>${esc(x)}</option>`).join('')}</select>`:''}
-      </div>
-    </div>`;
+    </div>
+    <div style="overflow-x:auto"><table style="min-width:950px"><tr>
+      <th style="width:40px"><input type="checkbox" id="selectAllBox" ${testNames.every(n=>selectedTests.has(n))?'checked':''} onclick="toggleAll(this)"></th>
+      <th style="max-width:185px">Test Name</th>
+      <th>Submitted</th><th>Score</th><th>Change</th><th>Accuracy</th><th>Correct</th><th>Wrong</th><th>Attempted</th><th>Unattempted</th><th>Total Time</th><th>Full Analysis</th></tr>`;
 
-  if(!filteredTestNames.length){
-    return o+'<div class="empty" style="padding:10px">कोई टेस्ट उपलब्ध नहीं है।</div></div>';
-  }
-
-  // Calculate average score for comparison change column
-  const all1stScores=testNames.map(name=>scores[testMap[name].index]);
-  const avg1stScore=all1stScores.length?sum(all1stScores)/all1stScores.length:0;
-
-  o+=`<div style="overflow-x:auto"><table style="min-width:950px"><tr>
-    <th>
-      <select onchange="setTF(this.value)" style="background:transparent;border:0;font-weight:bold;color:#31708f;cursor:pointer">
-        <option value="all">Test Name (All)</option>
-        ${testNames.map(x=>`<option value="${esc(x)}"${x===TF?' selected':''}>${esc(x)}</option>`).join('')}
-      </select>
-    </th>
-    <th>Submitted</th><th>Score</th><th>Change</th><th>Accuracy</th><th>Correct</th><th>Wrong</th><th>Attempted</th><th>Unattempted</th><th>Total Time</th><th>Full Analysis</th></tr>`;
-
-  filteredTestNames.forEach(name=>{
+  testNames.forEach(name=>{
     const n=testMap[name].index;
     const st=S[n];
     const sc=scores[n];
-    const ch=delta(sc-avg1stScore); // Difference vs average 1st attempt score
+    const ch=delta(sc-avg1stScore);
+    const isChecked=selectedTests.has(name);
     o+=`<tr>
-      <td style="text-align:left;min-width:180px"><b>${esc(name)}</b></td>
+      <td><input type="checkbox" class="t-chk" value="${esc(name)}" ${isChecked?'checked':''} onclick="toggleTest('${esc(name)}',this)"></td>
+      <td style="text-align:left;max-width:185px;font-size:12px"><b>${esc(name)}</b></td>
       <td>${when(A[n])}</td>
       <td><b>${sc}</b></td>
       <td>${ch}</td>
@@ -228,13 +205,46 @@ function firstAttemptCmpHTML(S,scores){
   return o+'</table></div></div>';
 }
 
+function toggleTest(name,el){
+  if(el.checked) selectedTests.add(name);
+  else selectedTests.delete(name);
+  render();
+}
+
+function toggleAll(el){
+  const testMap={};
+  A.forEach(a=>{
+    const name=tname(a);
+    const t=typeOf(a);
+    if(PF==='full'&&t==='full') testMap[name]=true;
+    if(PF==='sectional'&&t==='sectional'&&(SF==='all'||subjOf(a)===SF)) testMap[name]=true;
+  });
+  selectedTests.clear();
+  if(el.checked){
+    Object.keys(testMap).forEach(n=>selectedTests.add(n));
+  }
+  render();
+}
+
 function render(){
   const root=$('root');
+  $('pf').value=PF;
+
+  // Setup top subject filter container dynamically if sectional
+  const subCont=$('subjectFilterContainer');
+  if(PF==='sectional'){
+    const subs=[...new Set(A.filter(a=>typeOf(a)==='sectional').map(subjOf))].sort();
+    subCont.innerHTML=`<span>Subject:</span><select id="sfSelect" onchange="setSF(this.value)"><option value="all">All Subjects</option>${subs.map(x=>`<option value="${esc(x)}"${x===SF?' selected':''}>${esc(x)}</option>`).join('')}</select>`;
+    subCont.style.display='flex';
+  } else {
+    subCont.innerHTML='';
+    subCont.style.display='none';
+  }
+
   if(!A.length){
     root.innerHTML='<div class="card empty">अभी तक कोई टेस्ट attempt नहीं किया गया है।<br><br><a class="btn p" href="home.html">Start a Test</a></div>';
     return;
   }
-  $('pf').value=PF;
   const S=A.map(stats);
   const scores=A.map(score);
   const V=visible();
@@ -259,7 +269,6 @@ function render(){
     const a=A[n], st=S[n], isBest=(n===bestIdx);
     const name=tname(a);
     const allTries=A.map((x,idx)=>({x,idx})).filter(item=>tname(item.x)===name);
-    const currentAttemptNo=allTries.findIndex(item=>item.idx===n)+1;
 
     o+=`<div class="card${isBest?' best':''}">
       <div class="head">
@@ -288,15 +297,12 @@ function render(){
       <details open><summary>Section-wise Time &amp; Analysis</summary>
       <table><tr><th>Section</th><th>Score</th><th>Change</th><th>Accuracy</th><th>Correct</th><th>Wrong</th><th>Attempted</th><th>Unattempted</th><th>Correct Q. Time</th><th>Wrong Q. Time</th><th>Total Time</th></tr>`;
     
-    // Average section score for change calculation in section-wise table
     a.sections.forEach((s,i)=>{
       const p=st.parts[i];
-      const secAvgScore=p.net; // or compare against average if available
-      const secChange=delta(0); // Difference vs average/benchmark
       o+=`<tr>
-        <td><b>${esc(s.name||('Section '+(i+1)))}</b></td>
+        <td style="text-align:left;max-width:150px"><b>${esc(s.name||('Section '+(i+1)))}</b></td>
         <td>${p.net}</td>
-        <td>${secChange}</td>
+        <td><span class="u">—</span></td>
         <td>${p.acc.toFixed(1)}%</td>
         <td class="c">${p.c}</td>
         <td class="w">${p.w}</td>
