@@ -1,0 +1,32 @@
+{
+  "_help": "Structure: category -> level -> post name -> year -> list of tests. Each test = {\"title\": \"...\", \"file\": \"questions.json\"} (optional \"duration\": minutes). Sectional tests are made automatically from the sections inside each file.",
+  "teaching": {
+    "NTT": {},
+    "PRT": {
+      "Assistant  Teacher Primary (PRT)": {
+        "2026 post code 802/25": [
+          {
+            "title": "Assistant  Teacher Primary 10/04/2026 1:00 PM - 3:00 PM",
+            "file": "questions.json"
+          }
+        ]
+      }
+    },
+    "TGT": {},
+    "PGT": {}
+  },
+  "nonTeaching": {
+    "10th": {},
+    "12th": {},
+    "Graduation Level": {
+      "Assistant Security Officer": {
+        "2026": [
+          {
+            "title": "Assistant Security Officer shift 01/03/2026 shift  5:00 PM - 7:00 PM",
+            "file": "questions.json"
+          }
+        ]
+      }
+    }
+  }
+}
