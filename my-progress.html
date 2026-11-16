@@ -26,7 +26,7 @@ h2{margin:6px 0 10px;font-size:16px;color:#31708f}
 .chip b{font-size:14px}
 table{width:100%;border-collapse:collapse}
 th{background:#c6d9f1;border:1px solid #8ea9db;padding:6px}
-td{border:1px solid #ccc;padding:6px;text-align:center;word-break:break-word;overflow-wrap:break-word}
+td{border:1px solid #ccc;padding:6px;text-align:center;white-space:nowrap}
 .c{color:#2e7d32;font-weight:bold}.w{color:#d9534f;font-weight:bold}.u{color:#888;font-weight:bold}
 button,.btn{padding:6px 12px;border:1px solid #bbb;background:#fff;cursor:pointer;border-radius:3px;text-decoration:none;color:#333;display:inline-block}
 .btn.p{background:#33a6ea;color:#fff;border:0}
@@ -112,11 +112,11 @@ function typeOf(a){
 
 let PF=new URLSearchParams(location.search).get('f')||sessionStorage.getItem('progFilter')||'full';
 if(PF==='all'||PF==='reattempt')PF='full';
-function setF(v){PF=v;try{sessionStorage.setItem('progFilter',v)}catch(e){}SF='all';try{sessionStorage.setItem('progSubj','all')}catch(e){}render()}
+function setF(v){PF=v;try{sessionStorage.setItem('progFilter',v)}catch(e){}SF='all';try{sessionStorage.setItem('progSubj','all')}catch(e){}selectedTests.clear();render()}
 
 let SF='all'; 
 try{SF=sessionStorage.getItem('progSubj')||'all'}catch(e){}
-function setSF(v){SF=v;try{sessionStorage.setItem('progSubj',v)}catch(e){}render()}
+function setSF(v){SF=v;try{sessionStorage.setItem('progSubj',v)}catch(e){}selectedTests.clear();render()}
 
 let selectedTests=new Set();
 
@@ -168,27 +168,37 @@ function firstAttemptCmpHTML(S,scores){
     testNames.forEach(name=>selectedTests.add(name));
   }
 
-  const all1stScores=testNames.map(name=>scores[testMap[name].index]);
-  const avg1stScore=all1stScores.length?sum(all1stScores)/all1stScores.length:0;
+  const filteredTestNames = testNames.filter(name=>selectedTests.has(name));
+
+  const allSelectedScores=filteredTestNames.map(name=>scores[testMap[name].index]);
+  const avgSelectedScore=allSelectedScores.length?sum(allSelectedScores)/allSelectedScores.length:0;
 
   let o=`<div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">
       <h2 style="margin:0">1st Attempt-wise Comparison</h2>
     </div>
-    <div style="overflow-x:auto"><table style="min-width:950px"><tr>
-      <th style="width:40px"><input type="checkbox" id="selectAllBox" ${testNames.every(n=>selectedTests.has(n))?'checked':''} onclick="toggleAll(this)"></th>
-      <th style="max-width:185px">Test Name</th>
+    <div style="margin-bottom:10px;padding:8px;background:#e8f0f8;border-radius:4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+      <b style="font-size:12px;color:#31708f">Select Tests to Compare:</b>
+      ${testNames.map(name=>`<label style="font-size:12px;background:#fff;padding:3px 8px;border-radius:3px;border:1px solid #d0e1f9;cursor:pointer;display:flex;align-items:center;gap:4px">
+        <input type="checkbox" ${selectedTests.has(name)?'checked':''} onclick="toggleTest('${esc(name).replace(/'/g, "\\'")}',this)"> ${esc(name)}
+      </label>`).join('')}
+    </div>`;
+
+  if(!filteredTestNames.length){
+    return o+'<div class="empty" style="padding:10px">तुलना के लिए कृपया कम से कम एक टेस्ट चुनें।</div></div>';
+  }
+
+  o+=`<div style="overflow-x:auto"><table style="min-width:950px"><tr>
+      <th style="text-align:left;padding-left:8px">Test Name</th>
       <th>Submitted</th><th>Score</th><th>Change</th><th>Accuracy</th><th>Correct</th><th>Wrong</th><th>Attempted</th><th>Unattempted</th><th>Total Time</th><th>Full Analysis</th></tr>`;
 
-  testNames.forEach(name=>{
+  filteredTestNames.forEach(name=>{
     const n=testMap[name].index;
     const st=S[n];
     const sc=scores[n];
-    const ch=delta(sc-avg1stScore);
-    const isChecked=selectedTests.has(name);
+    const ch=delta(sc-avgSelectedScore);
     o+=`<tr>
-      <td><input type="checkbox" class="t-chk" value="${esc(name)}" ${isChecked?'checked':''} onclick="toggleTest('${esc(name)}',this)"></td>
-      <td style="text-align:left;max-width:185px;font-size:12px"><b>${esc(name)}</b></td>
+      <td style="text-align:left;padding-left:8px;font-size:12px;white-space:nowrap"><b>${esc(name)}</b></td>
       <td>${when(A[n])}</td>
       <td><b>${sc}</b></td>
       <td>${ch}</td>
@@ -211,26 +221,10 @@ function toggleTest(name,el){
   render();
 }
 
-function toggleAll(el){
-  const testMap={};
-  A.forEach(a=>{
-    const name=tname(a);
-    const t=typeOf(a);
-    if(PF==='full'&&t==='full') testMap[name]=true;
-    if(PF==='sectional'&&t==='sectional'&&(SF==='all'||subjOf(a)===SF)) testMap[name]=true;
-  });
-  selectedTests.clear();
-  if(el.checked){
-    Object.keys(testMap).forEach(n=>selectedTests.add(n));
-  }
-  render();
-}
-
 function render(){
   const root=$('root');
   $('pf').value=PF;
 
-  // Setup top subject filter container dynamically if sectional
   const subCont=$('subjectFilterContainer');
   if(PF==='sectional'){
     const subs=[...new Set(A.filter(a=>typeOf(a)==='sectional').map(subjOf))].sort();
@@ -300,7 +294,7 @@ function render(){
     a.sections.forEach((s,i)=>{
       const p=st.parts[i];
       o+=`<tr>
-        <td style="text-align:left;max-width:150px"><b>${esc(s.name||('Section '+(i+1)))}</b></td>
+        <td style="text-align:left;white-space:nowrap;padding-left:8px"><b>${esc(s.name||('Section '+(i+1)))}</b></td>
         <td>${p.net}</td>
         <td><span class="u">—</span></td>
         <td>${p.acc.toFixed(1)}%</td>
