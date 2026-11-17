@@ -32,13 +32,12 @@ const S={mode:null,cat:null,level:null,post:null,year:null,subj:null};
 const ORDER=['mode','cat','level','post','year'];
 const fileCache={};let SUBJ=null;
 
-// सर्च और सॉर्टिंग स्टेट वेरिएबल्स
 let postSearchQuery = '';
 let postSortOrder = 'asc';
 let testSearchQuery = '';
-let testSortOrder = 'newest'; // 'newest' या 'oldest'
+let testSortOrder = 'newest';
 let subItemSearchQuery = '';
-let subItemSortOrder = 'asc';
+let subItemSortOrder = 'newest';
 
 async function init(){
   try{const r=await fetch('tests.json');if(!r.ok)throw 0;CAT=await r.json()}
@@ -53,7 +52,7 @@ function pick(k,v){
   S[k]=decodeURIComponent(v);
   if(k==='level'){ postSearchQuery=''; postSortOrder='asc'; }
   if(k==='year'){ testSearchQuery=''; testSortOrder='newest'; }
-  if(k==='subj'){ subItemSearchQuery=''; subItemSortOrder='asc'; render(); return; }
+  if(k==='subj'){ subItemSearchQuery=''; subItemSortOrder='newest'; render(); return; }
   for(let i=ORDER.indexOf(k)+1;i<ORDER.length;i++)S[ORDER[i]]=null;
   S.subj=null;render();
 }
@@ -94,7 +93,6 @@ function getAttemptInfo(testTitle) {
   return { attempted: false, date: '' };
 }
 
-// तारीख और समय निकालने के लिए हेल्पर फंक्शन (जैसे "10-04-2026", "1.00 pm")
 function parseTestDateTime(title) {
   const dateMatch = title.match(/(\d{2}-\d{2}-\d{4})/);
   const timeMatch = title.match(/(\d{1,2}\.\d{2}\s*(?:am|pm))/i);
@@ -145,15 +143,20 @@ async function renderSubjects(){
   v.innerHTML='<h2>Sectional Test – विषय चुनें</h2><div class="tiles">'+Object.keys(sj).map((k,i)=>{const o=sj[k],q=o.items.reduce((a,b)=>a+b.n,0);
     return tile(ic[i%ic.length],esc(o.name),`${esc(o.nameHi||'')}<br>${o.items.length} test(s) • ${q} Q`,`pick('subj','${enc(k)}')`,['','g','o','r'][i%4])}).join('')+'</div>';
 }
-function renderSubjectTests(){
-  const o=SUBJ[S.subj];
+
+function updateSubItemList() {
+  const container = $('subItemListContainer');
+  if (!container) return;
+  const o = SUBJ[S.subj];
   let items = [...o.items];
   
-  // सेक्शनल विषय के अंदर सर्च और सॉर्टिंग फिल्टर
   if(subItemSearchQuery){
     items = items.filter(i => (i.t.title + ' ' + i.part + ' ' + i.p + ' ' + i.y).toLowerCase().includes(subItemSearchQuery.toLowerCase()));
   }
   items.sort((a,b)=>{
+    if(subItemSortOrder==='asc') return a.t.title.localeCompare(b.t.title);
+    if(subItemSortOrder==='desc') return b.t.title.localeCompare(a.t.title);
+
     let dtA = parseTestDateTime(a.t.title);
     let dtB = parseTestDateTime(b.t.title);
     if(dtA.dateStr !== dtB.dateStr){
@@ -162,6 +165,17 @@ function renderSubjectTests(){
     return subItemSortOrder==='newest'? dtB.timeVal - dtA.timeVal : dtA.timeVal - dtB.timeVal;
   });
 
+  container.innerHTML = items.length ? items.map((i,n)=>{
+    const att=getAttemptInfo(i.t.title+' – '+i.part);
+    const btnText=att.attempted?'Re-Attempt':'Start';
+    const btnClass=att.attempted?'btn g':'btn';
+    const subInfo=att.attempted?`<br><span style="color:#d9534f; font-size:11px;">Last attempted: ${esc(att.date)}</span>`:'';
+    return `<div class="row" style="align-items:center"><div style="display:flex;gap:12px;align-items:center"><span style="min-width:34px;height:34px;border-radius:50%;background:var(--bl2);color:#174ea6;display:flex;align-items:center;justify-content:center;font-weight:500">${n+1}</span><div><b>Set ${n+1}</b><div class="mut">${esc(i.part)} • ${esc(i.t.title)} • ${i.n} Q<br>${esc(i.p)} • ${esc(i.y)}${subInfo}</div></div></div><a class="${btnClass}" href="${launchURL(i.t,i.t.title+' – '+i.part,i.k)}">${btnText}</a></div>`;
+  }).join('') : empty('कोई सेट नहीं मिला।');
+}
+
+function renderSubjectTests(){
+  const o=SUBJ[S.subj];
   const q=o.items.reduce((a,b)=>a+b.n,0);
   $('view').innerHTML=`
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
@@ -170,22 +184,21 @@ function renderSubjectTests(){
         <div class="mut">${esc(o.nameHi||'')} • ${o.items.length} sets • ${q} questions</div>
       </div>
       <div style="display:flex; gap:6px; align-items:center;">
-        <input type="text" placeholder="सर्च सेट..." value="${esc(subItemSearchQuery)}" oninput="subItemSearchQuery=this.value; renderSubjectTests()" style="padding:6px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none; width:120px;">
-        <select onchange="subItemSortOrder=this.value; renderSubjectTests()" style="padding:6px; border:1px solid #ccc; border-radius:6px; font-size:12px; background:#fff; outline:none;">
+        <input type="text" id="subItemSearchInput" placeholder="सर्च सेट..." value="${esc(subItemSearchQuery)}" oninput="subItemSearchQuery=this.value; updateSubItemList()" style="padding:6px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none; width:120px;">
+        <select onchange="subItemSortOrder=this.value; updateSubItemList()" style="padding:6px; border:1px solid #ccc; border-radius:6px; font-size:12px; background:#fff; outline:none;">
           <option value="newest" ${subItemSortOrder==='newest'?'selected':''}>Newest First</option>
           <option value="oldest" ${subItemSortOrder==='oldest'?'selected':''}>Oldest First</option>
+          <option value="asc" ${subItemSortOrder==='asc'?'selected':''}>A to Z</option>
+          <option value="desc" ${subItemSortOrder==='desc'?'selected':''}>Z to A</option>
         </select>
       </div>
     </div>
-    <div class="card" style="padding:4px 14px!important">`+
-    (items.length ? items.map((i,n)=>{
-      const att=getAttemptInfo(i.t.title+' – '+i.part);
-      const btnText=att.attempted?'Re-Attempt':'Start';
-      const btnClass=att.attempted?'btn g':'btn';
-      const subInfo=att.attempted?`<br><span style="color:#d9534f; font-size:11px;">Last attempted: ${esc(att.date)}</span>`:'';
-      return `<div class="row" style="align-items:center"><div style="display:flex;gap:12px;align-items:center"><span style="min-width:34px;height:34px;border-radius:50%;background:var(--bl2);color:#174ea6;display:flex;align-items:center;justify-content:center;font-weight:500">${n+1}</span><div><b>Set ${n+1}</b><div class="mut">${esc(i.part)} • ${esc(i.t.title)} • ${i.n} Q<br>${esc(i.p)} • ${esc(i.y)}${subInfo}</div></div></div><a class="${btnClass}" href="${launchURL(i.t,i.t.title+' – '+i.part,i.k)}">${btnText}</a></div>`;
-    }).join('') : empty('कोई सेट नहीं मिला।'))+'</div>';
+    <div class="card" id="subItemListContainer" style="padding:4px 14px!important"></div>`;
+  updateSubItemList();
+  const inp = $('subItemSearchInput');
+  if(inp){ inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
 }
+
 function render(){
   crumb();const v=$('view');
   if(!S.mode){
@@ -216,7 +229,7 @@ function render(){
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
         <h2 style="margin:0">${esc(S.level)} – Post</h2>
         <div style="display:flex; gap:6px; align-items:center;">
-          <input type="text" placeholder="सर्च पोस्ट..." value="${esc(postSearchQuery)}" oninput="postSearchQuery=this.value; render()" style="padding:6px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none; width:130px;">
+          <input type="text" id="postSearchInput" placeholder="सर्च पोस्ट..." value="${esc(postSearchQuery)}" oninput="postSearchQuery=this.value; render()" style="padding:6px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none; width:130px;">
           <select onchange="postSortOrder=this.value; render()" style="padding:6px; border:1px solid #ccc; border-radius:6px; font-size:12px; background:#fff; outline:none;">
             <option value="asc" ${postSortOrder==='asc'?'selected':''}>A - Z</option>
             <option value="desc" ${postSortOrder==='desc'?'selected':''}>Z - A</option>
@@ -224,17 +237,46 @@ function render(){
         </div>
       </div>`+
       (ps.length?`<div class="tiles">${ps.map(p=>tile('📋',esc(p),Object.keys(node()[p]||{}).length+' year(s)',`pick('post','${enc(p)}')`)).join('')}</div>`:empty('इस level में अभी कोई post नहीं है।<br><span class="mut">tests.json में जोड़ें।</span>'));
+    
+    const inp = $('postSearchInput');
+    if(inp){ inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
     return;
   }
 
   if(!S.year){const ys=Object.keys(node()[S.post]||{}).sort((a,b)=>b.localeCompare(a));v.innerHTML=`<h2>${esc(S.post)} – Year</h2>`+(ys.length?`<div class="tiles">${ys.map(y=>tile('📅',esc(y),(node()[S.post][y]||[]).length+' test(s)',`pick('year','${enc(y)}')`)).join('')}</div>`:empty('कोई year नहीं मिला।'));return}
   
-  // --- फुल टेस्ट (Full Tests) पेज पर सर्च और डेट/टाइम सॉर्टिंग ---
+  v.innerHTML=`
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+      <h2 style="margin:0">Full Tests</h2>
+      <div style="display:flex; gap:6px; align-items:center;">
+        <input type="text" id="testSearchInput" placeholder="सर्च टेस्ट..." value="${esc(testSearchQuery)}" oninput="testSearchQuery=this.value; updateTestList()" style="padding:6px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none; width:130px;">
+        <select onchange="testSortOrder=this.value; updateTestList()" style="padding:6px; border:1px solid #ccc; border-radius:6px; font-size:12px; background:#fff; outline:none;">
+          <option value="newest" ${testSortOrder==='newest'?'selected':''}>Newest First</option>
+          <option value="oldest" ${testSortOrder==='oldest'?'selected':''}>Oldest First</option>
+          <option value="asc" ${testSortOrder==='asc'?'selected':''}>A to Z</option>
+          <option value="desc" ${testSortOrder==='desc'?'selected':''}>Z to A</option>
+        </select>
+      </div>
+    </div>
+    <div class="card" id="testListContainer" style="padding:4px 14px!important"></div>`;
+  
+  updateTestList();
+  const inp = $('testSearchInput');
+  if(inp){ inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+}
+
+function updateTestList() {
+  const container = $('testListContainer');
+  if (!container) return;
+  
   let ts=[...(node()[S.post]||{})[S.year]||[]];
   if(testSearchQuery){
     ts=ts.filter(t=>(t.title||'').toLowerCase().includes(testSearchQuery.toLowerCase()));
   }
   ts.sort((a,b)=>{
+    if(testSortOrder==='asc') return a.title.localeCompare(b.title);
+    if(testSortOrder==='desc') return b.title.localeCompare(a.title);
+
     let dtA = parseTestDateTime(a.title);
     let dtB = parseTestDateTime(b.title);
     if(dtA.dateStr !== dtB.dateStr){
@@ -243,24 +285,14 @@ function render(){
     return testSortOrder==='newest'? dtB.timeVal - dtA.timeVal : dtA.timeVal - dtB.timeVal;
   });
 
-  v.innerHTML=`
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-      <h2 style="margin:0">Full Tests</h2>
-      <div style="display:flex; gap:6px; align-items:center;">
-        <input type="text" placeholder="सर्च टेस्ट..." value="${esc(testSearchQuery)}" oninput="testSearchQuery=this.value; render()" style="padding:6px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none; width:130px;">
-        <select onchange="testSortOrder=this.value; render()" style="padding:6px; border:1px solid #ccc; border-radius:6px; font-size:12px; background:#fff; outline:none;">
-          <option value="newest" ${testSortOrder==='newest'?'selected':''}>Newest First</option>
-          <option value="oldest" ${testSortOrder==='oldest'?'selected':''}>Oldest First</option>
-        </select>
-      </div>
-    </div>
-    <div class="card" style="padding:4px 14px!important">`+(ts.length?ts.map(t=>{
+  container.innerHTML = ts.length ? ts.map(t=>{
     const att=getAttemptInfo(t.title);
     const btnText=att.attempted?'Re-Attempt':'Start Test';
     const btnClass=att.attempted?'btn g':'btn';
     const subInfo=att.attempted?`<div class="mut" style="color:#d9534f">Last attempted: ${esc(att.date)}</div>`:'';
     return `<div class="row"><div><b>${esc(t.title)}</b>${t.duration?`<div class="mut">${esc(t.duration)} min</div>`:''}${subInfo}</div><a class="${btnClass}" href="${launchURL(t)}">${btnText}</a></div>`;
-  }).join(''):empty('इस year में कोई test नहीं है।'))+'</div>';
+  }).join('') : empty('इस year में कोई test नहीं है।');
 }
+
 init();
 </script></body></html>
