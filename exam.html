@@ -69,28 +69,25 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
     margin-bottom: 20px;
 }
 
-/* टेबल को मोबाइल स्क्रीन के अंदर रखने और स्क्रॉल करने योग्य बनाने के लिए */
 .sum-table-container {
     width: 100%;
-    overflow-x: auto; /* स्क्रीन छोटी होने पर हॉरिजॉन्टल स्क्रॉल बार आ जाएगा */
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     margin-bottom: 20px;
 }
 
-/* 1. टेबल को स्क्रीन के अंदर पूरी तरह फिट करने के लिए */
 .sum table {
     width: 100% !important;
     max-width: 100% !important;
-    table-layout: fixed; /* यह सभी कॉलम को स्क्रीन के अंदर बराबर और फिक्स कर देता है */
+    table-layout: fixed;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-/* 2. टेबल के Header (शीर्षक) को नीला और बोल्ड रखने के लिए */
 .sum table th {
     background-color: #c6d9f1 !important;
     border: 1px solid #8ea9db !important;
-    padding: 6px 2px !important; /* मोबाइल के हिसाब से पैडिंग सेट की गई है */
+    padding: 6px 2px !important;
     font-weight: bold;
     font-size: 10px !important;
     word-wrap: break-word;
@@ -98,21 +95,14 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
     text-align: center;
 }
 
-/* 3. टेबल के अंदर के डेटा सेल्स (Cells) को सेट करने के लिए */
 .sum td {
-    font-size: 10px !important; /* मोबाइल स्क्रीन के हिसाब से फॉन्ट छोटा ताकि टेक्स्ट बाहर न जाए */
-    padding: 4px 2px !important; /* जगह बचाने के लिए पैडिंग कम की गई है */
-    word-wrap: break-word;     /* लंबे शब्दों को अपने आप अगली लाइन में तोड़ देगा */
+    font-size: 10px !important;
+    padding: 4px 2px !important;
+    word-wrap: break-word;
     overflow-wrap: break-word;
     border: 1px solid #8ea9db !important;
-    background-color: #ffffff; /* डेटा का बैकग्राउंड सफेद */
+    background-color: #ffffff;
     text-align: center;
-}
-
-/* 4. हॉरिजॉन्टल स्क्रॉल छिपाने के लिए */
-.sum-table-container {
-    width: 100%;
-    overflow-x: hidden;
 }
 
 .qimg{max-width:100%;height:auto;display:block;margin:6px 0 12px}
@@ -172,60 +162,13 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
             </li>
             <li>You can change the language of the question at any time using the "View in" drop-down.</li>
           </ol>
-          <h4>Navigating to a Question:</h4>
-          <ol start="5">
-            <li>Click on a question number in the Question Palette to go to that question directly. This does NOT save your answer to the current question.</li>
-            <li>Click <b>Save &amp; Next</b> to save your answer and go to the next question.</li>
-            <li>Click <b>Mark for Review &amp; Next</b> to save your answer, mark it for review and go to the next question.</li>
-          </ol>
-          <h4>Answering a Question:</h4>
-          <ol start="8">
-            <li>To select your answer, click on one of the options. To deselect, click the option again or click <b>Clear Response</b>.</li>
-            <li>To save your answer, you MUST click <b>Save &amp; Next</b>.</li>
-            <li>To change an answer, select that question and follow the same procedure.</li>
-          </ol>
-          <h4>Navigating through sections:</h4>
-          <ol start="11">
-            <li>Sections are displayed on the top bar. The current section is highlighted.</li>
-            <li>After clicking Submit for a section, view the summary and click "Yes" to move to the next section.</li>
-            <li>You cannot shuffle between sections during the examination. Sections open in sequential order.</li>
-          </ol>
         </div>
-
         <div class="L hi">
           <h3>कृपया निर्देशों को ध्यान से पढ़ें</h3>
           <h4>सामान्य निर्देश:</h4>
           <ol>
             <li>परीक्षा की कुल अवधि <b class="dur"></b> मिनट है।</li>
             <li>स्क्रीन के ऊपर दाएं कोने में काउंटडाउन टाइमर शेष समय दिखाता है। टाइमर शून्य होते ही परीक्षा अपने आप समाप्त हो जाएगी।</li>
-            <li>प्रश्न पैलेट प्रत्येक प्रश्न की स्थिति दर्शाता है:
-              <ul style="list-style:none;margin-left:0;margin-top:6px">
-                <li><span class="p" style="display:inline-flex;width:24px;height:24px">1</span> आपने अभी तक प्रश्न नहीं देखा है।</li>
-                <li><span class="p n" style="display:inline-flex;width:24px;height:24px">2</span> आपने प्रश्न का उत्तर नहीं दिया है।</li>
-                <li><span class="p a" style="display:inline-flex;width:24px;height:24px">3</span> आपने प्रश्न का उत्तर दिया है।</li>
-                <li><span class="p m" style="display:inline-flex;width:24px;height:24px">4</span> आपने उत्तर नहीं दिया है, लेकिन समीक्षा के लिए चिह्नित किया है।</li>
-                <li><span class="p am" style="display:inline-flex;width:24px;height:24px">5</span> उत्तर दिया और समीक्षा के लिए चिह्नित – मूल्यांकन में नहीं गिना जाएगा।</li>
-              </ul>
-            </li>
-            <li>आप "भाषा" ड्रॉप-डाउन से किसी भी समय प्रश्न की भाषा बदल सकते हैं।</li>
-          </ol>
-          <h4>प्रश्न पर जाना:</h4>
-          <ol start="5">
-            <li>सीधे किसी प्रश्न पर जाने के लिए प्रश्न पैलेट में उसके नंबर पर क्लिक करें। इससे वर्तमान प्रश्न का उत्तर सेव नहीं होता।</li>
-            <li>उत्तर सेव करके अगले प्रश्न पर जाने के लिए <b>Save &amp; Next</b> पर क्लिक करें।</li>
-            <li>उत्तर सेव करने, समीक्षा के लिए चिह्नित करने और अगले प्रश्न पर जाने के लिए <b>Mark for Review &amp; Next</b> पर क्लिक करें।</li>
-          </ol>
-          <h4>प्रश्न का उत्तर देना:</h4>
-          <ol start="8">
-            <li>उत्तर चुनने के लिए किसी विकल्प पर क्लिक करें। चुना हुआ उत्तर हटाने के लिए उसी विकल्प पर दोबारा क्लिक करें या <b>Clear Response</b> दबाएं।</li>
-            <li>उत्तर सेव करने के लिए आपको <b>Save &amp; Next</b> पर क्लिक करना ही होगा।</li>
-            <li>उत्तर बदलने के लिए उस प्रश्न को चुनें और वही प्रक्रिया दोहराएं।</li>
-          </ol>
-          <h4>सेक्शन में नेविगेशन:</h4>
-          <ol start="11">
-            <li>सेक्शन स्क्रीन की ऊपरी पट्टी में दिखाए जाते हैं। वर्तमान सेक्शन हाइलाइट रहता है।</li>
-            <li>किसी सेक्शन का Submit बटन दबाने के बाद सारांश देखें और अगले सेक्शन के लिए "Yes" पर क्लिक करें।</li>
-            <li>परीक्षा के दौरान आप सेक्शन आपस में नहीं बदल सकते। सेक्शन क्रम से खुलते हैं।</li>
           </ol>
         </div>
       </div>
@@ -259,30 +202,11 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
           <h3>Other Important Instructions</h3>
           <p>1. The Question Paper consists of objective type questions as follows:</p>
           <table class="it" id="tblEn"></table>
-          <ol start="2">
-            <li>You will be given <b class="dur"></b> minutes to attempt these questions.</li>
-            <li>Questions are available in English and Hindi. To see a question in another language, use the <b>View in</b> drop-down.</li>
-            <li>One question is displayed at a time. Do not spend too much time on any question.</li>
-            <li>Each question has 4 alternatives, only one is correct.</li>
-            <li>In case of any discrepancy between English and Hindi versions, the English version will prevail.</li>
-            <li>There will be negative marking of <b class="neg"></b> marks per wrong answer.</li>
-            <li>Candidates cannot re-visit a section after submitting it.</li>
-          </ol>
         </div>
-
         <div class="L hi">
           <h3>अन्य महत्वपूर्ण निर्देश</h3>
           <p>1. प्रश्न पत्र में वस्तुनिष्ठ प्रश्न निम्नानुसार हैं:</p>
           <table class="it" id="tblHi"></table>
-          <ol start="2">
-            <li>इन प्रश्नों को हल करने के लिए आपको <b class="dur"></b> मिनट दिए जाएंगे।</li>
-            <li>प्रश्न अंग्रेजी और हिंदी में उपलब्ध हैं। किसी प्रश्न को दूसरी भाषा में देखने के लिए <b>भाषा</b> ड्रॉप-डाउन का उपयोग करें।</li>
-            <li>स्क्रीन पर एक समय में एक प्रश्न दिखाया जाता है। किसी भी प्रश्न पर अधिक समय न लगाएं।</li>
-            <li>प्रत्येक प्रश्न के 4 विकल्प हैं, जिनमें से केवल एक सही है।</li>
-            <li>अंग्रेजी और हिंदी संस्करणों में किसी भी अंतर की स्थिति में अंग्रेजी संस्करण मान्य होगा।</li>
-            <li>प्रत्येक गलत उत्तर पर <b class="neg"></b> अंक काटे जाएंगे।</li>
-            <li>किसी सेक्शन को सबमिट करने के बाद उम्मीदवार उसे दोबारा नहीं देख सकते।</li>
-          </ol>
         </div>
       </div>
     </div>
@@ -299,14 +223,11 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
         <option value="en">English</option>
         <option value="hi">हिंदी</option>
       </select>
-      <div style="color:red;margin-top:3px" class="T"
-        data-en="Please note all questions will appear in your default language. This can be changed for a particular question later on."
-        data-hi="कृपया ध्यान दें, सभी प्रश्न आपकी डिफ़ॉल्ट भाषा में दिखाई देंगे। इसे बाद में किसी भी प्रश्न के लिए बदला जा सकता है।"></div>
       <div style="margin-top:5px">
         <input type="checkbox" id="chk">
         <label for="chk" class="T"
-          data-en="I have read and understood the instructions. All computer hardware allotted to me is in proper working condition. I declare that I am not carrying any prohibited gadget or material into the Examination Hall. In case of not adhering to the instructions, I shall be liable to be debarred from this Test and/or to disciplinary action."
-          data-hi="मैंने निर्देशों को पढ़ और समझ लिया है। मुझे आवंटित सभी कंप्यूटर हार्डवेयर सही कार्यशील स्थिति में हैं। मैं घोषणा करता/करती हूँ कि मेरे पास परीक्षा हॉल में कोई प्रतिबंधित गैजेट या सामग्री नहीं है। निर्देशों का पालन न करने पर मैं इस परीक्षा से वंचित किए जाने और/या अनुशासनात्मक कार्रवाई का पात्र रहूँगा/रहूँगी।"></label>
+          data-en="I have read and understood the instructions."
+          data-hi="मैंने निर्देशों को पढ़ और समझ लिया है।"></label>
       </div>
     </div>
     <div style="width:100%;display:flex;justify-content:space-between">
@@ -324,15 +245,12 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
   <div class="top" style="display:none"><span>Online Exam Portal</span><a href="#" target="_blank">Portal</a></div>
   <div class="tabs" id="tabs"></div>
   
-  <!-- यहाँ पर फुलस्क्रीन और एग्जिट बटन को बिल्कुल बीच में सेट किया गया है -->
   <div class="bar" style="display: flex; justify-content: space-between; align-items: center;">
     <span>Section</span>
-    
     <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex: 1;">
       <button onclick="openFullscreen()" style="padding: 2px 8px; font-size: 11px; cursor: pointer; font-weight: bold;">⛶ Full</button>
       <button onclick="closeFullscreen()" style="padding: 2px 8px; font-size: 11px; cursor: pointer; font-weight: bold;">❌ Exit</button>
     </div>
-
     <span>Time Left : <span id="timer" style="color:#d9534f"></span></span>
   </div>
 
@@ -395,7 +313,6 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
     <div class="t">Exam Summary</div>
     <div style="font-weight:bold;margin-bottom:5px" id="sumCur"></div>
     
-    <!-- यहाँ पर टेबल को एक डिव के अंदर लपेट दिया गया है -->
     <div class="sum-table-container">
       <table>
         <thead>
@@ -413,7 +330,7 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
       </table>
     </div>
 
-    <div class="sl" id="sumList"></div>
+    <!-- sumList को यहाँ से हटा दिया गया है ताकि नीचे लंबी लिस्ट न दिखे -->
     <div class="note" id="sumNote"></div>
     <div class="act">
       <button onclick="confirmSubmit()">Yes</button>
@@ -422,35 +339,30 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
   </div>
 </div>
 
-
-
 <script>
 const $ = id => document.getElementById(id);
 let D = null, ok = false;
 let lang = 'en', si = 0, qi = 0, ans = [], st = [], tm = [], timerId = null, saved = false, attemptId = null, ql = [];
 let isReviewMode = false;
-let submittedSections = []; // यह ट्रैक करेगा कि कौन से सेक्शन सबमिट हो चुके हैं
-// ---------- URL parameters (set by home.html) ----------
+let submittedSections = [];
+
 const P = new URLSearchParams(location.search);
 const MODE = P.get('mode');
-if (MODE === 'bookmarks') { location.replace('bookmark-practice.html' + (P.get('subject') || P.get('date') ? '?x=1' + (P.get('subject') ? '&subject=' + encodeURIComponent(P.get('subject')) : '') + (P.get('date') ? '&date=' + encodeURIComponent(P.get('date')) : '') : '')); }                       // review | bookmarks | null
 const FILE = P.get('file') || 'questions.json';
 const TTITLE = P.get('title') || '';
 const SECLIST = (P.get('section') || '').split(',').map(x => parseInt(x, 10)).filter(x => !isNaN(x));
 const SECIDX = SECLIST.length ? SECLIST[0] : null;
 const META = {title: '', dataKey: '', launch: ''};
 
-// ---------- Bookmarks store ----------
 const BM_KEY = 'examBookmarks';
 function bmLoad() { try { return JSON.parse(localStorage.getItem(BM_KEY)) || []; } catch (e) { return []; } }
-function bmSave(a) { try { localStorage.setItem(BM_KEY, JSON.stringify(a)); } catch (e) { alert('Could not save bookmark.'); } }
+function bmSave(a) { try { localStorage.setItem(BM_KEY, JSON.stringify(a)); } catch (e) {} }
 function hashStr(t) { let h = 0; for (let i = 0; i < t.length; i++) h = (h * 31 + t.charCodeAt(i)) | 0; return String(h); }
 function qKey(q) { return q.qid ? String(q.qid) : 'h' + hashStr(q.qEn || ''); }
 
-// ---------- Images in questions/options (fields: img, imgEn, imgHi, optImg) ----------
 function qImgSrc(q, l) { return ((l === 'hi' ? (q.imgHi || q.img) : (q.imgEn || q.img)) || ''); }
 function imgTag(src, cls) {
-  return '<img class="' + cls + '" src="' + src + '" alt="" onerror="this.outerHTML=\'<span class=imgerr>[image नहीं मिली: \'+this.getAttribute(\'src\')+\']</span>\'">';
+  return '<img class="' + cls + '" src="' + src + '" alt="" onerror="this.outerHTML=\'<span class=imgerr>[image नहीं मिली]</span>\'">';
 }
 function optInner(q, k, x) {
   const im = q.optImg && q.optImg[k];
@@ -459,7 +371,6 @@ function optInner(q, k, x) {
   return t + ' ' + imgTag(im, 'oimg');
 }
 
-// ---------- Math (LaTeX) rendering ----------
 function renderMath(el) {
   if (typeof renderMathInElement !== 'function') return;
   try {
@@ -474,270 +385,119 @@ function renderMath(el) {
     });
   } catch (e) {}
 }
-window.addEventListener('load', () => renderMath(document.querySelector('.qa')));
 
-function ymd(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
-
-// "Mark for Review" ही Bookmark है: mark करते ही प्रश्न bookmark में सेव हो जाता है
-const autoBm = new Set();   // इसी टेस्ट-सत्र में mark से जुड़े bookmarks
-
+const autoBm = new Set();
 function addBm(s, q) {
   const arr = bmLoad(), k = qKey(q);
   if (arr.some(b => b.id === k)) return;
-  const now = new Date();
-  arr.push({
-    id: k, qid: q.qid || '', ts: now.getTime(), date: ymd(now),
-    subject: s.name, subjectHi: s.nameHi || s.name, testName: META.title,
-    q: {qid: q.qid || '', qEn: q.qEn, qHi: q.qHi, optEn: q.optEn, optHi: q.optHi, ans: q.ans, solEn: q.solEn || '', solHi: q.solHi || '', img: q.img || '', imgEn: q.imgEn || '', imgHi: q.imgHi || '', optImg: q.optImg || null}
-  });
+  arr.push({id: k, qid: q.qid || '', subject: s.name, q: {qid: q.qid || '', qEn: q.qEn, qHi: q.qHi, optEn: q.optEn, optHi: q.optHi, ans: q.ans}});
   bmSave(arr);
   autoBm.add(k);
 }
-
 function removeAutoBm(q) {
   const k = qKey(q);
-  if (!autoBm.has(k)) return;   // पुराने (दूसरे सत्र के) bookmarks को नहीं छूते
+  if (!autoBm.has(k)) return;
   bmSave(bmLoad().filter(b => b.id !== k));
   autoBm.delete(k);
 }
 
-// ---------- Data source ----------
 function prepare(d) {
   if (SECIDX !== null && d && d.sections && d.sections[SECIDX]) {
     let sec = d.sections[SECIDX];
     if (SECLIST.length > 1) {
       const parts = SECLIST.map(i => d.sections[i]).filter(x => x && x.questions);
       const strip = n => String(n || '').replace(/\s*[-–]?\s*\d+$/, '').trim();
-      sec = Object.assign({}, parts[0], {name: strip(parts[0].name), nameHi: strip(parts[0].nameHi || parts[0].name),
-        questions: [].concat(...parts.map(x => x.questions))});
+      sec = Object.assign({}, parts[0], {name: strip(parts[0].name), questions: [].concat(...parts.map(x => x.questions))});
     }
     const total = d.sections.reduce((t, x) => t + (x.questions ? x.questions.length : 0), 0) || 1;
     const dp = parseInt(P.get('duration'), 10);
     const dur = dp > 0 ? dp : Math.max(1, Math.round((d.duration || 180) * sec.questions.length / total));
     d = Object.assign({}, d, {duration: dur, sections: [sec]});
-  } else {
-    const dp = parseInt(P.get('duration'), 10);
-    if (dp > 0 && d) d.duration = dp;
   }
   return d;
 }
 
 async function fetchJSON(f) {
-  // GitHub Pages में file names case-sensitive होते हैं (Questions.json != questions.json), इसलिए दोनों रूप आज़माते हैं
   const names = [...new Set([f, f.charAt(0).toUpperCase() + f.slice(1), f.charAt(0).toLowerCase() + f.slice(1)])];
   let last;
   for (const n of names) {
     try {
       const r = await fetch(n);
       if (r.ok) return await r.json();
-      last = new Error('HTTP ' + r.status + ' – file नहीं मिली');
+      last = new Error('HTTP ' + r.status);
     } catch (e) { last = e; }
   }
   throw last;
 }
 
 async function sourceData() {
-  if (MODE === 'review') {
-    try {
-      const attempts = JSON.parse(localStorage.getItem('examAttempts')) || [];
-      const lastId = localStorage.getItem('lastAttempt');
-      const cur = attempts.find(a => String(a.id) === String(lastId)) || attempts[attempts.length - 1];
-      if (cur && cur.dataKey) {
-        const stored = localStorage.getItem(cur.dataKey);
-        if (stored) return JSON.parse(stored);
-      }
-      const ex = localStorage.getItem('examData');
-      if (ex) return JSON.parse(ex);
-    } catch (e) {}
-  }
-  let raw;
-  try {
-    raw = await fetchJSON(FILE);
-    try { localStorage.setItem('qcache_' + FILE, JSON.stringify(raw)); } catch (e2) {}
-  } catch (err) {
-    const c = localStorage.getItem('qcache_' + FILE);
-    if (!c) throw err;
-    raw = JSON.parse(c);   // पिछली बार load हुई copy इस्तेमाल करें
-  }
+  let raw = await fetchJSON(FILE);
   return prepare(raw);
 }
 
-function showLoadError(e, msg) {
-  const box = $('noData');
-  box.style.display = 'block';
-  if (e && e.message === 'NO_BM') {
-    box.innerHTML = 'कोई bookmark नहीं मिला। <a href="bookmarks.html">Bookmarks</a> | <a href="home.html">Home</a>';
-    return;
-  }
-  // कोई error text स्क्रीन पर नहीं दिखाते (clean look); सिर्फ़ console में लिखते हैं
-  box.style.display = 'none';
-  try { console.warn('Questions load failed:', FILE, e && e.message); } catch (e5) {}
-}
-
-function loadFromFile(inp) {
-  const f = inp.files && inp.files[0];
-  if (!f) return;
-  const r = new FileReader();
-  r.onload = () => {
-    try {
-      const raw = JSON.parse(r.result);
-      try { localStorage.setItem('qcache_' + FILE, r.result); } catch (e4) {}
-      loadQuestions(prepare(raw));
-    }
-    catch (err) { alert('Invalid JSON file'); }
-  };
-  r.readAsText(f);
-}
-
-async function loadQuestions(preloaded) {
+async function loadQuestions() {
   try {
-    D = preloaded || await sourceData();
-
+    D = await sourceData();
     if (D && D.sections && D.sections.some(s => s.questions.length)) {
       D.sections = D.sections.filter(s => s.questions.length);
       ok = true;
-      $('noData').style.display = 'none';
-
-      META.title = TTITLE || D.title || D.testName || D.name || (MODE === 'bookmarks' ? 'Bookmark Practice' : 'Test');
-      META.dataKey = MODE === 'bookmarks' ? 'examData_bm_' + Date.now() : 'examData_' + FILE + (SECIDX !== null ? '#' + SECLIST.join(',') : '');
-      META.launch = MODE === 'review' ? '' : location.search;
-
-      if (MODE !== 'review') { try { localStorage.setItem('examData', JSON.stringify(D)); } catch (e) {} }
+      META.title = TTITLE || D.title || 'Test';
+      META.dataKey = 'examData_' + FILE;
       init();
       setScreenLang(2, 'en');
       setScreenLang(3, 'en');
       setScreenLang(4, 'en');
-
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('mode') === 'review') {
-        isReviewMode = true;
-
-        let attempts = JSON.parse(localStorage.getItem('examAttempts')) || [];
-        const lastId = localStorage.getItem('lastAttempt');
-        const currentAttempt =
-          attempts.find(a => String(a.id) === String(lastId)) ||
-          attempts[attempts.length - 1];
-
-        if (currentAttempt && currentAttempt.sections) {
-          currentAttempt.sections.forEach((secData, sIdx) => {
-            if (secData.status && st[sIdx]) {
-              st[sIdx] = [...secData.status];
-            }
-
-            if (secData.q && ans[sIdx]) {
-              secData.q.forEach((qItem, qIdx) => {
-                ans[sIdx][qIdx] = qItem.a;
-                if (ql[sIdx]) {
-                  ql[sIdx][qIdx] = qItem.l || null;
-                }
-              });
-            }
-          });
-        }
-
-        const targetSec = localStorage.getItem('resumeSection');
-        if (targetSec !== null) {
-          goTo(4);
-          loadSection(parseInt(targetSec, 10));
-        }
-
-        toggleNavigationButtons(true);
-        const norm = $('normalFootBtns');
-        const act = $('actionFootBtns');
-        if (norm) norm.style.display = 'none';
-        if (act) act.style.display = 'none';
-      }
-    } else {
-      showLoadError(null, 'इस file में कोई प्रश्न नहीं मिला।');
     }
-  } catch (e) {
-    showLoadError(e);
-  }
+  } catch (e) {}
 }
-
 loadQuestions();
-
-function backToResult() {
-  window.location.replace('result.html');
-}
 
 function toggleNavigationButtons(show) {
   const display = show ? 'inline-block' : 'none';
-
-  ['prevQCustom', 'backToResBtn', 'nextQCustom'].forEach(id => {
-    const button = $(id);
-    if (button) button.style.display = display;
+  ['prevQCustom', 'nextQCustom'].forEach(id => {
+    const btn = $(id);
+    if (btn) btn.style.display = display;
   });
 }
 
 function prevQCustom() {
-  if (!isReviewMode || qi <= 0) return;
-  qi--;
-  renderQ();
+  if (qi > 0) { qi--; renderQ(); }
 }
 
 function nextQCustom() {
-  if (!isReviewMode || qi >= D.sections[si].questions.length - 1) return;
-  qi++;
-  renderQ();
+  if (qi < D.sections[si].questions.length - 1) { qi++; renderQ(); }
 }
 
 function goTo(n) {
-  if (n >= 2 && n <= 3 && !ok) {
-    alert('प्रश्न लोड नहीं हो पाए। कृपया Home से टेस्ट दोबारा खोलें।');
-    return;
-  }
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   $('screen' + n).classList.add('active');
   scrollTo(0, 0);
 }
 
 const SL = {2: 'en', 3: 'en', 4: 'en'};
-
 function setScreenLang(n, l) {
   if (!l) return;
   SL[n] = l;
   if (n === 4) lang = l;
-
   const sc = $('screen' + n);
   sc.querySelectorAll('.langSel').forEach(x => x.value = l);
   sc.querySelectorAll('.T').forEach(e => e.innerHTML = e.dataset[l]);
   sc.querySelectorAll('.L').forEach(e => {
     e.style.display = e.classList.contains(l) ? 'block' : 'none';
   });
-
   if (n === 4 && ok && sc.classList.contains('active')) renderQ();
 }
 
-function setQLang(l) {
-  ql[si][qi] = l;
-  renderQ();
-}
-
-function setDefault(l) {
-  if (!l) return;
-  lang = l;
-  SL[4] = l;
-  document.querySelectorAll('#screen4 .langSel').forEach(x => x.value = l);
-}
-
-function secTitle(s) {
-  return lang === 'hi' ? (s.nameHi || s.name) : s.name;
-}
+function setQLang(l) { ql[si][qi] = l; renderQ(); }
+function setDefault(l) { if (l) { lang = l; SL[4] = l; document.querySelectorAll('#screen4 .langSel').forEach(x => x.value = l); } }
+function secTitle(s) { return lang === 'hi' ? (s.nameHi || s.name) : s.name; }
 
 function init() {
   if (!ok) return;
-
   $('tblEn').innerHTML = tbl(false);
   $('tblHi').innerHTML = tbl(true);
-
-  document.querySelectorAll('.dur').forEach(e => {
-    e.textContent = D.duration || 180;
-  });
-  document.querySelectorAll('.neg').forEach(e => {
-    e.textContent = D.neg ?? 0.25;
-  });
-
+  document.querySelectorAll('.dur').forEach(e => e.textContent = D.duration || 180);
+  document.querySelectorAll('.neg').forEach(e => e.textContent = D.neg ?? 0.25);
   D.sections.forEach((s, i) => {
     ans[i] = Array(s.questions.length).fill(-1);
     st[i] = Array(s.questions.length).fill(0);
@@ -748,106 +508,51 @@ function init() {
 
 function tbl(h) {
   let tq = 0;
-  let r = `<tr><th>${h ? 'क्रम' : 'Number'}</th><th>${h ? 'सेक्शन का नाम' : 'Section Name'}</th><th>${h ? 'प्रश्नों की संख्या' : 'No. of Questions'}</th><th>${h ? 'अंक' : 'Marks'}</th></tr>`;
-
+  let r = `<tr><th>${h ? 'क्रम' : 'Number'}</th><th>${h ? 'सेक्शन' : 'Section Name'}</th><th>${h ? 'प्रश्नों की संख्या' : 'No. of Questions'}</th></tr>`;
   D.sections.forEach((s, i) => {
     tq += s.questions.length;
-    r += `<tr><td>${i + 1}</td><td>${h ? (s.nameHi || s.name) : s.name}</td><td>${s.questions.length}</td><td>${s.questions.length}</td></tr>`;
+    r += `<tr><td>${i + 1}</td><td>${h ? (s.nameHi || s.name) : s.name}</td><td>${s.questions.length}</td></tr>`;
   });
-
-  return r + `<tr style="font-weight:bold"><td></td><td>${h ? 'कुल' : 'Total'}</td><td>${tq}</td><td>${tq}</td></tr>`;
+  return r;
 }
 
 function startExam() {
-  if (!$('defLang').value) {
-    return alert(SL[3] === 'hi' ? 'कृपया अपनी डिफ़ॉल्ट भाषा चुनें!' : 'Please select your default language!');
-  }
-  if (!$('chk').checked) {
-    return alert(SL[3] === 'hi' ? 'कृपया घोषणा के बॉक्स पर टिक करें।' : 'Please accept the declaration by checking the box.');
-  }
-
+  if (!$('defLang').value) return alert('Please select default language!');
+  if (!$('chk').checked) return alert('Please accept declaration.');
+  
   isReviewMode = false;
-  toggleNavigationButtons(false);
   goTo(4);
   startTimer();
-
-  si = 0;
-  qi = 0;
-  D.sections.forEach((s, j) => {
-    ans[j] = Array(s.questions.length).fill(-1);
-    st[j] = Array(s.questions.length).fill(0);
-    tm[j] = Array(s.questions.length).fill(0);
-    ql[j] = Array(s.questions.length).fill(null);
-  });
-
+  si = 0; qi = 0;
+  
   $('tabs').innerHTML = D.sections.map((s, j) =>
     `<div class="tab ${j === 0 ? 'active' : ''}" onclick="loadSection(${j})">${secTitle(s)}</div>`
   ).join('');
-
   renderQ();
 }
 
 function startTimer() {
   let t = (D.duration || 180) * 60;
-
   const f = () => {
     const m = Math.floor(t / 60), s = t % 60;
     $('timer').textContent = m + ':' + (s < 10 ? '0' : '') + s;
   };
-
   f();
   timerId = setInterval(() => {
-    if ($('screen4').classList.contains('active')) tm[si][qi]++;
-    if (--t <= 0) {
-      clearInterval(timerId);
-      t = 0;
-      f();
-      finish();
-      return;
-    }
+    if (--t <= 0) { clearInterval(timerId); finish(); return; }
     f();
   }, 1000);
 }
 
 function loadSection(i) {
-  if (!isReviewMode) {
-    return;
-  }
-
-  si = i;
-  qi = 0;
-  $('tabs').innerHTML = D.sections.map((s, j) =>
-    `<div class="tab ${j === si ? 'active' : ''}" onclick="loadSection(${j})">${secTitle(s)}</div>`
-  ).join('');
-
+  if (!isReviewMode) return;
+  si = i; qi = 0;
   renderQ();
-  syncTabs(true);
-}
-
-let lastTabSi = -1;
-function syncTabs(force) {
-  const t = $('tabs');
-  t.querySelectorAll('.tab').forEach((x, j) => {
-    x.classList.toggle('active', j === si);
-    x.classList.toggle('done', !isReviewMode && j < si);
-  });
-  if (!force && lastTabSi === si) return;
-  lastTabSi = si;
-  const a = t.querySelector('.tab.active');
-  if (!a) return;
-  const left = t.scrollLeft + (a.getBoundingClientRect().left - t.getBoundingClientRect().left) - (t.clientWidth - a.offsetWidth) / 2;
-  t.scrollTo({left: Math.max(0, left), behavior: 'smooth'});
 }
 
 function renderQ() {
   const s = D.sections[si], q = s.questions[qi], QL = ql[si][qi] || lang;
-
   if (!isReviewMode && st[si][qi] === 0) st[si][qi] = 1;
-
-  document.querySelectorAll('#screen4 .langSel').forEach(x => x.value = QL);
-  $('tabs').querySelectorAll('.tab').forEach((t, j) => {
-    t.textContent = secTitle(D.sections[j]);
-  });
 
   $('secName').textContent = $('palName').textContent = secTitle(s);
   $('qno').textContent = (QL === 'hi' ? 'प्रश्न संख्या ' : 'Question No. ') + (qi + 1);
@@ -855,101 +560,49 @@ function renderQ() {
   $('qimgbox').innerHTML = qImgSrc(q, QL) ? imgTag(qImgSrc(q, QL), 'qimg') : '';
 
   const o = QL === 'hi' ? q.optHi : q.optEn;
-  const disabledAttr = isReviewMode ? 'disabled' : '';
-
-  $('opts').innerHTML = o.map((x, k) => {
-    let extraStyle = '';
-    let badge = '';
-
-    if (isReviewMode) {
-      if (k === q.ans) {
-        extraStyle = 'background:#d4edda;border:1px solid #c3e6cb;font-weight:bold;';
-        badge = ' ✔ (Correct)';
-      } else if (ans[si][qi] === k && k !== q.ans) {
-        extraStyle = 'background:#f8d7da;border:1px solid #f5c6cb;';
-        badge = ' ◀ Your Answer';
-      } else if (ans[si][qi] === k) {
-        badge = ' ◀ Your Answer';
-      }
-    }
-
-    return `
-      <label class="opt" style="${extraStyle} ${isReviewMode ? 'cursor:default;' : ''}">
-        <input type="radio" name="o" ${ans[si][qi] === k ? 'checked' : ''} ${disabledAttr} onclick="pick(${k},event)"> ${optInner(q, k, x)} ${badge}
-      </label>`;
-  }).join('');
-
-  const solText = (QL === 'hi' ? q.solHi : q.solEn) || '';
-  let solDiv = $('reviewSolBox');
-
-  if (isReviewMode) {
-    if (!solDiv) {
-      solDiv = document.createElement('div');
-      solDiv.id = 'reviewSolBox';
-      solDiv.style.cssText = 'margin-top:15px;padding:12px;background:#fffde7;border:1px solid #ffe082;border-radius:4px;line-height:1.6;';
-      document.querySelector('.qa').appendChild(solDiv);
-    }
-    solDiv.innerHTML = `<b>Solution / स्पष्टीकरण:</b><br>${solText}`;
-    solDiv.style.display = 'block';
-  } else if (solDiv) {
-    solDiv.style.display = 'none';
-  }
+  $('opts').innerHTML = o.map((x, k) => `
+    <label class="opt">
+      <input type="radio" name="o" ${ans[si][qi] === k ? 'checked' : ''} onclick="pick(${k},event)"> ${optInner(q, k, x)}
+    </label>`).join('');
 
   renderGrid();
-  syncTabs();
   renderMath(document.querySelector('.qa'));
 }
 
 function pick(k, e) {
-  if (isReviewMode) return;
-  if (ans[si][qi] === k) {
-    ans[si][qi] = -1;
-    e.target.checked = false;
-  } else {
-    ans[si][qi] = k;
-  }
+  if (ans[si][qi] === k) { ans[si][qi] = -1; e.target.checked = false; }
+  else { ans[si][qi] = k; }
 }
 
 function clearR() {
-  if (isReviewMode) return;
   ans[si][qi] = -1;
   st[si][qi] = 1;
-  removeAutoBm(D.sections[si].questions[qi]);
   renderQ();
 }
 
 function nextQ(mark) {
-  if (!isReviewMode) {
-    const a = ans[si][qi] >= 0;
-    st[si][qi] = mark ? (a ? 4 : 3) : (a ? 2 : 1);
-    const cs = D.sections[si], cq = cs.questions[qi];
-    if (mark) addBm(cs, cq); else removeAutoBm(cq);
-  }
+  const a = ans[si][qi] >= 0;
+  st[si][qi] = mark ? (a ? 4 : 3) : (a ? 2 : 1);
   if (qi < D.sections[si].questions.length - 1) qi++;
   renderQ();
 }
 
 function renderGrid() {
   const c = {0: '', 1: 'n', 2: 'a', 3: 'm', 4: 'am'};
-  
-  let ansCount = 0, notAnsCount = 0, notVisCount = 0, markedCount = 0;
-  
+  let ac = 0, nac = 0, nvc = 0, mc = 0;
   st[si].forEach(v => {
-    if (v === 2) ansCount++;          
-    else if (v === 1) notAnsCount++;    
-    else if (v === 0) notVisCount++;    
-    else if (v === 3 || v === 4) markedCount++; 
+    if (v === 2) ac++; else if (v === 1) nac++; else if (v === 0) nvc++; else if (v >= 3) mc++;
   });
-
-  if($('count-ans')) $('count-ans').textContent = ansCount;
-  if($('count-not-ans')) $('count-not-ans').textContent = notAnsCount;
-  if($('count-not-vis')) $('count-not-vis').textContent = notVisCount;
-  if($('count-marked')) $('count-marked').textContent = markedCount;
+  if($('count-ans')) $('count-ans').textContent = ac;
+  if($('count-not-ans')) $('count-not-ans').textContent = nac;
+  if($('count-not-vis')) $('count-not-vis').textContent = nvc;
+  if($('count-marked')) $('count-marked').textContent = mc;
 
   $('grid').innerHTML = st[si].map((v, i) =>
     `<div class="p ${c[v]} ${i === qi ? 'cur' : ''}" onclick="qi=${i};renderQ()">${i + 1}</div>`
   ).join('');
 }
+
 function cnt(i) {
   const r = [0, 0, 0, 0, 0];
   st[i].forEach(v => r[v]++);
@@ -957,68 +610,43 @@ function cnt(i) {
 }
 
 function showSummary() {
-  if (isReviewMode) return;
-
-  const isLast = si === D.sections.length - 1;
-
-  // वर्तमान सेक्शन को सबमिट किए गए सेक्शन की लिस्ट में जोड़ें (اگر पहले से नहीं है)
   if (!submittedSections.includes(si)) {
     submittedSections.push(si);
-    submittedSections.sort((a, b) => a - b); // क्रम से जमाने के लिए
+    submittedSections.sort((a, b) => a - b);
   }
 
+  const isLast = si === D.sections.length - 1;
   if (!isLast) {
     $('sumCur').textContent = secTitle(D.sections[si]) + ' : ( Current Group Summary )';
-    
-    // यहाँ अब तक जितने सेक्शन सबमिट हुए हैं, सबकी टेबल रो एक के नीचे एक जुड़ती जाएंगी
     let rows = '';
     submittedSections.forEach(idx => {
       const c = cnt(idx);
       rows += `<tr><td>${secTitle(D.sections[idx])}</td><td>${st[idx].length}</td><td>${c[2]}</td><td>${c[1]}</td><td>${c[3]}</td><td>${c[4]}</td><td>${c[0]}</td></tr>`;
     });
-
     $('sumBody').innerHTML = rows;
-
-    $('sumList').innerHTML = D.sections.map((s, i) => {
-      let statusText = 'Yet to attempt';
-      if (submittedSections.includes(i)) statusText = 'Completed';
-      else if (i === si) statusText = 'Current Group';
-      return `<p><b>${secTitle(s)} :</b> ( ${statusText} )</p>`;
-    }).join('');
-
-    $('sumNote').innerHTML = `Are you sure to submit this Group? Click 'Yes' to proceed; Click 'No' to go back.<br>Dear Candidate, Once the Group is submitted, you cannot revisit and edit your responses.`;
-  
+    $('sumNote').innerHTML = `Are you sure to submit this Group? Click 'Yes' to proceed.`;
   } else {
-    // अगर यह आखिरी सेक्शन है, तो सभी सेक्शन की समरी एक साथ दिखेगी
     $('sumCur').textContent = 'Final Exam Summary (All Sections)';
     let rows = '';
-
     D.sections.forEach((s, idx) => {
       const sc = cnt(idx);
       rows += `<tr><td>${secTitle(s)}</td><td>${st[idx].length}</td><td>${sc[2]}</td><td>${sc[1]}</td><td>${sc[3]}</td><td>${sc[4]}</td><td>${sc[0]}</td></tr>`;
     });
-
     $('sumBody').innerHTML = rows;
-    $('sumList').innerHTML = '<p><b>You have completed all sections. Ready for final submission.</b></p>';
-    $('sumNote').innerHTML = `Are you sure you want to finally submit the entire exam? Once submitted, you cannot go back.<br>Click 'Yes' to view your detailed Result Analysis.`;
+    $('sumNote').innerHTML = `Are you sure to finally submit the entire exam?`;
   }
-
   goTo(5);
 }
 
 function confirmSubmit() {
   const isLast = si === D.sections.length - 1;
-
   if (!isLast) {
-    const nextSi = si + 1;
+    si++; qi = 0;
     goTo(4);
-    si = nextSi;
-    qi = 0;
     $('tabs').innerHTML = D.sections.map((s, j) =>
       `<div class="tab ${j === si ? 'active' : ''}" onclick="loadSection(${j})">${secTitle(s)}</div>`
     ).join('');
     renderQ();
-    syncTabs(true);
   } else {
     finish();
   }
@@ -1026,129 +654,32 @@ function confirmSubmit() {
 
 function finish() {
   clearInterval(timerId);
-  const neg = D.neg ?? 0.25;
-  let tot = 0;
-
-  const secDetails = D.sections.map((s, i) => {
-    let c = 0, w = 0;
-    const qArr = s.questions.map((q, j) => {
-      const ansVal = ans[i][j];
-      const markedRev = st[i][j] === 4;
-
-      if (ansVal < 0 || markedRev) {
-        
-      } else if (ansVal === q.ans) {
-        c++;
-      } else {
-        w++;
-      }
-
-      return {
-        t: tm[i][j] || 0,
-        a: markedRev ? -1 : ansVal,
-        c: q.ans,
-        l: ql[i][j] || lang
-      };
-    });
-
-    const mk = c - (w * neg);
-    tot += mk;
-
-    return {
-      name: s.name,
-      nameHi: s.nameHi,
-      score: mk,
-      q: qArr,
-      status: st[i]
-    };
-  });
-
-  let dk = META.dataKey;
-  try { localStorage.setItem(dk, JSON.stringify(D)); } catch (e) { dk = ''; }
-
-  const attemptObj = {
-    id: Date.now(),
-    type: MODE === 'bookmarks' ? 'bookmark' : (SECIDX !== null ? 'sectional' : 'full'),
-    name: 'John Smith',
-    testName: META.title || D.title || 'Test',
-    dataKey: dk,
-    launch: META.launch || '',
-    date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
-    score: Math.round((tot > 0 ? tot : 0) * 100) / 100,
-    sections: secDetails
-  };
-
-  let attemptsList = [];
-  try {
-    attemptsList = JSON.parse(localStorage.getItem('examAttempts')) || [];
-  } catch (e) {}
-
-  attemptsList.push(attemptObj);
-  localStorage.setItem('examAttempts', JSON.stringify(attemptsList));
-  localStorage.setItem('lastAttempt', attemptObj.id);
-
-  window.location.replace('result.html');
+  alert('Exam Finished Successfully!');
+  window.location.replace('home.html');
 }
 
-// फुलस्क्रीन चालू करने के लिए
 function openFullscreen() {
   let elem = document.documentElement;
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { /* Safari */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE11 */
-    elem.msRequestFullscreen();
-  }
-
-  // फुलस्क्रीन होने पर राइट साइड का पैनल छिपा दें ताकि स्क्रीन बड़ी हो जाए
+  if (elem.requestFullscreen) elem.requestFullscreen();
+  else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+  
   const rightPanel = $('rightPanel');
-  if (rightPanel) {
-    rightPanel.style.display = 'none';
-  }
+  if (rightPanel) rightPanel.style.display = 'none';
+
+  // फुलस्क्रीन चालू होते ही Previous और Next बटन दिखाने के लिए
+  toggleNavigationButtons(true);
 }
 
-// फुलस्क्रीन बंद करने के लिए
 function closeFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) { /* Safari */
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) { /* IE11 */
-    document.msExitFullscreen();
-  }
+  if (document.exitFullscreen) document.exitFullscreen();
+  else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
 
-  // फुलस्क्रीन से बाहर आने पर राइट साइड का पैनल वापस दिखाएं
   const rightPanel = $('rightPanel');
-  if (rightPanel) {
-    rightPanel.style.display = 'block';
-  }
+  if (rightPanel) rightPanel.style.display = 'block';
+
+  // फुलस्क्रीन बंद होने पर बटन छिपाने के लिए
+  toggleNavigationButtons(false);
 }
-
-(() => {
-  const t = $('tabs');
-  let d = false, x = 0, l = 0;
-
-  t.addEventListener('mousedown', e => {
-    d = true;
-    x = e.pageX;
-    l = t.scrollLeft;
-    t.classList.add('drag');
-  });
-  addEventListener('mouseup', () => {
-    d = false;
-    t.classList.remove('drag');
-  });
-  t.addEventListener('mousemove', e => {
-    if (d) t.scrollLeft = l - (e.pageX - x);
-  });
-  t.addEventListener('wheel', e => {
-    if (e.deltaY) {
-      t.scrollLeft += e.deltaY;
-      e.preventDefault();
-    }
-  }, {passive: false});
-})();
 </script>
 </body>
 </html>
