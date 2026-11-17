@@ -112,9 +112,12 @@ function drawHome(){
   h+=Object.keys(tm).sort().map(t=>{const c=cnt(tm[t]),p=c.t?Math.round(c.G/c.t*100):0;return `<div class="card tc" onclick="openT(this.dataset.t)" data-t="${esc(t)}"><div class="r"><b>${esc(t)}</b><span>${isFull(c)?'🎓':''} ${p}%</span></div><div class="pb"><i style="width:${p}%"></i></div><div class="note" style="margin:0">📘 ${c.L} • 📝 ${c.R} • 🔴 ${c.X} • 🟢 ${c.G} • कुल ${c.t}</div></div>`}).join('')||'<div class="card" style="text-align:center">कोई question नहीं मिला।</div>';
   $('main').innerHTML=h;
 }
-function learnPool(){
+function searchFilteredList(){
   const kw=UI.kw.trim().toLowerCase();
-  const p=cur().filter(o=>UI.src[listOf(o)]&&(!kw||((o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')+' '+(o.q.optHi||[]).join(' ')).toLowerCase().includes(kw)));
+  return cur().filter(o=>UI.src[listOf(o)]&&(!kw||((o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')+' '+(o.q.optHi||[]).join(' ')).toLowerCase().includes(kw)));
+}
+function learnPool(){
+  const p=searchFilteredList();
   return ['X','L','G'].flatMap(k=>shuffle(p.filter(o=>listOf(o)===k)));
 }
 function revPool(){
@@ -123,7 +126,11 @@ function revPool(){
 }
 function updInfo(){
   const lp=learnPool(),rp=revPool(),n=parseInt(UI.ln)||lp.length,m=parseInt(UI.rn)||rp.length;
-  if($('lInfo'))$('lInfo').innerHTML=`चुने गए प्रश्न: <b>${lp.length}</b> • इस बार: <b>${Math.min(n,lp.length)}</b> <button class="fc" style="padding:2px 8px;margin-left:6px" onclick="openBatchMove()">✎ सभी खोजे गए प्रश्न मूव करें</button>`;
+  const kw=UI.kw.trim();
+  if($('lInfo')){
+    let extraBtn=kw ? `<button class="fc" style="padding:2px 8px;margin-left:6px;background:var(--bl2);color:var(--bl)" onclick="openBatchMoveSearched()">✎ खोजे गए (${lp.length}) मूव करें</button>` : '';
+    $('lInfo').innerHTML=`चुने गए प्रश्न: <b>${lp.length}</b> • इस बार: <b>${Math.min(n,lp.length)}</b> ${extraBtn}`;
+  }
   const rc={R:0,X:0,G:0,nv:0};rp.forEach(o=>{rc[listOf(o)]++;if(never(o))rc.nv++});
   if($('rInfo'))$('rInfo').innerHTML=`${(parseFloat(UI.days)||0)>0?(parseFloat(UI.days))+' दिन या उससे पुराने':'सभी'}: 📝 <b>${rc.R}</b> • 🔴 <b>${rc.X}</b> • 🟢 <b>${rc.G}</b> • कुल <b>${rp.length}</b> ${rc.nv?`(⭐ कभी Revise नहीं: ${rc.nv})`:''}<br>Test में आएँगे: <b>${Math.min(m,rp.length)}</b>`;
   if($('lBtn'))$('lBtn').classList.toggle('off',!lp.length);
@@ -136,15 +143,33 @@ function drawDash(){
   const L=cur(),c=cnt(L),lr=lastRev(L);
   const sc=k=>`<button class="fc${UI.src[k]?' on':''}" onclick="togS('${k}')">${NM[k]} (${c[k]})</button>`;
   const rcb=k=>`<button class="fc${UI.rsrc[k]?' on':''}" onclick="togR('${k}')">${NM[k]} (${c[k]})</button>`;
+  
+  // खोजे गए प्रश्नों की लिस्ट नीचे दिखाने के लिए (यदि keyword डाला गया हो)
+  const filtered=searchFilteredList();
+  const kw=UI.kw.trim();
+  let searchResultsHTML='';
+  if(kw){
+    searchResultsHTML=`<div class="card"><h3 style="margin:0 0 8px">🔍 खोजे गए प्रश्न (${filtered.length})</h3>
+    <div class="note" style="margin-bottom:8px">यहाँ से आप प्रत्येक प्रश्न को पढ़ कर सीधे दूसरे टॉपिक में ट्रांसफर (✔) कर सकते हैं:</div>`+
+    (filtered.length? filtered.map(o=>{
+      const qtxt=hi()?(o.q.qHi||o.q.qEn):o.q.qEn;
+      return `<div class="row"><div style="flex:1">${esc(qtxt.slice(0,95))}...</div><button class="fc" style="padding:4px 10px;background:var(--bl2);color:var(--bl);font-weight:500" onclick="edTopic('${esc(o.key)}')">✔ ट्रांसफर / बदलें</button></div>`;
+    }).join('') : '<div class="note">कोई प्रश्न नहीं मिला।</div>')+`</div>`;
+  }
+
   $('main').innerHTML=`<a class="fc" onclick="toTopics()" style="display:inline-block;margin-bottom:8px">← Topics</a>
   <div class="card"><h2 style="margin:0 0 8px">${esc(F.top)}</h2>${tiles(c,true)}
     <div class="note">⏱ आख़िरी Revision: ${lr?`<b>${ago(lr)}</b> (${fmtT(lr)})`:'अभी तक नहीं हुआ'}</div>
     ${isFull(c)?'<div class="full">🎓 Fully Mastered</div>':''}
     <div class="note">यह सिर्फ़ Learning Progress है, Main Test Result नहीं। किसी गिनती पर टैप करने से उसकी सूची खुलती है।</div></div>
+  
   <div class="card"><h3 style="margin:0 0 6px">📘 Learning</h3><div class="note" style="margin:0 0 6px">किस सूची के प्रश्न पढ़ने हैं, चुनें:</div>
     <div class="chipbar">${sc('L')}${sc('X')}${sc('G')}</div>
-    <div class="bar"><input type="search" placeholder="कोई शब्द खोजें (वैकल्पिक)" value="${esc(UI.kw)}" ${oc('', 'kw')} style="flex:1"><input type="number" min="1" placeholder="कितने" value="${esc(UI.ln)}" ${oc('', 'ln')} style="width:90px"></div>
+    <div class="bar"><input type="search" placeholder="कोई शब्द खोजें (जैसे: क्रिया)" value="${esc(UI.kw)}" ${oc('', 'kw')} style="flex:1"><input type="number" min="1" placeholder="कितने" value="${esc(UI.ln)}" ${oc('', 'ln')} style="width:90px"></div>
     <div class="note" id="lInfo"></div><div class="nav"><button class="btn" id="lBtn" onclick="startLearn()">▶ Learning शुरू करें</button></div></div>
+
+  ${searchResultsHTML}
+
   <div class="card"><h3 style="margin:0 0 6px">🎯 Revision Test</h3><div class="note" style="margin:0 0 6px">किस सूची के प्रश्न जाँचने हैं, चुनें:</div>
     <div class="chipbar">${rcb('R')}${rcb('X')}${rcb('G')}</div>
     <div class="bar"><input type="number" min="0" placeholder="कितने दिन पुराने (0 = सब)" value="${UI.days==='0'?'':esc(UI.days)}" oninput="UI.days=this.value||'0';updInfo()" style="flex:1"><input type="number" min="1" placeholder="कितने प्रश्न" value="${esc(UI.rn)}" ${oc('', 'rn')} style="width:100px"></div>
@@ -152,12 +177,13 @@ function drawDash(){
   <div class="note" style="text-align:center"><a onclick="resetT()" style="color:var(--rd);cursor:pointer">इस Topic की Progress रीसेट करें</a></div>`;
   updInfo();
 }
+
 function resetT(){if(!confirm('इस Topic की सारी Learning Progress मिटानी है?'))return;cur().forEach(o=>delete REC[o.key]);saveR();draw()}
 function openList(k){F.list=k;F.view='list';draw()}
 function drawList(){
   const k=F.list,rows=cur().filter(o=>listOf(o)===k).sort((a,b)=>refT(a)-refT(b)),h=hi();
   const dd=o=>{if(k==='L')return '';const d=Math.floor(ageD(o));return never(o)?`⭐ ${d} दिन (Revise नहीं हुआ)`:`${d} दिन`};
-  $('main').innerHTML=`<a class="fc" onclick="back()" style="display:inline-block;margin-bottom:8px">← वापस</a><div class="card"><h2 style="margin:0 0 6px">${NM[k]} (${rows.length})</h2>${rows.map(o=>`<div class="row"><div style="flex:1">${esc(String(h?(o.q.qHi||o.q.qEn):o.q.qEn).slice(0,110))}</div><button class="fc" style="padding:2px 8px;font-size:11px" onclick="edTopic('${esc(o.key)}')">✎</button></div>`).join('')||'<div class="note">इस सूची में कोई प्रश्न नहीं।</div>'}</div>`;
+  $('main').innerHTML=`<a class="fc" onclick="back()" style="display:inline-block;margin-bottom:8px">← वापस</a><div class="card"><h2 style="margin:0 0 6px">${NM[k]} (${rows.length})</h2>${rows.map(o=>`<div class="row"><div style="flex:1">${esc(String(h?(o.q.qHi||o.q.qEn):o.q.qEn).slice(0,110))}</div><button class="fc" style="padding:2px 8px;font-size:11px" onclick="edTopic('${esc(o.key)}')">✎ बदलें</button></div>`).join('')||'<div class="note">इस सूची में कोई प्रश्न नहीं।</div>'}</div>`;
 }
 function startLearn(){
   let p=learnPool();const n=parseInt(UI.ln);if(n>0)p=p.slice(0,n);
@@ -218,22 +244,23 @@ function draw(){
   if(typeof renderMathInElement==='function')try{renderMathInElement($('main'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}
 }
 
-// ✎ सीधे चौथी इमेज जैसा बॉक्स (Direct Topic Name Input) और Batch Move सुविधा
+// सीधा चौथा स्टेप (Direct prompt box) - सिंगल प्रश्न के लिए
 function edTopic(k){
   const o=ALL.find(x=>x.key===k);
-  const v=prompt('नए Topic का नाम लिखें:',topicOf(o));
+  const curT=topicOf(o);
+  const v=prompt(`इस प्रश्न का नया Topic लिखें (वर्तमान: ${curT}):`,curT);
   if(v===null)return;
   const nt=v.trim();if(!nt)return;
   OV[k]=nt;
   try{localStorage.setItem('examTopics',JSON.stringify(OV))}catch(e){}
-  if(SS&&SS.mode==='learn')SS.queue=SS.queue.filter(x=>x.key!==k);
   draw();
 }
 
-function openBatchMove(){
-  const lp=learnPool();
-  if(!lp.length){alert('कोई प्रश्न नहीं मिला जिसे मूव किया जा सके।');return;}
-  const v=prompt(`खोजे गए ${lp.length} प्रश्नों को किस नए/मौजूदा Topic में भेजना है? (नाम दर्ज करें):`,'');
+// खोजे गए सभी प्रश्नों को एक साथ बैच ट्रांसफर करने के लिए
+function openBatchMoveSearched(){
+  const lp=searchFilteredList();
+  if(!lp.length){alert('कोई प्रश्न नहीं मिला।');return;}
+  const v=prompt(`खोजे गए ${lp.length} सभी प्रश्नों को किस नए/मौजूदा Topic में भेजना है? (नाम दर्ज करें):`,'');
   if(v===null)return;
   const nt=v.trim();if(!nt)return;
   lp.forEach(o=>{OV[o.key]=nt;});
