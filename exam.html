@@ -55,10 +55,13 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
 .lg{display:grid;grid-template-columns:1fr 1fr;gap:5px;font-size:10px;margin:10px 0}
 .lg span{display:flex;width:15px;height:15px;align-items: center;justify-content: center;margin-right:5px}
 .foot{position:fixed;bottom:0;left:0;width:100%;background:#f5f5f5;border-top:1px solid #ccc;padding:6px 15px;display:flex;justify-content:space-between}
+
+/* --- Exam Summary Container Fix for Fixed Buttons --- */
 .sum {
     width: 100% !important;
     max-width: 100% !important;
     padding: 15px !important;
+    padding-bottom: 80px !important; /* नीचे फिक्स बटन के लिए जगह छोड़ी गई है */
     box-sizing: border-box;
 }
 .sum .t {
@@ -99,14 +102,28 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
     background-color: #ffffff;
     text-align: center;
 }
+
+/* --- Exam Summary के Yes/No बटन्स को स्क्रीन पर नीचे फिक्स करने के लिए --- */
+.sum-footer-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #f5f5f5;
+    border-top: 1px solid #ccc;
+    padding: 10px 15px;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
 .qimg{max-width:100%;height:auto;display:block;margin:6px 0 12px}
 .oimg{max-width:100%;max-height:220px;height:auto;vertical-align:middle}
 .imgerr{color:#c00;font-size:11px}
 .bmb{padding:3px 10px;border:1px solid #f0ad4e;background:#fff;color:#c77c00;border-radius:3px;cursor:pointer;font-weight:bold;font-size:11px}
 .bmb.on{background:#f0ad4e;color:#fff}
 .sl{font-size:11px;line-height:1.8;color:#444}
-.note{text-align:center;margin-top:25px;font-size:11px}
-.act{text-align:center;margin-top:15px}.act button{padding:6px 20px;margin:0 5px;cursor:pointer}
+.note{text-align:center;margin-top:15px;font-size:11px;margin-bottom:10px}
+.act{text-align:center;margin-top:5px}.act button{padding:6px 20px;margin:0 5px;cursor:pointer;font-weight:bold;border-radius:3px}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -366,7 +383,6 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
       <button class="btn-p" id="backToResBtn" style="background:#f0ad4e;display:none" onclick="backToResult()">Back to Result</button>
       <button class="btn-p" id="nextQCustom" style="display:none" onclick="nextQCustom()">Next</button>
       <div id="actionFootBtns" style="display:flex;gap:10px">
-        <!-- फुलस्क्रीन मोड में यहाँ 'Previous' बटन दिखाने के लिए ID जोड़ी गई है -->
         <button class="btn-p" id="fsPrevBtn" style="display:none;background:#6c757d" onclick="fsPrevQ()">Previous</button>
         <button class="btn-p" onclick="nextQ(false)">Save &amp; Next</button>
         <button class="btn-p" style="background:#5bc0de" onclick="showSummary()">Submit</button>
@@ -399,14 +415,17 @@ table.it{width:100%;border-collapse:collapse;margin:10px 0}.it th,.it td{border:
 
     <div class="sl" id="sumList"></div>
     <div class="note" id="sumNote"></div>
-    <div class="act">
-      <button onclick="confirmSubmit()">Yes</button>
-      <button onclick="goTo(4)">No</button>
+    
+    <!-- Yes/No बटन को स्क्रीन के नीचे फिक्स कर दिया गया है ताकि टेबल लंबी होने पर भी यह नीचे न छिपे -->
+    <div class="sum-footer-fixed">
+      <div style="text-align:center; margin-bottom:5px; font-size:11px;" id="sumFooterMsg"></div>
+      <div class="act">
+        <button onclick="confirmSubmit()" style="background:#2ecc71; color:#fff;">Yes</button>
+        <button onclick="goTo(4)" style="background:#e74c3c; color:#fff;">No</button>
+      </div>
     </div>
   </div>
 </div>
-
-
 
 <script>
 const $ = id => document.getElementById(id);
@@ -643,7 +662,6 @@ function nextQCustom() {
   renderQ();
 }
 
-// फुलस्क्रीन मोड में पिछले प्रश्न पर जाने के लिए फंक्शन
 function fsPrevQ() {
   if (qi > 0) {
     qi--;
@@ -946,7 +964,7 @@ function showSummary() {
 
     $('sumBody').innerHTML = rows;
 
-    // यहाँ Completed वाले सेक्शन को display:none कर दिया गया है ताकि वह स्क्रीन पर दिखाई न दे
+    // Completed वाले सेक्शन छिपाए गए हैं और Yet to attempt वाले वैसे ही रखे गए हैं
     $('sumList').innerHTML = D.sections.map((s, i) => {
       let statusText = 'Yet to attempt';
       let isCompleted = false;
@@ -961,7 +979,7 @@ function showSummary() {
       return `<p style="${displayStyle}"><b>${secTitle(s)} :</b> ( ${statusText} )</p>`;
     }).join('');
 
-    $('sumNote').innerHTML = `Are you sure to submit this Group? Click 'Yes' to proceed; Click 'No' to go back.<br>Dear Candidate, Once the Group is submitted, you cannot revisit and edit your responses.`;
+    $('sumFooterMsg').innerHTML = `Are you sure to submit this Group? Click 'Yes' to proceed; Click 'No' to go back.<br>Dear Candidate, Once the Group is submitted, you cannot revisit and edit your responses.`;
   
   } else {
     $('sumCur').textContent = 'Final Exam Summary (All Sections)';
@@ -974,7 +992,7 @@ function showSummary() {
 
     $('sumBody').innerHTML = rows;
     $('sumList').innerHTML = '<p><b>You have completed all sections. Ready for final submission.</b></p>';
-    $('sumNote').innerHTML = `Are you sure you want to finally submit the entire exam? Once submitted, you cannot go back.<br>Click 'Yes' to view your detailed Result Analysis.`;
+    $('sumFooterMsg').innerHTML = `Are you sure you want to finally submit the entire exam? Once submitted, you cannot go back.`;
   }
 
   goTo(5);
@@ -1064,7 +1082,6 @@ function finish() {
   window.location.replace('result.html');
 }
 
-// फुलस्क्रीन चालू करने के लिए (साथ ही 'Previous' बटन दिखाने के लिए)
 function openFullscreen() {
   let elem = document.documentElement;
   if (elem.requestFullscreen) {
@@ -1080,14 +1097,12 @@ function openFullscreen() {
     rightPanel.style.display = 'none';
   }
 
-  // केवल फुलस्क्रीन में Previous बटन दिखाएं
   const fsPrevBtn = $('fsPrevBtn');
   if (fsPrevBtn) {
     fsPrevBtn.style.display = 'inline-block';
   }
 }
 
-// फुलस्क्रीन बंद करने के लिए (साथ ही 'Previous' बटन छिपाने के लिए)
 function closeFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
@@ -1102,7 +1117,6 @@ function closeFullscreen() {
     rightPanel.style.display = 'block';
   }
 
-  // फुलस्क्रीन से बाहर आते ही Previous बटन छिपा दें
   const fsPrevBtn = $('fsPrevBtn');
   if (fsPrevBtn) {
     fsPrevBtn.style.display = 'none';
