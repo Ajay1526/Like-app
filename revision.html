@@ -51,12 +51,13 @@ function kind(n){n=n.toLowerCase();return/discipline/.test(n)?'disc':/reasoning|
 function autoTopic(sn,q){const r=R[kind(sn)]||[],t=((q.qEn||'')+' '+(q.qHi||'')).toLowerCase();for(const[x,n]of r)if(x.test(t))return n;return 'अन्य / Other'}
 const topicOf=o=>OV[o.key]||o.q.topic||o.auto;
 
-const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part\vert{}set\vert{}भाग)?\s*\d+\s*[\)\]]?\s*$/i,'').trim();
+const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part|set|भाग)?\s*\d+\s*[\)\]]?\s*$/i,'').trim();
 function normSubj(name,nameHi,CFG){
   const al={};Object.keys((CFG&&CFG.subjectAliases)||{}).forEach(k=>al[stripN(k).toLowerCase()]=CFG.subjectAliases[k]);
   let n=stripN(name)||String(name||'').trim();const a=al[n.toLowerCase()];if(a)n=a;
   return {name:n,nameHi:stripN(nameHi)||nameHi,key:n.toLowerCase()};
 }
+
 async function load(){
   let C;try{C=await(await fetch('tests.json')).json()}catch(e){$('main').innerHTML='<div class="card empty">tests.json नहीं मिली। Server/hosting से खोलें।</div>';return}
   const files={};
@@ -174,7 +175,6 @@ function filterRows(k){
   return r;
 }
 
-// ------ Updated rowsHTML for Bulk Select & Verify ------
 function rowsHTML(k,rows){
   const h=hi();
   const allSelected = rows.length > 0 && rows.every(o => UI.selMap[o.key]);
@@ -217,7 +217,7 @@ function verifyQ(k){
       <button onclick="closeVerify()" style="border:none;background:none;font-size:18px;cursor:pointer">✕</button>
     </div>
     <div class="qt">${esc(h?(q.qHi||q.qEn):q.qEn)}</div>
-    ${opts.map((t,idx)=>`<div class="opt ${idx===q.ans?'ok':'lock'}" style="margin:4px 0">${String.fromCharCode(65+idx)}. ${esc(t)}${idx===q.ans?'✔':''}</div>`).join('')}
+    ${opts.map((t,idx)=>`<div class="opt ${idx===q.ans?'ok':'lock'}" style="margin:4px 0">${String.fromCharCode(65+idx)}. ${esc(t)} ${idx===q.ans?'✔':''}</div>`).join('')}
     ${sol?`<div class="sol"><b>Solution:</b><br>${esc(sol)}</div>`:''}
     <div class="nav" style="margin-top:12px"><button class="btn gray" onclick="closeVerify()">← लिस्ट पर वापस</button><button class="btn" onclick="closeVerify();moveQ('${esc(o.key)}')">🔀 दूसरे Topic में भेजें</button></div>
   </div>`;
@@ -290,4 +290,77 @@ function submitT(){
   if(un&&!confirm(un+' प्रश्न बिना उत्तर के हैं (गलत गिने जाएँगे)। Submit करें?'))return;
   const wrong=[];let g=0;
   SS.items.forEach((o,i)=>{const ok=SS.sel[i]===o.q.ans;revAns(o,ok);if(ok)g++;else wrong.push({o,i})});
-  saveR();SS={mode:'result',n:SS.items.length,g,wrong,sel:SS.sel};F.view='
+  saveR();SS={mode:'result',n:SS.items.length,g,wrong,sel:SS.sel};F.view='result';draw();
+}
+function drawTest(){
+  const o=SS.items[SS.i],n=SS.items.length;
+  $('main').innerHTML=`<div class="pb"><i style="width:${(SS.i+1)/n*100}%;background:var(--bl)"></i></div>
+  <div class="card"><div class="meta"><span>Revision Test • Q ${SS.i+1}/${n}</span></div>${qHTML(o,SS.sel[SS.i],false)}
+  <div class="nav"><button class="btn gray ${SS.i?'':'off'}" onclick="tgo(-1)">← Previous</button>${SS.i<n-1?`<button class="btn" onclick="tgo(1)">Next →</button>`:`<button class="btn g" onclick="submitT()">Submit</button>`}</div>
+  <div class="nav"><button class="btn gray" onclick="moveQ('${esc(o.key)}')">🔀 दूसरे Topic में भेजें</button><button class="btn gray" onclick="if(confirm('Test छोड़ें? Progress सेव नहीं होगी।'))back()">✕ छोड़ें</button></div></div>`;
+}
+function drawResult(){
+  const w=SS.wrong,h=hi(),c=cnt(cur());
+  $('main').innerHTML=`<div class="card big">${w.length?'📝':'🎉'}<b>${SS.n} में से ${SS.g} सही</b>🟢 ${SS.g} Strong • 🔴 ${w.length} Weak
+  <div class="nav"><button class="btn" onclick="back()">Topic पर जाएँ</button></div><div class="note">यह Revision/Learning Progress है, Main Test Result नहीं।</div></div>`+
+  w.map(x=>{const q=x.o.q,sol=(h?q.solHi:q.solEn)||q.solEn||'',opts=(h?q.optHi:q.optEn)||q.optEn||[],sv=SS.sel[x.i];
+    return `<div class="card"><div class="meta"><span>🔴 Weak Questions में गया</span></div><div class="qt">${esc(h?(q.qHi||q.qEn):q.qEn)}</div><div class="note">आपका उत्तर: ${sv===undefined?'—':esc(opts[sv])}</div><div class="opt ok lock">सही: ${String.fromCharCode(65+q.ans)}. ${esc(opts[q.ans])}</div>${sol?`<div class="sol">${esc(sol)}</div>`:''}<div class="nav"><button class="btn gray" onclick="moveQ('${esc(x.o.key)}')">🔀 दूसरे Topic में भेजें</button></div></div>`}).join('');
+}
+function draw(){
+  if(!ALL.length){$('main').innerHTML='<div class="card" style="text-align:center">अभी कोई test/question upload नहीं है।</div>';return}
+  ctl();
+  ({home:drawHome,dash:drawDash,list:drawList,learn:drawLearn,test:drawTest,result:drawResult})[F.view]();
+  if(typeof renderMathInElement==='function')try{renderMathInElement($('main'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}
+}
+function toast(t){const o=document.getElementById('toastB');if(o)o.remove();const d=document.createElement('div');d.id='toastB';d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>{const x=document.getElementById('toastB');if(x)x.remove()},2200)}
+
+function moveQ(k){
+  const o=ALL.find(x=>x.key===k);if(!o)return;
+  const now_=topicOf(o),tops=[...new Set(ALL.filter(x=>x.sk===o.sk).map(topicOf))].sort();
+  mvClose();const ov=document.createElement('div');ov.id='mvOv';ov.className='mvov';
+  ov.innerHTML=`<div class="mvbox"><b>इस प्रश्न को किस Topic में भेजना है?</b><div class="note">अभी: ${esc(now_)}</div>
+    <select id="mvSel" onchange="if(this.value==='__new'){let t=(prompt('नए Topic का नाम लिखें:')||'').trim();if(t){this.insertAdjacentHTML('afterbegin','<option selected>'+esc(t)+'</option>');this.value=t;}else{this.selectedIndex=0;}}">
+      ${tops.filter(t=>t!==now_).map(t=>`<option>${esc(t)}</option>`).join('')}
+      <option value="__new">➕ नया Topic बनाएँ…</option>
+    </select>
+    <div class="nav"><button class="btn gray" onclick="mvClose()">रद्द करें</button><button class="btn" onclick="mvDo('${esc(k)}')">भेजें</button></div></div>`;
+  document.body.appendChild(ov);
+}
+function mvClose(){const ov=document.getElementById('mvOv');if(ov)ov.remove()}
+function mvDo(k){
+  let t=document.getElementById('mvSel').value;
+  if(!t || t==='__new') return;
+  OV[k]=t;try{localStorage.setItem('examTopics',JSON.stringify(OV))}catch(e){}
+  mvClose();
+  if(SS&&SS.mode==='learn'){if(SS.queue[0]&&SS.queue[0].key===k){SS.ans=undefined;SS.moved=false}SS.queue=SS.queue.filter(x=>x.key!==k)}
+  draw();toast('✅ प्रश्न "'+t+'" Topic में भेज दिया गया');
+}
+
+function openBulkMove(){
+  const keys=Object.keys(UI.selMap).filter(k=>UI.selMap[k]);
+  if(!keys.length){alert('कृपया कम से कम एक प्रश्न चुनें।');return;}
+  const sm=subjMap(),tops=[...new Set(ALL.filter(x=>x.sk===F.subj).map(topicOf))].sort();
+  const now_=F.top;
+  const ov=document.createElement('div');ov.id='mvOv';ov.className='mvov';
+  ov.innerHTML=`<div class="mvbox"><b>चुने गए ${keys.length} प्रश्नों को किस Topic में भेजना है?</b>
+    <select id="mvSel" onchange="if(this.value==='__new'){let t=(prompt('नए Topic. का नाम लिखें:')||'').trim();if(t){this.insertAdjacentHTML('afterbegin','<option selected>'+esc(t)+'</option>');this.value=t;}else{this.selectedIndex=0;}}">
+      ${tops.filter(t=>t!==now_).map(t=>`<option>${esc(t)}</option>`).join('')}
+      <option value="__new">➕ नया Topic बनाएँ…</option>
+    </select>
+    <div class="nav"><button class="btn gray" onclick="mvClose()">रद्द करें</button><button class="btn" onclick="mvBulkDo()">भेजें</button></div></div>`;
+  document.body.appendChild(ov);
+}
+function mvBulkDo(){
+  let t=document.getElementById('mvSel').value;
+  if(!t || t==='__new') return;
+  const keys=Object.keys(UI.selMap).filter(k=>UI.selMap[k]);
+  keys.forEach(k=>{OV[k]=t;});
+  try{localStorage.setItem('examTopics',JSON.stringify(OV))}catch(e){}
+  UI.selMap={};
+  mvClose();
+  draw();
+  toast('✅ '+keys.length+' प्रश्न "'+t+'" Topic में भेज दिए गए');
+}
+
+load().catch(e=>{try{console.error(e)}catch(x){}$('main').innerHTML='<div class="card empty" style="text-align:center">प्रश्न लोड नहीं हो पाए। पेज दोबारा खोलें।</div>'});
+</script></body></html>
