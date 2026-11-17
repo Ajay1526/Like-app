@@ -61,7 +61,22 @@ function launchURL(t,title,section){
   if(section!==undefined)u+='&section='+section;else if(t.duration)u+='&duration='+enc(t.duration);
   return u;
 }
-// ---- Subject index (sectional tests are grouped by subject, across all uploaded tests) ----
+
+// छात्रों के पुराने अटेम्प्ट्स चेक करने के लिए फंक्शन
+function getAttemptInfo(testTitle) {
+  try {
+    const attempts = JSON.parse(localStorage.getItem('examAttempts')) || [];
+    // इस टेस्ट नाम से मिलता-जुलता पिछला अटेम्प्ट खोजें
+    const matched = attempts.filter(a => a.testName === testTitle);
+    if (matched.length > 0) {
+      // आखिरी बार कब दिया उसकी तारीख/समय लें
+      const lastAttempt = matched[matched.length - 1];
+      return { attempted: true, date: lastAttempt.date };
+    }
+  } catch (e) {}
+  return { attempted: false, date: '' };
+}
+
 const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part|set|भाग)?\s*\d+\s*[\)\]]?\s*$/i,'').trim();
 function normSubj(name,nameHi,CFG){
   const al={};Object.keys((CFG&&CFG.subjectAliases)||{}).forEach(k=>al[stripN(k).toLowerCase()]=CFG.subjectAliases[k]);
@@ -79,7 +94,6 @@ async function buildSubjects(){
     let d;try{d=await getFile(it.t.file)}catch(e){continue}
     (d.sections||[]).forEach((s,k)=>{
       if(!s.questions||!s.questions.length)return;
-      // "Discipline 1..5", "General Awareness (Part 1)" जैसे parts एक ही subject माने जाते हैं
       const ns=normSubj(s.name,s.nameHi,CAT),nm=ns.name,key=ns.key;
       const o=S2[key]=S2[key]||{name:nm,nameHi:ns.nameHi,items:[]};
       o.items.push({...it,k,n:s.questions.length,part:s.name});
@@ -98,7 +112,13 @@ async function renderSubjects(){
 function renderSubjectTests(){
   const o=SUBJ[S.subj],q=o.items.reduce((a,b)=>a+b.n,0);
   $('view').innerHTML=`<h2>${esc(o.name)}</h2><div class="mut" style="margin-bottom:8px">${esc(o.nameHi||'')} • ${o.items.length} sets • ${q} questions</div><div class="card" style="padding:4px 14px!important">`+
-    o.items.map((i,n)=>`<div class="row" style="align-items:center"><div style="display:flex;gap:12px;align-items:center"><span style="min-width:34px;height:34px;border-radius:50%;background:var(--bl2);color:#174ea6;display:flex;align-items:center;justify-content:center;font-weight:500">${n+1}</span><div><b>Set ${n+1}</b><div class="mut">${esc(i.part)} • ${esc(i.t.title)} • ${i.n} Q<br>${esc(i.p)} • ${esc(i.y)}</div></div></div><a class="btn g" href="${launchURL(i.t,i.t.title+' – '+i.part,i.k)}">Start</a></div>`).join('')+'</div>';
+    o.items.map((i,n)=>{
+      const att=getAttemptInfo(i.t.title+' – '+i.part);
+      const btnText=att.attempted?'Re-Attempt':'Start';
+      const btnClass=att.attempted?'btn g':'btn';
+      const subInfo=att.attempted?`<br><span style="color:#d9534f; font-size:11px;">Last attempted: ${esc(att.date)}</span>`:'';
+      return `<div class="row" style="align-items:center"><div style="display:flex;gap:12px;align-items:center"><span style="min-width:34px;height:34px;border-radius:50%;background:var(--bl2);color:#174ea6;display:flex;align-items:center;justify-content:center;font-weight:500">${n+1}</span><div><b>Set ${n+1}</b><div class="mut">${esc(i.part)} • ${esc(i.t.title)} • ${i.n} Q<br>${esc(i.p)} • ${esc(i.y)}${subInfo}</div></div></div><a class="${btnClass}" href="${launchURL(i.t,i.t.title+' – '+i.part,i.k)}">${btnText}</a></div>`;
+    }).join('')+'</div>';
 }
 function render(){
   crumb();const v=$('view');
@@ -114,13 +134,19 @@ function render(){
     if(SUBJ&&SUBJ[S.subj]){renderSubjectTests();return}
     S.subj=null;renderSubjects();return;
   }
-  // Fresh (full) test flow
   if(!S.cat){v.innerHTML=`<h2>Test Category</h2><div class="tiles">${Object.keys(STRUCT).map(k=>tile(STRUCT[k].icon,STRUCT[k].label,STRUCT[k].hi+' • '+STRUCT[k].levels.join(', '),`pick('cat','${k}')`)).join('')}</div>`;return}
   if(!S.level){v.innerHTML=`<h2>${STRUCT[S.cat].label} – Level</h2><div class="tiles">${STRUCT[S.cat].levels.map(l=>{const n=Object.keys((CAT[S.cat]||{})[l]||{}).length;return tile('🎓',esc(l),n+' post'+(n===1?'':'s'),`pick('level','${enc(l)}')`)}).join('')}</div>`;return}
   if(!S.post){const ps=Object.keys(node());v.innerHTML=`<h2>${esc(S.level)} – Post</h2>`+(ps.length?`<div class="tiles">${ps.map(p=>tile('📋',esc(p),Object.keys(node()[p]||{}).length+' year(s)',`pick('post','${enc(p)}')`)).join('')}</div>`:empty('इस level में अभी कोई post नहीं है।<br><span class="mut">tests.json में जोड़ें।</span>'));return}
   if(!S.year){const ys=Object.keys(node()[S.post]||{}).sort((a,b)=>b.localeCompare(a));v.innerHTML=`<h2>${esc(S.post)} – Year</h2>`+(ys.length?`<div class="tiles">${ys.map(y=>tile('📅',esc(y),(node()[S.post][y]||[]).length+' test(s)',`pick('year','${enc(y)}')`)).join('')}</div>`:empty('कोई year नहीं मिला।'));return}
+  
   const ts=(node()[S.post]||{})[S.year]||[];
-  v.innerHTML=`<h2>Full Tests</h2><div class="card" style="padding:4px 14px!important">`+(ts.length?ts.map(t=>`<div class="row"><div><b>${esc(t.title)}</b>${t.duration?`<div class="mut">${esc(t.duration)} min</div>`:''}</div><a class="btn" href="${launchURL(t)}">Start Test</a></div>`).join(''):empty('इस year में कोई test नहीं है।'))+'</div>';
+  v.innerHTML=`<h2>Full Tests</h2><div class="card" style="padding:4px 14px!important">`+(ts.length?ts.map(t=>{
+    const att=getAttemptInfo(t.title);
+    const btnText=att.attempted?'Re-Attempt':'Start Test';
+    const btnClass=att.attempted?'btn g':'btn';
+    const subInfo=att.attempted?`<div class="mut" style="color:#d9534f">Last attempted: ${esc(att.date)}</div>`:'';
+    return `<div class="row"><div><b>${esc(t.title)}</b>${t.duration?`<div class="mut">${esc(t.duration)} min</div>`:''}${subInfo}</div><a class="${btnClass}" href="${launchURL(t)}">${btnText}</a></div>`;
+  }).join(''):empty('इस year में कोई test नहीं है।'))+'</div>';
 }
 init();
 </script></body></html>
