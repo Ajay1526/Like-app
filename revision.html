@@ -44,7 +44,7 @@ const qKey=q=>q.qid?String(q.qid):'h'+hashStr(q.qEn||'');
 
 // ---- Topic auto-detection ----
 const R={
-rea:[[/series|come in place|श्रृंखला/,'Series'],[/related to|odd one|does not belong|संबंधित|अलग/,'Analogy & Classification'],[/coded|code|कूट/,'Coding-Decoding'],[/father|mother|brother|sister|son|daughter|uncle|aunt|पिता|माता|भाई|बहन/,'Blood Relations'],[/north|south|east|west|direction|दिशा/,'Direction'],[/rank|row|tallest|taller|heavier|पंक्ति/,'Ranking & Order'],[/venn|conclusion|statement|कथन|निष्कर्ष/,'Statements & Syllogism'],[/mirror|water image|folded|cube|dice|figure|दर्पण|पासा/,'Figure & Non-verbal'],[/calendar|clock|day of the week|घड़ी/,'Calendar & Clock'],[/symbol|interchang|operation|चिह्न/,'Mathematical Operations']],
+rea:[[/series|come in place|श्रृंखला/,'Series'],[/related to|odd one|does not belong|संबंधित|अलग/,'Analogy & Classification'],[/coded|code|कूट/,'Coding-Decoding'],[/father|mother|brother|sister|\bson\b|daughter|uncle|aunt|पिता|माता|भाई|बहन/,'Blood Relations'],[/north|south|east|west|direction|दिशा/,'Direction'],[/rank|\brow\b|tallest|taller|heavier|पंक्ति/,'Ranking & Order'],[/venn|conclusion|statement|कथन|निष्कर्ष/,'Statements & Syllogism'],[/mirror|water image|folded|cube|dice|figure|दर्पण|पासा/,'Figure & Non-verbal'],[/calendar|clock|day of the week|घड़ी/,'Calendar & Clock'],[/symbol|interchang|operation|चिह्न/,'Mathematical Operations']],
 math:[[/percent|%|प्रतिशत/,'Percentage'],[/profit|loss|discount|लाभ|हानि|छूट/,'Profit, Loss & Discount'],[/simple interest|compound|interest|ब्याज/,'Interest'],[/ratio|proportion|अनुपात/,'Ratio & Proportion'],[/average|mean|औसत/,'Average'],[/work|pipe|tank|काम|नल/,'Time & Work'],[/speed|train|km\/h|distance|चाल|ट्रेन/,'Time, Speed & Distance'],[/triangle|circle|area|perimeter|volume|radius|क्षेत्रफल|त्रिभुज|वृत्त/,'Geometry & Mensuration'],[/sin|cos|tan|trigonometr/,'Trigonometry'],[/divisible|hcf|lcm|prime|remainder|लघुत्तम|महत्तम|भाज्य/,'Number System'],[/simplif|value of|सरल/,'Simplification'],[/x\s*[+-]|equation|समीकरण/,'Algebra']],
 eng:[[/passage|comprehension/,'Comprehension'],[/error|incorrect|grammatically/,'Error Spotting'],[/fill in the blank|blank/,'Fill in the Blanks'],[/synonym|similar in meaning/,'Synonyms'],[/antonym|opposite/,'Antonyms'],[/idiom|phrase/,'Idioms & Phrases'],[/one word|substitut/,'One Word Substitution'],[/spelt|spelling/,'Spelling'],[/passive|active voice|narration|direct|indirect/,'Voice & Narration'],[/rearrange|jumbled|sentence/,'Sentence Arrangement']],
 hin:[[/संधि/,'संधि'],[/समास/,'समास'],[/पर्यायवाची|समानार्थी/,'पर्यायवाची'],[/विलोम|विपरीतार्थक/,'विलोम'],[/मुहावरा|मुहावरे|लोकोक्ति/,'मुहावरे व लोकोक्तियाँ'],[/शुद्ध|अशुद्ध|वर्तनी/,'शब्द शुद्धि'],[/एक शब्द|के लिए.*शब्द/,'एक शब्द'],[/अलंकार/,'अलंकार'],[/कारक|विभक्ति/,'कारक'],[/गद्यांश|अनुच्छेद/,'गद्यांश']],
@@ -59,21 +59,51 @@ function normSubj(name,nameHi,CFG){
   let n=stripN(name)||String(name||'').trim();const a=al[n.toLowerCase()];if(a)n=a;
   return {name:n,nameHi:stripN(nameHi)||nameHi,key:n.toLowerCase()};
 }
+
 async function load(){
-  let C;try{C=await(await fetch('tests.json')).json()}catch(e){$('main').innerHTML='<div class="card empty">tests.json नहीं मिली। Server/hosting से खोलें।</div>';return}
+  let C;
+  try {
+    const res = await fetch('tests.json');
+    if(!res.ok) throw new Error('tests.json HTTP status ' + res.status);
+    C = await res.json();
+  } catch(e) {
+    console.error('Error loading tests.json:', e);
+    $('main').innerHTML=`<div class="card empty" style="text-align:center;color:var(--rd)">
+      <b>tests.json लोड नहीं हो पाई!</b><br>
+      <small style="color:var(--mt)">कारण: ${esc(e.message)}<br>कृपया जाँचें कि क्या आप इसे लोकल सर्वर (Live Server) से चला रहे हैं या फ़ाइल उसी फ़ोल्डर में है।</small>
+    </div>`;
+    return;
+  }
+
   const files={};
   Object.keys(STRUCT).forEach(c=>STRUCT[c].forEach(l=>{const n=((C[c]||{})[l])||{};
     Object.keys(n).forEach(p=>Object.keys(n[p]||{}).forEach(y=>(n[p][y]||[]).forEach(t=>{if(!files[t.file])files[t.file]={c,l,p,y,t:t.title}})))}));
+  
   const seen=new Set();
   for(const f of Object.keys(files)){
-    let d;try{d=await(await fetch(f)).json()}catch(e){continue}
+    let d;
+    try {
+      const fres = await fetch(f);
+      if(!fres.ok) continue;
+      d = await fres.json();
+    } catch(e) {
+      continue;
+    }
     (d.sections||[]).forEach(s=>(s.questions||[]).forEach(q=>{
       const key=qKey(q);if(seen.has(key))return;seen.add(key);
       const ns=normSubj(s.name,s.nameHi,C);
       ALL.push({key,q,sn:ns.name,snHi:ns.nameHi||ns.name,sk:ns.key,auto:autoTopic(ns.name,q),m:files[f]});
     }));
   }
-  const sk=[...new Set(ALL.map(o=>o.sk))];F.subj=sk[0]||'';draw();
+
+  if(ALL.length === 0) {
+    $('main').innerHTML=`<div class="card empty" style="text-align:center"><b>कोई प्रश्न नहीं मिले!</b></div>`;
+    return;
+  }
+
+  const sk=[...new Set(ALL.map(o=>o.sk))];
+  F.subj=sk[0]||'';
+  draw();
 }
 
 // ================= Learning ⇄ Revision =================
@@ -96,6 +126,7 @@ function cnt(list){const c={L:0,R:0,X:0,G:0,t:list.length};list.forEach(o=>c[lis
 const p2=n=>String(n).padStart(2,'0');
 function fmtT(ts){const d=new Date(ts);let h=d.getHours();const ap=h>=12?'PM':'AM';h=h%12||12;return `${p2(d.getDate())}-${p2(d.getMonth()+1)}-${d.getFullYear()} ${p2(h)}:${p2(d.getMinutes())} ${ap}`}
 function ago(ts){const m=(Date.now()-ts)/6e4;if(m<60)return 'अभी अभी';if(m<1440)return Math.floor(m/60)+' घंटे पहले';return Math.floor(m/1440)+' दिन पहले'}
+function lastRev(list){let t=0;list.forEach(o=>{const r=REC[o.key];if(r&&r.lastRevisionAt&&r.lastRevisionAt>t)t=r.lastRevisionAt});return t}
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const mk=o=>REC[o.key]=REC[o.key]||{a:0,c:0,w:0,l:'L'};
 function learnAns(o,ok){const r=mk(o);r.a++;
@@ -205,14 +236,7 @@ function drawLearn(){
   const o=SS.queue[0],q=o.q,h=hi(),sol=(h?q.solHi:q.solEn)||q.solEn||q.solHi||'',a=SS.ans;
   $('main').innerHTML=`<div class="card" style="padding:10px!important">${tiles(c,false)}</div>
   <div class="card"><div class="meta"><span>बाकी: ${SS.queue.length}</span></div>${qHTML(o,a,a!==undefined)}
-  ${a!==undefined?`<div class="sol"><b>${SS.ok?'✅ Correct':'❌ Wrong'}</b>${SS.ok?'':'
-सही उत्तर: '+String.fromCharCode(65+q.ans)}${sol?'
-
-'+esc(sol):'
-
-Solution उपलब्ध नहीं है।'}
-
-${SS.ok?'→ 📝 Revision बाकी में गया।':'→ यह इसी सत्र में फिर आएगा।'}</div>`:''}
+  ${a!==undefined?`<div class="sol"><b>${SS.ok?'✅ Correct':'❌ Wrong'}</b>${SS.ok?'':'\nसही उत्तर: '+String.fromCharCode(65+q.ans)}${sol?'\n\n'+esc(sol):'\n\nSolution उपलब्ध नहीं है।'}\n\n${SS.ok?'→ 📝 Revision बाकी में गया।':'→ यह इसी सत्र में फिर आएगा।'}</div>`:''}
   <div class="nav"><button class="btn gray" onclick="back()">✕ रोकें</button>${a!==undefined?`<button class="btn" onclick="nextL()">Next →</button>`:''}</div>
   <div class="nav"><button class="btn gray" onclick="edTopic('${esc(o.key)}')">✎ Topic बदलें</button></div></div>`;
 }
@@ -251,31 +275,20 @@ function draw(){
   if(typeof renderMathInElement==='function')try{renderMathInElement($('main'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}
 }
 
-// ----------------- Improved edTopic with Topic Selection Modal/List -----------------
 function edTopic(k){
   const o=ALL.find(x=>x.key===k);
   if(!o) return;
   const currentT=topicOf(o);
   
-  // Get all unique topics for current subject
   const smTopics = [...new Set(cur().map(item => topicOf(item)))].sort();
   
-  let optionsText = smTopics.map((t, idx) => `${idx + 1}. ${t}`).join('
-');
-  let promptMsg = `वर्तमान Topic: "${currentT}"
-
-उपलब्ध टॉपिक्स:
-${optionsText}
-
-नया Topic बनाने या बदलने के लिए:
-- सूची में से नंबर (1, 2...) लिखें
-- या सीधे नया नाम टाइप करें:`;
+  let optionsText = smTopics.map((t, idx) => `${idx + 1}. ${t}`).join('\n');
+  let promptMsg = `वर्तमान Topic: "${currentT}"\n\nउपलब्ध टॉपिक्स:\n${optionsText}\n\nनया Topic बनाने या बदलने के लिए:\n- सूची में से नंबर (1, 2...) लिखें\n- या सीधे नया नाम टाइप करें:`;
   
   const v=prompt(promptMsg, currentT);
   if(v===null || !v.trim()) return;
   
   let newTopic = v.trim();
-  // If user entered a number corresponding to list
   const num = parseInt(newTopic, 10);
   if(!isNaN(num) && num >= 1 && num <= smTopics.length) {
     newTopic = smTopics[num - 1];
