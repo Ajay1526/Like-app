@@ -182,6 +182,12 @@ function filterTestsList(){
 
   const listEl=$('testListItems');
   const countEl=$('testCountLabel');
+  const selectAllEl=$('selectAllCheckbox');
+
+  if(selectAllEl){
+    selectAllEl.checked = searchable.length > 0 && searchable.every(name=>selectedTests.has(name));
+  }
+
   if(listEl){
     listEl.innerHTML=searchable.length?searchable.map(name=>`<label style="font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px">
       <input type="checkbox" ${selectedTests.has(name)?'checked':''} onclick="toggleTest('${esc(name).replace(/[']/g, "\\'")}',this)"> ${esc(name)}
@@ -236,6 +242,7 @@ function firstAttemptCmpHTML(S,scores){
   const avgSelectedScore=allSelectedScores.length?sum(allSelectedScores)/allSelectedScores.length:0;
 
   const searchableTestNames = testNames.filter(name=>name.toLowerCase().includes(testSearchQuery));
+  const isAllSearchedSelected = searchableTestNames.length > 0 && searchableTestNames.every(name=>selectedTests.has(name));
 
   let o=`<div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">
@@ -250,7 +257,7 @@ function firstAttemptCmpHTML(S,scores){
       <div style="margin-top:8px;display:${isDropdownOpen?'block':'none'};background:#fff;padding:8px;border-radius:4px;border:1px solid #ccc">
         <input type="text" id="testSearchBox" placeholder="🔍 Search test name..." value="${esc(testSearchQuery)}" oninput="filterTestsList()" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:3px;margin-bottom:6px;font-size:12px">
         <div style="display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding-bottom:4px;margin-bottom:4px">
-          <label style="font-size:12px;cursor:pointer;font-weight:bold"><input type="checkbox" ${testNames.every(n=>selectedTests.has(n))?'checked':''} onclick="toggleAllTests(this)"> Select All</label>
+          <label style="font-size:12px;cursor:pointer;font-weight:bold"><input type="checkbox" id="selectAllCheckbox" ${isAllSearchedSelected?'checked':''} onclick="toggleAllSearchedTests(this)"> Select All (Filtered)</label>
           <span id="testCountLabel" style="font-size:11px;color:#666">${searchableTestNames.length} found</span>
         </div>
         <div id="testListItems" style="max-height:140px;overflow-y:auto;display:flex;flex-direction:column;gap:4px">
@@ -302,21 +309,46 @@ function firstAttemptCmpHTML(S,scores){
 function toggleTest(name,el){
   if(el.checked) selectedTests.add(name);
   else selectedTests.delete(name);
-  render();
-}
-
-function toggleAllTests(el){
+  
+  // Update select all checkbox state without full re-render
   const testMap={};
-  A.forEach(a=>{
+  A.forEach((a,n)=>{
     const name=tname(a);
     const t=typeOf(a);
-    if(PF==='full'&&t==='full') testMap[name]=true;
-    if(PF==='sectional'&&t==='sectional'&&(SF==='all'||subjOf(a)===SF)) testMap[name]=true;
+    if(PF==='full'&&t!=='full')return;
+    if(PF==='sectional'){
+      if(t!=='sectional')return;
+      if(SF!=='all'&&subjOf(a)!==SF)return;
+    }
+    testMap[name]=true;
   });
-  selectedTests.clear();
-  if(el.checked){
-    Object.keys(testMap).forEach(n=>selectedTests.add(n));
+  const testNames=Object.keys(testMap);
+  const searchable=testNames.filter(name=>name.toLowerCase().includes(testSearchQuery.toLowerCase()));
+  const selectAllEl=$('selectAllCheckbox');
+  if(selectAllEl){
+    selectAllEl.checked = searchable.length > 0 && searchable.every(name=>selectedTests.has(name));
   }
+}
+
+function toggleAllSearchedTests(el){
+  const testMap={};
+  A.forEach((a,n)=>{
+    const name=tname(a);
+    const t=typeOf(a);
+    if(PF==='full'&&t!=='full')return;
+    if(PF==='sectional'){
+      if(t!=='sectional')return;
+      if(SF!=='all'&&subjOf(a)!==SF)return;
+    }
+    testMap[name]=true;
+  });
+  const testNames=Object.keys(testMap);
+  const searchable=testNames.filter(name=>name.toLowerCase().includes(testSearchQuery.toLowerCase()));
+
+  searchable.forEach(name=>{
+    if(el.checked) selectedTests.add(name);
+    else selectedTests.delete(name);
+  });
   render();
 }
 
