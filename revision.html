@@ -57,15 +57,11 @@ let ALL=[],OV={};
 try{OV=JSON.parse(localStorage.getItem('examTopics'))||{}}catch(e){}
 function hashStr(t){let h=0;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return String(h)}
 const qKey=q=>q.qid?String(q.qid):'h'+hashStr(q.qEn||'');
-
-/* ===== ✅ यही एकमात्र बदलाव है - Dropdown से हटाने वाला Data ===== */
 const HIDE_SUBJECTS=['current affairs','current','history','geography','gk','general knowledge','general awareness'];
 const HIDE_TOPICS=['history','geography','current affairs','current','gk','general knowledge','general awareness','अन्य / other'];
 function isHiddenSubject(name){ if(!name) return false; const n=String(name).toLowerCase().trim(); return HIDE_SUBJECTS.some(h=> n===h || n.includes(h)); }
 function isHiddenTopic(topic){ if(!topic) return false; const n=String(topic).toLowerCase().trim(); return HIDE_TOPICS.some(h=> n===h || n.includes(h)); }
 function isHiddenItem(o){ return isHiddenSubject(o.sn) || isHiddenSubject(o.snHi) || isHiddenTopic(topicOf(o)) || isHiddenTopic(o.auto); }
-/* ===== बदलाव खत्म ===== */
-
 const R={
 disc:[[/gender|patriarch|boys dominating|inherit property|inclusiv|respecting differences|diverse cultural|linguistic diversity/,'Gender & Inclusion'],[/article|preamble|amendment|constitution|commission|rte act|ncf|national integration|1952|post-1950s|mother tongue|obligated/,'Constitution, Policy & Commissions'],[/television|advertis|more people are engaged|socialization/,'Society & Media'],[/piaget|preschool|motor skill|play types|pretend play|vocabulary growth|personality|conditioning|bullying|anxious|denial|mindfulness|observe|self-understanding|punctuality|confident|area of development|\bstage\b|viewpoints/,'Child Development & Psychology'],[/mathematic|rational number|prime number|fraction|measuring length|units must be consistent/,'Mathematics Pedagogy'],[/science|scientific|environmental|evs|eco-club|kitchen garden|plants bending/,'Science & EVS Pedagogy'],[/english|language|vocabulary|grammar|subject-verb|pronunciation|literature|sentence|translation method|rule.governed/,'English / Language Pedagogy'],[/social stud|social science|economic|textbooks|political leadership|community play/,'Social Science Pedagogy'],[/curriculum|unit plan|lesson plan|micro teaching|pedagog|experiential|peer tutoring|teaching aid|low cost|alternative schooling|activity-based|open-ended/,'Curriculum & Lesson Planning'],[/assess|evaluat|formative|higher-order/,'Assessment & Evaluation'],[/leader|principal|school board|enrol|budget|school wants|facilitator|initiative/,'School Leadership & Management']],
 rea:[[/series|come in place|श्रृंखला/,'Series'],[/related to|odd one|does not belong|संबंधित|अलग/,'Analogy & Classification'],[/coded|code|कूट/,'Coding-Decoding'],[/father|mother|brother|sister|\bson\b|daughter|uncle|aunt|पिता|माता|भाई|बहन/,'Blood Relations'],[/north|south|east|west|direction|दिशा/,'Direction'],[/rank|\brow\b|tallest|taller|heavier|पंक्ति/,'Ranking & Order'],[/venn|conclusion|statement|कथन|निष्कर्ष/,'Statements & Syllogism'],[/mirror|water image|folded|cube|dice|figure|दर्पण|पासा/,'Figure & Non-verbal'],[/calendar|clock|day of the week|घड़ी/,'Calendar & Clock'],[/symbol|interchang|operation|चिह्न/,'Mathematical Operations']],
@@ -79,7 +75,6 @@ const topicOf=o=>OV[o.key]||o.q.topic||o.auto;
 const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part|set|भाग)?\s*\d+\s*[\)\]]?\s*$/i,'').trim();
 function normSubj(name,nameHi,CFG){const al={};Object.keys((CFG&&CFG.subjectAliases)||{}).forEach(k=>al[stripN(k).toLowerCase()]=CFG.subjectAliases[k]);let n=stripN(name)||String(name||'').trim();const a=al[n.toLowerCase()];if(a)n=a;return {name:n,nameHi:stripN(nameHi)||nameHi,key:n.toLowerCase()};}
 async function load(){let C;try{C=await(await fetch('tests.json')).json()}catch(e){$('main').innerHTML='<div class="card empty">tests.json नहीं मिली। Server/hosting से खोलें।</div>';return}const files={};Object.keys(STRUCT).forEach(c=>STRUCT[c].forEach(l=>{const n=((C[c]||{})[l])||{};Object.keys(n).forEach(p=>Object.keys(n[p]||{}).forEach(y=>(n[p][y]||[]).forEach(t=>{if(!files[t.file])files[t.file]={c,l,p,y,t:t.title}})))}));const seen=new Set();for(const f of Object.keys(files)){let d;try{d=await(await fetch(f)).json()}catch(e){continue}(d.sections||[]).forEach(s=>(s.questions||[]).forEach(q=>{const key=qKey(q);if(seen.has(key))return;seen.add(key);const ns=normSubj(s.name,s.nameHi,C);ALL.push({key,q,sn:ns.name,snHi:ns.nameHi||ns.name,sk:ns.key,auto:autoTopic(ns.name,q),m:files[f]});}))}try{const nr=await fetch('notes.json');if(nr.ok){const nd=await nr.json(),arr=Array.isArray(nd)?nd:(nd.notes||[]);arr.forEach(n=>{if(!n||!(n.q||n.title))return;const id=String(n.id||_nh((n.title||'')+(n.q||''))).replace(/[^A-Za-z0-9_-]/g,'');const key='n'+id;if(seen.has(key))return;seen.add(key);const subj=String(n.subject||'Notes').trim();ALL.push({key,kind:'note',note:{title:n.title||'',desc:n.desc||'',q:n.q||n.title||'',a:n.a||'',more:n.more||'',date:n.date||''},q:{topic:n.topic||''},sn:subj,snHi:n.subjectHi||subj,sk:subj.toLowerCase(),auto:n.topic||'अन्य / Other',m:{c:'notes',l:'Notes',p:'Notes',y:n.date||''}});});}}catch(e){}
-  /* ✅ Filter: Dropdown से हटाना है, MCQ Delete नहीं करना */
   ALL = ALL.filter(o=>!isHiddenItem(o));
   const sk=[...new Set(ALL.map(o=>o.sk))];F.subj=sk[0]||'';if(location.hash.length>1)readHash();draw();}
 function _nh(t){let h=0;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return String(h)}
@@ -99,7 +94,22 @@ function syncHash(){const h='#'+['s='+encodeURIComponent(F.subj),'t='+encodeURIC
 function readHash(){const p=new URLSearchParams((location.hash||'').slice(1));if(p.get('s'))F.subj=p.get('s');F.top=p.get('t')||'';F.l=p.get('l')||'';F.lang=p.get('g')==='hi'?'hi':'en'}
 function draw(){renderCards()}
 function subjMap(){const sm={};ALL.filter(o=>!F.l||o.m.l===F.l).forEach(o=>{(sm[o.sk]=sm[o.sk]||{n:hi()?o.snHi:o.sn,l:[]}).l.push(o)});return sm}
-function fillSel(){const sm=subjMap();if(!sm[F.subj])F.subj=Object.keys(sm)[0]||'';g$('subSel').innerHTML=Object.keys(sm).map(k=>`<option value="${esc(k)}"${k===F.subj?' selected':''}>📂 ${esc(sm[k].n)}</option>`).join('');const tops=[...new Set((sm[F.subj]?sm[F.subj].l:[]).map(topicOf))].sort().filter(t=>!isHiddenTopic(t));if(F.top&&!tops.includes(F.top))F.top='';g$('topSel').innerHTML=`<option value="">${T('📌 सभी टॉपिक','📌 All Topics')}</option>`+tops.map(t=>`<option value="${esc(t)}"${t===F.top?' selected':''}>📌 ${esc(t)}</option>`).join('');const lv=[...new Set(ALL.map(o=>o.m.l))];g$('lvlSel').innerHTML=`<option value="">All Levels</option>`+lv.map(l=>`<option${l===F.l?' selected':''}>${esc(l)}</option>`).join('');g$('langSel').value=F.lang;}
+/* ✅ UPDATED: Dropdown में Topic के सामने Total Question Count */
+function fillSel(){
+  const sm=subjMap();
+  if(!sm[F.subj]) F.subj=Object.keys(sm)[0]||'';
+  g$('subSel').innerHTML=Object.keys(sm).map(k=>`<option value="${esc(k)}"${k===F.subj?' selected':''}>📂 ${esc(sm[k].n)} (${sm[k].l.length})</option>`).join('');
+  const curList = sm[F.subj]?sm[F.subj].l:[];
+  const topicCounts={};
+  curList.forEach(o=>{ const t=topicOf(o); topicCounts[t]=(topicCounts[t]||0)+1; });
+  const tops=[...new Set(curList.map(topicOf))].sort().filter(t=>!isHiddenTopic(t));
+  if(F.top&&!tops.includes(F.top)) F.top='';
+  const totalAll = curList.length;
+  g$('topSel').innerHTML=`<option value="">${T(`📌 सभी टॉपिक (${totalAll})`,`📌 All Topics (${totalAll})`)}</option>`+tops.map(t=>`<option value="${esc(t)}"${t===F.top?' selected':''}>📌 ${esc(t)} (${topicCounts[t]||0})</option>`).join('');
+  const lv=[...new Set(ALL.map(o=>o.m.l))];
+  g$('lvlSel').innerHTML=`<option value="">All Levels</option>`+lv.map(l=>`<option${l===F.l?' selected':''}>${esc(l)}</option>`).join('');
+  g$('langSel').value=F.lang;
+}
 function onSubj(v){F.subj=v;F.top='';SEL={};UI.show=40;g$('selAll').checked=false;renderCards()}
 function onTopic(v){F.top=v;SEL={};UI.show=40;g$('selAll').checked=false;renderCards()}
 function onLevel(v){F.l=v;F.top='';SEL={};UI.show=40;renderCards()}
@@ -121,7 +131,8 @@ function toggleOne(key,c){if(c)SEL[key]=true;else delete SEL[key];g$('selAll').c
 function toggleAll(c){VIS.forEach(o=>{if(c)SEL[o.key]=true;else delete SEL[o.key]});renderCards()}
 function moveOne(key){SEL={};SEL[key]=true;openMove()}
 function selKeys(){return Object.keys(SEL).filter(k=>SEL[k])}
-function openMove(){const keys=selKeys();if(!keys.length){alert(T('कृपया कम से कम एक प्रश्न चुनें!','Please select at least one question!'));return}const tops=[...new Set(ALL.filter(o=>o.sk===F.subj).map(topicOf))].sort().filter(t=>!isHiddenTopic(t));const ov=document.createElement('div');ov.className='mvov';ov.id='customModal';ov.innerHTML=`<div class="mvbox"><b>${T(`चुने गए ${keys.length} प्रश्नों को किस टॉपिक में भेजना है?`,`Move the ${keys.length} selected questions to topic:`)}</b><select id="targetTopicSelect" style="width:100%;margin:10px 0;box-sizing:border-box">${tops.map(t=>`<option value="${esc(t)}">📌 ${esc(t)}</option>`).join('')}<option value="__new__">${T('➕ नया टॉपिक बनाएं...','➕ Create new topic...')}</option></select><div class="nav"><button class="btn gray" onclick="closeM('customModal')">${T('रद्द करें','Cancel')}</button><button class="btn" onclick="executeMove()">${T('भेजें','Send')}</button></div></div>`;document.body.appendChild(ov);}
+/* ✅ UPDATED: Move Popup में भी Topic Count */
+function openMove(){const keys=selKeys();if(!keys.length){alert(T('कृपया कम से कम एक प्रश्न चुनें!','Please select at least one question!'));return}const list=ALL.filter(o=>o.sk===F.subj);const topicCounts={};list.forEach(o=>{const t=topicOf(o);topicCounts[t]=(topicCounts[t]||0)+1;});const tops=[...new Set(list.map(topicOf))].sort().filter(t=>!isHiddenTopic(t));const ov=document.createElement('div');ov.className='mvov';ov.id='customModal';ov.innerHTML=`<div class="mvbox"><b>${T(`चुने गए ${keys.length} प्रश्नों को किस टॉपिक में भेजना है?`,`Move the ${keys.length} selected questions to topic:`)}</b><select id="targetTopicSelect" style="width:100%;margin:10px 0;box-sizing:border-box">${tops.map(t=>`<option value="${esc(t)}">📌 ${esc(t)} (${topicCounts[t]||0})</option>`).join('')}<option value="__new__">${T('➕ नया टॉपिक बनाएं...','➕ Create new topic...')}</option></select><div class="nav"><button class="btn gray" onclick="closeM('customModal')">${T('रद्द करें','Cancel')}</button><button class="btn" onclick="executeMove()">${T('भेजें','Send')}</button></div></div>`;document.body.appendChild(ov);}
 function closeM(id){const m=g$(id);if(m)m.remove()}
 function applyMove(keys,name){keys.forEach(k=>{OV[k]=name});try{localStorage.setItem('examTopics',JSON.stringify(OV))}catch(e){}SEL={};closeM('customModal');closeM('promptModal');renderCards();toast(T(`✅ ${keys.length} प्रश्न "${name}" में भेज दिए गए हैं!`,`✅ ${keys.length} questions moved to "${name}"!`));}
 function executeMove(){const v=g$('targetTopicSelect').value;if(v==='__new__'){openNewTopic();return}applyMove(selKeys(),v);}
