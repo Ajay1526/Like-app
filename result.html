@@ -52,6 +52,7 @@ button.s{background:#33a6ea;color:#fff;border:0}
 .tc{width:95px;max-width:95px;padding:4px!important;text-align:left}
 .tc *{white-space:nowrap;font-size:10px;line-height:1.2}
 .tc div[style*="flex"]{flex-direction:column;gap:1px}
+</style><style>.nbox{margin-top:10px}.nlbl{font-size:12px;color:#5f6368;margin-bottom:4px;font-weight:500}.nbox textarea{width:100%;box-sizing:border-box;min-height:72px;border:1px solid #dadce0;border-radius:10px;padding:8px;font-size:14px;font-family:inherit;background:#fff;color:#202124}
 </style><link rel="stylesheet" href="app.css?v=5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -366,13 +367,21 @@ function optInner(q, k, x) {
   return t + ' ' + imgTag(im, 'oimg');
 }
 
+
+// ---- Self notes: हर प्रश्न का अलग नोट (फ़ोन में सेव; सब पेजों में एक जैसा) ----
+function _nh(t){let h=0;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return String(h)}
+function noteKey(q){return q.qid?String(q.qid):'h'+_nh(q.qEn||'')}
+function noteGet(k){try{return (JSON.parse(localStorage.getItem('examNotes'))||{})[k]||''}catch(e){return ''}}
+function noteSet(k,v){try{const m=JSON.parse(localStorage.getItem('examNotes'))||{};if(String(v).trim())m[k]=v;else delete m[k];localStorage.setItem('examNotes',JSON.stringify(m))}catch(e){}}
+function noteBox(k){return '<div class="nbox"><div class="nlbl">📝 My Notes</div><textarea rows="3" placeholder="इस प्रश्न के लिए अपने नोट्स लिखें…" oninput="noteSet(\''+k+'\',this.value)">'+String(noteGet(k)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</textarea></div>'}
+
 function solHTML(i,j,x,h,L){
  const secObj=D&&D.sections&&D.sections[i];
  const q=secObj&&secObj.questions?secObj.questions[j]:null;
  if(!q)return L.nt;
  const opts=(h?q.optHi:q.optEn).map((t,k)=>`<div class="o ${k===q.ans?'ok':(k===x.a?'bad':'')}">${String.fromCharCode(65+k)}. ${optInner(q,k,t.replace(/</g,'&lt;'))}${k===q.ans?' ✔':''}${k===x.a?' ◀ '+L.your:''}</div>`).join('');
  const sol=(h?q.solHi:q.solEn)||'';
- return `<div class="sol"><b>Q.${j+1}) ${(h?q.qHi:q.qEn).replace(/</g,'&lt;')}</b>${qImgSrc(q,h?'hi':'en')?imgTag(qImgSrc(q,h?'hi':'en'),'qimg'):''}${opts}<div style="margin-top:6px"><b>${L.ans}:</b> ${String.fromCharCode(65+q.ans)} &nbsp; <b>${L.your}:</b> ${x.a<0?L.none:String.fromCharCode(65+x.a)}</div>${sol?`<div style="margin-top:6px">${sol.replace(/</g,'&lt;')}</div>`:''}</div>`}
+ return `<div class="sol"><b>Q.${j+1}) ${(h?q.qHi:q.qEn).replace(/</g,'&lt;')}</b>${qImgSrc(q,h?'hi':'en')?imgTag(qImgSrc(q,h?'hi':'en'),'qimg'):''}${opts}<div style="margin-top:6px"><b>${L.ans}:</b> ${String.fromCharCode(65+q.ans)} &nbsp; <b>${L.your}:</b> ${x.a<0?L.none:String.fromCharCode(65+x.a)}</div>${sol?`<div style="margin-top:6px">${sol.replace(/</g,'&lt;')}</div>`:''}${noteBox(noteKey(q))}</div>`}
 
 function setQSec(v){qSecSel=v;render()}
 function setQF(v){qFilterV=v;render()}
