@@ -44,6 +44,7 @@ const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').rep
 const enc=encodeURIComponent;
 let B=[];
 let F={group:'date',subject:'',date:'',lang:'en'};
+try{Object.assign(F,JSON.parse(sessionStorage.getItem('bmF'))||{})}catch(e){}
 
 function load(){try{B=JSON.parse(localStorage.getItem(KEY))||[]}catch(e){B=[]}B.sort((a,b)=>b.ts-a.ts)}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(B))}catch(e){alert('Could not save.')}}
@@ -62,6 +63,7 @@ function practiceURL(subject,date){
 }
 
 function drawCtl(){
+  try{sessionStorage.setItem('bmF',JSON.stringify(F))}catch(e){}
   const subs=uniq(B.map(b=>b.subject)), dates=uniq(B.map(b=>b.date)).sort().reverse();
   const list=filtered();
   $('ctl').innerHTML=`
