@@ -32,37 +32,31 @@ const S={mode:null,cat:null,level:null,post:null,year:null,subj:null};
 const ORDER=['mode','cat','level','post','year'];
 const fileCache={};let SUBJ=null;
 
-let postSearchQuery = '';
-let postSortOrder = 'asc';
-let testSearchQuery = '';
-let testSortOrder = 'newest';
-let subItemSearchQuery = '';
-let subItemSortOrder = 'newest';
-
 async function init(){
   try{const r=await fetch('tests.json');if(!r.ok)throw 0;CAT=await r.json()}
   catch(e){CAT=DEFAULT_CATALOG;$('note').innerHTML='<div class="card" style="color:#b3261e">tests.json नहीं मिली, sample list दिख रही है। Server/hosting से खोलें।</div>'}
+  if(location.hash.length>1)readHash();
   render();
 }
 const getBM=()=>{try{return JSON.parse(localStorage.getItem('examBookmarks'))||[]}catch(e){return[]}};
 const getFile=f=>fileCache[f]||(fileCache[f]=fetch(f).then(r=>{if(!r.ok)throw 0;return r.json()}));
 const node=()=>((CAT[S.cat]||{})[S.level])||{};
 
-function pick(k,v){
-  S[k]=decodeURIComponent(v);
-  if(k==='level'){ postSearchQuery=''; postSortOrder='asc'; }
-  if(k==='year'){ testSearchQuery=''; testSortOrder='newest'; }
-  if(k==='subj'){ subItemSearchQuery=''; subItemSortOrder='newest'; render(); return; }
-  for(let i=ORDER.indexOf(k)+1;i<ORDER.length;i++)S[ORDER[i]]=null;
-  S.subj=null;render();
+// ---- URL state: refresh पर वही screen रहे; सिर्फ़ Back दबाने पर पीछे जाए ----
+let _skip=false;
+const SKEYS=['mode','cat','level','post','year','subj'];
+function hashOfS(){const p=SKEYS.filter(k=>S[k]).map(k=>k+'='+encodeURIComponent(S[k]));return p.length?'#'+p.join('&'):''}
+function syncHash(){
+  if(_skip){_skip=false;return}
+  const h=hashOfS();
+  if((location.hash||'')===h)return;
+  try{history.pushState(null,'',h||(location.pathname+location.search))}catch(e){}
 }
-function pick2(c){S.mode='full';S.cat=c;S.level=S.post=S.year=S.subj=null;postSearchQuery='';render()}
-function upTo(k){
-  if(k===null){ORDER.forEach(x=>S[x]=null);S.subj=null}
-  else{for(let i=ORDER.indexOf(k)+1;i<ORDER.length;i++)S[ORDER[i]]=null;S.subj=null}
-  postSearchQuery=''; testSearchQuery=''; subItemSearchQuery='';
-  render();
-}
+function readHash(){const p=new URLSearchParams((location.hash||'').slice(1));SKEYS.forEach(k=>S[k]=p.get(k)||null)}
+window.addEventListener('popstate',()=>{readHash();_skip=true;if(CAT)render()});
+function pick(k,v){S[k]=decodeURIComponent(v);if(k==='subj'){render();return}for(let i=ORDER.indexOf(k)+1;i<ORDER.length;i++)S[ORDER[i]]=null;S.subj=null;render()}
+function pick2(c){S.mode='full';S.cat=c;S.level=S.post=S.year=S.subj=null;render()}
+function upTo(k){if(k===null){ORDER.forEach(x=>S[x]=null);S.subj=null}else{for(let i=ORDER.indexOf(k)+1;i<ORDER.length;i++)S[ORDER[i]]=null;S.subj=null}render()}
 function crumb(){
   const p=[`<a onclick="upTo(null)">Home</a>`];
   if(S.mode==='sec')p.push(`<a onclick="upTo('mode')">Sectional Test</a>`);
@@ -81,34 +75,19 @@ function launchURL(t,title,section){
   return u;
 }
 
+// छात्रों के पुराने अटेम्प्ट्स चेक करने के लिए फंक्शन
 function getAttemptInfo(testTitle) {
   try {
     const attempts = JSON.parse(localStorage.getItem('examAttempts')) || [];
+    // इस टेस्ट नाम से मिलता-जुलता पिछला अटेम्प्ट खोजें
     const matched = attempts.filter(a => a.testName === testTitle);
     if (matched.length > 0) {
+      // आखिरी बार कब दिया उसकी तारीख/समय लें
       const lastAttempt = matched[matched.length - 1];
       return { attempted: true, date: lastAttempt.date };
     }
   } catch (e) {}
   return { attempted: false, date: '' };
-}
-
-function parseTestDateTime(title) {
-  const dateMatch = title.match(/(\d{2}-\d{2}-\d{4})/);
-  const timeMatch = title.match(/(\d{1,2}\.\d{2}\s*(?:am|pm))/i);
-  let timeVal = 0;
-  let dateVal = dateMatch ? dateMatch[1].split('-').reverse().join('') : '00000000';
-  
-  if (timeMatch) {
-    let tStr = timeMatch[1].toLowerCase();
-    let parts = tStr.replace(/am|pm/, '').trim().split('.');
-    let hours = parseInt(parts[0], 10) || 0;
-    let mins = parseInt(parts[1], 10) || 0;
-    if (tStr.includes('pm') && hours < 12) hours += 12;
-    if (tStr.includes('am') && hours === 12) hours = 0;
-    timeVal = hours * 60 + mins;
-  }
-  return { dateStr: dateVal, timeVal: timeVal };
 }
 
 const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part|set|भाग)?\s*\d+\s*[\)\]]?\s*$/i,'').trim();
@@ -143,64 +122,19 @@ async function renderSubjects(){
   v.innerHTML='<h2>Sectional Test – विषय चुनें</h2><div class="tiles">'+Object.keys(sj).map((k,i)=>{const o=sj[k],q=o.items.reduce((a,b)=>a+b.n,0);
     return tile(ic[i%ic.length],esc(o.name),`${esc(o.nameHi||'')}<br>${o.items.length} test(s) • ${q} Q`,`pick('subj','${enc(k)}')`,['','g','o','r'][i%4])}).join('')+'</div>';
 }
-
-function updateSubItemList() {
-  const container = $('subItemListContainer');
-  if (!container) return;
-  const o = SUBJ[S.subj];
-  let items = [...o.items];
-  
-  if(subItemSearchQuery){
-    items = items.filter(i => (i.t.title + ' ' + i.part + ' ' + i.p + ' ' + i.y).toLowerCase().includes(subItemSearchQuery.toLowerCase()));
-  }
-  items.sort((a,b)=>{
-    if(subItemSortOrder==='asc') return a.t.title.localeCompare(b.t.title);
-    if(subItemSortOrder==='desc') return b.t.title.localeCompare(a.t.title);
-
-    let dtA = parseTestDateTime(a.t.title);
-    let dtB = parseTestDateTime(b.t.title);
-    if(dtA.dateStr !== dtB.dateStr){
-      return subItemSortOrder==='newest'? dtB.dateStr.localeCompare(dtA.dateStr) : dtA.dateStr.localeCompare(dtB.dateStr);
-    }
-    return subItemSortOrder==='newest'? dtB.timeVal - dtA.timeVal : dtA.timeVal - dtB.timeVal;
-  });
-
-  container.innerHTML = items.length ? items.map((i,n)=>{
-    const att=getAttemptInfo(i.t.title+' – '+i.part);
-    const btnText=att.attempted?'Re-Attempt':'Start';
-    const btnClass=att.attempted?'btn g':'btn';
-    const subInfo=att.attempted?`<br><span style="color:#d9534f; font-size:11px;">Last attempted: ${esc(att.date)}</span>`:'';
-    return `<div class="row" style="align-items:center"><div style="display:flex;gap:12px;align-items:center"><span style="min-width:34px;height:34px;border-radius:50%;background:var(--bl2);color:#174ea6;display:flex;align-items:center;justify-content:center;font-weight:500">${n+1}</span><div><b>Set ${n+1}</b><div class="mut">${esc(i.part)} • ${esc(i.t.title)} • ${i.n} Q<br>${esc(i.p)} • ${esc(i.y)}${subInfo}</div></div></div><a class="${btnClass}" href="${launchURL(i.t,i.t.title+' – '+i.part,i.k)}">${btnText}</a></div>`;
-  }).join('') : empty('कोई सेट नहीं मिला।');
-}
-
 function renderSubjectTests(){
-  const o=SUBJ[S.subj];
-  const q=o.items.reduce((a,b)=>a+b.n,0);
-  $('view').innerHTML=`
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-      <div>
-        <h2 style="margin:0">${esc(o.name)}</h2>
-        <div class="mut">${esc(o.nameHi||'')} • ${o.items.length} sets • ${q} questions</div>
-      </div>
-      <div style="display:flex; gap:6px; align-items:center;">
-        <input type="text" id="subItemSearchInput" placeholder="सर्च सेट..." value="${esc(subItemSearchQuery)}" oninput="subItemSearchQuery=this.value; updateSubItemList()" style="padding:6px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none; width:120px;">
-        <select onchange="subItemSortOrder=this.value; updateSubItemList()" style="padding:6px; border:1px solid #ccc; border-radius:6px; font-size:12px; background:#fff; outline:none;">
-          <option value="newest" ${subItemSortOrder==='newest'?'selected':''}>Newest First</option>
-          <option value="oldest" ${subItemSortOrder==='oldest'?'selected':''}>Oldest First</option>
-          <option value="asc" ${subItemSortOrder==='asc'?'selected':''}>A to Z</option>
-          <option value="desc" ${subItemSortOrder==='desc'?'selected':''}>Z to A</option>
-        </select>
-      </div>
-    </div>
-    <div class="card" id="subItemListContainer" style="padding:4px 14px!important"></div>`;
-  updateSubItemList();
-  const inp = $('subItemSearchInput');
-  if(inp){ inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+  const o=SUBJ[S.subj],q=o.items.reduce((a,b)=>a+b.n,0);
+  $('view').innerHTML=`<h2>${esc(o.name)}</h2><div class="mut" style="margin-bottom:8px">${esc(o.nameHi||'')} • ${o.items.length} sets • ${q} questions</div><div class="card" style="padding:4px 14px!important">`+
+    o.items.map((i,n)=>{
+      const att=getAttemptInfo(i.t.title+' – '+i.part);
+      const btnText=att.attempted?'Re-Attempt':'Start';
+      const btnClass=att.attempted?'btn g':'btn';
+      const subInfo=att.attempted?`<br><span style="color:#d9534f; font-size:11px;">Last attempted: ${esc(att.date)}</span>`:'';
+      return `<div class="row" style="align-items:center"><div style="display:flex;gap:12px;align-items:center"><span style="min-width:34px;height:34px;border-radius:50%;background:var(--bl2);color:#174ea6;display:flex;align-items:center;justify-content:center;font-weight:500">${n+1}</span><div><b>Set ${n+1}</b><div class="mut">${esc(i.part)} • ${esc(i.t.title)} • ${i.n} Q<br>${esc(i.p)} • ${esc(i.y)}${subInfo}</div></div></div><a class="${btnClass}" href="${launchURL(i.t,i.t.title+' – '+i.part,i.k)}">${btnText}</a></div>`;
+    }).join('')+'</div>';
 }
-
 function render(){
-  crumb();const v=$('view');
+  syncHash();crumb();const v=$('view');
   if(!S.mode){
     v.innerHTML=`<h2>Test Category</h2><div class="tiles">
       ${Object.keys(STRUCT).map(k=>tile(STRUCT[k].icon,STRUCT[k].label,STRUCT[k].hi+' • '+STRUCT[k].levels.join(', '),`pick2('${k}')`)).join('')}
@@ -210,89 +144,23 @@ function render(){
   }
   if(S.mode==='sec'){
     if(!S.subj){renderSubjects();return}
-    if(SUBJ&&SUBJ[S.subj]){renderSubjectTests();return}
+    if(!SUBJ){$('view').innerHTML='<div class="card empty" style="text-align:center">Loading…</div>';buildSubjects().then(()=>{_skip=true;render()}).catch(()=>{S.subj=null;render()});return}
+    if(SUBJ[S.subj]){renderSubjectTests();return}
     S.subj=null;renderSubjects();return;
   }
   if(!S.cat){v.innerHTML=`<h2>Test Category</h2><div class="tiles">${Object.keys(STRUCT).map(k=>tile(STRUCT[k].icon,STRUCT[k].label,STRUCT[k].hi+' • '+STRUCT[k].levels.join(', '),`pick('cat','${k}')`)).join('')}</div>`;return}
   if(!S.level){v.innerHTML=`<h2>${STRUCT[S.cat].label} – Level</h2><div class="tiles">${STRUCT[S.cat].levels.map(l=>{const n=Object.keys((CAT[S.cat]||{})[l]||{}).length;return tile('🎓',esc(l),n+' post'+(n===1?'':'s'),`pick('level','${enc(l)}')`)}).join('')}</div>`;return}
-  
-  if(!S.post){
-    let ps=Object.keys(node());
-    if(postSearchQuery){
-      ps=ps.filter(p=>p.toLowerCase().includes(postSearchQuery.toLowerCase()));
-    }
-    ps.sort((a,b)=>{
-      return postSortOrder==='asc'?a.localeCompare(b):b.localeCompare(a);
-    });
-
-    v.innerHTML=`
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-        <h2 style="margin:0">${esc(S.level)} – Post</h2>
-        <div style="display:flex; gap:6px; align-items:center;">
-          <input type="text" id="postSearchInput" placeholder="सर्च पोस्ट..." value="${esc(postSearchQuery)}" oninput="postSearchQuery=this.value; render()" style="padding:6px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none; width:130px;">
-          <select onchange="postSortOrder=this.value; render()" style="padding:6px; border:1px solid #ccc; border-radius:6px; font-size:12px; background:#fff; outline:none;">
-            <option value="asc" ${postSortOrder==='asc'?'selected':''}>A - Z</option>
-            <option value="desc" ${postSortOrder==='desc'?'selected':''}>Z - A</option>
-          </select>
-        </div>
-      </div>`+
-      (ps.length?`<div class="tiles">${ps.map(p=>tile('📋',esc(p),Object.keys(node()[p]||{}).length+' year(s)',`pick('post','${enc(p)}')`)).join('')}</div>`:empty('इस level में अभी कोई post नहीं है।<br><span class="mut">tests.json में जोड़ें।</span>'));
-    
-    const inp = $('postSearchInput');
-    if(inp){ inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
-    return;
-  }
-
+  if(!S.post){const ps=Object.keys(node());v.innerHTML=`<h2>${esc(S.level)} – Post</h2>`+(ps.length?`<div class="tiles">${ps.map(p=>tile('📋',esc(p),Object.keys(node()[p]||{}).length+' year(s)',`pick('post','${enc(p)}')`)).join('')}</div>`:empty('इस level में अभी कोई post नहीं है।<br><span class="mut">tests.json में जोड़ें।</span>'));return}
   if(!S.year){const ys=Object.keys(node()[S.post]||{}).sort((a,b)=>b.localeCompare(a));v.innerHTML=`<h2>${esc(S.post)} – Year</h2>`+(ys.length?`<div class="tiles">${ys.map(y=>tile('📅',esc(y),(node()[S.post][y]||[]).length+' test(s)',`pick('year','${enc(y)}')`)).join('')}</div>`:empty('कोई year नहीं मिला।'));return}
   
-  v.innerHTML=`
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-      <h2 style="margin:0">Full Tests</h2>
-      <div style="display:flex; gap:6px; align-items:center;">
-        <input type="text" id="testSearchInput" placeholder="सर्च टेस्ट..." value="${esc(testSearchQuery)}" oninput="testSearchQuery=this.value; updateTestList()" style="padding:6px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none; width:130px;">
-        <select onchange="testSortOrder=this.value; updateTestList()" style="padding:6px; border:1px solid #ccc; border-radius:6px; font-size:12px; background:#fff; outline:none;">
-          <option value="newest" ${testSortOrder==='newest'?'selected':''}>Newest First</option>
-          <option value="oldest" ${testSortOrder==='oldest'?'selected':''}>Oldest First</option>
-          <option value="asc" ${testSortOrder==='asc'?'selected':''}>A to Z</option>
-          <option value="desc" ${testSortOrder==='desc'?'selected':''}>Z to A</option>
-        </select>
-      </div>
-    </div>
-    <div class="card" id="testListContainer" style="padding:4px 14px!important"></div>`;
-  
-  updateTestList();
-  const inp = $('testSearchInput');
-  if(inp){ inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
-}
-
-function updateTestList() {
-  const container = $('testListContainer');
-  if (!container) return;
-  
-  let ts=[...(node()[S.post]||{})[S.year]||[]];
-  if(testSearchQuery){
-    ts=ts.filter(t=>(t.title||'').toLowerCase().includes(testSearchQuery.toLowerCase()));
-  }
-  ts.sort((a,b)=>{
-    if(testSortOrder==='asc') return a.title.localeCompare(b.title);
-    if(testSortOrder==='desc') return b.title.localeCompare(a.title);
-
-    let dtA = parseTestDateTime(a.title);
-    let dtB = parseTestDateTime(b.title);
-    if(dtA.dateStr !== dtB.dateStr){
-      return testSortOrder==='newest'? dtB.dateStr.localeCompare(dtA.dateStr) : dtA.dateStr.localeCompare(dtB.dateStr);
-    }
-    return testSortOrder==='newest'? dtB.timeVal - dtA.timeVal : dtA.timeVal - dtB.timeVal;
-  });
-
-  container.innerHTML = ts.length ? ts.map(t=>{
+  const ts=(node()[S.post]||{})[S.year]||[];
+  v.innerHTML=`<h2>Full Tests</h2><div class="card" style="padding:4px 14px!important">`+(ts.length?ts.map(t=>{
     const att=getAttemptInfo(t.title);
     const btnText=att.attempted?'Re-Attempt':'Start Test';
     const btnClass=att.attempted?'btn g':'btn';
     const subInfo=att.attempted?`<div class="mut" style="color:#d9534f">Last attempted: ${esc(att.date)}</div>`:'';
     return `<div class="row"><div><b>${esc(t.title)}</b>${t.duration?`<div class="mut">${esc(t.duration)} min</div>`:''}${subInfo}</div><a class="${btnClass}" href="${launchURL(t)}">${btnText}</a></div>`;
-  }).join('') : empty('इस year में कोई test नहीं है।');
+  }).join(''):empty('इस year में कोई test नहीं है।'))+'</div>';
 }
-
 init();
 </script></body></html>
