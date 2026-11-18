@@ -20,6 +20,7 @@ body{padding-bottom:24px}
 .btn.gray{background:#e8eaed!important;color:var(--tx)!important}
 .qimg,.oimg{max-width:100%;height:auto;display:block;margin:6px 0}
 .big{text-align:center;padding:28px 14px}.big b{font-size:26px;display:block;margin:8px 0}
+.nbox{margin-top:10px}.nlbl{font-size:12px;color:#5f6368;margin-bottom:4px;font-weight:500}.nbox textarea{width:100%;box-sizing:border-box;min-height:72px;border:1px solid #dadce0;border-radius:10px;padding:8px;font-size:14px;font-family:inherit;background:#fff;color:#202124}
 </style></head><body>
 <div class="top"><b>🔖 Bookmark Practice</b>
   <select id="lg" onchange="LG=this.value;draw()"><option value="en">English</option><option value="hi">हिंदी</option></select></div>
@@ -29,6 +30,17 @@ const $=id=>document.getElementById(id);
 const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const P=new URLSearchParams(location.search);
 let LG='en',B=[],L=[],I=0,ANS={},DONE=false;
+
+function _nh(t){let h=0;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return String(h)}
+function noteKey(q){return q.qid?String(q.qid):'h'+_nh(q.qEn||'')}
+function noteGet(k){try{return (JSON.parse(localStorage.getItem('examNotes'))||{})[k]||''}catch(e){return ''}}
+function noteSet(k,v){try{const m=JSON.parse(localStorage.getItem('examNotes'))||{};if(String(v).trim())m[k]=v;else delete m[k];localStorage.setItem('examNotes',JSON.stringify(m))}catch(e){}}
+function noteBox(k){return '<div class="nbox"><div class="nlbl">📝 My Notes</div><textarea rows="3" placeholder="इस प्रश्न के लिए अपने नोट्स लिखें…" oninput="noteSet(\''+k+'\',this.value)">'+String(noteGet(k)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</textarea></div>'}
+
+// refresh पर वहीं रहें: प्रश्न-संख्या और उत्तर sessionStorage में
+const _SK='bpState:'+location.search;
+function saveState(){try{sessionStorage.setItem(_SK,JSON.stringify({I,ANS}))}catch(e){}}
+function loadState(){try{const s=JSON.parse(sessionStorage.getItem(_SK));if(s){I=s.I||0;ANS=s.ANS||{}}}catch(e){}}
 function load(){
   try{B=JSON.parse(localStorage.getItem('examBookmarks'))||[]}catch(e){B=[]}
   const s=P.get('subject'),d=P.get('date');
@@ -57,10 +69,10 @@ function draw(){
   ${opts.map((t,k)=>{let c='opt';if(a!==undefined){c+=' lock';if(k===q.ans)c+=' ok';else if(k===a)c+=' bad'}
     const oi=q.optImg&&q.optImg[k];
     return `<button class="${c}" onclick="tapOpt(${k})">${String.fromCharCode(65+k)}. ${esc(t)}${oi?`<img class="oimg" src="${esc(oi)}" alt="">`:''}${a!==undefined&&k===q.ans?' ✔':''}</button>`}).join('')}
-  ${a!==undefined?`<div class="sol"><b>${a===q.ans?'✅ सही':'❌ गलत'}</b>${sol?'\n\n'+esc(sol):'\n\nSolution उपलब्ध नहीं है।'}</div>`:''}
+  ${a!==undefined?`<div class="sol"><b>${a===q.ans?'✅ सही':'❌ गलत'}</b>${sol?'\n\n'+esc(sol):'\n\nSolution उपलब्ध नहीं है।'}</div>`+noteBox(noteKey(q)):''}
   <div class="nav"><button class="btn gray" onclick="go(-1)" ${I===0?'disabled style="opacity:.4"':''}>← Previous</button><button class="btn" onclick="go(1)">${I===L.length-1?'Finish':'Next →'}</button></div>
   <div class="nav"><button class="btn r" onclick="rm()">🗑 Bookmark हटाएँ</button><a class="btn gray" href="bookmarks.html">✕ बंद करें</a></div></div>`;
-  math();window.scrollTo(0,0);
+  math();window.scrollTo(0,0);saveState();
 }
-load();draw();window.addEventListener('load',math);
+load();loadState();if(I>L.length)I=0;draw();window.addEventListener('load',math);
 </script></body></html>
