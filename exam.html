@@ -432,6 +432,8 @@ const $ = id => document.getElementById(id);
 let D = null, ok = false;
 let lang = 'en', si = 0, qi = 0, ans = [], st = [], tm = [], timerId = null, saved = false, attemptId = null, ql = [];
 let isReviewMode = false;
+let timeLeft = null, _done = false;
+const resumeKey = () => 'resume|' + FILE + '|' + (new URLSearchParams(location.search).get('section') || '') + '|' + (new URLSearchParams(location.search).get('title') || '');
 let submittedSections = [];
 const P = new URLSearchParams(location.search);
 const MODE = P.get('mode');
@@ -626,6 +628,8 @@ async function loadQuestions(preloaded) {
         const act = $('actionFootBtns');
         if (norm) norm.style.display = 'none';
         if (act) act.style.display = 'none';
+      } else {
+        tryResume();
       }
     } else {
       showLoadError(null, 'इस file में कोई प्रश्न नहीं मिला।');
@@ -774,8 +778,48 @@ function startExam() {
   renderQ();
 }
 
-function startTimer() {
-  let t = (D.duration || 180) * 60;
+// ---- Refresh/बंद होने पर टेस्ट वहीं से जारी: उत्तर, प्रश्न-संख्या और बचा समय सेव ----
+function saveResume() {
+  if (_done || isReviewMode || !D || timeLeft == null) return;
+  const s4 = $('screen4');
+  if (!s4 || !s4.classList.contains('active')) return;
+  try {
+    localStorage.setItem('examResume', JSON.stringify({
+      key: resumeKey(), ans, st, tm, ql, si, qi, timeLeft, lang,
+      sub: submittedSections, savedAt: Date.now()
+    }));
+  } catch (e) {}
+}
+function tryResume() {
+  if (MODE === 'review') return false;
+  let r = null;
+  try { r = JSON.parse(localStorage.getItem('examResume')); } catch (e) {}
+  if (!r || r.key !== resumeKey() || !r.ans || r.ans.length !== D.sections.length) return false;
+  const rem = r.timeLeft - Math.floor((Date.now() - r.savedAt) / 1000);
+  if (rem > 0 && !confirm('आपका पिछला टेस्ट अधूरा मिला है।\n\nOK = वहीं से जारी करें\nCancel = नया टेस्ट शुरू करें')) {
+    try { localStorage.removeItem('examResume'); } catch (e) {}
+    return false;
+  }
+  ans = r.ans; st = r.st; tm = r.tm; ql = r.ql || ql; lang = r.lang || lang;
+  submittedSections = r.sub || []; si = r.si || 0; qi = r.qi || 0;
+  isReviewMode = false;
+  toggleNavigationButtons(false);
+  goTo(4);
+  $('tabs').innerHTML = D.sections.map((s, j) =>
+    `<div class="tab ${j === si ? 'active' : ''}" onclick="loadSection(${j})">${secTitle(s)}</div>`
+  ).join('');
+  if (rem <= 0) { alert('समय समाप्त हो चुका था, इसलिए आपका टेस्ट जमा कर दिया गया है।'); finish(); return true; }
+  startTimer(rem);
+  renderQ();
+  syncTabs(true);
+  return true;
+}
+window.addEventListener('pagehide', saveResume);
+document.addEventListener('visibilitychange', () => { if (document.hidden) saveResume(); });
+
+function startTimer(resumeSecs) {
+  let t = resumeSecs != null ? resumeSecs : (D.duration || 180) * 60;
+  timeLeft = t;
 
   const f = () => {
     const m = Math.floor(t / 60), s = t % 60;
@@ -792,7 +836,9 @@ function startTimer() {
       finish();
       return;
     }
+    timeLeft = t;
     f();
+    if (t % 5 === 0) saveResume();
   }, 1000);
 }
 
@@ -1018,6 +1064,8 @@ function confirmSubmit() {
 
 function finish() {
   clearInterval(timerId);
+  _done = true;
+  try { localStorage.removeItem('examResume'); } catch (e) {}
   const neg = D.neg ?? 0.25;
   let tot = 0;
 
