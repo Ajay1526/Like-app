@@ -6,37 +6,63 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <style>
-.qt{white-space:pre-wrap;line-height:1.65;font-size:16px;font-weight:500;margin:8px 0 10px}
-.opt{display:block;width:100%;text-align:left;padding:12px 14px;margin:8px 0;border:1.5px solid var(--ln);border-radius:14px;background:#fff;color:var(--tx);font-size:15px;line-height:1.45;cursor:pointer}
-.opt.sel{border-color:var(--bl);background:var(--bl2)}.opt.ok{background:var(--gr2);border-color:var(--gr);color:#0d652d;font-weight:500}.opt.bad{background:var(--rd2);border-color:var(--rd);color:#a50e0e}.opt.lock{cursor:default}
-.sol{background:var(--am2);border-radius:14px;padding:12px;margin-top:12px;white-space:pre-wrap;line-height:1.6}
+/* ============ SUPER ATTRACTIVE THEME - ONLY DESIGN, NO LOGIC CHANGE ============ */
+:root{--bl:#7c3aed;--bl2:#ede9fe;--gr:#10b981;--gr2:#ecfdf5;--rd:#ef4444;--rd2:#fef2f2;--am2:#fefce8;--ln:#e2e8f0;--tx:#1e293b;--mt:#64748b}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(180deg,#ddd6fe 0%,#e0f2fe 45%,#fef9c3 100%)!important;color:var(--tx);min-height:100vh}
+.top{background:linear-gradient(135deg,#7c3aed,#db2777,#f59e0b)!important;color:#fff!important;padding:14px 16px!important;font-size:19px!important;font-weight:900!important;letter-spacing:.3px;box-shadow:0 10px 25px rgba(124,58,237,.35);position:sticky;top:0;z-index:100;border-radius:0 0 18px 18px}
+.top::after{content:" ✨ 🔥";float:right}
+.wrap{max-width:780px;margin:auto;padding:10px}
+.card{background:#fff;border-radius:16px!important;box-shadow:0 6px 18px rgba(0,0,0,.06)!important;border:1px solid var(--ln)}
+.card.hdr{padding:14px!important;background:rgba(255,255,255,.95)!important;backdrop-filter:blur(8px)}
+select,input[type=search],input[type=number]{border:1.5px solid #ddd6fe!important;border-radius:12px!important;padding:9px 10px!important;background:#f8fafc!important;font-weight:600!important;font-size:13px!important;outline:none}
+select:focus,input:focus{border-color:#7c3aed!important;background:#fff!important;box-shadow:0 0 0 3px #ede9fe}
+.subsel{border:2px solid #7c3aed!important;background:linear-gradient(135deg,#ede9fe,#fff)!important;color:#4c1d95!important;font-weight:800!important;font-size:14px!important}
+.btn{background:linear-gradient(135deg,#7c3aed,#6d28d9)!important;color:#fff!important;border:none!important;border-radius:25px!important;padding:9px 16px!important;font-weight:800!important;box-shadow:0 4px 12px rgba(124,58,237,.25);cursor:pointer}
+.btn:active{transform:scale(.94)}
+.btn.g{background:linear-gradient(135deg,#10b981,#059669)!important}
+.btn.r{background:linear-gradient(135deg,#ef4444,#dc2626)!important}
+.btn.gray{background:#eef2ff!important;color:#334155!important;box-shadow:none!important;border:1px solid #e2e8f0!important}
+.btn.sm{padding:6px 14px!important;font-size:12px!important}
+
+.qt{white-space:pre-wrap;line-height:1.65;font-size:16px;font-weight:600;margin:8px 0 10px}
+.opt{display:block;width:100%;text-align:left;padding:13px 14px;margin:8px 0;border:1.5px solid var(--ln);border-radius:14px;background:#fff;color:var(--tx);font-size:15px;line-height:1.45;cursor:pointer;transition:.2s}
+.opt:hover{border-color:#a78bfa;background:#f5f3ff;transform:translateY(-1px)}
+.opt.sel{border-color:var(--bl);background:var(--bl2);box-shadow:0 0 0 3px #ede9fe}.opt.ok{background:var(--gr2);border-color:var(--gr);color:#0d652d;font-weight:600}.opt.bad{background:var(--rd2);border-color:var(--rd);color:#a50e0e}.opt.lock{cursor:default}
+.sol{background:#fefce8;border:1px solid #fde68a;border-radius:14px;padding:12px;margin-top:12px;white-space:pre-wrap;line-height:1.6}
 .meta{display:flex;flex-wrap:wrap;gap:6px;font-size:11px;color:var(--mt);margin-bottom:4px}.meta span{background:#f1f3f4;border-radius:10px;padding:2px 8px}
-.nav{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}.nav .btn{flex:1;text-align:center}.btn.gray{background:#e8eaed!important;color:var(--tx)!important}.btn.off{opacity:.45;pointer-events:none}
+.nav{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}.nav .btn{flex:1;text-align:center}.btn.off{opacity:.45;pointer-events:none}
 .bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.lbl{font-size:12px;color:var(--mt);margin:6px 0 2px}
 .pb{height:8px;background:#e0e3e7;border-radius:4px;overflow:hidden;margin:6px 0}.pb i{display:block;height:100%;background:var(--gr)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}.stats div{background:var(--bl2);border-radius:12px;padding:8px 2px;font-size:11px;color:var(--mt)}.stats b{display:block;font-size:18px;color:var(--tx);font-weight:500}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}.stats div{background:var(--bl2);border-radius:12px;padding:8px 2px;font-size:11px;color:var(--mt)}.stats b{display:block;font-size:18px;color:var(--tx);font-weight:700}
 .tc{cursor:pointer}.tc .r{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.full{background:var(--gr2);color:#0d652d;border-radius:14px;padding:10px;text-align:center;font-weight:500;margin-top:10px}
+.full{background:var(--gr2);color:#0d652d;border-radius:14px;padding:10px;text-align:center;font-weight:600;margin-top:10px}
 .note{font-size:11px;color:var(--mt);margin-top:8px}.big{text-align:center;padding:22px 12px}.big b{font-size:24px;display:block;margin:8px 0}
-.qimg,.oimg{max-width:100%;height:auto;display:block;margin:6px 0}
+.qimg,.oimg{max-width:100%;height:auto;display:block;margin:6px 0;border-radius:10px}
 .row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #eee;font-size:13px}
-.stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}.stats4 div{background:var(--bl2);border-radius:12px;padding:8px 2px;font-size:10px;color:var(--mt);cursor:pointer}.stats4 b{display:block;font-size:15px;color:var(--tx);font-weight:500}
-.bar select,.bar input{box-sizing:border-box;min-width:0;max-width:100%}.subsel{box-sizing:border-box;min-width:0;max-width:100%;font-weight:600;border:2px solid var(--bl)!important;background:var(--bl2)!important;color:#174ea6}.subsel:disabled{opacity:1;color:#174ea6}
+.stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}.stats4 div{background:linear-gradient(180deg,#f5f3ff,#fff)!important;border:1px solid #ede9fe;border-radius:14px!important;padding:10px 2px;font-size:11px;color:var(--mt);cursor:pointer}.stats4 b{display:block;font-size:17px;color:var(--tx);font-weight:800}
+.bar select,.bar input{box-sizing:border-box;min-width:0;max-width:100%}.subsel:disabled{opacity:1;color:#174ea6}
 .ei{font-size:.72em;vertical-align:.12em}
-.opt{box-sizing:border-box;max-width:100%}.mvov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}.mvbox{background:#fff;border-radius:18px;padding:18px;width:100%;max-width:420px;box-sizing:border-box}.mvbox select{width:100%;margin-top:10px;box-sizing:border-box}.toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:#202124;color:#fff;padding:10px 16px;border-radius:20px;font-size:13px;z-index:300;max-width:90%}
-.nbox{margin-top:10px}.nlbl{font-size:12px;color:#5f6368;margin-bottom:4px;font-weight:500}.nbox textarea{width:100%;box-sizing:border-box;min-height:72px;border:1px solid #dadce0;border-radius:10px;padding:8px;font-size:14px;font-family:inherit;background:#fff;color:#202124}
-.ntitle{font-weight:600;font-size:16px;color:#1e3a8a;margin:8px 0 4px}.ndesc{white-space:pre-wrap;line-height:1.65;color:#374151;margin-bottom:8px}.blur{display:inline-block;background:#e5e7eb;color:transparent;text-shadow:0 0 7px rgba(0,0,0,.55);padding:7px 12px;border-radius:10px;cursor:pointer;font-weight:600}.blur.rev{background:#ecfdf5;color:#047857;text-shadow:none}.evrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}.btn.dim{opacity:.45}.sm{padding:5px 12px!important;font-size:12px!important}
-.ncard{background:#f9fafb;border:1px solid var(--ln);border-left:4px solid var(--bl);padding:12px 14px;margin-bottom:12px;border-radius:12px}
-.ctitle{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:600;color:#1e3a8a;font-size:14px;margin-bottom:4px}
-.ctitle label{display:flex;align-items:center;gap:8px;cursor:pointer;flex:1}.ctitle input{width:16px;height:16px}
-.tmeta{font-size:11px;color:var(--mt);margin-bottom:6px;background:#f1f3f4;padding:3px 8px;border-radius:6px;display:inline-block}
+.mvov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}.mvbox{background:#fff;border-radius:20px;padding:20px;width:100%;max-width:420px;box-sizing:border-box;box-shadow:0 20px 40px rgba(0,0,0,.25)}.mvbox select{width:100%;margin-top:10px;box-sizing:border-box}.toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:#1e293b;color:#fff;padding:11px 18px;border-radius:25px;font-size:13px;z-index:300;max-width:90%;box-shadow:0 8px 20px rgba(0,0,0,.3);font-weight:600}
+.nbox{margin-top:10px}.nlbl{font-size:12px;color:#5f6368;margin-bottom:4px;font-weight:600}.nbox textarea{width:100%;box-sizing:border-box;min-height:72px;border:1.5px solid #e2e8f0;border-radius:12px;padding:10px;font-size:14px;font-family:inherit;background:#fff;color:#202124}
+.nbox textarea:focus{border-color:#7c3aed;outline:none}
+.ntitle{font-weight:700;font-size:16px;color:#1e3a8a;margin:8px 0 4px}.ndesc{white-space:pre-wrap;line-height:1.65;color:#374151;margin-bottom:8px}.blur{display:inline-block;background:#e5e7eb;color:transparent;text-shadow:0 0 7px rgba(0,0,0,.55);padding:8px 14px;border-radius:12px;cursor:pointer;font-weight:700}.blur.rev{background:#ecfdf5;color:#047857;text-shadow:none;border:1px solid #a7f3d0}.evrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}.btn.dim{opacity:.45}.sm{padding:5px 12px!important;font-size:12px!important}
+.ncard{background:#fff;border:1px solid var(--ln);border-left:6px solid var(--bl);padding:14px;margin-bottom:14px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.05);animation:slideIn .35s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.ncard:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(124,58,237,.12)}
+.ctitle{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:700;color:#1e3a8a;font-size:14px;margin-bottom:4px}
+.ctitle label{display:flex;align-items:center;gap:8px;cursor:pointer;flex:1}.ctitle input{width:18px;height:18px;accent-color:#7c3aed}
+.tmeta{font-size:11px;color:var(--mt);margin-bottom:6px;background:#f1f5f9;padding:4px 10px;border-radius:20px;display:inline-block;font-weight:600}
 .crow{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}.crow input[type=search]{flex:1;min-width:130px}.crow input[type=number]{width:92px}
-.bulk{display:flex;justify-content:space-between;align-items:center;background:#f1f3f4;padding:8px 12px;border-radius:10px;gap:8px;flex-wrap:wrap}
-.bulk label{display:flex;align-items:center;gap:6px;cursor:pointer}.bulk input{width:16px;height:16px}
+.bulk{display:flex;justify-content:space-between;align-items:center;background:#f1f5f9;padding:10px 12px;border-radius:12px;gap:8px;flex-wrap:wrap}
+.bulk label{display:flex;align-items:center;gap:6px;cursor:pointer}.bulk input{width:16px;height:16px;accent-color:#7c3aed}
 mark{background:#fef08a;font-weight:bold;padding:0 2px;border-radius:3px}
-.hintx{font-size:12px;color:var(--mt);text-align:center;margin:10px 0}
+.hintx{font-size:12px;color:#7c3aed;text-align:center;margin:10px 0;font-weight:600;background:#fff;padding:8px;border-radius:20px}
 .hdr select{box-sizing:border-box;width:100%;margin-bottom:8px}
 .st4{margin:8px 0}
+/* Correct / Wrong Glow */
+.ncard:has(.opt.ok){border-left-color:#10b981}
+.ncard:has(.opt.bad){border-left-color:#ef4444}
 </style></head><body>
 <div class="top"><b>📚 Revision</b></div>
 <div class="wrap">
@@ -60,7 +86,6 @@ let ALL=[],OV={};
 try{OV=JSON.parse(localStorage.getItem('examTopics'))||{}}catch(e){}
 function hashStr(t){let h=0;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return String(h)}
 const qKey=q=>q.qid?String(q.qid):'h'+hashStr(q.qEn||'');
-// ---- Topic auto-detection (optional "topic" field in JSON wins; user can also change any topic) ----
 const R={
 disc:[[/gender|patriarch|boys dominating|inherit property|inclusiv|respecting differences|diverse cultural|linguistic diversity/,'Gender & Inclusion'],[/article|preamble|amendment|constitution|commission|rte act|ncf|national integration|1952|post-1950s|mother tongue|obligated/,'Constitution, Policy & Commissions'],[/television|advertis|more people are engaged|socialization/,'Society & Media'],[/piaget|preschool|motor skill|play types|pretend play|vocabulary growth|personality|conditioning|bullying|anxious|denial|mindfulness|observe|self-understanding|punctuality|confident|area of development|\bstage\b|viewpoints/,'Child Development & Psychology'],[/mathematic|rational number|prime number|fraction|measuring length|units must be consistent/,'Mathematics Pedagogy'],[/science|scientific|environmental|evs|eco-club|kitchen garden|plants bending/,'Science & EVS Pedagogy'],[/english|language|vocabulary|grammar|subject-verb|pronunciation|literature|sentence|translation method|rule.governed/,'English / Language Pedagogy'],[/social stud|social science|economic|textbooks|political leadership|community play/,'Social Science Pedagogy'],[/curriculum|unit plan|lesson plan|micro teaching|pedagog|experiential|peer tutoring|teaching aid|low cost|alternative schooling|activity-based|open-ended/,'Curriculum & Lesson Planning'],[/assess|evaluat|formative|higher-order/,'Assessment & Evaluation'],[/leader|principal|school board|enrol|budget|school wants|facilitator|initiative/,'School Leadership & Management']],
 rea:[[/series|come in place|श्रृंखला/,'Series'],[/related to|odd one|does not belong|संबंधित|अलग/,'Analogy & Classification'],[/coded|code|कूट/,'Coding-Decoding'],[/father|mother|brother|sister|\bson\b|daughter|uncle|aunt|पिता|माता|भाई|बहन/,'Blood Relations'],[/north|south|east|west|direction|दिशा/,'Direction'],[/rank|\brow\b|tallest|taller|heavier|पंक्ति/,'Ranking & Order'],[/venn|conclusion|statement|कथन|निष्कर्ष/,'Statements & Syllogism'],[/mirror|water image|folded|cube|dice|figure|दर्पण|पासा/,'Figure & Non-verbal'],[/calendar|clock|day of the week|घड़ी/,'Calendar & Clock'],[/symbol|interchang|operation|चिह्न/,'Mathematical Operations']],
@@ -71,221 +96,60 @@ gk:[[/emperor|dynasty|battle|mughal|revolt|ancient|medieval|freedom|वंश|�
 function kind(n){n=n.toLowerCase();return/discipline/.test(n)?'disc':/reasoning|intelligence/.test(n)?'rea':/arith|numer|quant|math/.test(n)?'math':/english/.test(n)?'eng':/hindi/.test(n)?'hin':/awareness|knowledge|gk|current/.test(n)?'gk':''}
 function autoTopic(sn,q){const r=R[kind(sn)]||[],t=((q.qEn||'')+' '+(q.qHi||'')).toLowerCase();for(const[x,n]of r)if(x.test(t))return n;return 'अन्य / Other'}
 const topicOf=o=>OV[o.key]||o.q.topic||o.auto;
-
 const stripN=n=>String(n||'').replace(/\s*[-–:]?\s*[\(\[]?\s*(part|set|भाग)?\s*\d+\s*[\)\]]?\s*$/i,'').trim();
-function normSubj(name,nameHi,CFG){
-  const al={};Object.keys((CFG&&CFG.subjectAliases)||{}).forEach(k=>al[stripN(k).toLowerCase()]=CFG.subjectAliases[k]);
-  let n=stripN(name)||String(name||'').trim();const a=al[n.toLowerCase()];if(a)n=a;
-  return {name:n,nameHi:stripN(nameHi)||nameHi,key:n.toLowerCase()};
-}
-async function load(){
-  let C;try{C=await(await fetch('tests.json')).json()}catch(e){$('main').innerHTML='<div class="card empty">tests.json नहीं मिली। Server/hosting से खोलें।</div>';return}
-  const files={};
-  Object.keys(STRUCT).forEach(c=>STRUCT[c].forEach(l=>{const n=((C[c]||{})[l])||{};
-    Object.keys(n).forEach(p=>Object.keys(n[p]||{}).forEach(y=>(n[p][y]||[]).forEach(t=>{if(!files[t.file])files[t.file]={c,l,p,y,t:t.title}})))}));
-  const seen=new Set();
-  for(const f of Object.keys(files)){
-    let d;try{d=await(await fetch(f)).json()}catch(e){continue}
-    (d.sections||[]).forEach(s=>(s.questions||[]).forEach(q=>{
-      const key=qKey(q);if(seen.has(key))return;seen.add(key);
-      const ns=normSubj(s.name,s.nameHi,C);
-      ALL.push({key,q,sn:ns.name,snHi:ns.nameHi||ns.name,sk:ns.key,auto:autoTopic(ns.name,q),m:files[f]});
-    }));
-  }
-  // notes.json: हर नोट-कार्ड Revision में एक प्रश्न की तरह जुड़ता है (विषय/टॉपिक फ़ाइल से)
-  try{
-    const nr=await fetch('notes.json');
-    if(nr.ok){
-      const nd=await nr.json(),arr=Array.isArray(nd)?nd:(nd.notes||[]);
-      arr.forEach(n=>{
-        if(!n||!(n.q||n.title))return;
-        const id=String(n.id||_nh((n.title||'')+(n.q||''))).replace(/[^A-Za-z0-9_-]/g,'');
-        const key='n'+id;if(seen.has(key))return;seen.add(key);
-        const subj=String(n.subject||'Notes').trim();
-        ALL.push({key,kind:'note',note:{title:n.title||'',desc:n.desc||'',q:n.q||n.title||'',a:n.a||'',more:n.more||'',date:n.date||''},
-          q:{topic:n.topic||''},sn:subj,snHi:n.subjectHi||subj,sk:subj.toLowerCase(),auto:n.topic||'अन्य / Other',m:{c:'notes',l:'Notes',p:'Notes',y:n.date||''}});
-      });
-    }
-  }catch(e){}
-  const sk=[...new Set(ALL.map(o=>o.sk))];F.subj=sk[0]||'';if(location.hash.length>1)readHash();draw();
-}
-
-
-// ---- Self notes: हर प्रश्न का अलग नोट (फ़ोन में सेव; सब पेजों में एक जैसा) ----
+function normSubj(name,nameHi,CFG){const al={};Object.keys((CFG&&CFG.subjectAliases)||{}).forEach(k=>al[stripN(k).toLowerCase()]=CFG.subjectAliases[k]);let n=stripN(name)||String(name||'').trim();const a=al[n.toLowerCase()];if(a)n=a;return {name:n,nameHi:stripN(nameHi)||nameHi,key:n.toLowerCase()};}
+async function load(){let C;try{C=await(await fetch('tests.json')).json()}catch(e){$('main').innerHTML='<div class="card empty">tests.json नहीं मिली। Server/hosting से खोलें।</div>';return}const files={};Object.keys(STRUCT).forEach(c=>STRUCT[c].forEach(l=>{const n=((C[c]||{})[l])||{};Object.keys(n).forEach(p=>Object.keys(n[p]||{}).forEach(y=>(n[p][y]||[]).forEach(t=>{if(!files[t.file])files[t.file]={c,l,p,y,t:t.title}})))}));const seen=new Set();for(const f of Object.keys(files)){let d;try{d=await(await fetch(f)).json()}catch(e){continue}(d.sections||[]).forEach(s=>(s.questions||[]).forEach(q=>{const key=qKey(q);if(seen.has(key))return;seen.add(key);const ns=normSubj(s.name,s.nameHi,C);ALL.push({key,q,sn:ns.name,snHi:ns.nameHi||ns.name,sk:ns.key,auto:autoTopic(ns.name,q),m:files[f]});}))}try{const nr=await fetch('notes.json');if(nr.ok){const nd=await nr.json(),arr=Array.isArray(nd)?nd:(nd.notes||[]);arr.forEach(n=>{if(!n||!(n.q||n.title))return;const id=String(n.id||_nh((n.title||'')+(n.q||''))).replace(/[^A-Za-z0-9_-]/g,'');const key='n'+id;if(seen.has(key))return;seen.add(key);const subj=String(n.subject||'Notes').trim();ALL.push({key,kind:'note',note:{title:n.title||'',desc:n.desc||'',q:n.q||n.title||'',a:n.a||'',more:n.more||'',date:n.date||''},q:{topic:n.topic||''},sn:subj,snHi:n.subjectHi||subj,sk:subj.toLowerCase(),auto:n.topic||'अन्य / Other',m:{c:'notes',l:'Notes',p:'Notes',y:n.date||''}});});}}catch(e){}const sk=[...new Set(ALL.map(o=>o.sk))];F.subj=sk[0]||'';if(location.hash.length>1)readHash();draw();}
 function _nh(t){let h=0;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return String(h)}
 function noteKey(q){return q.qid?String(q.qid):'h'+_nh(q.qEn||'')}
 function noteGet(k){try{return (JSON.parse(localStorage.getItem('examNotes'))||{})[k]||''}catch(e){return ''}}
 function noteSet(k,v){try{const m=JSON.parse(localStorage.getItem('examNotes'))||{};if(String(v).trim())m[k]=v;else delete m[k];localStorage.setItem('examNotes',JSON.stringify(m))}catch(e){}}
 function noteBox(k){return '<div class="nbox"><div class="nlbl">📝 My Notes</div><textarea rows="3" placeholder="इस प्रश्न के लिए अपने नोट्स लिखें…" oninput="noteSet(\''+k+'\',this.value)">'+String(noteGet(k)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</textarea></div>'}
-
-// ================= Revision: कार्ड में सही / गलत / शेष (दूसरी फ़ाइल वाला तरीका) =================
 let F={l:'',lang:'en',subj:'',top:''};
 let PROG={},SEL={},REV={},VIS=[],UI={show:40};
 try{PROG=JSON.parse(localStorage.getItem('examRev4'))||{}}catch(e){}
-try{['examLearning2','examLearning','examLearningMeta'].forEach(k=>localStorage.removeItem(k))}catch(e){}   // पुरानी Progress रीसेट
+try{['examLearning2','examLearning','examLearningMeta'].forEach(k=>localStorage.removeItem(k))}catch(e){}
 const saveP=()=>{try{localStorage.setItem('examRev4',JSON.stringify(PROG))}catch(e){}};
 const hi=()=>F.lang==='hi';
 const T=(h,e)=>hi()?h:e;
 const DAY=864e5;
 const stOf=o=>(PROG[o.key]||{}).status||'pending';
 const g$=id=>document.getElementById(id);
-
 function toast(t){const o=g$('toastB');if(o)o.remove();const d=document.createElement('div');d.id='toastB';d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>{const x=g$('toastB');if(x)x.remove()},2500)}
-function formatAgo(ts){
-  if(!ts)return T('कभी नहीं पढ़ा गया','Never read');
-  const mins=Math.floor((Date.now()-ts)/60000),hours=Math.floor(mins/60),days=Math.floor(hours/24);
-  if(hi()){if(mins<2)return 'अभी-अभी';if(mins<60)return mins+' मिनट पहले';if(hours<24)return hours+' घंटे पहले';return days+' दिन पहले'}
-  if(mins<2)return 'Just now';if(mins<60)return mins+'m ago';if(hours<24)return hours+'h ago';return days+(days===1?' day ago':' days ago');
-}
-function hl(text,kw){
-  const t=esc(text);if(!kw)return t;
-  const k=esc(kw).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-  try{return t.replace(new RegExp('('+k+')','gi'),'<mark>$1</mark>')}catch(e){return t}
-}
-// ---- URL state: refresh पर वही चुनाव बना रहे ----
+function formatAgo(ts){if(!ts)return T('कभी नहीं पढ़ा गया','Never read');const mins=Math.floor((Date.now()-ts)/60000),hours=Math.floor(mins/60),days=Math.floor(hours/24);if(hi()){if(mins<2)return 'अभी-अभी';if(mins<60)return mins+' मिनट पहले';if(hours<24)return hours+' घंटे पहले';return days+' दिन पहले'}if(mins<2)return 'Just now';if(mins<60)return mins+'m ago';if(hours<24)return hours+'h ago';return days+(days===1?' day ago':' days ago');}
+function hl(text,kw){const t=esc(text);if(!kw)return t;const k=esc(kw).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');try{return t.replace(new RegExp('('+k+')','gi'),'<mark>$1</mark>')}catch(e){return t}}
 function syncHash(){const h='#'+['s='+encodeURIComponent(F.subj),'t='+encodeURIComponent(F.top),'l='+encodeURIComponent(F.l),'g='+F.lang].join('&');try{if(location.hash!==h)history.replaceState(null,'',h)}catch(e){}}
 function readHash(){const p=new URLSearchParams((location.hash||'').slice(1));if(p.get('s'))F.subj=p.get('s');F.top=p.get('t')||'';F.l=p.get('l')||'';F.lang=p.get('g')==='hi'?'hi':'en'}
 function draw(){renderCards()}
-
-// ---- ड्रॉप डाउन ----
 function subjMap(){const sm={};ALL.filter(o=>!F.l||o.m.l===F.l).forEach(o=>{(sm[o.sk]=sm[o.sk]||{n:hi()?o.snHi:o.sn,l:[]}).l.push(o)});return sm}
-function fillSel(){
-  const sm=subjMap();if(!sm[F.subj])F.subj=Object.keys(sm)[0]||'';
-  g$('subSel').innerHTML=Object.keys(sm).map(k=>`<option value="${esc(k)}"${k===F.subj?' selected':''}>📂 ${esc(sm[k].n)}</option>`).join('');
-  const tops=[...new Set((sm[F.subj]?sm[F.subj].l:[]).map(topicOf))].sort();
-  if(F.top&&!tops.includes(F.top))F.top='';
-  g$('topSel').innerHTML=`<option value="">${T('📌 सभी टॉपिक','📌 All Topics')}</option>`+tops.map(t=>`<option value="${esc(t)}"${t===F.top?' selected':''}>📌 ${esc(t)}</option>`).join('');
-  const lv=[...new Set(ALL.map(o=>o.m.l))];
-  g$('lvlSel').innerHTML=`<option value="">All Levels</option>`+lv.map(l=>`<option${l===F.l?' selected':''}>${esc(l)}</option>`).join('');
-  g$('langSel').value=F.lang;
-}
+function fillSel(){const sm=subjMap();if(!sm[F.subj])F.subj=Object.keys(sm)[0]||'';g$('subSel').innerHTML=Object.keys(sm).map(k=>`<option value="${esc(k)}"${k===F.subj?' selected':''}>📂 ${esc(sm[k].n)}</option>`).join('');const tops=[...new Set((sm[F.subj]?sm[F.subj].l:[]).map(topicOf))].sort();if(F.top&&!tops.includes(F.top))F.top='';g$('topSel').innerHTML=`<option value="">${T('📌 सभी टॉपिक','📌 All Topics')}</option>`+tops.map(t=>`<option value="${esc(t)}"${t===F.top?' selected':''}>📌 ${esc(t)}</option>`).join('');const lv=[...new Set(ALL.map(o=>o.m.l))];g$('lvlSel').innerHTML=`<option value="">All Levels</option>`+lv.map(l=>`<option${l===F.l?' selected':''}>${esc(l)}</option>`).join('');g$('langSel').value=F.lang;}
 function onSubj(v){F.subj=v;F.top='';SEL={};UI.show=40;g$('selAll').checked=false;renderCards()}
 function onTopic(v){F.top=v;SEL={};UI.show=40;g$('selAll').checked=false;renderCards()}
 function onLevel(v){F.l=v;F.top='';SEL={};UI.show=40;renderCards()}
 function onLang(v){F.lang=v;renderCards()}
-function setTexts(){
-  const set=(id,h,e)=>{const x=g$(id);if(x)x.textContent=T(h,e)};
-  set('lblTotal','कुल प्रश्न','Total Qs');set('lblCorrect','सही','Correct');set('lblWrong','गलत','Wrong');set('lblPending','शेष','Pending');
-  set('optAll','📁 सभी स्टेटस','📁 All Status');set('optCorrect','🟢 केवल सही','🟢 Correct Only');set('optWrong','🔴 केवल गलत','🔴 Wrong Only');set('optPending','⏳ केवल शेष','⏳ Pending Only');
-  set('lblSel','सभी चुनें','Select All');set('btnMove','🔀 मूव','🔀 Move');set('btnReset','🔄 रीसेट','🔄 Reset');
-  g$('kw').placeholder=T('🔍 खोजें...','🔍 Search...');g$('dayIn').placeholder=T('दिन (>=)','Days (>=)');
-  g$('hintTxt').textContent=T('💡 टिप: मूव करने पर प्रश्न उसी सब्जेक्ट के दूसरे टॉपिक में ट्रांसफर हो जाएगा!','💡 Tip: Moving questions transfers them to another topic of the same subject!');
-}
+function setTexts(){const set=(id,h,e)=>{const x=g$(id);if(x)x.textContent=T(h,e)};set('lblTotal','कुल प्रश्न','Total Qs');set('lblCorrect','सही','Correct');set('lblWrong','गलत','Wrong');set('lblPending','शेष','Pending');set('optAll','📁 सभी स्टेटस','📁 All Status');set('optCorrect','🟢 केवल सही','🟢 Correct Only');set('optWrong','🔴 केवल गलत','🔴 Wrong Only');set('optPending','⏳ केवल शेष','⏳ Pending Only');set('lblSel','सभी चुनें','Select All');set('btnMove','🔀 मूव','🔀 Move');set('btnReset','🔄 रीसेट','🔄 Reset');g$('kw').placeholder=T('🔍 खोजें...','🔍 Search...');g$('dayIn').placeholder=T('दिन (>=)','Days (>=)');g$('hintTxt').textContent=T('💡 टिप: मूव करने पर प्रश्न उसी सब्जेक्ट के दूसरे टॉपिक में ट्रांसफर हो जाएगा!','💡 Tip: Moving questions transfers them to another topic of the same subject!');}
 const itemsCur=()=>ALL.filter(o=>(!F.l||o.m.l===F.l)&&o.sk===F.subj&&(!F.top||topicOf(o)===F.top));
-
-// ---- कार्ड बनाना ----
 function imgOf(q){return hi()?(q.imgHi||q.img):(q.imgEn||q.img)}
-function mcqBody(o,p,kw){
-  const q=o.q,locked=p.status!=='pending',opts=(hi()?q.optHi:q.optEn)||q.optEn||[],im=imgOf(q),sol=(hi()?q.solHi:q.solEn)||q.solEn||q.solHi||'';
-  const ob=opts.map((t,k)=>{let c='opt';if(locked){c+=' lock';if(k===q.ans)c+=' ok';else if(p.selectedOpt===k)c+=' bad'}else if(p.selectedOpt===k)c+=' sel';
-    const oi=q.optImg&&q.optImg[k];
-    return `<button class="${c}" onclick="pickOpt('${esc(o.key)}',${k})">${String.fromCharCode(65+k)}. ${hl(t,kw)}${oi?`<img class="oimg" src="${esc(oi)}" alt="">`:''}${locked&&k===q.ans?' ✔':''}</button>`}).join('');
-  return `<div class="qt">${hl(hi()?(q.qHi||q.qEn):q.qEn,kw)}</div>${im?`<img class="qimg" src="${esc(im)}" alt="">`:''}<div>${ob}</div>`+
-    (locked?`<div class="sol"><b>${T('स्पष्टीकरण (Solution):','Solution:')}</b><br>${sol?hl(sol,kw):T('Solution उपलब्ध नहीं है।','No solution available.')}</div>`:'');
-}
-function noteBody(o,p,kw){
-  const n=o.note,locked=p.status!=='pending',shown=locked||REV[o.key],k=esc(o.key);
-  const detail=[n.title,n.desc,n.more].filter(Boolean).join('\n\n');
-  return `<div class="qt">🔹 ${hl(n.q,kw)}</div>
-  <div class="evrow"><span class="blur${shown?' rev':''}" ${locked?'':`onclick="revealN('${k}')"`}>${T('उत्तर','Answer')}: ${hl(n.a,kw)}</span>${detail?`<button class="btn gray sm" onclick="toggleMore('${k}')">${T('📖 विवरण देखें','📖 View details')}</button>`:''}</div>
-  ${detail?`<div class="sol" id="more-${k}" style="display:none">${esc(detail)}</div>`:''}
-  ${locked?`<div class="note">${p.status==='correct'?T('✅ सही दर्ज हुआ (लॉक)','✅ Marked correct (locked)'):T('❌ गलत दर्ज हुआ (लॉक)','❌ Marked wrong (locked)')}</div>`
-    :shown?`<div class="evrow"><span class="note" style="margin:0">${T('क्या आपने सही सोचा था?','Did you think it right?')}</span><button class="btn g sm" onclick="markNote('${k}','correct')">${T('हाँ ✅','Yes ✅')}</button><button class="btn r sm" onclick="markNote('${k}','wrong')">${T('नहीं ❌','No ❌')}</button></div>`
-    :`<div class="note">${T('उत्तर देखने के लिए धुँधले उत्तर पर टैप करें।','Tap the blurred answer to reveal it.')}</div>`}`;
-}
-function cardHTML(o,idx,kw){
-  const p=PROG[o.key]||{status:'pending'},k=esc(o.key);
-  const tm=p.firstAttemptAt?T(`⏱️ पहली बार हल: ${formatAgo(p.firstAttemptAt)} | आखिरी बार: ${formatAgo(p.lastRevisedAt)}`,`⏱️ First attempt: ${formatAgo(p.firstAttemptAt)} | Last: ${formatAgo(p.lastRevisedAt)}`):T('⏳ अभी तक नहीं पढ़ा गया (Pending)','⏳ Pending');
-  return `<div class="ncard" id="card-${k}"><div class="ctitle"><label><input type="checkbox" ${SEL[o.key]?'checked':''} onchange="toggleOne('${k}',this.checked)"><span>${idx+1}. ${esc(topicOf(o))}</span></label><button class="btn gray sm" onclick="moveOne('${k}')">${T('🔀 मूव','🔀 Move')}</button></div>
-  <div class="tmeta">${tm}</div>${o.kind==='note'?noteBody(o,p,kw):mcqBody(o,p,kw)}${noteBox(o.key)}</div>`;
-}
-function renderCards(){
-  fillSel();setTexts();
-  const base=itemsCur();let cor=0,wro=0,pen=0;
-  base.forEach(o=>{const s=stOf(o);if(s==='correct')cor++;else if(s==='wrong')wro++;else pen++});
-  g$('statTotal').textContent=base.length;g$('statCorrect').textContent=cor;g$('statWrong').textContent=wro;g$('statPending').textContent=pen;
-  const kw=(g$('kw').value||'').trim().toLowerCase(),sf=g$('stSel').value,dv=parseFloat(g$('dayIn').value);
-  VIS=base.filter(o=>{
-    const p=PROG[o.key]||{status:'pending'};
-    if(sf!=='all'&&p.status!==sf)return false;
-    if(!isNaN(dv)&&dv>=0){if(!p.lastRevisedAt)return false;if((Date.now()-p.lastRevisedAt)/DAY<dv)return false}
-    if(kw&&!oText(o).toLowerCase().includes(kw))return false;
-    return true;
-  });
-  const box=g$('cards');
-  if(!ALL.length){box.innerHTML='<div class="card" style="text-align:center">अभी कोई test/question upload नहीं है।</div>';syncHash();return}
-  if(!VIS.length){box.innerHTML=`<div class="ncard" style="text-align:center;color:var(--mt)">${T('इन मानदंडों के अनुसार कोई प्रश्न नहीं मिला।','No questions found matching criteria.')}</div>`}
-  else{
-    box.innerHTML=VIS.slice(0,UI.show).map((o,i)=>cardHTML(o,i,kw)).join('')+(VIS.length>UI.show?`<div style="text-align:center"><button class="btn gray" onclick="UI.show+=40;renderCards()">${T('और दिखाएँ','Show more')} (${VIS.length-UI.show})</button></div>`:'');
-  }
-  g$('selAll').checked=VIS.length>0&&VIS.every(o=>SEL[o.key]);
-  if(typeof renderMathInElement==='function')try{renderMathInElement(box,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}
-  syncHash();
-}
+function mcqBody(o,p,kw){const q=o.q,locked=p.status!=='pending',opts=(hi()?q.optHi:q.optEn)||q.optEn||[],im=imgOf(q),sol=(hi()?q.solHi:q.solEn)||q.solEn||q.solHi||'';const ob=opts.map((t,k)=>{let c='opt';if(locked){c+=' lock';if(k===q.ans)c+=' ok';else if(p.selectedOpt===k)c+=' bad'}else if(p.selectedOpt===k)c+=' sel';const oi=q.optImg&&q.optImg[k];return `<button class="${c}" onclick="pickOpt('${esc(o.key)}',${k})">${String.fromCharCode(65+k)}. ${hl(t,kw)}${oi?`<img class="oimg" src="${esc(oi)}" alt="">`:''}${locked&&k===q.ans?' ✔':''}</button>`}).join('');return `<div class="qt">${hl(hi()?(q.qHi||q.qEn):q.qEn,kw)}</div>${im?`<img class="qimg" src="${esc(im)}" alt="">`:''}<div>${ob}</div>`+(locked?`<div class="sol"><b>${T('स्पष्टीकरण (Solution):','Solution:')}</b><br>${sol?hl(sol,kw):T('Solution उपलब्ध नहीं है।','No solution available.')}</div>`:'');}
+function noteBody(o,p,kw){const n=o.note,locked=p.status!=='pending',shown=locked||REV[o.key],k=esc(o.key);const detail=[n.title,n.desc,n.more].filter(Boolean).join('\n\n');return `<div class="qt">🔹 ${hl(n.q,kw)}</div><div class="evrow"><span class="blur${shown?' rev':''}" ${locked?'':`onclick="revealN('${k}')"`}>${T('उत्तर','Answer')}: ${hl(n.a,kw)}</span>${detail?`<button class="btn gray sm" onclick="toggleMore('${k}')">${T('📖 विवरण देखें','📖 View details')}</button>`:''}</div>${detail?`<div class="sol" id="more-${k}" style="display:none">${esc(detail)}</div>`:''}${locked?`<div class="note">${p.status==='correct'?T('✅ सही दर्ज हुआ (लॉक)','✅ Marked correct (locked)'):T('❌ गलत दर्ज हुआ (लॉक)','❌ Marked wrong (locked)')}</div>`:shown?`<div class="evrow"><span class="note" style="margin:0">${T('क्या आपने सही सोचा था?','Did you think it right?')}</span><button class="btn g sm" onclick="markNote('${k}','correct')">${T('हाँ ✅','Yes ✅')}</button><button class="btn r sm" onclick="markNote('${k}','wrong')">${T('नहीं ❌','No ❌')}</button></div>`: `<div class="note">${T('उत्तर देखने के लिए धुँधले उत्तर पर टैप करें।','Tap the blurred answer to reveal it.')}</div>`}`;}
+function cardHTML(o,idx,kw){const p=PROG[o.key]||{status:'pending'},k=esc(o.key);const tm=p.firstAttemptAt?T(`⏱️ पहली बार हल: ${formatAgo(p.firstAttemptAt)} | आखिरी बार: ${formatAgo(p.lastRevisedAt)}`,`⏱️ First attempt: ${formatAgo(p.firstAttemptAt)} | Last: ${formatAgo(p.lastRevisedAt)}`):T('⏳ अभी तक नहीं पढ़ा गया (Pending)','⏳ Pending');return `<div class="ncard" id="card-${k}"><div class="ctitle"><label><input type="checkbox" ${SEL[o.key]?'checked':''} onchange="toggleOne('${k}',this.checked)"><span>${idx+1}. ${esc(topicOf(o))}</span></label><button class="btn gray sm" onclick="moveOne('${k}')">${T('🔀 मूव','🔀 Move')}</button></div><div class="tmeta">${tm}</div>${o.kind==='note'?noteBody(o,p,kw):mcqBody(o,p,kw)}${noteBox(o.key)}</div>`;}
+function renderCards(){fillSel();setTexts();const base=itemsCur();let cor=0,wro=0,pen=0;base.forEach(o=>{const s=stOf(o);if(s==='correct')cor++;else if(s==='wrong')wro++;else pen++});g$('statTotal').textContent=base.length;g$('statCorrect').textContent=cor;g$('statWrong').textContent=wro;g$('statPending').textContent=pen;const kw=(g$('kw').value||'').trim().toLowerCase(),sf=g$('stSel').value,dv=parseFloat(g$('dayIn').value);VIS=base.filter(o=>{const p=PROG[o.key]||{status:'pending'};if(sf!=='all'&&p.status!==sf)return false;if(!isNaN(dv)&&dv>=0){if(!p.lastRevisedAt)return false;if((Date.now()-p.lastRevisedAt)/DAY<dv)return false}if(kw&&!oText(o).toLowerCase().includes(kw))return false;return true;});const box=g$('cards');if(!ALL.length){box.innerHTML='<div class="card" style="text-align:center">अभी कोई test/question upload नहीं है।</div>';syncHash();return}if(!VIS.length){box.innerHTML=`<div class="ncard" style="text-align:center;color:var(--mt)">${T('इन मानदंडों के अनुसार कोई प्रश्न नहीं मिला।','No questions found matching criteria.')}</div>`}else{box.innerHTML=VIS.slice(0,UI.show).map((o,i)=>cardHTML(o,i,kw)).join('')+(VIS.length>UI.show?`<div style="text-align:center"><button class="btn gray" onclick="UI.show+=40;renderCards()">${T('और दिखाएँ','Show more')} (${VIS.length-UI.show})</button></div>`:'');}g$('selAll').checked=VIS.length>0&&VIS.every(o=>SEL[o.key]);if(typeof renderMathInElement==='function')try{renderMathInElement(box,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}syncHash();}
 function oText(o){return o.kind==='note'?[o.note.title,o.note.desc,o.note.q,o.note.a].join(' '):((o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')+' '+(o.q.optHi||[]).join(' '))}
-
-// ---- उत्तर देना (टैप करते ही लॉक) ----
-function setStatus(o,status,sel){
-  const now=Date.now(),pr=PROG[o.key]||{};
-  PROG[o.key]={status,selectedOpt:sel,firstAttemptAt:pr.firstAttemptAt||now,lastRevisedAt:now};
-  saveP();renderCards();
-}
+function setStatus(o,status,sel){const now=Date.now(),pr=PROG[o.key]||{};PROG[o.key]={status,selectedOpt:sel,firstAttemptAt:pr.firstAttemptAt||now,lastRevisedAt:now};saveP();renderCards();}
 function pickOpt(key,k){const o=ALL.find(x=>x.key===key);if(!o||stOf(o)!=='pending')return;setStatus(o,k===o.q.ans?'correct':'wrong',k)}
 function revealN(key){REV[key]=true;renderCards()}
 function markNote(key,st){const o=ALL.find(x=>x.key===key);if(!o||stOf(o)!=='pending')return;setStatus(o,st,null)}
 function toggleMore(key){const b=g$('more-'+key);if(b)b.style.display=b.style.display==='block'?'none':'block'}
-
-// ---- चुनना और मूव ----
 function toggleOne(key,c){if(c)SEL[key]=true;else delete SEL[key];g$('selAll').checked=VIS.length>0&&VIS.every(o=>SEL[o.key])}
 function toggleAll(c){VIS.forEach(o=>{if(c)SEL[o.key]=true;else delete SEL[o.key]});renderCards()}
 function moveOne(key){SEL={};SEL[key]=true;openMove()}
 function selKeys(){return Object.keys(SEL).filter(k=>SEL[k])}
-function openMove(){
-  const keys=selKeys();
-  if(!keys.length){alert(T('कृपया कम से कम एक प्रश्न चुनें!','Please select at least one question!'));return}
-  const tops=[...new Set(ALL.filter(o=>o.sk===F.subj).map(topicOf))].sort();
-  const ov=document.createElement('div');ov.className='mvov';ov.id='customModal';
-  ov.innerHTML=`<div class="mvbox"><b>${T(`चुने गए ${keys.length} प्रश्नों को किस टॉपिक में भेजना है?`,`Move the ${keys.length} selected questions to topic:`)}</b>
-    <select id="targetTopicSelect" style="width:100%;margin:10px 0;box-sizing:border-box">${tops.map(t=>`<option value="${esc(t)}">📌 ${esc(t)}</option>`).join('')}<option value="__new__">${T('➕ नया टॉपिक बनाएं...','➕ Create new topic...')}</option></select>
-    <div class="nav"><button class="btn gray" onclick="closeM('customModal')">${T('रद्द करें','Cancel')}</button><button class="btn" onclick="executeMove()">${T('भेजें','Send')}</button></div></div>`;
-  document.body.appendChild(ov);
-}
+function openMove(){const keys=selKeys();if(!keys.length){alert(T('कृपया कम से कम एक प्रश्न चुनें!','Please select at least one question!'));return}const tops=[...new Set(ALL.filter(o=>o.sk===F.subj).map(topicOf))].sort();const ov=document.createElement('div');ov.className='mvov';ov.id='customModal';ov.innerHTML=`<div class="mvbox"><b>${T(`चुने गए ${keys.length} प्रश्नों को किस टॉपिक में भेजना है?`,`Move the ${keys.length} selected questions to topic:`)}</b><select id="targetTopicSelect" style="width:100%;margin:10px 0;box-sizing:border-box">${tops.map(t=>`<option value="${esc(t)}">📌 ${esc(t)}</option>`).join('')}<option value="__new__">${T('➕ नया टॉपिक बनाएं...','➕ Create new topic...')}</option></select><div class="nav"><button class="btn gray" onclick="closeM('customModal')">${T('रद्द करें','Cancel')}</button><button class="btn" onclick="executeMove()">${T('भेजें','Send')}</button></div></div>`;document.body.appendChild(ov);}
 function closeM(id){const m=g$(id);if(m)m.remove()}
-function applyMove(keys,name){
-  keys.forEach(k=>{OV[k]=name});
-  try{localStorage.setItem('examTopics',JSON.stringify(OV))}catch(e){}
-  SEL={};closeM('customModal');closeM('promptModal');renderCards();
-  toast(T(`✅ ${keys.length} प्रश्न "${name}" में भेज दिए गए हैं!`,`✅ ${keys.length} questions moved to "${name}"!`));
-}
-function executeMove(){
-  const v=g$('targetTopicSelect').value;
-  if(v==='__new__'){openNewTopic();return}
-  applyMove(selKeys(),v);
-}
-function openNewTopic(){
-  closeM('promptModal');
-  const ov=document.createElement('div');ov.className='mvov';ov.id='promptModal';
-  ov.innerHTML=`<div class="mvbox"><b>${T('नए टॉपिक का नाम दर्ज करें:','Enter new topic name:')}</b>
-    <input type="text" id="newTopicNameInput" placeholder="${T('जैसे: संज्ञा, सर्वनाम...','e.g. Nouns, Pronouns...')}" style="width:100%;margin:10px 0;box-sizing:border-box">
-    <div class="nav"><button class="btn gray" onclick="closeM('promptModal')">${T('रद्द करें','Cancel')}</button><button class="btn" onclick="saveNewTopic()">${T('सहेजें (Save)','Save')}</button></div></div>`;
-  document.body.appendChild(ov);
-  const i=g$('newTopicNameInput');if(i&&i.focus)i.focus();
-}
+function applyMove(keys,name){keys.forEach(k=>{OV[k]=name});try{localStorage.setItem('examTopics',JSON.stringify(OV))}catch(e){}SEL={};closeM('customModal');closeM('promptModal');renderCards();toast(T(`✅ ${keys.length} प्रश्न "${name}" में भेज दिए गए हैं!`,`✅ ${keys.length} questions moved to "${name}"!`));}
+function executeMove(){const v=g$('targetTopicSelect').value;if(v==='__new__'){openNewTopic();return}applyMove(selKeys(),v);}
+function openNewTopic(){closeM('promptModal');const ov=document.createElement('div');ov.className='mvov';ov.id='promptModal';ov.innerHTML=`<div class="mvbox"><b>${T('नए टॉपिक का नाम दर्ज करें:','Enter new topic name:')}</b><input type="text" id="newTopicNameInput" placeholder="${T('जैसे: संज्ञा, सर्वनाम...','e.g. Nouns, Pronouns...')}" style="width:100%;margin:10px 0;box-sizing:border-box"><div class="nav"><button class="btn gray" onclick="closeM('promptModal')">${T('रद्द करें','Cancel')}</button><button class="btn" onclick="saveNewTopic()">${T('सहेजें (Save)','Save')}</button></div></div>`;document.body.appendChild(ov);const i=g$('newTopicNameInput');if(i&&i.focus)i.focus();}
 function saveNewTopic(){const v=(g$('newTopicNameInput').value||'').trim();if(!v)return;applyMove(selKeys(),v)}
-
-// ---- रीसेट ----
-function confirmReset(){
-  const sf=g$('stSel').value,names={all:T('सभी प्रश्न','All questions'),correct:T('केवल सही प्रश्न','Correct questions only'),wrong:T('केवल गलत प्रश्न','Wrong questions only'),pending:T('केवल शेष प्रश्न','Pending questions only')};
-  const ov=document.createElement('div');ov.className='mvov';ov.id='resetModal';
-  ov.innerHTML=`<div class="mvbox"><b style="color:var(--rd)">⚠️ ${T('चेतावनी','Warning')}</b>
-    <p style="font-size:14px;margin:10px 0">${T(`क्या आप इस विषय/टॉपिक के <b>${names[sf]}</b> की प्रगति रीसेट करना चाहते हैं?`,`Reset progress for <b>${names[sf]}</b> in this subject/topic?`)}</p>
-    <div class="nav"><button class="btn gray" onclick="closeM('resetModal')">${T('रद्द करें','Cancel')}</button><button class="btn r" onclick="executeReset()">${T('हाँ, रीसेट करें','Yes, Reset')}</button></div></div>`;
-  document.body.appendChild(ov);
-}
-function executeReset(){
-  closeM('resetModal');const sf=g$('stSel').value;
-  itemsCur().forEach(o=>{const p=PROG[o.key];if(p&&(sf==='all'||p.status===sf)){delete PROG[o.key];delete REV[o.key]}});
-  saveP();SEL={};renderCards();toast(T('🔄 प्रगति सफलतापूर्वक रीसेट कर दी गई है!','🔄 Progress reset successfully!'));
-}
+function confirmReset(){const sf=g$('stSel').value,names={all:T('सभी प्रश्न','All questions'),correct:T('केवल सही प्रश्न','Correct questions only'),wrong:T('केवल गलत प्रश्न','Wrong questions only'),pending:T('केवल शेष प्रश्न','Pending questions only')};const ov=document.createElement('div');ov.className='mvov';ov.id='resetModal';ov.innerHTML=`<div class="mvbox"><b style="color:var(--rd)">⚠️ ${T('चेतावनी','Warning')}</b><p style="font-size:14px;margin:10px 0">${T(`क्या आप इस विषय/टॉपिक के <b>${names[sf]}</b> की प्रगति रीसेट करना चाहते हैं?`,`Reset progress for <b>${names[sf]}</b> in this subject/topic?`)}</p><div class="nav"><button class="btn gray" onclick="closeM('resetModal')">${T('रद्द करें','Cancel')}</button><button class="btn r" onclick="executeReset()">${T('हाँ, रीसेट करें','Yes, Reset')}</button></div></div>`;document.body.appendChild(ov);}
+function executeReset(){closeM('resetModal');const sf=g$('stSel').value;itemsCur().forEach(o=>{const p=PROG[o.key];if(p&&(sf==='all'||p.status===sf)){delete PROG[o.key];delete REV[o.key]}});saveP();SEL={};renderCards();toast(T('🔄 प्रगति सफलतापूर्वक रीसेट कर दी गई है!','🔄 Progress reset successfully!'));}
 load().catch(e=>{try{console.error(e)}catch(x){}g$('cards').innerHTML='<div class="card empty" style="text-align:center">प्रश्न लोड नहीं हो पाए। पेज दोबारा खोलें।</div>'});
 </script></body></html>
