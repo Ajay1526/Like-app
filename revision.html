@@ -11,8 +11,9 @@
 .opt.sel{border-color:var(--bl);background:var(--bl2)}.opt.ok{background:var(--gr2);border-color:var(--gr);color:#0d652d;font-weight:500}.opt.bad{background:var(--rd2);border-color:var(--rd);color:#a50e0e}.opt.lock{cursor:default}
 .sol{background:var(--am2);border-radius:14px;padding:12px;margin-top:12px;white-space:pre-wrap;line-height:1.6}
 .meta{display:flex;flex-wrap:wrap;gap:6px;font-size:11px;color:var(--mt);margin-bottom:4px}.meta span{background:#f1f3f4;border-radius:10px;padding:2px 8px}
-.nav{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}.nav .btn{flex:1;text-align:center}.btn.gray{background:#e8eaed!important;color:var(--tx)!important}.btn.off{opacity:.45;pointer-events:none}
+.nav{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}.nav .btn{flex:1;text-align:center}.btn.gray{background:#e8eaed!important;color:var(--tx)!important}.btn.off{opacity:.45;pointer-events:none}.btn.sm{padding:6px 14px!important;font-size:12px}
 .bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.lbl{font-size:12px;color:var(--mt);margin:6px 0 2px}
+.subsel{border:2px solid var(--bl)!important;font-weight:600;color:#174ea6}
 .pb{height:8px;background:#e0e3e7;border-radius:4px;overflow:hidden;margin:6px 0}.pb i{display:block;height:100%;background:var(--gr)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}.stats div{background:var(--bl2);border-radius:12px;padding:8px 2px;font-size:11px;color:var(--mt)}.stats b{display:block;font-size:18px;color:var(--tx);font-weight:500}
 .tc{cursor:pointer}.tc .r{display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -21,6 +22,9 @@
 .qimg,.oimg{max-width:100%;height:auto;display:block;margin:6px 0}
 .stats5{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;text-align:center}.stats5 div{background:var(--bl2);border-radius:12px;padding:8px 2px;font-size:10px;color:var(--mt)}.stats5 b{display:block;font-size:18px;color:var(--tx);font-weight:500}
 .row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #eee;font-size:13px}
+.bulk{display:flex;justify-content:space-between;align-items:center;background:#f1f3f4;padding:10px 12px;border-radius:12px;gap:8px;flex-wrap:wrap;margin-bottom:6px}.bulk input,.row input{width:17px;height:17px}
+.mvov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}.mvbox{background:#fff;border-radius:20px;padding:20px;width:100%;max-width:420px;box-shadow:0 20px 40px rgba(0,0,0,.25)}
+.toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:#202124;color:#fff;padding:11px 18px;border-radius:25px;font-size:13px;z-index:300}
 </style></head><body>
 <div class="top"><b>📚 Revision</b></div>
 <div class="wrap">
@@ -58,11 +62,18 @@ async function load(){
   const files={};
   Object.keys(STRUCT).forEach(c=>STRUCT[c].forEach(l=>{const n=((C[c]||{})[l])||{};
     Object.keys(n).forEach(p=>Object.keys(n[p]||{}).forEach(y=>(n[p][y]||[]).forEach(t=>{if(!files[t.file])files[t.file]={c,l,p,y,t:t.title}})))}));
-  const seen=new Set();
+  // ✅ FIX: एक ही फ़ाइल का कोई प्रश्न अब कभी नहीं छूटता (हर section के सारे प्रश्न गिने जाते हैं)।
+  // Duplicate तभी हटता है जब वही प्रश्न + वही options किसी दूसरी फ़ाइल में दोबारा आए।
+  const seen=new Set(),fpFile={};
   for(const f of Object.keys(files)){
     let d;try{d=await(await fetch(f)).json()}catch(e){continue}
     (d.sections||[]).forEach(s=>(s.questions||[]).forEach(q=>{
-      const key=qKey(q);if(seen.has(key))return;seen.add(key);
+      let key=qKey(q);
+      const fp=key+'|'+(q.optEn||[]).join('~')+'|'+(q.optHi||[]).join('~');
+      if(fpFile[fp]&&fpFile[fp]!==f)return;
+      fpFile[fp]=f;
+      if(seen.has(key)){let n=2;while(seen.has(key+'_'+n))n++;key=key+'_'+n}
+      seen.add(key);
       const ns=normSubj(s.name,s.nameHi,C);
       ALL.push({key,q,sn:ns.name,snHi:ns.nameHi||ns.name,sk:ns.key,auto:autoTopic(ns.name,q),m:files[f]});
     }));
@@ -73,7 +84,7 @@ async function load(){
 // ================= Learning ⇄ Revision (4 lists) =================
 // L = Learning, R = Revision बाकी, X = 🔴 लाल (Revision में गलत), G = 🟢 हरी (Revision में सही)
 const LS='examLearning2';
-let REC={},SS=null;
+let REC={},SS=null,SEL={},LROWS=[];
 try{REC=JSON.parse(localStorage.getItem(LS))||{}}catch(e){}
 try{localStorage.removeItem('examLearning');localStorage.removeItem('examLearningMeta')}catch(e){}   // पुराना डेटा रीसेट
 const saveR=()=>{try{localStorage.setItem(LS,JSON.stringify(REC))}catch(e){}};
@@ -100,9 +111,9 @@ function learnAns(o,ok){const r=mk(o);r.a++;
   saveR()}
 function revAns(o,ok){const r=mk(o);r.a++;if(ok){r.c++;r.l='G'}else{r.w++;r.l='X'}r.lastRevisionAt=Date.now()}
 
-function setF(k,v){F[k]=v;if(k==='subj')F.top='';F.view='home';SS=null;draw()}
-function openT(t){F.top=t;F.view='dash';SS=null;draw()}
-function toTopics(){F.top='';F.view='home';SS=null;draw()}
+function setF(k,v){F[k]=v;if(k==='subj')F.top='';F.view='home';SEL={};SS=null;draw()}
+function openT(t){F.top=t;F.view='dash';SEL={};SS=null;draw()}
+function toTopics(){F.top='';F.view='home';SEL={};SS=null;draw()}
 function back(){F.view=F.top?'dash':'home';SS=null;draw()}
 function ctl(){
   const lv=[...new Set(ALL.map(o=>o.m.l))];
@@ -111,11 +122,17 @@ function ctl(){
 }
 const isFull=c=>c.t>0&&c.G===c.t;
 function tiles(c,click){return `<div class="stats5">${['L','R','X','G'].map(k=>`<div ${click?`onclick="openList('${k}')" style="cursor:pointer"`:''}><b>${c[k]}</b>${NM[k]}</div>`).join('')}<div><b>${c.t}</b>Total</div></div>`}
+// ---- Subject / Topic dropdown (हर विकल्प के सामने कुल प्रश्न) ----
+function subjMap(){const sm={};ALL.filter(o=>!F.l||o.m.l===F.l).forEach(o=>{(sm[o.sk]=sm[o.sk]||{n:hi()?o.snHi:o.sn,l:[]}).l.push(o)});if(!sm[F.subj])F.subj=Object.keys(sm)[0]||'';return sm}
+function selBar(sm){
+  const cl=sm[F.subj]?sm[F.subj].l:[],tc={};cl.forEach(o=>{const t=topicOf(o);tc[t]=(tc[t]||0)+1});
+  return `<div class="bar"><select class="subsel" style="flex:1 1 100%" onchange="setF('subj',this.value)">${Object.keys(sm).map(k=>`<option value="${esc(k)}"${k===F.subj?' selected':''}>📂 ${esc(sm[k].n)} (${sm[k].l.length})</option>`).join('')}</select>
+  <select style="flex:1 1 100%" onchange="pickTop(this.value)"><option value="">${hi()?'📌 सभी टॉपिक':'📌 All Topics'} (${cl.length})</option>${Object.keys(tc).sort().map(t=>`<option value="${esc(t)}"${t===F.top?' selected':''}>📌 ${esc(t)} (${tc[t]})</option>`).join('')}</select></div>`;
+}
+function pickTop(v){if(v)openT(v);else toTopics()}
 function drawHome(){
-  const lv=ALL.filter(o=>!F.l||o.m.l===F.l),sm={};
-  lv.forEach(o=>{(sm[o.sk]=sm[o.sk]||{n:hi()?o.snHi:o.sn,l:[]}).l.push(o)});
-  if(!sm[F.subj])F.subj=Object.keys(sm)[0]||'';
-  let h=`<div class="lbl">विषय (Subject)</div><div class="chipbar">${Object.keys(sm).map(k=>{const c=cnt(sm[k].l);return `<button class="fc${k===F.subj?' on':''}" onclick="setF('subj',this.dataset.v)" data-v="${esc(k)}">${esc(sm[k].n)} <small>🟢${c.G}/${c.t}</small></button>`}).join('')}</div><div class="lbl">टॉपिक (Topic) चुनें</div>`;
+  const sm=subjMap();
+  let h=selBar(sm)+`<div class="lbl">टॉपिक (Topic) चुनें</div>`;
   const tm={};(sm[F.subj]?sm[F.subj].l:[]).forEach(o=>{(tm[topicOf(o)]=tm[topicOf(o)]||[]).push(o)});
   h+=Object.keys(tm).sort().map(t=>{const c=cnt(tm[t]),p=c.t?Math.round(c.G/c.t*100):0;return `<div class="card tc" onclick="openT(this.dataset.t)" data-t="${esc(t)}"><div class="r"><b>${esc(t)}</b><span>${isFull(c)?'🎓':''} ${p}%</span></div><div class="pb"><i style="width:${p}%"></i></div><div class="note" style="margin:0">📘 ${c.L} • 📝 ${c.R} • 🔴 ${c.X} • 🟢 ${c.G} • कुल ${c.t}</div></div>`}).join('')||'<div class="card" style="text-align:center">कोई question नहीं मिला।</div>';
   $('main').innerHTML=h;
@@ -142,10 +159,10 @@ function togS(k){UI.src[k]=UI.src[k]?0:1;draw()}
 function togR(k){UI.rsrc[k]=UI.rsrc[k]?0:1;draw()}
 const oc=(v,k)=>`oninput="UI.${k}=this.value;updInfo()"`;
 function drawDash(){
-  const L=cur(),c=cnt(L),lr=lastRev(L);
+  const L=cur(),c=cnt(L),lr=lastRev(L),sm=subjMap();
   const sc=k=>`<button class="fc${UI.src[k]?' on':''}" onclick="togS('${k}')">${NM[k]} (${c[k]})</button>`;
   const rcb=k=>`<button class="fc${UI.rsrc[k]?' on':''}" onclick="togR('${k}')">${NM[k]} (${c[k]})</button>`;
-  $('main').innerHTML=`<a class="fc" onclick="toTopics()" style="display:inline-block;margin-bottom:8px">← Topics</a>
+  $('main').innerHTML=selBar(sm)+`<a class="fc" onclick="toTopics()" style="display:inline-block;margin-bottom:8px">← Topics</a>
   <div class="card"><h2 style="margin:0 0 8px">${esc(F.top)}</h2>${tiles(c,true)}
     <div class="note">⏱ आख़िरी Revision: ${lr?`<b>${ago(lr)}</b> (${fmtT(lr)})`:'अभी तक नहीं हुआ'}</div>
     ${isFull(c)?'<div class="full">🎓 Fully Mastered</div>':''}
@@ -162,13 +179,36 @@ function drawDash(){
   updInfo();
 }
 function resetT(){if(!confirm('इस Topic की सारी Learning Progress मिटानी है?'))return;cur().forEach(o=>delete REC[o.key]);saveR();draw()}
-// ---------- List viewer ----------
-function openList(k){F.list=k;F.view='list';draw()}
+// ---------- List viewer (अब चेकबॉक्स + 🔀 Move के साथ) ----------
+function openList(k){F.list=k;F.view='list';SEL={};draw()}
+function togSel(k,c){if(c)SEL[k]=1;else delete SEL[k]}
+function selAllL(c){LROWS.forEach(o=>{if(c)SEL[o.key]=1;else delete SEL[o.key]});draw()}
 function drawList(){
-  const k=F.list,rows=cur().filter(o=>listOf(o)===k).sort((a,b)=>refT(a)-refT(b)),h=hi();
+  const k=F.list,rows=cur().filter(o=>listOf(o)===k).sort((a,b)=>refT(a)-refT(b)),h=hi();LROWS=rows;
   const dd=o=>{if(k==='L')return '';const d=Math.floor(ageD(o));return never(o)?`⭐ ${d} दिन (Revise नहीं हुआ)`:`${d} दिन`};
-  $('main').innerHTML=`<a class="fc" onclick="back()" style="display:inline-block;margin-bottom:8px">← वापस</a><div class="card"><h2 style="margin:0 0 6px">${NM[k]} (${rows.length})</h2>${rows.map(o=>`<div class="row"><div style="flex:1">${esc(String(h?(o.q.qHi||o.q.qEn):o.q.qEn).slice(0,110))}</div><span style="white-space:nowrap;font-size:12px;color:var(--mt)">${dd(o)}</span></div>`).join('')||'<div class="note">इस सूची में कोई प्रश्न नहीं।</div>'}</div>`;
+  $('main').innerHTML=`<a class="fc" onclick="back()" style="display:inline-block;margin-bottom:8px">← वापस</a><div class="card"><h2 style="margin:0 0 6px">${NM[k]} (${rows.length})</h2>
+  ${rows.length?`<div class="bulk"><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" onchange="selAllL(this.checked)"${rows.every(o=>SEL[o.key])?' checked':''}><b>सभी चुनें</b></label><button class="btn sm" onclick="openMove()">🔀 Move</button></div>`:''}
+  ${rows.map(o=>`<div class="row"><label style="flex:1;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" data-k="${esc(o.key)}" ${SEL[o.key]?'checked':''} onchange="togSel(this.dataset.k,this.checked)"><span>${esc(String(h?(o.q.qHi||o.q.qEn):o.q.qEn).slice(0,110))}</span></label><span style="white-space:nowrap;font-size:12px;color:var(--mt)">${dd(o)}</span></div>`).join('')||'<div class="note">इस सूची में कोई प्रश्न नहीं।</div>'}</div>`;
 }
+// ---------- Move (चुने हुए प्रश्न दूसरे Topic में) ----------
+function toast(t){const o=$('toastB');if(o)o.remove();const d=document.createElement('div');d.id='toastB';d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>{const x=$('toastB');if(x)x.remove()},2500)}
+function closeM(id){const m=$(id);if(m)m.remove()}
+const selKeys=()=>Object.keys(SEL).filter(k=>SEL[k]);
+function openMove(){
+  const keys=selKeys();if(!keys.length){alert('कृपया कम से कम एक प्रश्न चुनें!');return}
+  const list=ALL.filter(o=>o.sk===F.subj&&(!F.l||o.m.l===F.l)),tc={};list.forEach(o=>{const t=topicOf(o);tc[t]=(tc[t]||0)+1});
+  const ov=document.createElement('div');ov.className='mvov';ov.id='customModal';
+  ov.innerHTML=`<div class="mvbox"><b>चुने गए ${keys.length} प्रश्नों को किस टॉपिक में भेजना है?</b><select id="targetTopicSelect" style="width:100%;margin:10px 0">${Object.keys(tc).sort().map(t=>`<option value="${esc(t)}">📌 ${esc(t)} (${tc[t]})</option>`).join('')}<option value="__new__">➕ नया टॉपिक बनाएं...</option></select><div class="nav"><button class="btn gray" onclick="closeM('customModal')">रद्द करें</button><button class="btn" onclick="executeMove()">भेजें</button></div></div>`;
+  document.body.appendChild(ov);
+}
+function applyMove(keys,name){keys.forEach(k=>{OV[k]=name});try{localStorage.setItem('examTopics',JSON.stringify(OV))}catch(e){}SEL={};closeM('customModal');closeM('promptModal');draw();toast(`✅ ${keys.length} प्रश्न "${name}" में भेज दिए गए हैं!`)}
+function executeMove(){const v=$('targetTopicSelect').value;if(v==='__new__'){openNewTopic();return}applyMove(selKeys(),v)}
+function openNewTopic(){
+  closeM('promptModal');const ov=document.createElement('div');ov.className='mvov';ov.id='promptModal';
+  ov.innerHTML=`<div class="mvbox"><b>नए टॉपिक का नाम दर्ज करें:</b><input type="text" id="newTopicNameInput" placeholder="जैसे: संज्ञा, सर्वनाम..." style="width:100%;margin:10px 0;box-sizing:border-box"><div class="nav"><button class="btn gray" onclick="closeM('promptModal')">रद्द करें</button><button class="btn" onclick="saveNewTopic()">सहेजें</button></div></div>`;
+  document.body.appendChild(ov);const i=$('newTopicNameInput');if(i&&i.focus)i.focus();
+}
+function saveNewTopic(){const v=($('newTopicNameInput').value||'').trim();if(!v)return;applyMove(selKeys(),v)}
 // ---------- Learning ----------
 function startLearn(){
   let p=learnPool();const n=parseInt(UI.ln);if(n>0)p=p.slice(0,n);
