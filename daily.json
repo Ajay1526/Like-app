@@ -1,0 +1,4 @@
+{
+  "_help": "रोज़ का सारा data (सभी subjects और Current Affairs) इसी एक फ़ाइल में रहता है। नया data admin.html के 'Daily Data' कार्ड से जोड़ें, फिर daily.json डाउनलोड करके पुरानी की जगह upload (replace) करें। हर item: date (YYYY-MM-DD), subject, q (प्रश्न), a (उत्तर); वैकल्पिक: id, subjectHi, topic, title, desc, more, titleEn, descEn, qEn, aEn, moreEn",
+  "items": []
+}
