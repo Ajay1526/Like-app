@@ -57,7 +57,6 @@ mark{background:#fef08a;font-weight:bold;padding:0 2px;border-radius:3px}.hintx{
     <div class="stats4 st4" id="hdrStats"></div>
     <div class="crow"><input type="search" id="kw" oninput="UI.show=40;renderCards()"><select id="stSel" onchange="UI.show=40;renderCards()" style="flex:1;margin:0;min-width:120px"><option value="all" id="optAll"></option><option value="correct" id="optCorrect"></option><option value="wrong" id="optWrong"></option><option value="pending" id="optPending"></option></select><input type="number" id="dayIn" min="0" oninput="UI.show=40;renderCards()"></div>
     <div class="bulk"><label><input type="checkbox" id="selAll" onchange="toggleAll(this.checked)"><b id="lblSel"></b></label><div><button class="btn sm" id="btnMove" onclick="openMove()"></button> <button class="btn r sm" id="btnReset" onclick="confirmReset()"></button></div></div>
-    <div class="crow" style="margin-bottom:0"><button class="btn g" style="flex:1" id="btnLearn" onclick="startLearn()"></button><button class="btn" style="flex:1" id="btnTest" onclick="startTest()"></button></div>
   </div>
   <div id="main"><div class="card" style="text-align:center">Loading questions…</div></div>
   <div class="hintx" id="hintTxt"></div>
@@ -151,7 +150,6 @@ function setTexts(){
   const set=(id,h,e)=>{const x=$(id);if(x)x.textContent=T(h,e)};
   set('optAll','📁 सभी स्टेटस','📁 All Status');set('optCorrect','🟢 केवल सही','🟢 Correct Only');set('optWrong','🔴 केवल गलत','🔴 Wrong Only');set('optPending','⏳ केवल शेष','⏳ Pending Only');
   set('lblSel','सभी चुनें','Select All');set('btnMove','🔀 मूव','🔀 Move');set('btnReset','🔄 रीसेट','🔄 Reset');
-  set('btnLearn','📘 Learning शुरू करें','📘 Start Learning');set('btnTest','🎯 Revision Test','🎯 Revision Test');
   $('kw').placeholder=T('🔍 खोजें...','🔍 Search...');$('dayIn').placeholder=T('दिन (>=)','Days (>=)');
   set('hintTxt','💡 टिप: मूव करने पर प्रश्न उसी सब्जेक्ट के दूसरे टॉपिक में ट्रांसफर हो जाएगा!','💡 Tip: Moving questions transfers them to another topic of the same subject!');
 }
@@ -172,7 +170,6 @@ function mathAll(el){if(typeof renderMathInElement==='function')try{renderMathIn
 function renderCards(){
   const box=$('main');
   if(!ALL.length){$('hdr').style.display='none';box.innerHTML='<div class="card" style="text-align:center">अभी कोई test/question upload नहीं है।</div>';return}
-  if(F.view!=='list'){$('hdr').style.display='none';({learn:drawLearn,test:drawTest,result:drawResult})[F.view]();mathAll(box);return}
   $('hdr').style.display='';fillSel();setTexts();
   const base=cur();let cor=0,wro=0,pen=0;base.forEach(o=>{const s=stOf(o);if(s==='correct')cor++;else if(s==='wrong')wro++;else pen++});
   $('hdrStats').innerHTML=`<div><b>${base.length}</b><span>${T('कुल प्रश्न','Total Qs')}</span></div><div><b>🟢 ${cor}</b><span>${T('सही','Correct')}</span></div><div><b>🔴 ${wro}</b><span>${T('गलत','Wrong')}</span></div><div><b>⏳ ${pen}</b><span>${T('शेष','Pending')}</span></div>`;
@@ -213,73 +210,6 @@ function confirmReset(){
   if(!tgt.length)return;
   if(!confirm(T(`${tgt.length} प्रश्नों की प्रोग्रेस रीसेट करें?`,`Reset progress of ${tgt.length} questions?`)))return;
   tgt.forEach(o=>delete REC[o.key]);saveR();SEL={};renderCards();
-}
-// ---------- Learning session (original logic) ----------
-function ask(msg){const v=prompt(msg,'20');if(v===null)return null;const n=parseInt(v,10);return n>0?n:20}
-function startLearn(){
-  const n=ask(T('कितने प्रश्न पढ़ने हैं?','How many questions?'));if(n===null)return;
-  const pool=cur().filter(o=>{const l=listOf(o);return l==='L'||l==='X'});
-  const p=['X','L'].flatMap(k=>shuffle(pool.filter(o=>listOf(o)===k))).slice(0,n);
-  if(!p.length){alert(T('Learning के लिए कोई प्रश्न बाकी नहीं है।','No questions left for Learning.'));return}
-  SS={mode:'learn',queue:p,ans:undefined};F.view='learn';renderCards();
-}
-function learnAns(o,ok){const r=mk(o);r.a++;r.firstAt=r.firstAt||Date.now();
-  if(ok){r.c++;r.l='R';r.learnedAt=Date.now();delete r.lastRevisionAt;delete r.sel}   // 1 बार सही → Revision बाकी
-  else{r.w++;if(r.l==='G')r.l='X'}
-  saveR()}
-function revAns(o,ok,sel){const r=mk(o);r.a++;if(ok){r.c++;r.l='G'}else{r.w++;r.l='X'}r.sel=sel;r.firstAt=r.firstAt||Date.now();r.lastRevisionAt=Date.now()}
-function tiles(c){return `<div class="stats4 s5">${['L','R','X','G'].map(k=>`<div style="cursor:default"><b>${c[k]}</b>${NM[k]}</div>`).join('')}<div style="cursor:default"><b>${c.t}</b>Total</div></div>`}
-function qHTML(o,sel,lock){
-  const q=o.q,h=hi(),opts=(h?q.optHi:q.optEn)||q.optEn||[],im=imgOf(q),l=listOf(o);
-  return `<div class="meta"><span>${esc(h?o.snHi:o.sn)}</span><span>${esc(topicOf(o))}</span>${l==='X'?'<span>🔴 लाल</span>':l==='G'?'<span>🟢 हरी</span>':''}</div><div class="qt">${esc(h?(q.qHi||q.qEn):q.qEn)}</div>${im?`<img class="qimg" src="${esc(im)}" alt="">`:''}`+
-  opts.map((t,k)=>{let c='opt';if(lock){c+=' lock';if(k===q.ans)c+=' ok';else if(k===sel)c+=' bad'}else if(k===sel)c+=' sel';
-    const oi=q.optImg&&q.optImg[k];return `<button class="${c}" onclick="tap(${k})">${String.fromCharCode(65+k)}. ${esc(t)}${oi?`<img class="oimg" src="${esc(oi)}" alt="">`:''}${lock&&k===q.ans?' ✔':''}</button>`}).join('');
-}
-function tap(k){
-  if(!SS)return;
-  if(SS.mode==='learn'){if(SS.ans!==undefined)return;const o=SS.queue[0];SS.ans=k;SS.ok=k===o.q.ans;learnAns(o,SS.ok);renderCards()}
-  else if(SS.mode==='test'){SS.sel[SS.i]=k;renderCards()}
-}
-function nextL(){const o=SS.queue.shift();if(listOf(o)!=='R')SS.queue.push(o);SS.ans=undefined;renderCards()}   // गलत प्रश्न इसी सत्र में फिर आता है
-function back(){F.view='list';SS=null;renderCards()}
-function drawLearn(){
-  const c=cnt(cur());
-  if(!SS.queue.length){$('main').innerHTML=`<div class="card big">🎉<b>Learning सत्र पूरा!</b>${tiles(c)}<div class="nav"><button class="btn" onclick="back()">वापस जाएँ</button></div></div>`;return}
-  const o=SS.queue[0],q=o.q,sol=(hi()?q.solHi:q.solEn)||q.solEn||q.solHi||'',a=SS.ans;
-  $('main').innerHTML=`<div class="card" style="padding:10px!important">${tiles(c)}</div>
-  <div class="card"><div class="meta"><span>बाकी: ${SS.queue.length}</span></div>${qHTML(o,a,a!==undefined)}
-  ${a!==undefined?`<div class="sol"><b>${SS.ok?'✅ Correct':'❌ Wrong'}</b>${SS.ok?'':'\nसही उत्तर: '+String.fromCharCode(65+q.ans)}${sol?'\n\n'+esc(sol):'\n\nSolution उपलब्ध नहीं है।'}\n\n${SS.ok?'→ 📝 Revision बाकी में गया।':'→ यह इसी सत्र में फिर आएगा।'}</div>`:''}
-  <div class="nav"><button class="btn gray" onclick="back()">✕ रोकें</button>${a!==undefined?`<button class="btn" onclick="nextL()">Next →</button>`:''}</div></div>`;
-}
-// ---------- Revision Test ----------
-function startTest(){
-  const n=ask(T('Revision Test में कितने प्रश्न?','How many questions in the test?'));if(n===null)return;
-  const d=Math.max(0,parseFloat($('dayIn').value)||0);
-  const p=cur().filter(o=>{const l=listOf(o);return(l==='R'||l==='X'||l==='G')&&ageD(o)>=d}).sort((a,b)=>refT(a)-refT(b)).slice(0,n);   // सबसे पुराने पहले
-  if(!p.length){alert(T('Revision के लिए कोई प्रश्न नहीं मिला।','No questions available for revision.'));return}
-  SS={mode:'test',items:shuffle(p),i:0,sel:{}};F.view='test';renderCards();
-}
-function tgo(d){SS.i=Math.max(0,Math.min(SS.items.length-1,SS.i+d));renderCards()}
-function submitT(){
-  const un=SS.items.filter((o,i)=>SS.sel[i]===undefined).length;
-  if(un&&!confirm(un+' प्रश्न बिना उत्तर के हैं (गलत गिने जाएँगे)। Submit करें?'))return;
-  const wrong=[];let g=0;
-  SS.items.forEach((o,i)=>{const ok=SS.sel[i]===o.q.ans;revAns(o,ok,SS.sel[i]);if(ok)g++;else wrong.push({o,i})});
-  saveR();SS={mode:'result',n:SS.items.length,g,wrong,sel:SS.sel};F.view='result';renderCards();
-}
-function drawTest(){
-  const o=SS.items[SS.i],n=SS.items.length;
-  $('main').innerHTML=`<div class="pb"><i style="width:${(SS.i+1)/n*100}%"></i></div>
-  <div class="card"><div class="meta"><span>Revision Test • Q ${SS.i+1}/${n}</span></div>${qHTML(o,SS.sel[SS.i],false)}
-  <div class="nav"><button class="btn gray ${SS.i?'':'off'}" onclick="tgo(-1)">← Previous</button>${SS.i<n-1?`<button class="btn" onclick="tgo(1)">Next →</button>`:`<button class="btn g" onclick="submitT()">Submit</button>`}</div>
-  <div class="nav"><button class="btn gray" onclick="if(confirm('Test छोड़ें? Progress सेव नहीं होगी।'))back()">✕ छोड़ें</button></div></div>`;
-}
-function drawResult(){
-  const w=SS.wrong,h=hi(),c=cnt(cur());
-  $('main').innerHTML=`<div class="card big">${w.length?'📝':'🎉'}<b>${SS.n} में से ${SS.g} सही</b>🟢 ${SS.g} सही • 🔴 ${w.length} गलत<div style="margin-top:12px">${tiles(c)}</div>
-  <div class="nav"><button class="btn" onclick="back()">वापस जाएँ</button></div><div class="note">यह Revision/Learning Progress है, Main Test Result नहीं।</div></div>`+
-  w.map(x=>{const q=x.o.q,sol=(h?q.solHi:q.solEn)||q.solEn||'',opts=(h?q.optHi:q.optEn)||q.optEn||[],sv=SS.sel[x.i];
-    return `<div class="card"><div class="meta"><span>🔴 गलत सूची में गया</span></div><div class="qt">${esc(h?(q.qHi||q.qEn):q.qEn)}</div><div class="note">आपका उत्तर: ${sv===undefined?'—':esc(opts[sv])}</div><div class="opt ok lock">सही: ${String.fromCharCode(65+q.ans)}. ${esc(opts[q.ans])}</div>${sol?`<div class="sol">${esc(sol)}</div>`:''}</div>`}).join('');
 }
 function draw(){renderCards()}
 load().catch(e=>{try{console.error(e)}catch(x){}$('main').innerHTML='<div class="card empty" style="text-align:center">प्रश्न लोड नहीं हो पाए। पेज दोबारा खोलें।</div>'});
