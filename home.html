@@ -10,6 +10,7 @@
 .crumb{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:12px;color:var(--mt);margin-bottom:10px}
 .crumb a{cursor:pointer}.mut{color:var(--mt);font-size:12px}
 .gt{font-weight:500;color:var(--bl);margin:14px 0 4px;font-size:13px}
+.cal{display:inline-flex;flex-direction:column;width:36px;border-radius:7px;overflow:hidden;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3);line-height:1;text-align:center}.cal i{background:#d93025;color:#fff;font-size:9px;font-weight:700;padding:3px 0 2px;font-style:normal;letter-spacing:.5px}.tile .cal b{color:#202124!important;font-size:17px!important;font-weight:700!important;padding:3px 0 4px;display:block}
 </style></head><body>
 <div class="top"><b>🎓 Exam Portal</b></div>
 <div class="wrap">
@@ -88,6 +89,7 @@ function crumb(){
   $('crumb').innerHTML=S.mode?p.join(' › '):'';
 }
 const empty=m=>`<div class="card empty" style="text-align:center;padding:24px">${m}</div>`;
+const calIcon=()=>{const d=new Date();return `<span class="cal"><i>${d.toLocaleString('en',{month:'short'}).toUpperCase()}</i><b>${d.getDate()}</b></span>`};
 const tile=(ic,t,s,on,cls)=>`<div class="tile ${cls||''}" onclick="${on}"><span class="ic">${ic}</span><b>${t}</b><span class="s">${s}</span></div>`;
 function launchURL(t,title,section){
   let u='exam.html?file='+enc(t.file)+'&title='+enc(title||t.title);
@@ -251,7 +253,7 @@ function render(){
     v.innerHTML=`<h2>Test Category</h2><div class="tiles">
       ${Object.keys(STRUCT).map(k=>tile(STRUCT[k].icon,STRUCT[k].label,STRUCT[k].hi+' • '+STRUCT[k].levels.join(', '),`pick2('${k}')`)).join('')}
       ${tile('🧩','Sectional Test','Subject-wise practice',"pick('mode','sec')",'g')}
-      ${tile('📅','Daily Planner & Target With Current Affairs','रोज़ का Target • Current Affairs • Subject-wise Revision',"location.href='daily.html'",'o')}
+      ${tile(calIcon(),'Daily Planner & Target With Current Affairs','रोज़ का Target • Current Affairs • Subject-wise Revision',"location.href='daily.html'",'o')}
     </div>`;return;
   }
   if(S.mode==='sec'){

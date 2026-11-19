@@ -5,15 +5,16 @@
 <style>
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .hero{background:linear-gradient(135deg,#7c3aed,#db2777,#f59e0b);color:#fff;border-radius:22px;padding:16px;margin-bottom:12px}
-.hero h1{margin:0;font-size:19px;font-weight:600;color:#fff}.hero p{margin:4px 0 0;font-size:12px;opacity:.95}
+.hero h1{margin:0;font-size:19px;font-weight:600;color:#fff;display:flex;align-items:center;gap:10px}.hero p{margin:4px 0 0;font-size:12px;opacity:.95}
+.cal{display:inline-flex;flex-direction:column;flex:none;width:36px;border-radius:7px;overflow:hidden;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3);line-height:1;text-align:center}
+.cal i{background:#d93025;color:#fff;font-size:9px;font-weight:700;padding:3px 0 2px;font-style:normal;letter-spacing:.5px}
+.cal b{color:#202124;font-size:17px;font-weight:700;padding:3px 0 4px}
 .chips{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center}
-.hc{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.35);padding:5px 12px;border-radius:18px;font-size:12px;font-weight:700}
 .rbtn{border:0;padding:8px 16px;border-radius:22px;background:#fff;color:#7c3aed;font-weight:700;cursor:pointer;font-size:13px}
 .rbtn.on{background:#d93025;color:#fff}
 .bar{height:10px;background:#e8eaed;border-radius:20px;overflow:hidden;margin-top:7px}
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#188038,#1a73e8,#7c3aed);border-radius:20px;transition:width .4s}
 .rowt{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;font-weight:500}
-.tg{width:64px!important;text-align:center}
 .mut{color:var(--mt);font-size:12px}
 .ctl{display:flex;gap:8px;flex-wrap:wrap}.ctl>div{flex:1;min-width:120px}
 .ctl label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;color:var(--mt);margin-bottom:3px}
@@ -46,14 +47,8 @@ details{margin-top:8px}details summary{cursor:pointer;font-weight:500}details di
 <div class="top"><b>🎯 Daily Planner & Target</b><a href="home.html">🏠 Home</a></div>
 <div class="wrap">
   <div class="hero">
-    <h1 id="hT">📅 Daily Planner & Target With Current Affairs</h1><p id="hS">रोज़ पढ़ो, खुद जाँचो, Target पूरा करो 🔥</p>
-    <div class="chips"><span class="hc">🔥 Streak: <span id="streak">0</span></span><span class="hc">⭐ XP: <span id="xp">0</span></span><span class="hc">🏆 Level: <span id="level">1</span></span><button id="rb" class="rbtn" onclick="toggleRev()"></button></div>
-  </div>
-
-  <div class="card">
-    <div class="rowt"><span id="tgL">🎯 आज का Target</span><span><input class="tg" id="tgIn" type="number" min="1" max="500" onchange="setTarget(this.value)"> <span class="mut" id="tgU">प्रश्न</span></span></div>
-    <div class="bar"><i id="tgBar"></i></div>
-    <div class="mut" id="tgT" style="margin-top:6px"></div>
+    <h1><span class="cal" id="calB"><i></i><b></b></span><span id="hT"></span></h1><p id="hS">रोज़ पढ़ो, खुद जाँचो, Target पूरा करो 🔥</p>
+    <div class="chips"><button id="rb" class="rbtn" onclick="toggleRev()"></button></div>
   </div>
 
   <div class="card">
@@ -78,15 +73,14 @@ const $=id=>document.getElementById(id);
 const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const ls=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
 const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
-const K={st:'dailyStatusV1',xp:'dailyXP',sk:'dailyStreak',log:'dailyLogV1',tg:'dailyTarget',lang:'dailyLang'};
-const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-let ITEMS=[],ST=ls(K.st,{}),LOG=ls(K.log,{}),xp=+ls(K.xp,0)||0,streak=+ls(K.sk,0)||0,target=+ls(K.tg,10)||10,lang=ls(K.lang,'hi');
+const K={st:'dailyStatusV1',lang:'dailyLang'};
+let ITEMS=[],ST=ls(K.st,{}),lang=ls(K.lang,'hi');
 let revMode=false,active=null,lastRes=null,loaded=false;
 const F={subject:'all',date:'all',sort:'newest'};
-const Q=['💪 चलो शुरू करते हैं, आज Topper बनना है!','🔥 एक और सही = एक कदम Success की ओर!','🎯 गलत होना भी सीखना है, रुकना नहीं!','⭐ बस 1 और Question!','🏆 Revision करने वाले ही Selection लेते हैं!'];
-const H=lang==='hi';
 const T=(h,e)=>lang==='hi'?h:e;
 const st=id=>(ST[id]&&ST[id].s)||'unanswered';
+// आज की तारीख़ के हिसाब से कैलेंडर आइकन
+(function(){const d=new Date();const b=$('calB');b.firstChild.textContent=d.toLocaleString('en',{month:'short'}).toUpperCase();b.lastChild.textContent=d.getDate()})();
 
 async function init(){
   try{
@@ -112,46 +106,36 @@ function buildFilters(){
 function fmt(d){const x=new Date(d+'T00:00:00');return isNaN(x)?d:x.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}
 function setLang(l){lang=l;lsSet(K.lang,l);buildFilters();applyLang();render()}
 function applyLang(){
-  $('hT').textContent=T('📅 Daily Planner & Target With Current Affairs','📅 Daily Planner & Target With Current Affairs');
+  $('hT').textContent='Daily Planner & Target With Current Affairs';
   $('hS').textContent=T('रोज़ पढ़ो, खुद जाँचो, Target पूरा करो 🔥','Read daily, self-check, hit your target 🔥');
-  $('tgL').textContent=T('🎯 आज का Target','🎯 Today\'s Target');$('tgU').textContent=T('प्रश्न','questions');
   $('pgL').textContent=T('📊 Progress','📊 Progress');
   $('cCL').textContent=T('✅ सही','✅ Correct');$('cWL').textContent=T('❌ गलत','❌ Wrong');$('cRL').textContent=T('⏳ बाकी','⏳ Remaining');
   $('rb').textContent=revMode?T('❌ बंद करें','❌ Exit'):T('🎯 सेल्फ-रिवीजन','🎯 Self-Revision');
   $('mo').textContent=revMode?T('🎯 उत्तर देखो → "हाँ/नहीं" चुनो | Latest status सेव होगा | गलत हो तो भी घबराना नहीं!','🎯 Reveal answer → pick Yes/No | Latest status is saved | Wrong is fine, keep learning!'):'';
-  $('tgIn').value=target;
 }
 function toggleRev(){revMode=!revMode;if(!revMode){active=null;lastRes=null}$('rb').classList.toggle('on',revMode);applyLang();render()}
-function sortChange(v){F.sort=v;if((v==='reattempt-wrong'||v==='reattempt-correct')&&!revMode){toggleRev();return}render()}
-function setTarget(v){target=Math.max(1,Math.min(500,parseInt(v,10)||10));lsSet(K.tg,target);$('tgIn').value=target;updateTarget()}
-function updateTarget(){
-  const done=LOG[today()]||0,p=Math.min(100,Math.round(done/target*100));
-  $('tgBar').style.width=p+'%';
-  $('tgT').textContent=done>=target?T(`🎉 Target पूरा! आज ${done} प्रश्न हल किए।`,`🎉 Target done! ${done} questions today.`):T(`आज ${done} / ${target} हल • ${target-done} बाकी`,`${done} / ${target} today • ${target-done} to go`);
-}
-function visible(){
-  let v=ITEMS.filter(i=>(F.subject==='all'||i.subject===F.subject)&&(F.date==='all'||i.date===F.date));
-  return v;
-}
+function sortChange(v){F.sort=v;if((v==='reattempt-wrong'||v==='reattempt-correct')&&!revMode)toggleRev();else render()}
+function visible(){return ITEMS.filter(i=>(F.subject==='all'||i.subject===F.subject)&&(F.date==='all'||i.date===F.date))}
 function updateScore(){
   let c=0,w=0,r=0;visible().forEach(i=>{const s=st(i.id);if(s==='correct')c++;else if(s==='wrong')w++;else r++});
   const t=c+w+r,p=t?Math.round((c+w)/t*100):0;
   $('cC').textContent=c;$('cW').textContent=w;$('cR').textContent=r;
   $('pgBar').style.width=p+'%';$('pgT').textContent=p+'% '+T('पूरा','Complete');
-  $('xp').textContent=xp;$('streak').textContent=streak;$('level').textContent=Math.floor(xp/100)+1;
-  updateTarget();
 }
 function pick(i,k){const e=lang==='en'&&i[k+'En'];return e?e:i[k]||''}
 function cardHTML(i){
   const s=st(i.id),res=lastRes&&lastRes.id===i.id?lastRes.s:null,act=active===i.id,rv=act||!!res;
   const sl=s==='correct'?T('सही','Correct'):s==='wrong'?T('गलत','Wrong'):T('बाकी','Unanswered');
   let h=`<div class="card dc" id="c-${i.id}" data-s="${s}"><div class="ch"><span class="dt">${esc(fmt(i.date))} • ${esc(lang==='hi'?i.subjectHi:i.subject)}${i.topic?' • '+esc(i.topic):''}</span><span class="sb">${sl}</span></div>`;
-  if(i.title||i.titleEn)h+=`<h3>${esc(pick(i,'title'))}</h3>`;
-  if(i.desc||i.descEn)h+=`<div class="ds">${esc(pick(i,'desc'))}</div>`;
+  // शीर्षक व विवरण सिर्फ़ सामान्य मोड में; सेल्फ-रिवीजन मोड में नहीं (वहाँ जवाब छिपा रहना चाहिए)
+  if(!revMode){
+    if(i.title||i.titleEn)h+=`<h3>${esc(pick(i,'title'))}</h3>`;
+    if(i.desc||i.descEn)h+=`<div class="ds">${esc(pick(i,'desc'))}</div>`;
+  }
   if(revMode){
     h+=`<div class="qb"><div class="qq">${esc(pick(i,'q'))}</div><div class="ab${rv?' rv':''}" onclick="reveal('${i.id}')">${rv?esc(pick(i,'a')):T('👆 उत्तर देखने के लिए टैप करें ✨','👆 Tap to reveal answer ✨')}</div>`;
     if(act&&!res)h+=`<div class="ev"><span class="l">${T('क्या आपने सही सोचा था? 🤔','Did you get it right? 🤔')}</span><button class="y" onclick="mark('${i.id}','correct')">${T('✅ हाँ','✅ Yes')}</button><button class="n" onclick="mark('${i.id}','wrong')">${T('❌ नहीं','❌ No')}</button></div>`;
-    if(res)h+=`<div class="rm" style="color:var(${res==='correct'?'--gr':'--rd'})">${res==='correct'?T('🎉 ✓ सही! +10 XP शानदार!','🎉 ✓ Correct! +10 XP'):T('💪 ✗ गलत - कोई बात नहीं, अब याद हो गया!','💪 ✗ Wrong - no worries, now you know it!')}</div>`;
+    if(res)h+=`<div class="rm" style="color:var(${res==='correct'?'--gr':'--rd'})">${res==='correct'?T('🎉 ✓ सही! शानदार!','🎉 ✓ Correct!'):T('💪 ✗ गलत - कोई बात नहीं, अब याद हो गया!','💪 ✗ Wrong - no worries, now you know it!')}</div>`;
     h+='</div>';
   }
   if(i.more||i.moreEn)h+=`<details><summary>👁 ${T('पूरी जानकारी / News','Full details / News')}</summary><div>${esc(pick(i,'more'))}</div></details>`;
@@ -186,9 +170,7 @@ function reveal(id){
 function confetti(){['🎉','⭐','🔥','💯','🎊'].forEach(em=>{const d=document.createElement('div');d.className='cf';d.textContent=em;d.style.left=(30+Math.random()*40)+'%';d.style.top='30%';document.body.appendChild(d);setTimeout(()=>d.remove(),1000)})}
 function mark(id,s){
   ST[id]={s,t:Date.now()};lsSet(K.st,ST);
-  if(s==='correct'){xp+=10;streak++;confetti()}else{streak=0;xp=Math.max(0,xp-2)}
-  lsSet(K.xp,xp);lsSet(K.sk,streak);
-  const td=today();LOG[td]=(LOG[td]||0)+1;lsSet(K.log,LOG);
+  if(s==='correct')confetti();
   active=null;lastRes={id,s};paint(id);updateScore();
   if(F.sort==='reattempt-wrong'||F.sort==='reattempt-correct')setTimeout(()=>{lastRes=null;render()},1100);
 }

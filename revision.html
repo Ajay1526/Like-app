@@ -56,6 +56,7 @@ mark{background:#fef08a;font-weight:bold;padding:0 2px;border-radius:3px}.hintx{
     <div class="bar"><select id="lvlSel" onchange="onLevel(this.value)" style="flex:1"></select><select id="langSel" onchange="onLang(this.value)" style="flex:1"><option value="en">English</option><option value="hi">हिंदी</option></select></div>
     <div class="stats4 st4" id="hdrStats"></div>
     <div class="crow"><input type="search" id="kw" oninput="UI.show=40;renderCards()"><select id="stSel" onchange="UI.show=40;renderCards()" style="flex:1;margin:0;min-width:120px"><option value="all" id="optAll"></option><option value="correct" id="optCorrect"></option><option value="wrong" id="optWrong"></option><option value="pending" id="optPending"></option></select><input type="number" id="dayIn" min="0" oninput="UI.show=40;renderCards()"></div>
+    <div class="note" id="kwCount" style="display:none;margin:0 0 8px;font-weight:600;color:#4c1d95"></div>
     <div class="bulk"><label><input type="checkbox" id="selAll" onchange="toggleAll(this.checked)"><b id="lblSel"></b></label><div><button class="btn sm" id="btnMove" onclick="openMove()"></button> <button class="btn r sm" id="btnReset" onclick="confirmReset()"></button></div></div>
   </div>
   <div id="main"><div class="card" style="text-align:center">Loading questions…</div></div>
@@ -108,6 +109,10 @@ async function load(){
       ALL.push({key,q,sn:ns.name,snHi:ns.nameHi||ns.name,sk:ns.key,auto:autoTopic(ns.name,q),m:files[f]});
     }));
   }
+  try{const nr=await fetch('notes.json');if(nr.ok){const nd=await nr.json(),arr=Array.isArray(nd)?nd:(nd.notes||[]);
+    arr.forEach(n=>{if(!n||!(n.q||n.title))return;const id=String(n.id||hashStr((n.title||'')+(n.q||''))).replace(/[^A-Za-z0-9_-]/g,'');const key='n'+id;if(seen.has(key))return;seen.add(key);
+      const subj=String(n.subject||'Notes').trim();
+      ALL.push({key,kind:'note',note:{title:n.title||'',desc:n.desc||'',q:n.q||n.title||'',a:n.a||'',more:n.more||'',date:n.date||''},q:{topic:n.topic||''},sn:subj,snHi:n.subjectHi||subj,sk:subj.toLowerCase(),auto:n.topic||'अन्य / Other',m:{c:'notes',l:'Notes',p:'Notes',y:n.date||''}})})}}catch(e){}
   const sk=[...new Set(ALL.map(o=>o.sk))];F.subj=sk[0]||'';draw();
 }
 
@@ -160,11 +165,20 @@ function mcqBody(o,kw){
     return `<button class="${c}" data-k="${esc(o.key)}" onclick="pickOpt(this.dataset.k,${k})">${String.fromCharCode(65+k)}. ${hl(t,kw)}${oi?`<img class="oimg" src="${esc(oi)}" alt="">`:''}${locked&&k===q.ans?' ✔':''}</button>`}).join('');
   return `<div class="qt">${hl(hi()?(q.qHi||q.qEn):q.qEn,kw)}</div>${im?`<img class="qimg" src="${esc(im)}" alt="">`:''}<div>${ob}</div>`+(locked?`<div class="sol"><b>${T('स्पष्टीकरण (Solution):','Solution:')}</b><br>${sol?hl(sol,kw):T('Solution उपलब्ध नहीं है।','No solution available.')}</div>`:'');
 }
+const REV={};
+function noteBody(o,kw){
+  const n=o.note,locked=stOf(o)!=='pending',shown=locked||REV[o.key],k=esc(o.key),detail=[n.title,n.desc,n.more].filter(Boolean).join('\n\n');
+  return `<div class="qt">🔹 ${hl(n.q,kw)}</div><div class="evrow"><span class="blur${shown?' rev':''}" ${locked?'':`data-k="${k}" onclick="revealN(this.dataset.k)"`}>${T('उत्तर','Answer')}: ${hl(n.a,kw)}</span>${detail?`<button class="btn gray sm" data-k="${k}" onclick="toggleMore(this.dataset.k)">${T('📖 विवरण देखें','📖 View details')}</button>`:''}</div>${detail?`<div class="sol" id="more-${k}" style="display:none">${esc(detail)}</div>`:''}`+
+  (locked?`<div class="note">${stOf(o)==='correct'?T('✅ सही दर्ज हुआ (लॉक)','✅ Marked correct (locked)'):T('❌ गलत दर्ज हुआ (लॉक)','❌ Marked wrong (locked)')}</div>`:shown?`<div class="evrow"><span class="note" style="margin:0">${T('क्या आपने सही सोचा था?','Did you think it right?')}</span><button class="btn g sm" data-k="${k}" onclick="markNote(this.dataset.k,true)">${T('हाँ ✅','Yes ✅')}</button><button class="btn r sm" data-k="${k}" onclick="markNote(this.dataset.k,false)">${T('नहीं ❌','No ❌')}</button></div>`:`<div class="note">${T('उत्तर देखने के लिए धुँधले उत्तर पर टैप करें।','Tap the blurred answer to reveal it.')}</div>`);
+}
+function revealN(k){REV[k]=true;renderCards()}
+function toggleMore(k){const b=$('more-'+k);if(b)b.style.display=b.style.display==='block'?'none':'block'}
+function markNote(k,ok){const o=ALL.find(x=>x.key===k);if(!o||stOf(o)!=='pending')return;const r=mk(o),now=Date.now();r.a++;ok?r.c++:r.w++;r.l=ok?'G':'X';r.firstAt=r.firstAt||now;r.lastRevisionAt=now;saveR();renderCards()}
 function cardHTML(o,idx,kw){
   const r=REC[o.key]||{},k=esc(o.key),last=refT(o);
   const tm=r.firstAt||last?T(`⏱️ पहली बार हल: ${formatAgo(r.firstAt||last)} | आखिरी बार: ${formatAgo(last)}`,`⏱️ First attempt: ${formatAgo(r.firstAt||last)} | Last: ${formatAgo(last)}`):T('⏳ अभी तक नहीं पढ़ा गया (Pending)','⏳ Pending');
   const bc=stOf(o)==='correct'?'#10b981':stOf(o)==='wrong'?'#ef4444':'#7c3aed';
-  return `<div class="ncard" style="border-left-color:${bc}"><div class="ctitle"><label><input type="checkbox" data-k="${k}" ${SEL[o.key]?'checked':''} onchange="toggleOne(this.dataset.k,this.checked)"><span>${idx+1}. ${esc(topicOf(o))}</span></label><button class="btn gray sm" data-k="${k}" onclick="moveOne(this.dataset.k)">${T('🔀 मूव','🔀 Move')}</button></div><div class="tmeta">${tm}</div>${mcqBody(o,kw)}</div>`;
+  return `<div class="ncard" style="border-left-color:${bc}"><div class="ctitle"><label><input type="checkbox" data-k="${k}" ${SEL[o.key]?'checked':''} onchange="toggleOne(this.dataset.k,this.checked)"><span>${idx+1}. ${esc(topicOf(o))}</span></label><button class="btn gray sm" data-k="${k}" onclick="moveOne(this.dataset.k)">${T('🔀 मूव','🔀 Move')}</button></div><div class="tmeta">${tm}</div>${o.kind==='note'?noteBody(o,kw):mcqBody(o,kw)}</div>`;
 }
 function mathAll(el){if(typeof renderMathInElement==='function')try{renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}}
 function renderCards(){
@@ -175,11 +189,15 @@ function renderCards(){
   $('hdrStats').innerHTML=`<div><b>${base.length}</b><span>${T('कुल प्रश्न','Total Qs')}</span></div><div><b>🟢 ${cor}</b><span>${T('सही','Correct')}</span></div><div><b>🔴 ${wro}</b><span>${T('गलत','Wrong')}</span></div><div><b>⏳ ${pen}</b><span>${T('शेष','Pending')}</span></div>`;
   const kw=($('kw').value||'').trim().toLowerCase(),sf=$('stSel').value,dv=parseFloat($('dayIn').value);
   VIS=base.filter(o=>{if(sf!=='all'&&stOf(o)!==sf)return false;if(!isNaN(dv)&&dv>=0){if(!refT(o)||ageD(o)<dv)return false}if(kw&&oText(o).toLowerCase().includes(kw)===false)return false;return true});
+  const kc=$('kwCount');
+  if(kw){let occ=0;try{const re=new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');VIS.forEach(o=>{occ+=(oText(o).match(re)||[]).length})}catch(e){}
+    kc.style.display='';kc.textContent=T(`🔎 "${kw}": ${VIS.length} प्रश्न/नोट्स मिले • कुल ${occ} बार आया`,`🔎 "${kw}": ${VIS.length} results found • appears ${occ} times`)}
+  else kc.style.display='none';
   if(!VIS.length)box.innerHTML=`<div class="ncard" style="text-align:center;color:var(--mt)">${T('इन मानदंडों के अनुसार कोई प्रश्न नहीं मिला।','No questions found matching criteria.')}</div>`;
   else box.innerHTML=VIS.slice(0,UI.show).map((o,i)=>cardHTML(o,i,kw)).join('')+(VIS.length>UI.show?`<div style="text-align:center"><button class="btn gray" onclick="UI.show+=40;renderCards()">${T('और दिखाएँ','Show more')} (${VIS.length-UI.show})</button></div>`:'');
   $('selAll').checked=VIS.length>0&&VIS.every(o=>SEL[o.key]);mathAll(box);
 }
-const oText=o=>(o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')+' '+(o.q.optHi||[]).join(' ');
+const oText=o=>o.kind==='note'?[o.note.title,o.note.desc,o.note.q,o.note.a,o.note.more].join(' '):(o.q.qEn||'')+' '+(o.q.qHi||'')+' '+(o.q.optEn||[]).join(' ')+' '+(o.q.optHi||[]).join(' ');
 function pickOpt(key,k){
   const o=ALL.find(x=>x.key===key);if(!o||stOf(o)!=='pending')return;
   const ok=k===o.q.ans,r=mk(o),now=Date.now();r.a++;ok?r.c++:r.w++;r.l=ok?'G':'X';r.sel=k;r.firstAt=r.firstAt||now;r.lastRevisionAt=now;saveR();renderCards();
@@ -209,7 +227,7 @@ function confirmReset(){
   const keys=selKeys(),tgt=keys.length?ALL.filter(o=>SEL[o.key]):VIS;
   if(!tgt.length)return;
   if(!confirm(T(`${tgt.length} प्रश्नों की प्रोग्रेस रीसेट करें?`,`Reset progress of ${tgt.length} questions?`)))return;
-  tgt.forEach(o=>delete REC[o.key]);saveR();SEL={};renderCards();
+  tgt.forEach(o=>{delete REC[o.key];delete REV[o.key]});saveR();SEL={};renderCards();
 }
 function draw(){renderCards()}
 load().catch(e=>{try{console.error(e)}catch(x){}$('main').innerHTML='<div class="card empty" style="text-align:center">प्रश्न लोड नहीं हो पाए। पेज दोबारा खोलें।</div>'});
