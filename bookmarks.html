@@ -85,8 +85,8 @@ function drawCtl(){
     </div>
     <div class="ctl" style="border-top:1px dashed #ddd;padding-top:8px">
       <label>🗑 Clear old bookmarks – older than</label>
-      <input type="number" id="oldN" min="1" step="1" value="${F.oldN}" style="width:80px" oninput="oldChg()">
-      <select id="oldU" onchange="oldChg()"><option value="1"${F.oldU==='1'?' selected':''}>दिन / Days</option><option value="7"${F.oldU==='7'?' selected':''}>हफ़्ते / Weeks</option><option value="30"${F.oldU==='30'?' selected':''}>महीने / Months</option><option value="365"${F.oldU==='365'?' selected':''}>साल / Years</option></select>
+      <input type="number" id="oldN" min="1" step="1" value="${F.oldN}" style="width:75px" oninput="oldChg()">
+      <span style="color:#555">days</span>
       ${[7,15,30,60,90].map(n=>`<button onclick="quickOld(${n})">${n}d</button>`).join('')}
       <span id="oldCnt" style="color:#777"></span>
       <button class="btn r" onclick="clearOld()">Clear Old</button>
@@ -147,20 +147,20 @@ function clearGroup(key,k){
   if(!confirm('इस group के '+ids.size+' bookmarks हटाएँ?'))return;
   B=B.filter(b=>!ids.has(b.id));save();draw();
 }
-function oldDays(){const n=parseInt($('oldN').value,10),u=parseInt($('oldU').value,10);return n>0?n*u:0}
+function oldDays(){const n=parseInt($('oldN').value,10),u=parseInt(F.oldU||'1',10)||1;return n>0?n*u:0}
 function oldChg(){
-  F.oldN=$('oldN').value;F.oldU=$('oldU').value;
+  F.oldN=$('oldN').value;F.oldU='1';
   try{sessionStorage.setItem('bmF',JSON.stringify(F))}catch(e){}
   const d=oldDays();$('oldCnt').textContent=d?'→ '+B.filter(b=>b.ts<Date.now()-d*86400000).length+' हटेंगे':'';
 }
-function quickOld(n){$('oldN').value=n;$('oldU').value='1';oldChg()}
+function quickOld(n){$('oldN').value=n;F.oldU='1';oldChg()}
 function clearOld(){
   const days=oldDays();
   if(!days){alert('सही दिन/संख्या डालें (कम से कम 1)।');return}
   const lim=Date.now()-days*86400000;
   const n=B.filter(b=>b.ts<lim).length;
-  if(!n){alert($('oldN').value+' '+$('oldU').selectedOptions[0].text.split(' /')[0]+' से पुराना कोई bookmark नहीं है।');return}
-  if(!confirm($('oldN').value+' '+$('oldU').selectedOptions[0].text.split(' /')[0]+' ('+days+' दिन) से पुराने '+n+' bookmarks हटाएँ?'))return;
+  if(!n){alert($('oldN').value+' days से पुराना कोई bookmark नहीं है।');return}
+  if(!confirm($('oldN').value+' days ('+days+' दिन) से पुराने '+n+' bookmarks हटाएँ?'))return;
   B=B.filter(b=>b.ts>=lim);save();draw();
 }
 function clearAll(){
