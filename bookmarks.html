@@ -150,7 +150,7 @@ function oldDays(){const n=parseInt($('oldN').value,10),u=parseInt(F.oldU||'1',1
 function oldChg(){
   F.oldN=$('oldN').value;F.oldU='1';
   try{sessionStorage.setItem('bmF',JSON.stringify(F))}catch(e){}
-  const d=oldDays();$('oldCnt').textContent=d?'→ '+B.filter(b=>b.ts<Date.now()-d*86400000).length+' हटेंगे':'';
+  const d=oldDays();$('oldCnt').textContent=d?'→ '+B.filter(b=>b.ts<Date.now()-d*86400000).length+' bookmark हटेंगे':'';
 }
 function quickOld(n){$('oldN').value=n;F.oldU='1';oldChg()}
 function clearOld(){
