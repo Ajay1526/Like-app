@@ -87,7 +87,6 @@ function drawCtl(){
       <label>🗑 Clear old bookmarks – older than</label>
       <input type="number" id="oldN" min="1" step="1" value="${F.oldN}" style="width:75px" oninput="oldChg()">
       <span style="color:#555">days</span>
-      ${[7,15,30,60,90].map(n=>`<button onclick="quickOld(${n})">${n}d</button>`).join('')}
       <span id="oldCnt" style="color:#777"></span>
       <button class="btn r" onclick="clearOld()">Clear Old</button>
       <button class="btn r" onclick="clearAll()">Clear All</button>
