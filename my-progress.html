@@ -297,6 +297,10 @@ function firstAttemptCmpHTML(S,scores){
 function toggleTest(name,el){
   if(el.checked) selectedTests.add(name);
   else selectedTests.delete(name);
+  const lb0=$('testListItems'),sTop=lb0?lb0.scrollTop:0;
+  render();   // चुनाव बदलते ही तुलना-तालिका और "x/y selected" दोबारा बनें
+  const lb1=$('testListItems');if(lb1)lb1.scrollTop=sTop;
+  return;
   
   // Update select all checkbox state without full re-render
   const testMap={};
@@ -378,7 +382,7 @@ function render(){
 
   o+='<h2>All Attempts (Latest first)</h2>';
 
-  for(const n of [...V].reverse()){
+  for(const n of [...V].filter(i=>selectedTests.has(tname(A[i]))).reverse()){   // सिर्फ़ चुने हुए टेस्ट
     const a=A[n], st=S[n], isBest=(n===bestIdx);
     const name=tname(a);
     const allTries=A.map((x,idx)=>({x,idx})).filter(item=>tname(item.x)===name);
@@ -391,7 +395,7 @@ function render(){
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
           <a class="btn p" href="result.html#${encodeURIComponent(a.id)}">Full Analysis</a>
-          <select onchange="if(this.value)window.location.href='result.html#'+encodeURIComponent(A[Number(this.value)].id)" style="padding:6px;border-radius:3px;border:1px solid #bbb">
+          <select onchange="var v=this.value;this.value='${n}';if(v)window.location.href='result.html#'+encodeURIComponent(A[Number(v)].id)" style="padding:6px;border-radius:3px;border:1px solid #bbb">
             <option value="">Attempts (${allTries.length})</option>
             ${allTries.map((item,idx)=>`<option value="${item.idx}"${item.idx===n?' selected':''}>Attempt ${idx+1} (${score(item.x)})</option>`).join('')}
           </select>
@@ -430,6 +434,7 @@ function render(){
   root.innerHTML=o;
 }
 
+window.addEventListener('pageshow',e=>{if(e.persisted)render()});   // Back दबाने पर पुरानी चुनी हुई value न दिखे
 render();
 </script>
 </body></html>
