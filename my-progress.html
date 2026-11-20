@@ -419,12 +419,12 @@ function render(){
         <div class="chip"><span>Total Time</span><b>${fmt(st.tot)}</b></div>
       </div>
       <details open><summary>Section-wise Time &amp; Analysis</summary>
-      <table><tr><th>Section</th><th>Score</th><th>Change</th><th>Accuracy</th><th>Correct</th><th>Wrong</th><th>Attempted</th><th>Unattempted</th><th>Correct Q. Time</th><th>Wrong Q. Time</th><th>Total Time</th></tr>`;
+      <div style="overflow-x:auto"><table style="min-width:900px"><tr><th style="min-width:170px">Section</th><th>Score</th><th>Change</th><th>Accuracy</th><th>Correct</th><th>Wrong</th><th>Attempted</th><th>Unattempted</th><th>Correct Q. Time</th><th>Wrong Q. Time</th><th>Total Time</th></tr>`;
     
     a.sections.forEach((s,i)=>{
       const p=st.parts[i];
       o+=`<tr>
-        <td style="text-align:left;padding-left:8px;max-width:180px;word-break:break-word"><b>${esc(s.name||('Section '+(i+1)))}</b></td>
+        <td style="text-align:left;padding-left:8px;min-width:170px;word-break:normal;overflow-wrap:normal"><b>${esc(s.name||('Section '+(i+1)))}</b></td>
         <td>${p.net}</td>
         <td><span class="u">—</span></td>
         <td>${p.acc.toFixed(1)}%</td>
@@ -437,7 +437,7 @@ function render(){
         <td><b>${fmt(p.tot)}</b></td>
       </tr>`;
     });
-    o+='</table></details></div>';
+    o+='</table></div></details></div>';
   }
   root.innerHTML=o;
 }
