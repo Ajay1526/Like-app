@@ -106,7 +106,7 @@ async function load(){
       if(seen.has(key)){let n=2;while(seen.has(key+'_'+n))n++;key=key+'_'+n}
       seen.add(key);
       const ns=normSubj(s.name,s.nameHi,C);
-      ALL.push({key,q,sn:ns.name,snHi:ns.nameHi||ns.name,sk:ns.key,auto:autoTopic(ns.name,q),m:files[f]});
+      ALL.push({key,nk:qKey(q),q,sn:ns.name,snHi:ns.nameHi||ns.name,sk:ns.key,auto:autoTopic(ns.name,q),m:files[f]});
     }));
   }
   try{const nr=await fetch('notes.json');if(nr.ok){const nd=await nr.json(),arr=Array.isArray(nd)?nd:(nd.notes||[]);
@@ -163,9 +163,12 @@ function mcqBody(o,kw){
   const q=o.q,r=REC[o.key]||{},locked=stOf(o)!=='pending',opts=(hi()?q.optHi:q.optEn)||q.optEn||[],im=imgOf(q),sol=(hi()?q.solHi:q.solEn)||q.solEn||q.solHi||'';
   const ob=opts.map((t,k)=>{let c='opt';if(locked){c+=' lock';if(k===q.ans)c+=' ok';else if(r.sel===k)c+=' bad'}const oi=q.optImg&&q.optImg[k];
     return `<button class="${c}" data-k="${esc(o.key)}" onclick="pickOpt(this.dataset.k,${k})">${String.fromCharCode(65+k)}. ${hl(t,kw)}${oi?`<img class="oimg" src="${esc(oi)}" alt="">`:''}${locked&&k===q.ans?' ✔':''}</button>`}).join('');
-  return `<div class="qt">${hl(hi()?(q.qHi||q.qEn):q.qEn,kw)}</div>${im?`<img class="qimg" src="${esc(im)}" alt="">`:''}<div>${ob}</div>`+(locked?`<div class="sol"><b>${T('स्पष्टीकरण (Solution):','Solution:')}</b><br>${sol?hl(sol,kw):T('Solution उपलब्ध नहीं है।','No solution available.')}</div>`:'');
+  return `<div class="qt">${hl(hi()?(q.qHi||q.qEn):q.qEn,kw)}</div>${im?`<img class="qimg" src="${esc(im)}" alt="">`:''}<div>${ob}</div>`+(locked?`<div class="sol"><b>${T('स्पष्टीकरण (Solution):','Solution:')}</b><br>${sol?hl(sol,kw):T('Solution उपलब्ध नहीं है।','No solution available.')}</div>${noteBox(o.nk||o.key)}`:'');
 }
 const REV={};
+function noteGet(k){try{return (JSON.parse(localStorage.getItem('examNotes'))||{})[k]||''}catch(e){return ''}}
+function noteSet(k,v){try{const m=JSON.parse(localStorage.getItem('examNotes'))||{};if(String(v).trim())m[k]=v;else delete m[k];localStorage.setItem('examNotes',JSON.stringify(m))}catch(e){}}
+function noteBox(k){return `<div class="nbox"><div class="nlbl">✍️ My Notes</div><textarea rows="3" placeholder="${T('यहाँ अपने नोट्स लिखें (अपने आप सेव होंगे)','Write your notes here (auto-saved)')}" data-k="${esc(k)}" oninput="noteSet(this.dataset.k,this.value)">${esc(noteGet(k))}</textarea></div>`}
 function noteBody(o,kw){
   const n=o.note,locked=stOf(o)!=='pending',shown=locked||REV[o.key],k=esc(o.key),detail=[n.title,n.desc,n.more].filter(Boolean).join('\n\n');
   return `<div class="qt">🔹 ${hl(n.q,kw)}</div><div class="evrow"><span class="blur${shown?' rev':''}" ${locked?'':`data-k="${k}" onclick="revealN(this.dataset.k)"`}>${T('उत्तर','Answer')}: ${hl(n.a,kw)}</span>${detail?`<button class="btn gray sm" data-k="${k}" onclick="toggleMore(this.dataset.k)">${T('📖 विवरण देखें','📖 View details')}</button>`:''}</div>${detail?`<div class="sol" id="more-${k}" style="display:none">${esc(detail)}</div>`:''}`+
