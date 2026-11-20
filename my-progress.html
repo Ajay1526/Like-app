@@ -99,13 +99,14 @@ function typeOf(a){
 
 let PF=new URLSearchParams(location.search).get('f')||sessionStorage.getItem('progFilter')||'full';
 if(PF==='all'||PF==='reattempt')PF='full';
-function setF(v){PF=v;try{sessionStorage.setItem('progFilter',v)}catch(e){}SF='all';try{sessionStorage.setItem('progSubj','all')}catch(e){}selectedTests.clear();testSearchQuery='';render()}
+function setF(v){PF=v;try{sessionStorage.setItem('progFilter',v)}catch(e){}SF='all';try{sessionStorage.setItem('progSubj','all')}catch(e){}selectedTests.clear();selTouched=false;testSearchQuery='';render()}
 
 let SF='all'; 
 try{SF=sessionStorage.getItem('progSubj')||'all'}catch(e){}
-function setSF(v){SF=v;try{sessionStorage.setItem('progSubj',v)}catch(e){}selectedTests.clear();testSearchQuery='';render()}
+function setSF(v){SF=v;try{sessionStorage.setItem('progSubj',v)}catch(e){}selectedTests.clear();selTouched=false;testSearchQuery='';render()}
 
 let selectedTests=new Set();
+let selTouched=false;   // true = उपयोगकर्ता ने खुद चुनाव बदला, तो खाली होने पर अपने-आप सब न चुनें
 let shownAtt={};   // test name -> जो attempt अभी कार्ड में दिख रही है
 function setAttempt(name,v){shownAtt[name]=Number(v);render()}
 let sortField='name'; 
@@ -208,7 +209,7 @@ function firstAttemptCmpHTML(S,scores){
     return '<div class="card"><div class="empty" style="padding:10px">कोई टेस्ट उपलब्ध नहीं है।</div></div>';
   }
 
-  if(selectedTests.size===0){
+  if(selectedTests.size===0&&!selTouched){
     testNames.forEach(name=>selectedTests.add(name));
   }
 
@@ -297,6 +298,7 @@ function firstAttemptCmpHTML(S,scores){
 }
 
 function toggleTest(name,el){
+  selTouched=true;
   if(el.checked) selectedTests.add(name);
   else selectedTests.delete(name);
   const lb0=$('testListItems'),sTop=lb0?lb0.scrollTop:0;
@@ -325,6 +327,7 @@ function toggleTest(name,el){
 }
 
 function toggleAllSearchedTests(el){
+  selTouched=true;
   const testMap={};
   A.forEach((a,n)=>{
     const name=tname(a);
