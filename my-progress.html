@@ -106,6 +106,8 @@ try{SF=sessionStorage.getItem('progSubj')||'all'}catch(e){}
 function setSF(v){SF=v;try{sessionStorage.setItem('progSubj',v)}catch(e){}selectedTests.clear();testSearchQuery='';render()}
 
 let selectedTests=new Set();
+let shownAtt={};   // test name -> जो attempt अभी कार्ड में दिख रही है
+function setAttempt(name,v){shownAtt[name]=Number(v);render()}
 let sortField='name'; 
 let sortOrder='asc';  
 let isDropdownOpen=false; 
@@ -382,7 +384,11 @@ function render(){
 
   o+='<h2>All Attempts (Latest first)</h2>';
 
-  for(const n of [...V].filter(i=>selectedTests.has(tname(A[i]))).reverse()){   // सिर्फ़ चुने हुए टेस्ट
+  const shownIdx=[...new Set(V.map(i=>tname(A[i])))].filter(nm=>selectedTests.has(nm)).map(nm=>{
+    const tr=A.map((x,i)=>i).filter(i=>tname(A[i])===nm);let k=shownAtt[nm];
+    return (k===undefined||!tr.includes(k))?tr[tr.length-1]:k;   // डिफ़ॉल्ट: उस टेस्ट की सबसे नई attempt
+  }).sort((a,b)=>b-a);
+  for(const n of shownIdx){   // हर चुने हुए टेस्ट का सिर्फ़ एक कार्ड
     const a=A[n], st=S[n], isBest=(n===bestIdx);
     const name=tname(a);
     const allTries=A.map((x,idx)=>({x,idx})).filter(item=>tname(item.x)===name);
@@ -395,8 +401,7 @@ function render(){
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
           <a class="btn p" href="result.html#${encodeURIComponent(a.id)}">Full Analysis</a>
-          <select onchange="var v=this.value;this.value='${n}';if(v)window.location.href='result.html#'+encodeURIComponent(A[Number(v)].id)" style="padding:6px;border-radius:3px;border:1px solid #bbb">
-            <option value="">Attempts (${allTries.length})</option>
+          <select data-t="${esc(name)}" onchange="setAttempt(this.dataset.t,this.value)" style="padding:6px;border-radius:3px;border:1px solid #bbb">
             ${allTries.map((item,idx)=>`<option value="${item.idx}"${item.idx===n?' selected':''}>Attempt ${idx+1} (${score(item.x)})</option>`).join('')}
           </select>
         </div>
